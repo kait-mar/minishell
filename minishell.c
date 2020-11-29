@@ -18,8 +18,13 @@ int main(int argc, char **argv)
 
     get_next_line(0, &line);
     bult = ft_split(line, ' ');
-    //start your code from here
-    // exp : if (ft_strcmp(bult[0], "echo") == 0) ===> do and do .. etc
-    
+    if (ft_strcmp(bult[0], "echo") == 0)
+    {
+        while (*(bult++) != NULL)
+        {
+            ft_putstr(*bult);
+            write(1, " ", 1);
+        }
+    }
     return (0);
 }
