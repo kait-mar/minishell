@@ -28,5 +28,6 @@ static char		**ft_tofree(char *tab[], int j);
 char			**ft_split(char const *s, char c);
 int             ft_strcmp(const char *s1, const char *s2);
 void	        ft_putstr(char *s);
+void	        ft_putchar(char c);
 
 #endif
