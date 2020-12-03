@@ -6,7 +6,7 @@
 #    By: molabhai <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 17:15:38 by molabhai          #+#    #+#              #
-#    Updated: 2020/11/30 18:02:56 by molabhai         ###   ########.fr        #
+#    Updated: 2020/12/01 18:21:18 by molabhai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC= gcc
 
 FLAGS= -Wall -Wextra -Werror
 
-SRCS= cd.c
+SRCS= cd.c main.c
 
 OBJ = $(SRCS:.c=.o)
 
@@ -26,8 +26,10 @@ HEADERS= minishell.h
 
 DELETEOBJ= rm -rf *.o
 
+DELETENAME= rm -rf $(NAME)
 
 MAKING= cd Libft && make -f Makefile
+
 
 all: $(NAME)
 
@@ -36,4 +38,7 @@ $(NAME):
 	$(CC) $(FLAGS)  $(SRCS)  Libft/libft.a -o minishell
 
 clean:
-	$(DELETEOBJ)
+	$(DELETEOBJ) $(DELETENAME)
+
+
+re: clean all
