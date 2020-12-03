@@ -6,7 +6,7 @@
 #    By: molabhai <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 17:15:38 by molabhai          #+#    #+#              #
-#    Updated: 2020/12/01 18:21:18 by molabhai         ###   ########.fr        #
+#    Updated: 2020/12/03 19:15:41 by molabhai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC= gcc
 
 FLAGS= -Wall -Wextra -Werror
 
-SRCS= cd.c main.c
+SRCS=  cd.c main.c cd_utility.c
 
 OBJ = $(SRCS:.c=.o)
 
@@ -35,7 +35,7 @@ all: $(NAME)
 
 $(NAME):
 	$(MAKING)
-	$(CC) $(FLAGS)  $(SRCS)  Libft/libft.a -o minishell
+	$(CC)   $(SRCS)  Libft/libft.a -o minishell
 
 clean:
 	$(DELETEOBJ) $(DELETENAME)

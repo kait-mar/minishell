@@ -6,47 +6,48 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/01 19:05:06 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/03 18:44:40 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		main()
-{
-/*	DIR *dir;
-	struct dirent *dirent;*/
-/*	pid_t pid1;
-	int status;
 
-	status = 0;
-	printf("Parent Process PID == > %d\n", getpid());
-	pid1 = fork();
-	if (pid1 == 0)
+
+int		check_wich_command(char *str)
+{
+	if (ft_strncmp(str, "cd", 2) == 0)
+		return (1);
+	return (0);
+}
+
+int		main(int ac, char **av, char **env)
+{
+	char *str;
+	t_command_cd *cd;
+	char **splits;
+	pid_t  pid1;
+	int		status;
+	char	*pwd;
+	int i;
+
+	str = NULL;
+	pwd = NULL;
+	cd = malloc(sizeof(t_command_cd));
+	if (cd == NULL)
+		return (-1);
+	while (1)
 	{
-		printf("Child Process PID == > %d\n", getpid());
-		exit(status);
-	}
-	else {
-		printf("Process is == > %d check == > %d\n", getpid(), pid1);
-		wait(&status);
-	}
-	printf("status ==> %d\n", status);*/
-/*
-	printf("Here\n");
-	dir = opendir("Libft");
-	if (dir != NULL)
-	{
-		while((dirent = readdir(dir)) != NULL)
+		str = reading_input(str);
+		str = ft_strtrim(str, "\t");
+		splits = split_to_tokens(str);
+		cd->command = splits[0];
+		cd->argument = splits[1];
+		if (check_wich_command(cd->command) == 1)
 		{
-			printf("%s ", dirent->d_name);
+			pwd = cd_command(cd->argument);
+			printf("==> %s\n", pwd);
 		}
 	}
-	if (chdir("Libft") == 0)
-		ft_putstr("Has Changed Directory\n");
-	else {
-		ft_putstr("Error");
-	}*/
-	cd_command();
 	return(0);
 }
