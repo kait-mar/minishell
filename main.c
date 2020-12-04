@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/03 18:44:40 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/04 17:56:23 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int		check_wich_command(char *str)
 {
-	if (ft_strncmp(str, "cd", 2) == 0)
+	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[2]) == 0))
 		return (1);
 	return (0);
 }
@@ -41,12 +41,22 @@ int		main(int ac, char **av, char **env)
 		str = reading_input(str);
 		str = ft_strtrim(str, "\t");
 		splits = split_to_tokens(str);
-		cd->command = splits[0];
-		cd->argument = splits[1];
-		if (check_wich_command(cd->command) == 1)
+		i = how_mutch_argument(str, 0);
+		if (i > 0)
 		{
-			pwd = cd_command(cd->argument);
-			printf("==> %s\n", pwd);
+			i = how_mutch_argument(str, 2);
+			splits[0] = ft_strtrim(splits[0], "\t");
+			if (i == 1)
+				splits[1] = ft_strtrim(splits[1], "\t");
+			else if (i == 0)
+				splits[1] = ft_strdup("/Users/molabhai");
+			if (check_wich_command(splits[0]) == 1)
+			{
+				pwd = cd_command(splits[1], i);
+				printf("==> %s\n", pwd);
+			}
+			else
+				printf("Command [%s] doesnt exist\n", splits[0]);
 		}
 	}
 	return(0);
