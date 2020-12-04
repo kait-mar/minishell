@@ -12,12 +12,11 @@
 
 #include "minishell.h"
 #include <dirent.h>
-#include "./Libft/libft.h"
 #include <errno.h>
 
 char     *reading_input(char *str)
 {
-	get_next_line(1, &str);
+	get_next_line(0, &str);
 	return (str);
 }
 

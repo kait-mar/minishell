@@ -49,7 +49,7 @@ int		main(int ac, char **av, char **env)
 			if (i == 1)
 				splits[1] = ft_strtrim(splits[1], "\t");
 			else if (i == 0)
-				splits[1] = ft_strdup("/Users/molabhai");
+				splits[1] = ft_strdup("$HOME");
 			if (check_wich_command(splits[0]) == 1)
 			{
 				pwd = cd_command(splits[1], i);

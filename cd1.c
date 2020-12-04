@@ -13,13 +13,3 @@
 #include <stdio.h>
 #include "minishell.h"
 
-
-
-int	main(int ac, char **av, char **env)
-{
-	char *pwd;
-
-	pwd = NULL;
-	cd_command(av[1], pwd);
-	return (0);
-}
