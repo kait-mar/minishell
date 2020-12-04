@@ -61,6 +61,29 @@ int		find(char *str, char c)
 	return (0);
 }
 
+//re change here for the count espace for split 
+int		*count_espace(char *s)
+{
+	int		i;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (s[i] != '\0')
+	{
+		while (s[i] == c)
+			i++;
+		if (s[i] != c && s[i] != '\0')
+		{
+			count++;
+			i++;
+		}
+		while (s[i] != c && s[i] != '\0')
+			i++;
+	}
+	return (count);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char	*line;
