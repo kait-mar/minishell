@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/04 17:56:23 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/05 10:54:16 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int		check_wich_command(char *str)
 {
 	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[2]) == 0))
 		return (1);
+	/* Here CHECK your command is lexically correct*/
 	return (0);
 }
 
@@ -51,10 +52,12 @@ int		main(int ac, char **av, char **env)
 			else if (i == 0)
 				splits[1] = ft_strdup("/Users/molabhai");
 			if (check_wich_command(splits[0]) == 1)
-			{
 				pwd = cd_command(splits[1], i);
-				printf("==> %s\n", pwd);
-			}
+			/* Add ure main command Here
+			 * Example:
+			 * if (check_wich_command(*****))
+			 * 		main_function
+			 */ 
 			else
 				printf("Command [%s] doesnt exist\n", splits[0]);
 		}

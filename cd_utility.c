@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 19:01:30 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/04 17:53:33 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/05 10:54:18 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		how_mutch_argument(char *str, int i)
 	on = 0;
 	while (str[i] != '\0')
 	{
-		if (ft_isalpha(str[i]))
+		if (ft_isalpha(str[i]) || (str[i] == '.'))
 			on = 1;
 		i += 1;
 	}

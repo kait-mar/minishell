@@ -6,7 +6,7 @@
 #    By: molabhai <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 17:15:38 by molabhai          #+#    #+#              #
-#    Updated: 2020/12/03 19:15:41 by molabhai         ###   ########.fr        #
+#    Updated: 2020/12/05 10:57:53 by molabhai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ $(NAME):
 
 clean:
 	$(DELETEOBJ) $(DELETENAME)
+	cd Libft && make fclean -f Makefile
 
 
 re: clean all
