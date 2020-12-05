@@ -5,5 +5,6 @@
 
 void	print(char **bult, char **env);
 int		find(char *str, char c);
+int	echo(char **argv, char **env);
 
 #endif

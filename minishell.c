@@ -47,22 +47,8 @@ void	ft_putchar(char c)
 	write(1, &c, 1);
 }
 
-int		find(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 //re change here for the count espace for split 
-int		*count_espace(char *s)
+/*int		*count_espace(char *s)
 {
 	int		i;
 	int		count;
@@ -82,9 +68,23 @@ int		*count_espace(char *s)
 			i++;
 	}
 	return (count);
-}
+}*/
 
-int	main(int argc, char **argv, char **env)
+/*int		find(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
+}*/
+
+int	echo(char **argv, char **env)
 {
 	char	*line;
 	char	**bult;
@@ -92,6 +92,7 @@ int	main(int argc, char **argv, char **env)
 
 	i = 0;
 	get_next_line(0, &line);
+	printf("my line char is : %s\n", line);
 	//line = "echo hello world";
 	bult = ft_split(line, ' ');
 	if (ft_strcmp(bult[0], "echo") == 0)
@@ -102,7 +103,7 @@ int	main(int argc, char **argv, char **env)
 			bult++;
 			i = 1;
 		}
-		if (find(line, '<') == 0 && find(line, '>') == 0 && find(line, '>>') == 0)
+		if (find(line, '<') == 0 && find(line, '>') == 0)
 		{
 			while (*(bult + 1) != NULL)
 			{
