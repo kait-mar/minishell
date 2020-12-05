@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 19:01:30 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/05 10:54:18 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/05 11:02:33 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ char	*without_that(char *str, char c)
 	s = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (s == NULL)
 		return (NULL);
-	printf("str == > %s\n", str);
 	i = 0;
 	j = 0;
 	while (str[i] != '\0')
