@@ -6,7 +6,7 @@
 /*   By: molabhai <molabhai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 12:22:29 by molabhai          #+#    #+#             */
-/*   Updated: 2020/11/30 19:19:59 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/05 12:03:05 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <string.h>
 # include <unistd.h>
 # include "get_next_line.h"
+# include "../Printf/ft_printf.h"
 
 void					*ft_memset(void *s, int c, size_t len);
 void					ft_bzero (void *s, size_t n);

@@ -6,18 +6,13 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 19:13:45 by molabhai          #+#    #+#             */
-/*   Updated: 2020/11/30 19:18:35 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/05 12:11:23 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
-void 	ft_putstr(char *str)
+void 			ft_putstr(char *str)
 {
 	int i;
 

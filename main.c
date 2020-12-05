@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/05 10:54:16 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/05 12:12:08 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		main(int ac, char **av, char **env)
 			 * 		main_function
 			 */ 
 			else
-				printf("Command [%s] doesnt exist\n", splits[0]);
+				ft_printf("Command [%s] doesnt exist\n", splits[0]);
 		}
 	}
 	return(0);

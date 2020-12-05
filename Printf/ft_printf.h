@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 16:42:37 by molabhai          #+#    #+#             */
-/*   Updated: 2019/12/18 05:36:39 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/05 12:10:55 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include "../Libft/libft.h"
 
 typedef struct		s_flag
 {
@@ -81,7 +82,7 @@ int					check_condition_three(t_flag *check);
 int					check_condition_four(t_flag *check);
 void				*ft_memset(void *s, int c, size_t len);
 int					ft_isdigit(int c);
-char				*ft_strdup(char *s);
+//char				*ft_strdup(char *s);
 size_t				ft_strlen(char const *s);
 int					ft_atoi(char const *s);
 void				ft_bzero(void *s, size_t n);
