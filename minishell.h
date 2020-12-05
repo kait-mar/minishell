@@ -6,7 +6,7 @@
 /*   By: molabhai <molabhai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/05 12:03:03 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/05 14:53:56 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@ typedef struct s_command_cd
 	int error;
 }				t_command_cd;
 
-
-char	*cd_command(char *argument, int i);
+void	cd_command(char *argument, int i);
 char	**taking_command(char *str);
 char 	**split_to_tokens(char *str);
 char	*reading_input(char *str);
 char	*without_that(char *str, char c);
 int		how_mutch_argument(char *str, int i);
+char	*ft_toStrLower(char *str);
+void	pwd_command(void);
+int		check_pwd(char *str);
 
 #endif
