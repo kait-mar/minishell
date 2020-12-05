@@ -44,4 +44,8 @@ int		check_double_quote(char *str);
 int		check_env(char *str);
 void	env_command(char **str);
 
+void	print(char **bult, char **env);
+int		find(char *str, char c);
+int	echo(char **argv, char **env);
+
 #endif
