@@ -6,7 +6,7 @@
 /*   By: molabhai <molabhai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/05 14:53:56 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/05 17:19:49 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,9 @@ int		how_mutch_argument(char *str, int i);
 char	*ft_toStrLower(char *str);
 void	pwd_command(void);
 int		check_pwd(char *str);
+int 	check_quote(char *str);
+int		check_double_quote(char *str);
+int		check_env(char *str);
+void	env_command(char **str);
 
 #endif
