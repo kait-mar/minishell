@@ -6,7 +6,7 @@
 #    By: molabhai <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 17:15:38 by molabhai          #+#    #+#              #
-#    Updated: 2020/12/05 10:57:53 by molabhai         ###   ########.fr        #
+#    Updated: 2020/12/05 11:49:01 by molabhai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,18 +28,22 @@ DELETEOBJ= rm -rf *.o
 
 DELETENAME= rm -rf $(NAME)
 
-MAKING= cd Libft && make -f Makefile
+MAKINGLIBFT= cd Libft && make -f Makefile
+
+MAKINGPRINTF= cd Printf && make -f Makefile
 
 
 all: $(NAME)
 
 $(NAME):
-	$(MAKING)
-	$(CC)   $(SRCS)  Libft/libft.a -o minishell
+	$(MAKINGLIBFT)
+	$(MAKINGPRINTF)
+	$(CC)   $(SRCS)  Libft/libft.a Printf/libftprintf.a -o minishell
 
 clean:
 	$(DELETEOBJ) $(DELETENAME)
 	cd Libft && make fclean -f Makefile
+	cd Printf && make fclean -f Makefile
 
 
 re: clean all
