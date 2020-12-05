@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 19:01:30 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/04 17:53:33 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/05 12:12:23 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ char	*without_that(char *str, char c)
 	s = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (s == NULL)
 		return (NULL);
-	printf("str == > %s\n", str);
 	i = 0;
 	j = 0;
 	while (str[i] != '\0')
@@ -48,7 +47,7 @@ int		how_mutch_argument(char *str, int i)
 	on = 0;
 	while (str[i] != '\0')
 	{
-		if (ft_isalpha(str[i]))
+		if (ft_isalpha(str[i]) || (str[i] == '.'))
 			on = 1;
 		i += 1;
 	}

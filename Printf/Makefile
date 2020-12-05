@@ -5,45 +5,37 @@
 #                                                     +:+ +:+         +:+      #
 #    By: molabhai <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/11/30 17:15:38 by molabhai          #+#    #+#              #
-#    Updated: 2020/12/05 13:34:56 by molabhai         ###   ########.fr        #
+#    Created: 2019/12/16 03:23:08 by molabhai          #+#    #+#              #
+#    Updated: 2020/12/05 12:05:51 by molabhai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
+NAME = libftprintf.a
 
-NAME= minishell
+CC = gcc
 
-CC= gcc
+FLAGS = -Wall -Wextra -Werror
 
-FLAGS= -Wall -Wextra -Werror
+SRCS = ft_printf.c print_conversion.c print_convert_two.c ft_printf_utils.c \
+	   flag_utils.c flags.c flag_helper.c flag_helper_two.c flag_helper_three.c \
+	   flag_helper_four.c ft_strlen.c ft_isdigit.c ft_memset.c ft_strlen.c \
+	   ft_atoi.c ft_bzero.c ft_calloc.c
 
-SRCS=  cd.c main.c cd_utility.c	pwd.c
 
 OBJ = $(SRCS:.c=.o)
 
-HEADERS= minishell.h
-
-DELETEOBJ= rm -rf *.o
-
-DELETENAME= rm -rf $(NAME)
-
-MAKINGLIBFT= cd Libft && make -f Makefile
-
-MAKINGPRINTF= cd Printf && make -f Makefile
-
-
-all: $(NAME)
-
-$(NAME):
-	$(MAKINGLIBFT)
-	$(MAKINGPRINTF)
-	$(CC)   $(SRCS)  Libft/libft.a Printf/libftprintf.a -o minishell
+all:
+	$(CC) $(FLAGS) -c $(SRCS)
+	ar rc $(NAME) $(OBJ)
+	ranlib $(NAME)
 
 clean:
-	$(DELETEOBJ) $(DELETENAME)
-	cd Libft && make fclean -f Makefile
-	cd Printf && make fclean -f Makefile
+	rm -rf $(OBJ)
 
+re : clean all
 
-re: clean all
+fclean : clean
+	rm -rf $(NAME)
+
+.PHONY: clean re all
