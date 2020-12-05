@@ -68,6 +68,7 @@ int		main(int ac, char **av, char **env)
 			 */ 
 			else
 				ft_printf("Command [%s] doesnt exist\n", splits[0]);
+			//how about here , what gonna happen if I merge !
 		}
 	}
 	return(0);
