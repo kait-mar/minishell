@@ -40,4 +40,8 @@ char	*ft_toStrLower(char *str);
 void	pwd_command(void);
 int		check_pwd(char *str);
 
+void	print(char **bult, char **env);
+int		find(char *str, char c);
+int	echo(char **argv, char **env);
+
 #endif
