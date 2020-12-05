@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd1.c                                              :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/03 17:53:16 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/03 17:55:28 by molabhai         ###   ########.fr       */
+/*   Created: 2019/10/09 11:38:52 by molabhai          #+#    #+#             */
+/*   Updated: 2019/10/21 14:50:32 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "minishell.h"
+#include "libft.h"
 
-
-
-int	main(int ac, char **av, char **env)
+int		ft_isalpha(int c)
 {
-	char *pwd;
-
-	pwd = NULL;
-	cd_command(av[1], pwd);
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
 	return (0);
 }
