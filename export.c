@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 16:19:20 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/07 10:55:06 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/07 13:39:45 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,54 @@ int		check_env(char *str)
 	else
 		on = 1;
 	return (on);
+}
+
+t_export		*check_export(char **splits)
+{
+	int i;
+	t_export	*export;
+	int			on;
+
+	on = 0;
+	ft_memset(export, 0, sizeof(t_export));
+	ft_printf("Check Export\n");
+	if (!(export = (t_export *) malloc(sizeof(t_export))))
+		return (NULL);
+	i = 1;
+	export->command = ft_strdup(splits[0]);
+	if (how_mutch_arguments(splits, i) == 1)
+	{
+		while (splits[i] != NULL)
+		{
+			splits[i] = ft_strtrim(splits[i], "\t");
+			if (check_exp_lex(splits[i]) == 1)
+			{
+				export->argument = ft_strdup(splits[i]);
+				export->flag = 1;
+			}
+			i += 1;
+		}
+	}
+	return (export);
+}
+
+void	export_command(char **env, char **splits)
+{	
+	t_export *export;
+	int		i;
+
+	i = 0;
+	ft_memset(export, 0, sizeof(t_export));
+	ft_printf("export Command\n");
+	export = check_export(splits);
+	if (export->flag == 1)
+	{
+		while (env[i] != NULL)
+			i += 1;
+		if (env[i] == NULL)
+			env[i] = ft_strdup(export->argument);
+		env[i + 1] = NULL;
+	}
 }
 
 void	env_command(char **env, char **splits)

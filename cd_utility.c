@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 19:01:30 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/07 10:44:48 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/07 11:55:58 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,24 @@ int		how_mutch_argument(char *str, int i)
 	if (on == 1)
 		return (1);
 	return (0);
+}
+
+int		how_mutch_arguments(char **str, int i)
+{
+	int on;
+	int	j;
+
+	on = 0;
+	while (str[i] != NULL)
+	{
+		j = 0;
+		while (str[i][j] != '\0')
+		{
+			if (ft_isalpha(str[i][j]) == 0)
+				on = 1;
+			j += 1;
+		}
+		i += 1;
+	}
+	return (on);
 }
