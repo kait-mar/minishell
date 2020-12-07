@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 16:19:20 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/07 13:39:45 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/07 14:38:06 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,9 @@ t_export		*check_export(char **splits)
 	int			on;
 
 	on = 0;
-	ft_memset(export, 0, sizeof(t_export));
-	ft_printf("Check Export\n");
 	if (!(export = (t_export *) malloc(sizeof(t_export))))
 		return (NULL);
+	memset(export, 0, sizeof(t_export));
 	i = 1;
 	export->command = ft_strdup(splits[0]);
 	if (how_mutch_arguments(splits, i) == 1)
@@ -112,8 +111,6 @@ void	export_command(char **env, char **splits)
 	int		i;
 
 	i = 0;
-	ft_memset(export, 0, sizeof(t_export));
-	ft_printf("export Command\n");
 	export = check_export(splits);
 	if (export->flag == 1)
 	{
@@ -123,6 +120,8 @@ void	export_command(char **env, char **splits)
 			env[i] = ft_strdup(export->argument);
 		env[i + 1] = NULL;
 	}
+	else
+		ft_printf("Error in export command\n");
 }
 
 void	env_command(char **env, char **splits)
