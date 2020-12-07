@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 16:19:20 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/05 18:25:52 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/07 10:55:06 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,26 @@ int		check_env(char *str)
 	return (on);
 }
 
-void	env_command(char **str)
+void	env_command(char **env, char **splits)
 {
 	int i;
+	int j;
 
 	i = 0;
-	while (str[i])
+	j = 0;
+	while (splits[j] != NULL)
 	{
-		ft_printf("%s\n", str[i]);
+		splits[j] = ft_strtrim(splits[j], "\t");
+		if (check_env(splits[j]) == 1)
+		{
+			ft_printf("Command [%s] doesnt exist\n", splits[j]);
+			return ;
+		}
+		j += 1;
+	}
+	while (env[i])
+	{
+		ft_printf("%s\n", env[i]);
 		i += 1;
 	}
 }
-

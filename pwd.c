@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 13:19:17 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/05 14:51:43 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/05 18:30:18 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		check_pwd(char *str)
 	char *s;
 	int on;
 
-
+	i = 0;
 	on = 0;
 	str = ft_toStrLower(str);
 	s = "pwd";

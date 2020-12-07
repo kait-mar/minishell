@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/05 14:53:01 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/07 10:55:08 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ int		check_wich_command(char *str)
 {
 	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[2]) == 0))
 		return (1);
-	if (check_pwd(str) == 0)
+	 if (check_pwd(str) == 0)
 		return (2);
+	if (check_env(str) == 0)
+		return (3);
 	/* Here CHECK your command is lexically correct*/
 	return (0);
 }
@@ -57,6 +59,8 @@ int		main(int ac, char **av, char **env)
 				cd_command(splits[1], i);
 			else if (check_wich_command(splits[0]) == 2)
 				pwd_command();
+			else if (check_wich_command(splits[0]) == 3)
+				env_command(env, splits);
 			/* Add ure main command Here
 			 * Example:
 			 * if (check_wich_command(*****))
