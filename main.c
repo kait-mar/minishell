@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/07 13:49:20 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/07 14:15:57 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		main(int ac, char **av, char **env)
 			 * Example:
 			 * if (check_wich_command(*****))
 			 * 		main_function
-			 */ 
+			 */
 			else
 				ft_printf("Command [%s] doesnt exist\n", splits[0]);
 		}
