@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 16:19:20 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/07 14:38:06 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/08 19:39:49 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,48 +80,81 @@ int		check_env(char *str)
 t_export		*check_export(char **splits)
 {
 	int i;
+	int	j;
 	t_export	*export;
 	int			on;
 
 	on = 0;
+	j = 0;
 	if (!(export = (t_export *) malloc(sizeof(t_export))))
 		return (NULL);
-	memset(export, 0, sizeof(t_export));
+	ft_memset(export, 0, sizeof(t_export));
 	i = 1;
 	export->command = ft_strdup(splits[0]);
+	if (!(export->argument = (char **) ft_calloc(sizeof(char *), arguments_in(splits, i) + 1)))
+		return (NULL);
 	if (how_mutch_arguments(splits, i) == 1)
 	{
 		while (splits[i] != NULL)
 		{
 			splits[i] = ft_strtrim(splits[i], "\t");
+			if (check_double_quote(splits[i]) == 1)
+				splits[i] = without_that(splits[i], '\"');
+			else if (check_quote(splits[i]) == 1)
+				splits[i] = without_that(splits[i], '\'');
 			if (check_exp_lex(splits[i]) == 1)
 			{
-				export->argument = ft_strdup(splits[i]);
+				export->argument[j] = ft_strdup(splits[i]);
+				j += 1;
 				export->flag = 1;
 			}
+			else
+				export->flag = 0;
 			i += 1;
 		}
 	}
 	return (export);
 }
 
-void	export_command(char **env, char **splits)
+void	export_command(char **env, char *str)
 {	
 	t_export *export;
 	int		i;
+	int		j;
+	int 	stop;
+	char	**splits;
 
 	i = 0;
+	j = 0;
+	stop = 0;
+	splits = take_only_carac(str);
 	export = check_export(splits);
 	if (export->flag == 1)
 	{
-		while (env[i] != NULL)
-			i += 1;
-		if (env[i] == NULL)
-			env[i] = ft_strdup(export->argument);
-		env[i + 1] = NULL;
+		while (export->argument[j] != NULL)
+		{
+			while (env[i] != NULL)
+			{
+				if (match(env[i], export->argument[j]) == 1)
+				{
+					env[i] = ft_strdup(export->argument[j]);
+					stop = 1;
+				}
+				i += 1;
+			}
+			if (env[i] == NULL &&  stop == 0)
+			{
+				env[i] = ft_strdup(export->argument[j]);
+				env[i + 1] = NULL;
+			}
+			j += 1;
+			i = 0;
+			stop = 0;
+		}
 	}
 	else
 		ft_printf("Error in export command\n");
+	free_export(export);
 }
 
 void	env_command(char **env, char **splits)

@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/07 14:35:33 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/08 20:05:08 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,19 @@ int		main(int ac, char **av, char **env)
 	pid_t  pid1;
 	int		status;
 	char	*pwd;
+	char s[100];
 	int i;
 
 	str = NULL;
 	pwd = NULL;
 	cd = malloc(sizeof(t_command_cd));
+
 	if (cd == NULL)
 		return (-1);
 	while (1)
 	{
+		getcwd(s, 100);
+		ft_printf("%s ", s);
 		str = reading_input(str);
 		str = ft_strtrim(str, "\t");
 		splits = split_to_tokens(str);
@@ -64,7 +68,7 @@ int		main(int ac, char **av, char **env)
 			else if (check_wich_command(splits[0]) == 3)
 				env_command(env, splits);
 			else if (check_wich_command(splits[0]) == 4)
-				export_command(env, splits);
+				export_command(env, str);
 			/* Add ure main command Here
 			 * Example:
 			 * if (check_wich_command(*****))
