@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 16:19:20 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/08 19:39:49 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/09 14:42:14 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ void	export_command(char **env, char *str)
 	}
 	else
 		ft_printf("Error in export command\n");
+	free_splits(splits);
 	free_export(export);
 }
 

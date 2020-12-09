@@ -6,7 +6,7 @@
 /*   By: molabhai <molabhai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/08 18:38:05 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/09 14:22:39 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ void	free_export(t_export *export);
 char	**take_only_carac(char *str);
 int		check_quote(char *str);
 int		check_double_quote(char *str);
+void	free_splits(char **splits);
 
 #endif

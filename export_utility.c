@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 11:56:12 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/08 20:00:05 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/09 14:42:27 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,23 @@ int		match(char *str, char  *export)
 	return (0);
 }
 
-
 int		check_single_double_quote(char c)
 {
+	if (c == '\"' || c == '\'')
+		return (1);
+	return (0);
+}
+
+static int		check_single_quotes(char c)
+{
 	if (c == '\'')
+		return (1);
+	return (0);
+}
+
+static int		check_double_quotes(char c)
+{
+	if (c == '\"')
 		return (1);
 	return (0);
 }
@@ -104,8 +117,7 @@ char	**take_only_carac(char *str)
 	int k;
 
 	i = 0;
-	ft_printf ("==> %c\n", str[j]);
-	if (!(splits = (char **) ft_calloc(sizeof(char *) , 10)))
+	if (!(splits = (char **) ft_calloc(sizeof(char *) , 100)))
 		return (NULL);
 	k = 0;
 	while (str[i] != '\0')
@@ -113,27 +125,45 @@ char	**take_only_carac(char *str)
 		if (ft_isalpha(str[i]))
 		{
 			j = i;
-			ft_printf("Here1\n");
-			while (ft_isalpha(str[j]) && (check_single_double_quote(str[j]) == 0))
+			while (((ft_isalpha(str[j]) == 1 ) || str[j] == '=') &&
+					(check_single_double_quote(str[j]) == 0))
 				j += 1;
-			splits[k] = from_to(str, i, j);
-			k += 1;
+			splits[k++] = from_to(str, i, j);
 			i = j;
 		}
-		if (check_single_double_quote(str[j]) == 1)
+		
+		if (check_double_quotes(str[i]))
 		{
-			ft_printf("Here2\n");
 			j = i + 1;
-			while (str[j] != '\"')
+			while (check_double_quotes(str[j]) == 0)
 				j += 1;
-			splits[k] = from_to(str, i, j + 1);
-			k += 1;
-			i = j + 1;
-		}	
+			splits[k++] = from_to(str, i, j + 1);
+		   i = j;	
+		}
+		if (check_single_quotes(str[i]))
+		{
+			j = i + 1;
+			while (check_single_quotes(str[j]) == 0)
+				j += 1;
+			splits[k++] = from_to(str, i, j + 1);
+		   i = j;	
+		}
 		i += 1;
 	}
-	splits[k] = NULL;
 	return (splits);
+}
+
+void	free_splits(char **splits)
+{
+	int i;
+
+	i = 0;
+	while (splits[i] != NULL)
+	{
+		free(splits[i]);
+		i += 1;
+	}
+	free(splits);
 }
 
 
