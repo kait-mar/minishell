@@ -51,5 +51,14 @@ void	env_command(char **str, char **splits);
 void	export_command(char **env, char **splits);
 int		how_mutch_arguments(char **splits, int i);
 int		check_exp_lex(char *str);
+void	ft_putstr(char *s);
+void	print(char **bult, char **env);
+int		find(char *str, char c);
+void	quote_dquote(char *line);
+int		echo(char *argv, char **env);
+int		ft_strcmp(const char *s1, const char *s2);
+char	*skip_first_word(char **str);
+char	**keep_split(char *s, char c);
+void	print_env(char *bult, char **env, int which_quote);
 
 #endif

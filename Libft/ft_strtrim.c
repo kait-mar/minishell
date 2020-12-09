@@ -12,101 +12,66 @@
 
 #include "libft.h"
 
-static int		nobody(char const *s, char const *set, int i, int j)
+static int	fct(char s, char *str)
 {
-	int k;
+	int	i;
 
-	k = 0;
-	while (set[i] != '\0')
+	i = 0;
+	while (str[i] != '\0')
 	{
-		if (set[i] == s[j])
-			k = 1;
+		if (str[i] == s)
+			return (1);
 		i++;
 	}
-	return (k);
+	return (0);
 }
 
-static	int		check_backward(char const *s, char const *set, int i)
+static char	*other_return(char const *s1, char const *set)
 {
-	int		check;
-	int		j;
-	int		m;
+	if (s1 == NULL)
+		return (NULL);
+	else if (set == NULL)
+		return ((char *)s1);
+	else
+		return ((char *)set);
+}
 
-	j = 0;
-	check = 0;
-	while (i >= 0)
+static char	*return_vr(int end, int start)
+{
+	char	*vr;
+
+	if (end < start)
 	{
-		check = 0;
-		m = nobody(s, set, 0, i);
-		if (m == 0)
-			return (j);
-		while (set[check] != '\0')
-		{
-			if (set[check] == s[i])
-			{
-				j++;
-				break ;
-			}
-			check++;
-		}
-		i--;
+		vr = malloc(1);
+		if (vr == 0)
+			return (0);
+		vr[0] = '\0';
+		return (vr);
 	}
-	return (j);
+	else
+		return (NULL);
 }
 
-static int		check_forward(char const *s, char const *set, int i)
+char		*ft_strtrim(char const *s1, char const *set)
 {
-	int		check;
-	int		j;
-	int		k;
-
-	check = 0;
-	j = 0;
-	while (s[i] != '\0')
-	{
-		check = 0;
-		k = nobody(s, set, 0, i);
-		if (k == 0)
-			return (j);
-		while (set[check] != '\0')
-		{
-			if (set[check] == s[i])
-			{
-				j++;
-				break ;
-			}
-			check++;
-		}
-		i++;
-	}
-	return (j);
-}
-
-char			*ft_strtrim(char const *s, char const *set)
-{
+	int		start;
+	int		end;
 	char	*str;
-	int		j;
-	int		k;
-	int		l;
-	int		sign;
 
-	sign = 1;
-	if (s == NULL)
+	if (s1 == NULL || set == NULL)
+		return (other_return(s1, set));
+	start = 0;
+	end = ft_strlen(s1) - 1;
+	while (fct(s1[start], (char *)set) != 0)
+		start++;
+	while (fct(s1[end], (char *)set) != 0 && end > 0)
+		end--;
+	if (end < start)
+		return (return_vr(end, start));
+	str = (char *)malloc(end - start + 2);
+	if (str == NULL)
 		return (NULL);
-	k = check_forward(s, set, 0);
-	j = check_backward(s, set, ft_strlen(s) - 1);
-	if (k == 0 && j == 0)
-		return (ft_strdup(s));
-	if (k == j)
-		return (str = ft_substr(s, 0, 0));
-	if (k > ((int)ft_strlen(s) - j))
-		sign = -1;
-	l = (ft_strlen(s) - j) * sign - k;
-	if (!(str = (char *)malloc(sizeof(char) * (l + 1))))
-		return (NULL);
-	j = 0;
-	while (j < l)
-		str[j++] = s[k++];
-	str[j] = '\0';
+	ft_memcpy(str, s1 + start, end - start + 1);
+	str[end - start + 1] = '\0';
 	return (str);
 }

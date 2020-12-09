@@ -24,10 +24,13 @@ int		check_wich_command(char *str)
 		return (3);
 	if (ft_strncmp(str, "export", 6) == 0 && (ft_isalpha(str[6]) == 0))
 		return (4);
+	if (ft_strcmp(str, "echo") == 0)
+		return (5);
 	/* Here CHECK your command is lexically correct*/
 	return (0);
 }
 
+//int		main()
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -38,6 +41,10 @@ int		main(int ac, char **av, char **env)
 	char	*pwd;
 	int i;
 
+
+	//char **av;
+	//char **env;
+
 	str = NULL;
 	pwd = NULL;
 	cd = malloc(sizeof(t_command_cd));
@@ -46,6 +53,7 @@ int		main(int ac, char **av, char **env)
 	while (1)
 	{
 		str = reading_input(str);
+		//str = "echo ' hello   world' ";
 		str = ft_strtrim(str, "\t");
 		splits = split_to_tokens(str);
 		i = how_mutch_argument(str, 0);
@@ -65,11 +73,11 @@ int		main(int ac, char **av, char **env)
 				env_command(env, splits);
 			else if (check_wich_command(splits[0]) == 4)
 				export_command(env, splits);
-			/* Add ure main command Here
-			 * Example:
-			 * if (check_wich_command(*****))
-			 * 		main_function
-			 */ 
+			else if (check_wich_command(splits[0]) == 5)
+			{
+				//check the case of ech"o"
+				echo(str, env);
+			}	
 			else
 				ft_printf("Command [%s] doesnt exist\n", splits[0]);
 		}
