@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-
-
 int		check_wich_command(char *str)
 {
 	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[2]) == 0))
@@ -65,11 +63,6 @@ int		main(int ac, char **av, char **env)
 				env_command(env, splits);
 			else if (check_wich_command(splits[0]) == 4)
 				export_command(env, splits);
-			/* Add ure main command Here
-			 * Example:
-			 * if (check_wich_command(*****))
-			 * 		main_function
-			 */ 
 			else
 				ft_printf("Command [%s] doesnt exist\n", splits[0]);
 		}
