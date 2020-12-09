@@ -14,12 +14,12 @@
 
 NAME= minishell
 
-CC= gcc
+CC= gcc -g
 
 FLAGS= -Wall -Wextra -Werror
 
 SRCS=  cd.c main.c cd_utility.c	pwd.c export.c \
-	   export_utility.c
+	   export_utility.c echo.c echo_utility.c keep_split.c
 
 OBJ = $(SRCS:.c=.o)
 
@@ -39,7 +39,7 @@ all: $(NAME)
 $(NAME):
 	$(MAKINGLIBFT)
 	$(MAKINGPRINTF)
-	$(CC)   $(SRCS)  Libft/libft.a Printf/libftprintf.a -o minishell
+	$(CC)   $(SRCS)  Libft/libft.a Printf/libftprintf.a -o minishell 
 
 clean:
 	$(DELETEOBJ) $(DELETENAME)

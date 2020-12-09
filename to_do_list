@@ -1,0 +1,2 @@
+parse the dquote case "" && quote ''
+add the free() for libft functions {ft_strtrim - ft_split}
