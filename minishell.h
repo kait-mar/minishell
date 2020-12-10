@@ -6,7 +6,7 @@
 /*   By: molabhai <molabhai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/07 14:24:30 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/10 14:38:28 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ typedef struct s_command_cd
 typedef struct s_export
 {
 	char 	*command;
-	char	*argument;
+	char	**argument;
+	char	**env;
 	int 	flag;
 }				t_export;
 
@@ -48,8 +49,17 @@ void	pwd_command(void);
 int		check_pwd(char *str);
 int		check_env(char *str);
 void	env_command(char **str, char **splits);
-void	export_command(char **env, char **splits);
+void	export_command(char **env, char *splits);
 int		how_mutch_arguments(char **splits, int i);
 int		check_exp_lex(char *str);
+int		match(char *str, char  *export);
+int		arguments_in(char **splits, int i);
+void	free_export(t_export *export);
+char	**take_only_carac(char *str);
+int		check_quote(char *str);
+int		check_double_quote(char *str);
+void	free_splits(char **splits);
+char	*front_append(char *string, char *to_append);
+t_export	*check_export(char **splits, char **env);
 
 #endif

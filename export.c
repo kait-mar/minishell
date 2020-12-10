@@ -6,7 +6,11 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 16:19:20 by molabhai          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2020/12/07 14:38:06 by molabhai         ###   ########.fr       */
+=======
+/*   Updated: 2020/12/10 14:04:43 by molabhai         ###   ########.fr       */
+>>>>>>> export
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,51 +81,118 @@ int		check_env(char *str)
 	return (on);
 }
 
-t_export		*check_export(char **splits)
+t_export		*check_export(char **splits, char **env)
 {
 	int i;
+	int	j;
 	t_export	*export;
 	int			on;
 
 	on = 0;
+<<<<<<< HEAD
 	if (!(export = (t_export *) malloc(sizeof(t_export))))
 		return (NULL);
 	memset(export, 0, sizeof(t_export));
+=======
+	j = 0;
+	if (!(export = (t_export *) malloc(sizeof(t_export))))
+		return (NULL);
+	ft_memset(export, 0, sizeof(t_export));
+>>>>>>> export
 	i = 1;
 	export->command = ft_strdup(splits[0]);
+	if (!(export->argument = (char **) ft_calloc(sizeof(char *), arguments_in(splits, i) + 1)))
+		return (NULL);
 	if (how_mutch_arguments(splits, i) == 1)
 	{
 		while (splits[i] != NULL)
 		{
 			splits[i] = ft_strtrim(splits[i], "\t");
+			if (check_double_quote(splits[i]) == 1)
+				splits[i] = without_that(splits[i], '\"');
+			else if (check_quote(splits[i]) == 1)
+				splits[i] = without_that(splits[i], '\'');
 			if (check_exp_lex(splits[i]) == 1)
 			{
-				export->argument = ft_strdup(splits[i]);
+				export->argument[j] = ft_strdup(splits[i]);
+				j += 1;
 				export->flag = 1;
 			}
+			else
+				export->flag = 0;
 			i += 1;
 		}
+	}
+	else
+	{
+		i = 0;
+		if (!(export->env = (char **) ft_calloc(sizeof(char *),(arguments_in(env, i) + 1))))
+			return (NULL);
+		while (env[i])
+		{
+			export->env[i] = front_append(env[i], "declare -x ");
+			i += 1;
+		}
+		export->flag = 2;
 	}
 	return (export);
 }
 
-void	export_command(char **env, char **splits)
+void	export_command(char **env, char *str)
 {	
 	t_export *export;
 	int		i;
+	int		j;
+	int 	stop;
+	char	**splits;
 
 	i = 0;
+<<<<<<< HEAD
 	export = check_export(splits);
+=======
+	j = 0;
+	stop = 0;
+	splits = take_only_carac(str);
+	export = check_export(splits, env);
+>>>>>>> export
 	if (export->flag == 1)
 	{
-		while (env[i] != NULL)
+		while (export->argument[j] != NULL)
+		{
+			while (env[i] != NULL)
+			{
+				if (match(env[i], export->argument[j]) == 1)
+				{
+					env[i] = ft_strdup(export->argument[j]);
+					stop = 1;
+				}
+				i += 1;
+			}
+			if (env[i] == NULL &&  stop == 0)
+			{
+				env[i] = ft_strdup(export->argument[j]);
+				env[i + 1] = NULL;
+			}
+			j += 1;
+			i = 0;
+			stop = 0;
+		}
+	}
+	else if (export->flag == 2)
+	{
+		while (export->env[i])
+		{		
+			ft_printf("%s\n", export->env[i]);
 			i += 1;
-		if (env[i] == NULL)
-			env[i] = ft_strdup(export->argument);
-		env[i + 1] = NULL;
+		}
 	}
 	else
 		ft_printf("Error in export command\n");
+<<<<<<< HEAD
+=======
+	free_splits(splits);
+	free_export(export);
+>>>>>>> export
 }
 
 void	env_command(char **env, char **splits)

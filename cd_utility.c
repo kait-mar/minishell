@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 19:01:30 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/07 11:55:58 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/10 13:51:26 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,32 @@ int		how_mutch_arguments(char **str, int i)
 		i += 1;
 	}
 	return (on);
+}
+
+int		arguments_in(char **splits, int i)
+{
+	int j;
+
+	j = 0;
+	while (splits[i] != NULL)
+	{
+		j += 1;
+		i += 1;
+	}	
+	return (j);
+}
+
+void	free_export(t_export *export)
+{
+	int i;
+
+	i = 0;
+	while (export->argument[i])
+	{
+		free(export->argument[i]);
+		i +=  1;
+	}
+	free(export->argument);
+	free(export->command);
+	free(export);
 }
