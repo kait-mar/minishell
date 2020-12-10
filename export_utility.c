@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 11:56:12 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/09 14:42:27 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/10 14:01:42 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,12 @@ char	**take_only_carac(char *str)
 		if (ft_isalpha(str[i]))
 		{
 			j = i;
-			while (((ft_isalpha(str[j]) == 1 ) || str[j] == '=') &&
+			while (((ft_isalpha(str[j]) == 1 ) || str[j] == '=' || ft_isdigit(str[j])) &&
 					(check_single_double_quote(str[j]) == 0))
 				j += 1;
 			splits[k++] = from_to(str, i, j);
 			i = j;
 		}
-		
 		if (check_double_quotes(str[i]))
 		{
 			j = i + 1;
@@ -165,7 +164,3 @@ void	free_splits(char **splits)
 	}
 	free(splits);
 }
-
-
-
-

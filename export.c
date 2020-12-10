@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 16:19:20 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/09 14:42:14 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/10 14:04:43 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		check_env(char *str)
 	return (on);
 }
 
-t_export		*check_export(char **splits)
+t_export		*check_export(char **splits, char **env)
 {
 	int i;
 	int	j;
@@ -113,6 +113,18 @@ t_export		*check_export(char **splits)
 			i += 1;
 		}
 	}
+	else
+	{
+		i = 0;
+		if (!(export->env = (char **) ft_calloc(sizeof(char *),(arguments_in(env, i) + 1))))
+			return (NULL);
+		while (env[i])
+		{
+			export->env[i] = front_append(env[i], "declare -x ");
+			i += 1;
+		}
+		export->flag = 2;
+	}
 	return (export);
 }
 
@@ -128,7 +140,7 @@ void	export_command(char **env, char *str)
 	j = 0;
 	stop = 0;
 	splits = take_only_carac(str);
-	export = check_export(splits);
+	export = check_export(splits, env);
 	if (export->flag == 1)
 	{
 		while (export->argument[j] != NULL)
@@ -150,6 +162,14 @@ void	export_command(char **env, char *str)
 			j += 1;
 			i = 0;
 			stop = 0;
+		}
+	}
+	else if (export->flag == 2)
+	{
+		while (export->env[i])
+		{		
+			ft_printf("%s\n", export->env[i]);
+			i += 1;
 		}
 	}
 	else
