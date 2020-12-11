@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 13:23:59 by molabhai          #+#    #+#             */
-/*   Updated: 2019/10/21 17:00:48 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/11 12:48:58 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ char			*ft_strtrim(char const *s, char const *set)
 	j = check_backward(s, set, ft_strlen(s) - 1);
 	if (k == 0 && j == 0)
 		return (ft_strdup(s));
-	if (k == j)
-		return (str = ft_substr(s, 0, 0));
 	if (k > ((int)ft_strlen(s) - j))
 		sign = -1;
 	l = (ft_strlen(s) - j) * sign - k;
+	if (k == j)
+		return (str = ft_substr(s, k, (ft_strlen(s) - j - k)));
 	if (!(str = (char *)malloc(sizeof(char) * (l + 1))))
 		return (NULL);
 	j = 0;
