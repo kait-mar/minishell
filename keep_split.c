@@ -11,19 +11,19 @@ static int  coun(char *s, char c, char b)
     while (s[i] != '\0')
     {
         k = 0;
-        while (s[i] != c && s[i] != '\0')
+        while (s[i] != c && s[i] != b && s[i] != '\0')
         {
             k++;
             i++;
         }
         if (k != 0)
             count++;
-        else if (s[i] == c && s[i] != '\0')
+        else if ((s[i] == c || s[i] == b) && s[i] != '\0')
         {
             i++;
-            while (s[i] != c && s[i] != '\0')
+            while (s[i] != c && s[i] != b && s[i] != '\0')
                 i++;
-            if (s[i] == c)
+            if (s[i] == c || s[i] == b)
                 i++;
             count++;
         }
@@ -51,13 +51,13 @@ char	**keep_split(char *s, char c, char b)
 		return (NULL);
 	i = 0;
 	j = 0;
-    int count = coun(s, c);
+    int count = coun(s, c, b);
 	if (!(tab = (char **)malloc(sizeof(*tab) * (count + 1))))
 		return (NULL);
 	while (s[i] != '\0' && j < count)
 	{
 		k = 0;
-		while (s[i] != c && s[i] != '\0')
+		while (s[i] != c && s[i] != b && s[i] != '\0')
 		{
 			i++;
 			k++;
@@ -68,22 +68,22 @@ char	**keep_split(char *s, char c, char b)
 				return (ft_tofree(tab, j));
 			i -= k;
 			k = 0;
-			while (s[i] != c && s[i] != '\0')
+			while (s[i] != c && s[i] != b && s[i] != '\0')
 			{
 				tab[j][k++] = s[i++];
 			}
 			tab[j][k] = '\0';
 		}
-        else if (s[i] == c)
+        else if (s[i] == c || s[i] == b)
 		{
 			i++;
 			k++;
-			while (s[i] != c && s[i] != '\0')
+			while (s[i] != c && s[i] != b && s[i] != '\0')
 			{
 				i++;
 				k++;
 			}
-			if (s[i] == c)
+			if (s[i] == c || s[i] == b)
 			{
 				i++;
 				k++;

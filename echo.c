@@ -18,6 +18,7 @@ void	print(char **bult, char **env)
 	char	**tab;
 	int		i;
 
+	//add a split here
 	if (**bult == '$')
 	{
 		j = 0;
@@ -108,7 +109,7 @@ int	echo(char *argv, char **env)
 	argv = ft_strtrim(argv, "\t");
 	if (find(argv, '<') == 0 && find(argv, '>') == 0)
 	{
-		bult = keep_split(argv, 39);
+		bult = keep_split(argv, 39, 34);
 		if (ft_strcmp(*bult, "-n") == 0)
 		{
 			bult++;
@@ -143,7 +144,8 @@ int	echo(char *argv, char **env)
 					ft_putstr(*bult);
 				else
 				{
-					print_env(*bult, env, which_quote);
+					if (print_env(*bult, env, which_quote) == 1)
+						write(1, " ", 1);
 				}
 			}
 			bult++;
@@ -181,6 +183,28 @@ int	ft_strcmp(const char *s1, const char *s2)
 		i++;
 	if (s1[i] != s2[i])
 		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	else
+		return (0);
+}
+
+int	echo_strcmp(const char *s1, const char *s2)
+{
+	if (s1 == 0 || s2 == 0)
+		return (0);
+	while (*s1 != '\0' && *s2 != '\0')
+	{
+		while ((*s1 == '\'' || *s1 == '\"') && *s1 != '\0')
+			s1++;
+		if (*s1 != '\0' && *s2 != '\0' && *s1 == *s2)
+		{
+			s1++;
+			s2++;
+		}
+		else
+			break ;
+	}
+	if (*s1 != *s2)
+		return ((unsigned char)*s1 - (unsigned char)*s2);
 	else
 		return (0);
 }

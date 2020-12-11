@@ -39,7 +39,7 @@ typedef struct s_export
 
 void	cd_command(char *argument, int i);
 char	**taking_command(char *str);
-char 	**split_to_tokens(char *str);
+char	**split_to_tokens(char *str);
 char	*reading_input(char *str);
 char	*without_that(char *str, char c);
 int		how_mutch_argument(char *str, int i);
@@ -57,8 +57,8 @@ int		find(char *str, char c);
 void	quote_dquote(char *line);
 int		echo(char *argv, char **env);
 int		ft_strcmp(const char *s1, const char *s2);
-char	*skip_first_word(char **str);
-char	**keep_split(char *s, char c);
-void	print_env(char *bult, char **env, int which_quote);
+char	**keep_split(char *s, char c, char b);
+int		print_env(char *bult, char **env, int which_quote);
+int		echo_strcmp(const char *s1, const char *s2);
 
 #endif

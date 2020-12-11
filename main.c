@@ -22,14 +22,14 @@ int		check_wich_command(char *str)
 		return (3);
 	if (ft_strncmp(str, "export", 6) == 0 && (ft_isalpha(str[6]) == 0))
 		return (4);
-	if (ft_strcmp(str, "echo") == 0)
+	if (echo_strcmp(str, "echo") == 0)
 		return (5);
 	/* Here CHECK your command is lexically correct*/
 	return (0);
 }
 
-//int		main()
-int		main(int ac, char **av, char **env)
+int		main()
+//int		main(int ac, char **av, char **env)
 {
 	char *str;
 	t_command_cd *cd;
@@ -40,9 +40,11 @@ int		main(int ac, char **av, char **env)
 	int i;
 
 
-	//char **av;
-	//char **env;
-
+	char **av;
+	char **env;
+	env = malloc(2*sizeof(char *));
+	*env = "PATH=user/bin";
+	env[1] = NULL;
 	str = NULL;
 	pwd = NULL;
 	cd = malloc(sizeof(t_command_cd));
@@ -50,8 +52,8 @@ int		main(int ac, char **av, char **env)
 		return (-1);
 	while (1)
 	{
-		str = reading_input(str);
-		//str = "echo ' hello   world' ";
+		//str = reading_input(str);
+		str = "echo $path hello ";
 		str = ft_strtrim(str, "\t");
 		splits = split_to_tokens(str);
 		i = how_mutch_argument(str, 0);
