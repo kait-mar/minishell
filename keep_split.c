@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static int  coun(char *s, char c)
+static int  coun(char *s, char c, char b)
 {
     int        i;
     int        count;
@@ -39,7 +39,7 @@ static char		**ft_tofree(char *tab[], int j)
 	return (NULL);
 }
 
-char	**keep_split(char *s, char c)
+char	**keep_split(char *s, char c, char b)
 {
 	int			i;
 	int			j;

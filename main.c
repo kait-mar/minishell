@@ -71,14 +71,11 @@ int		main(int ac, char **av, char **env)
 				env_command(env, splits);
 			else if (check_wich_command(splits[0]) == 4)
 				export_command(env, splits);
-<<<<<<< HEAD
-=======
 			else if (check_wich_command(splits[0]) == 5)
 			{
 				//check the case of ech"o"
 				echo(str, env);
-			}	
->>>>>>> backup
+			}
 			else
 				ft_printf("Command [%s] doesnt exist\n", splits[0]);
 		}
