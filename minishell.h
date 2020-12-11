@@ -6,7 +6,7 @@
 /*   By: molabhai <molabhai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/09 18:24:34 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/11 14:32:05 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ typedef struct s_export
 	int 	flag;
 }				t_export;
 
+typedef struct s_unset
+{
+	char	**argument;
+}				t_unset;
+
 void	cd_command(char *argument, int i);
 char	**taking_command(char *str);
 char 	**split_to_tokens(char *str);
@@ -61,5 +66,7 @@ int		check_double_quote(char *str);
 void	free_splits(char **splits);
 char	*front_append(char *string, char *to_append);
 t_export	*check_export(char **splits, char **env);
+int		check_unset(char *str);
+void	unset_command(char **env, char *str);
 
 #endif
