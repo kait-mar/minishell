@@ -6,11 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 16:19:20 by molabhai          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2020/12/07 14:38:06 by molabhai         ###   ########.fr       */
-=======
-/*   Updated: 2020/12/10 14:04:43 by molabhai         ###   ########.fr       */
->>>>>>> export
+/*   Updated: 2020/12/12 18:19:10 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +85,10 @@ t_export		*check_export(char **splits, char **env)
 	int			on;
 
 	on = 0;
-<<<<<<< HEAD
-	if (!(export = (t_export *) malloc(sizeof(t_export))))
-		return (NULL);
-	memset(export, 0, sizeof(t_export));
-=======
 	j = 0;
 	if (!(export = (t_export *) malloc(sizeof(t_export))))
 		return (NULL);
 	ft_memset(export, 0, sizeof(t_export));
->>>>>>> export
 	i = 1;
 	export->command = ft_strdup(splits[0]);
 	if (!(export->argument = (char **) ft_calloc(sizeof(char *), arguments_in(splits, i) + 1)))
@@ -147,14 +137,10 @@ void	export_command(char **env, char *str)
 	char	**splits;
 
 	i = 0;
-<<<<<<< HEAD
-	export = check_export(splits);
-=======
 	j = 0;
 	stop = 0;
 	splits = take_only_carac(str);
 	export = check_export(splits, env);
->>>>>>> export
 	if (export->flag == 1)
 	{
 		while (export->argument[j] != NULL)
@@ -188,11 +174,8 @@ void	export_command(char **env, char *str)
 	}
 	else
 		ft_printf("Error in export command\n");
-<<<<<<< HEAD
-=======
 	free_splits(splits);
 	free_export(export);
->>>>>>> export
 }
 
 void	env_command(char **env, char **splits)

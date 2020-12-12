@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 11:56:12 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/10 14:01:42 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/11 14:12:40 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,8 @@ char	**take_only_carac(char *str)
 			splits[k++] = from_to(str, i, j + 1);
 		   i = j;	
 		}
-		i += 1;
+		if (str[i] != '\0')
+			i += 1;
 	}
 	return (splits);
 }

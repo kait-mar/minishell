@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/12 16:59:01 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/12 18:16:35 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int		check_wich_command(char *str)
 		return (3);
 	if (ft_strncmp(str, "export", 6) == 0 && (ft_isalpha(str[6]) == 0))
 		return (4);
+	if (check_unset(str) == 0)
+		return (5);
 	/* Here CHECK your command is lexically correct*/
 	return (0);
 }
@@ -69,6 +71,8 @@ int		main(int ac, char **av, char **env)
 				env_command(env, splits);
 			else if (check_wich_command(splits[0]) == 4)
 				export_command(env, str);
+			else if (check_wich_command(splits[0]) == 5)
+				unset_command(env, str);
 			/* Add ure main command Here
 			 * Example:
 			 * if (check_wich_command(*****))

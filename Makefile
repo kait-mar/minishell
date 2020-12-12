@@ -6,7 +6,7 @@
 #    By: molabhai <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 17:15:38 by molabhai          #+#    #+#              #
-#    Updated: 2020/12/09 18:09:21 by molabhai         ###   ########.fr        #
+#    Updated: 2020/12/11 14:01:07 by molabhai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ CC= gcc
 FLAGS= -Wall -Wextra -Werror
 
 SRCS=  cd.c cd_utility.c pwd.c export.c \
-	   export_utility.c export_utility_two.c main.c
+	   export_utility.c export_utility_two.c \
+	   unset.c main.c
 
 OBJ = $(SRCS:.c=.o)
 
