@@ -52,7 +52,7 @@ void	export_command(char **env, char **splits);
 int		how_mutch_arguments(char **splits, int i);
 int		check_exp_lex(char *str);
 void	ft_putstr(char *s);
-void	print(char **bult, char **env);
+int		print(char **bult, char **env);
 int		find(char *str, char c);
 void	quote_dquote(char *line);
 int		echo(char *argv, char **env);

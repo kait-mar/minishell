@@ -53,7 +53,7 @@ int		main()
 	while (1)
 	{
 		//str = reading_input(str);
-		str = "echo $path hello ";
+		str = "echo $PATH'       hello' ";
 		str = ft_strtrim(str, "\t");
 		splits = split_to_tokens(str);
 		i = how_mutch_argument(str, 0);

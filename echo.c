@@ -12,13 +12,14 @@ void	ft_putstr(char *s)
 	}
 }
 
-void	print(char **bult, char **env)
+int		print(char **bult, char **env)
 {
 	int		j;
 	char	**tab;
 	int		i;
 
 	//add a split here
+	i = 0;
 	if (**bult == '$')
 	{
 		j = 0;
@@ -29,7 +30,7 @@ void	print(char **bult, char **env)
 			if (ft_strcmp(tab[0], (*bult) + 1) == 0)
 			{
 				ft_putstr(tab[1]);
-				//i = 1;
+				i = 1;
 				break ;
 			}
 			j++;
@@ -40,7 +41,11 @@ void	print(char **bult, char **env)
 		//	ft_putstr(*bult);
 	}
 	else
+	{
 		ft_putstr(*bult);
+		i = 1;
+	}
+	return (i);
 }
 
 int		find(char *str, char c)
@@ -102,6 +107,7 @@ int	echo(char *argv, char **env)
 	char	**bult;
 	int		i;
 	int		which_quote;
+	char	**split;
 
 	i = 0;
 	argv = skip_first_word(&argv);
@@ -119,13 +125,14 @@ int	echo(char *argv, char **env)
 		{
 			if (find(*bult, 39) == 0 && find(*bult, 34) == 0)
 			{
-				while (*(bult + 1) != NULL)
+				split = ft_split(*bult, ' ');
+				while (*(split + 1) != NULL)
 				{
-					print(bult, env);
-					write(1, " ", 1);
-					bult++;
+					if (print(split, env) == 1)
+						write(1, " ", 1);
+					split++;
 				}
-				print(bult, env);
+				print(split, env);
 			}
 			else if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
 			{
