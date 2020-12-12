@@ -39,7 +39,6 @@ int		main()
 	char	*pwd;
 	int i;
 
-
 	char **av;
 	char **env;
 	env = malloc(2*sizeof(char *));
@@ -53,7 +52,7 @@ int		main()
 	while (1)
 	{
 		//str = reading_input(str);
-		str = "echo $PATH'       hello' ";
+		str = "echo        hello $ ";
 		str = ft_strtrim(str, "\t");
 		splits = split_to_tokens(str);
 		i = how_mutch_argument(str, 0);
@@ -76,6 +75,7 @@ int		main()
 			else if (check_wich_command(splits[0]) == 5)
 			{
 				//check the case of ech"o"
+				//case of PATH and path
 				echo(str, env);
 			}
 			else

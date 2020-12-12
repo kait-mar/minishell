@@ -1,2 +1,15 @@
 parse the dquote case "" && quote ''
 add the free() for libft functions {ft_strtrim - ft_split}
+
+
+
+echo '  hello $ path'
+  hello $ path
+echo " hello path $"
+ hello path 
+ echo hello $
+hello 
+ echo hello '$'   
+hello$
+echo hello 'yes'
+helloyes

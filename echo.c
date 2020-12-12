@@ -20,6 +20,12 @@ int		print(char **bult, char **env)
 
 	//add a split here
 	i = 0;
+	char b = *(*bult + 1);
+	if (**bult == '$' && ft_isalnum(*(*bult + 1) == 0))
+	{
+		ft_putchar(**bult);
+		return (1);
+	}
 	if (**bult == '$')
 	{
 		j = 0;
