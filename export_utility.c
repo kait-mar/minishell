@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 11:56:12 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/11 14:12:40 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/12 18:53:06 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,14 @@ int		check_single_double_quote(char c)
 	return (0);
 }
 
-static int		check_single_quotes(char c)
+int		check_single_quotes(char c)
 {
 	if (c == '\'')
 		return (1);
 	return (0);
 }
 
-static int		check_double_quotes(char c)
+int		check_double_quotes(char c)
 {
 	if (c == '\"')
 		return (1);
@@ -117,15 +117,15 @@ char	**take_only_carac(char *str)
 	int k;
 
 	i = 0;
-	if (!(splits = (char **) ft_calloc(sizeof(char *) , 100)))
+	if (!(splits = (char **) ft_calloc(sizeof(char *) , kait_count(str) + 1)))
 		return (NULL);
 	k = 0;
 	while (str[i] != '\0')
 	{
-		if (ft_isalpha(str[i]))
+		if (ft_isalnum(str[i]))
 		{
 			j = i;
-			while (((ft_isalpha(str[j]) == 1 ) || str[j] == '=' || ft_isdigit(str[j])) &&
+			while (((ft_isalnum(str[j]) == 1 ) || str[j] == '=') &&
 					(check_single_double_quote(str[j]) == 0))
 				j += 1;
 			splits[k++] = from_to(str, i, j);

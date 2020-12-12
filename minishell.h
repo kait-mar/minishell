@@ -6,7 +6,7 @@
 /*   By: molabhai <molabhai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/12 18:16:14 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/12 19:00:21 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,9 @@ int		check_unset(char *str);
 void	unset_command(char **env, char *str);
 t_env		*filling_env(char **env);
 t_env		*adding_last(t_env *head, int i, char *env);
+int			kait_count(char *str);
+int			check_single_quotes(char c);
+int			check_double_quotes(char c);
+int			check_single_double_quote(char c);
 
 #endif
