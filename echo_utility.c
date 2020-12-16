@@ -37,3 +37,53 @@ int	print_env(char *bult, char **env, int which_quote)
 	}
 	return (i);
 }
+
+void	put_cases(char **bult, char **env)
+{
+	int		which_quote;
+	char	**split;
+	int		i;
+
+	i = 0;
+	while (*bult)
+	{
+		if (find(*bult, 39) == 0 && find(*bult, 34) == 0)
+		{
+			split = ft_split(*bult, ' ');
+			while (*(split + 1) != NULL)
+			{
+				if (print(split, env) == 1 || i == 1)
+					write(1, " ", 1);
+				split++;
+			}
+			print(split, env);
+		}
+		else if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
+		{
+			if (find(*bult, 39) == 1)
+			{
+				*bult = ft_strtrim(*bult, "'");
+				which_quote = 39;
+			}
+			else
+			{
+				*bult = ft_strtrim(*bult, "\"");
+				which_quote = 34;
+			}
+			//add the * case and / skip charactere
+			if (find(*bult, '$') == 0 || which_quote == 39)
+			{
+				if (i == 1)
+					write(1, " ", 1);
+				ft_putstr(*bult);
+				i = 1;
+			}
+			else
+			{
+				if (print_env(*bult, env, which_quote) == 1)
+					write(1, " ", 1);
+			}
+		}
+		bult++;
+	}
+}

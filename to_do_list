@@ -13,3 +13,6 @@ hello
 hello$
 echo hello 'yes'
 helloyes
+
+***********************************************
+next issue is to fixe the spaces bug.. echo hello 'yes' Vs echo hello'yes'

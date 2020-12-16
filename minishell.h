@@ -60,5 +60,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 char	**keep_split(char *s, char c, char b);
 int		print_env(char *bult, char **env, int which_quote);
 int		echo_strcmp(const char *s1, const char *s2);
+void	put_cases(char **bult, char **env);
+
 
 #endif

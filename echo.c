@@ -20,13 +20,18 @@ int		print(char **bult, char **env)
 
 	//add a split here
 	i = 0;
-	char b = *(*bult + 1);
-	if (**bult == '$' && ft_isalnum(*(*bult + 1) == 0))
+	while (**bult != '$' && **bult != '\0')
+	{
+		ft_putchar(**bult);
+		(*bult)++;
+		i = 1;
+	}
+	if (**bult == '$' && *(*bult + 1) == '\0')
 	{
 		ft_putchar(**bult);
 		return (1);
 	}
-	if (**bult == '$')
+	else if (**bult == '$')
 	{
 		j = 0;
 		i = 0;
@@ -46,11 +51,11 @@ int		print(char **bult, char **env)
 		//else
 		//	ft_putstr(*bult);
 	}
-	else
-	{
-		ft_putstr(*bult);
-		i = 1;
-	}
+	//else
+	//{
+		//ft_putstr(*bult);
+		//i = 1;
+	//}
 	return (i);
 }
 
@@ -112,8 +117,8 @@ int	echo(char *argv, char **env)
 {
 	char	**bult;
 	int		i;
-	int		which_quote;
 	char	**split;
+	char	**str;
 
 	i = 0;
 	argv = skip_first_word(&argv);
@@ -122,47 +127,25 @@ int	echo(char *argv, char **env)
 	if (find(argv, '<') == 0 && find(argv, '>') == 0)
 	{
 		bult = keep_split(argv, 39, 34);
-		if (ft_strcmp(*bult, "-n") == 0)
+		if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
 		{
-			bult++;
-			i = 1;
+			if (ft_strcmp(*bult, "-n") == 0 || ft_strcmp(*bult, "'-n'") == 0)
+			{
+				bult++;
+				i = 1;
+			}
 		}
-		while (*bult)
+		else
 		{
-			if (find(*bult, 39) == 0 && find(*bult, 34) == 0)
+			str = ft_split(*bult, ' ');
+			if (ft_strcmp(*str, "-n") == 0 || ft_strcmp(*str, "'-n'") == 0)
 			{
-				split = ft_split(*bult, ' ');
-				while (*(split + 1) != NULL)
-				{
-					if (print(split, env) == 1)
-						write(1, " ", 1);
-					split++;
-				}
-				print(split, env);
+				str++;
+				i = 1;
 			}
-			else if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
-			{
-				if (find(*bult, 39) == 1)
-				{
-					*bult = ft_strtrim(*bult, "'");
-					which_quote = 39;
-				}
-				else
-				{
-					*bult = ft_strtrim(*bult, "\"");
-					which_quote = 34;
-				}
-				//add the * case and / skip charactere
-				if (find(*bult, '$') == 0 || which_quote == 39)
-					ft_putstr(*bult);
-				else
-				{
-					if (print_env(*bult, env, which_quote) == 1)
-						write(1, " ", 1);
-				}
-			}
-			bult++;
+			put_cases(str, env);
 		}
+		put_cases(bult, env);
 	}
 
 
