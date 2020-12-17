@@ -43,13 +43,19 @@ void	put_cases(char **bult, char **env)
 	int		which_quote;
 	char	**split;
 	int		i;
+	int		spaces;
 
 	i = 0;
+	spaces = 0;
 	while (*bult)
 	{
 		if (find(*bult, 39) == 0 && find(*bult, 34) == 0)
 		{
 			split = ft_split(*bult, ' ');
+			if (**bult == ' ')
+				ft_putchar(' ');
+			if ((*bult)[ft_strlen(*bult) - 1] == ' ' && bult + 1 != NULL)
+				spaces = 1;
 			while (*(split + 1) != NULL)
 			{
 				if (print(split, env) == 1 || i == 1)
@@ -57,6 +63,9 @@ void	put_cases(char **bult, char **env)
 				split++;
 			}
 			print(split, env);
+			if (spaces == 1)
+				ft_putchar(' ');
+			spaces = 0;
 		}
 		else if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
 		{
@@ -76,7 +85,7 @@ void	put_cases(char **bult, char **env)
 				if (i == 1)
 					write(1, " ", 1);
 				ft_putstr(*bult);
-				i = 1;
+				i = 0;
 			}
 			else
 			{
@@ -86,4 +95,17 @@ void	put_cases(char **bult, char **env)
 		}
 		bult++;
 	}
+}
+
+void	put_normal(char **split, char **env, int i)
+{
+	while (*(split + 1) != NULL)
+	{
+		if (print(split, env) == 1)
+			write(1, " ", 1);
+		split++;
+	}
+	print(split, env);
+	if (i == 1)
+		ft_putchar(' ');
 }

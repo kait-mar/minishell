@@ -52,7 +52,8 @@ int		main()
 	while (1)
 	{
 		//str = reading_input(str);
-		str = "echo   'no'    yes \"hello$PATh\" ";
+		//str = "echo   \"-n\"  hello yes'no'yes \"hello$PATh    \"    ";
+		str = "echo hello'yes' 'stop' ";
 		str = ft_strtrim(str, "\t");
 		splits = split_to_tokens(str);
 		i = how_mutch_argument(str, 0);
@@ -77,6 +78,7 @@ int		main()
 				//check the case of ech"o"
 				//case of PATH and path
 				echo(str, env);
+				return (0);
 			}
 			else
 				ft_printf("Command [%s] doesnt exist\n", splits[0]);

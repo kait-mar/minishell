@@ -59,6 +59,7 @@ void					ft_putendl_fd(char *s, int fd);
 void					ft_putnbr_fd(int n, int fd);
 int						ft_atoi(const char *s);
 char					*ft_strdup(const char *s1);
+char					*ft_strtrim_left(char const *s1, char const *set);
 
 typedef	struct			s_list
 {

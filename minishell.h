@@ -37,6 +37,12 @@ typedef struct s_export
 	int 	flag;
 }				t_export;
 
+typedef	struct s_spaces
+{
+	char	*bult;
+	int		spaces;
+}			t_spaces;
+
 void	cd_command(char *argument, int i);
 char	**taking_command(char *str);
 char	**split_to_tokens(char *str);
@@ -61,6 +67,6 @@ char	**keep_split(char *s, char c, char b);
 int		print_env(char *bult, char **env, int which_quote);
 int		echo_strcmp(const char *s1, const char *s2);
 void	put_cases(char **bult, char **env);
-
+void	put_normal(char **split, char **env, int i);
 
 #endif

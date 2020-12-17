@@ -73,20 +73,6 @@ int		find(char *str, char c)
 	return (0);
 }
 
-void	quote_dquote(char *line)
-{
-	char	*str;
-
-	str = malloc(2);
-	*str = '"';
-	str[1] = '\0';
-	printf("the old line : %s\n", line);
-	//add a free to line here
-	line = ft_strtrim(line, str);
-	printf("the new line : %s\n", line);
-	ft_putstr(line);
-}
-
 char	*skip_first_word(char **str)
 {
 	char	*s;
@@ -119,8 +105,10 @@ int	echo(char *argv, char **env)
 	int		i;
 	char	**split;
 	char	**str;
+	int		spaces;
 
 	i = 0;
+	spaces = 0;
 	argv = skip_first_word(&argv);
 	argv = ft_strtrim(argv, " ");
 	argv = ft_strtrim(argv, "\t");
@@ -129,10 +117,11 @@ int	echo(char *argv, char **env)
 		bult = keep_split(argv, 39, 34);
 		if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
 		{
-			if (ft_strcmp(*bult, "-n") == 0 || ft_strcmp(*bult, "'-n'") == 0)
+			if (ft_strcmp(*bult, "-n") == 0 || ft_strcmp(*bult, "'-n'") == 0 || ft_strcmp(*bult, "\"-n\"") == 0)
 			{
 				bult++;
 				i = 1;
+				*bult = ft_strtrim_left(*bult, " ");
 			}
 		}
 		else
@@ -140,29 +129,17 @@ int	echo(char *argv, char **env)
 			str = ft_split(*bult, ' ');
 			if (ft_strcmp(*str, "-n") == 0 || ft_strcmp(*str, "'-n'") == 0)
 			{
+				//here we use just str[0] so we can free it later!
 				str++;
 				i = 1;
+				*bult = skip_first_word(&(*bult));
 			}
-			put_cases(str, env);
+			//if ((*bult)[ft_strlen(*bult) - 1] == ' ' && ++bult != NULL)
+			//	spaces = 1;
+			//put_normal(str, env, spaces);
 		}
 		put_cases(bult, env);
 	}
-
-
-	/*if (find(argv, '<') == 0 && find(argv, '>') == 0 && find(argv, 34)  == 0 && find(argv, 39) == 0)
-	{
-		while (*(bult + 1) != NULL)
-		{
-			print(bult, env);
-			write(1, " ", 1);
-			bult++;
-		}
-		print(bult, env);
-	}
-	else if (find(argv, 34)  == 1 || find(argv, 39)  == 1)
-	{
-		quote_dquote(argv);
-	}*/
 	if (i == 0)
 		ft_putchar('\n');
 	return (0);
