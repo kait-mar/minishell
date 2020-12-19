@@ -12,32 +12,37 @@ int	print_env(char *bult, char **env, int which_quote)
 	{
 		while (*bult != '$' && *bult != '\0')
 			ft_putchar(*(bult++));
-		str = ft_split(bult, ' ');
-		if (*str != NULL)
+		if (*bult == '$' && (*(bult + 1) == '\0' || *(bult + 1) == ' '))
+			ft_putchar(*(bult++));
+		else
 		{
-			j = 0;
-			while (env[j])
+			str = ft_split(bult, ' ');
+			if (*str != NULL)
 			{
-				tab = ft_split(env[j], '=');
-				if (ft_strcmp(tab[0], str[0]) == 0)
+				j = 0;
+				while (env[j])
 				{
-					ft_putstr(tab[1]);
-					i = 1;
-					break ;
+					tab = ft_split(env[j], '=');
+					if (ft_strcmp(tab[0], str[0]) == 0)
+					{
+						ft_putstr(tab[1]);
+						i = 1;
+						break ;
+					}
+					j++;
 				}
-				j++;
 			}
-		}
-		if (*bult == '$')
-		{
-			bult++;
-			while (ft_isalnum(*bult) == 1)
+			else if (*bult == '$' && *(bult + 1) != '\0')
+			{
 				bult++;
+				while (ft_isalnum(*bult) == 1)
+					bult++;
+			}
 		}
 	}
 	return (i);
 }
-
+ 
 void	put_cases(char **bult, char **env)
 {
 	int		which_quote;
@@ -54,6 +59,11 @@ void	put_cases(char **bult, char **env)
 			split = ft_split(*bult, ' ');
 			if (**bult == ' ')
 				ft_putchar(' ');
+			if (*split == NULL)
+			{
+				bult++;
+				continue ;
+			}
 			if ((*bult)[ft_strlen(*bult) - 1] == ' ' && bult + 1 != NULL)
 				spaces = 1;
 			while (*(split + 1) != NULL)

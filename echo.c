@@ -127,7 +127,7 @@ int	echo(char *argv, char **env)
 		else
 		{
 			str = ft_split(*bult, ' ');
-			if (ft_strcmp(*str, "-n") == 0 || ft_strcmp(*str, "'-n'") == 0)
+			if (ft_strcmp(*str, "-n") == 0)
 			{
 				//here we use just str[0] so we can free it later!
 				str++;
