@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-
-
 int		check_wich_command(char *str)
 {
 	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[2]) == 0))
@@ -24,12 +22,17 @@ int		check_wich_command(char *str)
 		return (3);
 	if (ft_strncmp(str, "export", 6) == 0 && (ft_isalpha(str[6]) == 0))
 		return (4);
+<<<<<<< HEAD
 	if (check_unset(str) == 0)
+=======
+	if (echo_strcmp(str, "echo") == 0)
+>>>>>>> new-echo
 		return (5);
 	/* Here CHECK your command is lexically correct*/
 	return (0);
 }
 
+//int		main()
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -41,6 +44,11 @@ int		main(int ac, char **av, char **env)
 	char s[100];
 	int i;
 
+	//char **av;
+	//char **env;
+	//env = malloc(2*sizeof(char *));
+	//*env = "PATH=user/bin";
+	//env[1] = NULL;
 	str = NULL;
 	pwd = NULL;
 	cd = malloc(sizeof(t_command_cd));
@@ -52,7 +60,9 @@ int		main(int ac, char **av, char **env)
 		getcwd(s, 100);
 		ft_printf("%s ", s);
 		str = reading_input(str);
-		str = ft_strtrim(str, "\t");
+		//str = "echo   \"-n\"  hello yes'no'yes \"hello$PATh    \"    ";
+		//str = "echo hello'world 'yes ";
+		//str = ft_strtrim(str, "\t");
 		splits = split_to_tokens(str);
 		i = how_mutch_argument(str, 0);
 		if (i > 0)
@@ -70,6 +80,7 @@ int		main(int ac, char **av, char **env)
 			else if (check_wich_command(splits[0]) == 3)
 				env_command(env, splits);
 			else if (check_wich_command(splits[0]) == 4)
+<<<<<<< HEAD
 				export_command(env, str);
 			else if (check_wich_command(splits[0]) == 5)
 				unset_command(env, str);
@@ -78,6 +89,16 @@ int		main(int ac, char **av, char **env)
 			 * if (check_wich_command(*****))
 			 * 		main_function
 			 */ 
+=======
+				export_command(env, splits);
+			else if (check_wich_command(splits[0]) == 5)
+			{
+				//check the case of ech"o"
+				//case of PATH and path
+				echo(str, env);
+				//return (0);
+			}
+>>>>>>> new-echo
 			else
 				ft_printf("Command [%s] doesnt exist\n", splits[0]);
 		}

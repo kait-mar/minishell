@@ -49,10 +49,15 @@ typedef struct s_env
 	char	*in_env;
 	struct s_env	*next;
 }				t_env;
+typedef	struct s_spaces
+{
+	char	*bult;
+	int		spaces;
+}			t_spaces;
 
 void	cd_command(char *argument, int i);
 char	**taking_command(char *str);
-char 	**split_to_tokens(char *str);
+char	**split_to_tokens(char *str);
 char	*reading_input(char *str);
 char	*without_that(char *str, char c);
 int		how_mutch_argument(char *str, int i);
@@ -81,5 +86,16 @@ int			kait_count(char *str);
 int			check_single_quotes(char c);
 int			check_double_quotes(char c);
 int			check_single_double_quote(char c);
+void	ft_putstr(char *s);
+int		print(char **bult, char **env);
+int		find(char *str, char c);
+void	quote_dquote(char *line);
+int		echo(char *argv, char **env);
+int		ft_strcmp(const char *s1, const char *s2);
+char	**keep_split(char *s, char c, char b);
+int		print_env(char *bult, char **env, int which_quote);
+int		echo_strcmp(const char *s1, const char *s2);
+void	put_cases(char **bult, char **env);
+void	put_normal(char **split, char **env, int i);
 
 #endif
