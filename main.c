@@ -28,8 +28,8 @@ int		check_wich_command(char *str)
 	return (0);
 }
 
-int		main()
-//int		main(int ac, char **av, char **env)
+//int		main()
+int		main(int ac, char **av, char **env)
 {
 	char *str;
 	t_command_cd *cd;
@@ -39,11 +39,11 @@ int		main()
 	char	*pwd;
 	int i;
 
-	char **av;
-	char **env;
-	env = malloc(2*sizeof(char *));
-	*env = "PATH=user/bin";
-	env[1] = NULL;
+	//char **av;
+	//char **env;
+	//env = malloc(2*sizeof(char *));
+	//*env = "PATH=user/bin";
+	//env[1] = NULL;
 	str = NULL;
 	pwd = NULL;
 	cd = malloc(sizeof(t_command_cd));
@@ -51,10 +51,10 @@ int		main()
 		return (-1);
 	while (1)
 	{
-		//str = reading_input(str);
+		str = reading_input(str);
 		//str = "echo   \"-n\"  hello yes'no'yes \"hello$PATh    \"    ";
-		str = "echo hello'world 'yes ";
-		str = ft_strtrim(str, "\t");
+		//str = "echo hello'world 'yes ";
+		//str = ft_strtrim(str, "\t");
 		splits = split_to_tokens(str);
 		i = how_mutch_argument(str, 0);
 		if (i > 0)
@@ -78,7 +78,7 @@ int		main()
 				//check the case of ech"o"
 				//case of PATH and path
 				echo(str, env);
-				return (0);
+				//return (0);
 			}
 			else
 				ft_printf("Command [%s] doesnt exist\n", splits[0]);
