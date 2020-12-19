@@ -58,7 +58,7 @@ int		main()
 		splits = split_to_tokens(str);
 		i = how_mutch_argument(str, 0);
 		if (i > 0)
-		{
+		{ 
 			i = how_mutch_argument(str, 2);
 			splits[0] = ft_strtrim(splits[0], "\t");
 			if (i == 1)
