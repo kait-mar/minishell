@@ -53,12 +53,12 @@ int		main()
 	{
 		//str = reading_input(str);
 		//str = "echo   \"-n\"  hello yes'no'yes \"hello$PATh    \"    ";
-		str = "echo hello $ ";
+		str = "echo hello'world 'yes ";
 		str = ft_strtrim(str, "\t");
 		splits = split_to_tokens(str);
 		i = how_mutch_argument(str, 0);
 		if (i > 0)
-		{  
+		{
 			i = how_mutch_argument(str, 2);
 			splits[0] = ft_strtrim(splits[0], "\t");
 			if (i == 1)

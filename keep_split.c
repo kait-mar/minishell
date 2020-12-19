@@ -1,34 +1,43 @@
 #include "minishell.h"
 
-static int  coun(char *s, char c, char b)
+static int	coun(char *s, char c, char b)
 {
-    int        i;
-    int        count;
-    int        k;
+	int	i;
+	int	count;
+	int	k;
 
-    i = 0;
-    count = 0;
-    while (s[i] != '\0')
-    {
-        k = 0;
-        while (s[i] != c && s[i] != b && s[i] != '\0')
-        {
-            k++;
-            i++;
-        }
-        if (k != 0)
-            count++;
-        else if ((s[i] == c || s[i] == b) && s[i] != '\0')
-        {
-            i++;
-            while (s[i] != c && s[i] != b && s[i] != '\0')
-                i++;
-            if (s[i] == c || s[i] == b)
-                i++;
-            count++;
-        }
-    }
-    return (count);
+	i = 0;
+	count = 0;
+	while (s[i] != '\0')
+	{
+		k = 0;
+		while (s[i] != c && s[i] != b && s[i] != '\0')
+		{
+			k++;
+			i++;
+		}
+		if (k != 0)
+			count++;
+		else if (s[i] == c && s[i] != '\0')
+		{
+			i++;
+			while (s[i] != c && s[i] != '\0')
+				i++;
+			if (s[i] == c)
+				i++;
+			count++;
+		}
+		else if (s[i] == b && s[i] != '\0')
+		{
+			i++;
+			while (s[i] != b && s[i] != '\0')
+				i++;
+			if (s[i] == b)
+				i++;
+			count++;
+		}
+	}
+	return (count);
 }
 
 static char		**ft_tofree(char *tab[], int j)
@@ -74,16 +83,39 @@ char	**keep_split(char *s, char c, char b)
 			}
 			tab[j][k] = '\0';
 		}
-        else if (s[i] == c || s[i] == b)
+        else if (s[i] == c)
 		{
 			i++;
 			k++;
-			while (s[i] != c && s[i] != b && s[i] != '\0')
+			while (s[i] != c && s[i] != '\0')
 			{
 				i++;
 				k++;
 			}
-			if (s[i] == c || s[i] == b)
+			if (s[i] == c)
+			{
+				i++;
+				k++;
+			}
+			if (!(tab[j] = malloc(k + 1)))
+				return (ft_tofree(tab, j));
+			i -= k;
+			l = k;
+			k = 0;
+			while (k < l)
+				tab[j][k++] = s[i++];
+			tab[j][k] = '\0';
+		}
+		else if (s[i] == b)
+		{
+			i++;
+			k++;
+			while (s[i] != b && s[i] != '\0')
+			{
+				i++;
+				k++;
+			}
+			if (s[i] == b)
 			{
 				i++;
 				k++;

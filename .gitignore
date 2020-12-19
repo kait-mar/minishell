@@ -1,0 +1,13 @@
+#vs code files
+.vscode
+#executable
+a.out
+a.out.dSYM
+minishell
+minishell.dSYM
+#object libraries files
+*.o
+Libft/*.o
+Libft/*.a
+Printf/*.o
+Printf/*.a

@@ -2,18 +2,18 @@
 #include <stdlib.h>
 #include "Libft/libft.h"
 
-int		coun(char *s, char c)
+static int	coun(char *s, char c, char b)
 {
-	int        i;
-	int        count;
-	int        k;
+	int	i;
+	int	count;
+	int	k;
 
 	i = 0;
 	count = 0;
 	while (s[i] != '\0')
 	{
 		k = 0;
-		while (s[i] != c && s[i] != '\0')
+		while (s[i] != c && s[i] != b && s[i] != '\0')
 		{
 			k++;
 			i++;
@@ -29,11 +29,28 @@ int		coun(char *s, char c)
 				i++;
 			count++;
 		}
+		else if (s[i] == b && s[i] != '\0')
+		{
+			i++;
+			while (s[i] != b && s[i] != '\0')
+				i++;
+			if (s[i] == b)
+				i++;
+			count++;
+		}
 	}
 	return (count);
 }
 
-char    **keep_split(char *s, char c)
+static char		**ft_tofree(char *tab[], int j)
+{
+	while (--j > 0)
+		free(tab[j]);
+	free(tab);
+	return (NULL);
+}
+
+char	**keep_split(char *s, char c, char b)
 {
 	int			i;
 	int			j;
@@ -45,23 +62,24 @@ char    **keep_split(char *s, char c)
 		return (NULL);
 	i = 0;
 	j = 0;
-    int count = coun(s, c);
+    int count = coun(s, c, b);
 	if (!(tab = (char **)malloc(sizeof(*tab) * (count + 1))))
 		return (NULL);
 	while (s[i] != '\0' && j < count)
 	{
 		k = 0;
-		while (s[i] != c && s[i] != '\0')
+		while (s[i] != c && s[i] != b && s[i] != '\0')
 		{
 			i++;
 			k++;
 		}
 		if (k != 0)
 		{
-		tab[j] = malloc(k + 1);
+			if (!(tab[j] = malloc(k + 1)))
+				return (ft_tofree(tab, j));
 			i -= k;
 			k = 0;
-			while (s[i] != c && s[i] != '\0')
+			while (s[i] != c && s[i] != b && s[i] != '\0')
 			{
 				tab[j][k++] = s[i++];
 			}
@@ -81,7 +99,31 @@ char    **keep_split(char *s, char c)
 				i++;
 				k++;
 			}
-			tab[j] = malloc(k + 1);
+			if (!(tab[j] = malloc(k + 1)))
+				return (ft_tofree(tab, j));
+			i -= k;
+			l = k;
+			k = 0;
+			while (k < l)
+				tab[j][k++] = s[i++];
+			tab[j][k] = '\0';
+		}
+		else if (s[i] == b)
+		{
+			i++;
+			k++;
+			while (s[i] != b && s[i] != '\0')
+			{
+				i++;
+				k++;
+			}
+			if (s[i] == b)
+			{
+				i++;
+				k++;
+			}
+			if (!(tab[j] = malloc(k + 1)))
+				return (ft_tofree(tab, j));
 			i -= k;
 			l = k;
 			k = 0;
@@ -95,6 +137,19 @@ char    **keep_split(char *s, char c)
 	return (tab);
 }
 
+int main()
+{
+  char *s = "hello \" to'world'\"  ' yes' go";
+  char **line = keep_split(s, 39, 34);
+  int i =0;
+  while (line[i])
+    printf("|%s|\n", line[i++]);
+  // char	*str = "   hello world  ";
+  // printf("|%s|\n", ft_strtrim_left(str, " "));
+  return 0;
+}
+
+/*
 static int	fct(char s, char *str)
 {
 	int	i;
@@ -157,21 +212,7 @@ char		*ft_strtrim_left(char const *s1, char const *set)
 	ft_memcpy(str, s1 + start, end - start + 1);
 	str[end - start + 1] = '\0';
 	return (str);
-}
-
-int main()
-{
-  //char *s = "'-n '    hello 'world'    here 'we go   !'yes";
-  //char **line = keep_split(s, 39);
-  //int i =0;
-  //while (line[i])
-   // printf("|%s|\n", line[i++]);
-   char	*str = "   hello world  ";
-   printf("|%s|\n", ft_strtrim_left(str, " "));
-  return 0;
-}
-
-
+}*/
 /*t_spaces	*keep_split(char *s, char c, char b)
 {
 	int			i;
