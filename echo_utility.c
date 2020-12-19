@@ -23,7 +23,7 @@ int	print_env(char *bult, char **env, int which_quote)
 				while (env[j])
 				{
 					tab = ft_split(env[j], '=');
-					if (ft_strcmp(tab[0], str[0]) == 0)
+					if (ft_strcmp(tab[0], str[0] + 1) == 0)
 					{
 						ft_putstr(tab[1]);
 						i = 1;
@@ -32,7 +32,7 @@ int	print_env(char *bult, char **env, int which_quote)
 					j++;
 				}
 			}
-			else if (*bult == '$' && *(bult + 1) != '\0')
+			if (*bult == '$' && *(bult + 1) != '\0')
 			{
 				bult++;
 				while (ft_isalnum(*bult) == 1)

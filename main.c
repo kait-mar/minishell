@@ -53,7 +53,7 @@ int		main()
 	{
 		//str = reading_input(str);
 		//str = "echo   \"-n\"  hello yes'no'yes \"hello$PATh    \"    ";
-		str = "echo \" hello path $PATH again \"";
+		str = "echo hello $ ";
 		str = ft_strtrim(str, "\t");
 		splits = split_to_tokens(str);
 		i = how_mutch_argument(str, 0);
