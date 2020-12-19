@@ -22,12 +22,10 @@ int		check_wich_command(char *str)
 		return (3);
 	if (ft_strncmp(str, "export", 6) == 0 && (ft_isalpha(str[6]) == 0))
 		return (4);
-<<<<<<< HEAD
 	if (check_unset(str) == 0)
-=======
-	if (echo_strcmp(str, "echo") == 0)
->>>>>>> new-echo
 		return (5);
+	if (echo_strcmp(str, "echo") == 0)
+		return (6);
 	/* Here CHECK your command is lexically correct*/
 	return (0);
 }
@@ -80,25 +78,16 @@ int		main(int ac, char **av, char **env)
 			else if (check_wich_command(splits[0]) == 3)
 				env_command(env, splits);
 			else if (check_wich_command(splits[0]) == 4)
-<<<<<<< HEAD
 				export_command(env, str);
 			else if (check_wich_command(splits[0]) == 5)
 				unset_command(env, str);
-			/* Add ure main command Here
-			 * Example:
-			 * if (check_wich_command(*****))
-			 * 		main_function
-			 */ 
-=======
-				export_command(env, splits);
-			else if (check_wich_command(splits[0]) == 5)
+			else if (check_wich_command(splits[0]) == 6)
 			{
 				//check the case of ech"o"
 				//case of PATH and path
 				echo(str, env);
 				//return (0);
 			}
->>>>>>> new-echo
 			else
 				ft_printf("Command [%s] doesnt exist\n", splits[0]);
 		}
