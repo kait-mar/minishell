@@ -14,3 +14,4 @@ Libft/*.o
 Libft/*.a
 Printf/*.o
 Printf/*.a
+test.c

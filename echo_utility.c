@@ -79,12 +79,12 @@ void	put_cases(char **bult, char **env)
 		}
 		else if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
 		{
-			if (find(*bult, 39) == 1)
+			if (**bult == 39)
 			{
 				*bult = ft_strtrim(*bult, "'");
 				which_quote = 39;
 			}
-			else
+			else if (**bult == 34)
 			{
 				*bult = ft_strtrim(*bult, "\"");
 				which_quote = 34;
