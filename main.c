@@ -42,11 +42,11 @@ int		main(int ac, char **av, char **env)
 	char s[100];
 	int i;
 
-	//char **av;
-	//char **env;
-	//env = malloc(2*sizeof(char *));
-	//*env = "PATH=user/bin";
-	//env[1] = NULL;
+	/*char **av;
+	char **env;
+	env = malloc(2*sizeof(char *));
+	*env = "PATH=user/bin";
+	env[1] = NULL;*/
 	str = NULL;
 	pwd = NULL;
 	cd = malloc(sizeof(t_command_cd));
@@ -58,7 +58,7 @@ int		main(int ac, char **av, char **env)
 		getcwd(s, 100);
 		ft_printf("%s ", s);
 		str = reading_input(str);
-		//str = "echo hello \" to'world'\"  ' yes' go";
+		//str = "echo \"hello '$'\"";
 		str = ft_strtrim(str, "\t");
 		splits = split_to_tokens(str);
 		i = how_mutch_argument(str, 0);

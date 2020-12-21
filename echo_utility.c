@@ -12,17 +12,21 @@ int	print_env(char *bult, char **env, int which_quote)
 	{
 		while (*bult != '$' && *bult != '\0')
 			ft_putchar(*(bult++));
-		if ((*bult == '$' && (*(bult + 1) == '\0' || *(bult + 1) == ' ') && (which_quote == 0 || (which_quote == 1 || *(bult  + 1) == 39 || *(bult  + 1) == 34))))
+		if ((*bult == '$' && ((which_quote == 0 && (*(bult + 1) == '\0' || *(bult + 1) == ' ')) || (which_quote == 1 && (*(bult  + 1) == 39 || *(bult  + 1) == 34 || *(bult + 1) == '\0' || *(bult + 1) == ' ')))))
 			ft_putchar(*(bult++));
+		if (*bult == '\0')
+			break ;
 		else
 		{
 			if (which_quote == 0)
 				str = ft_split(bult, ' ');
 			else if (which_quote == 1)
 			{
-				str = ft_split(bult , ' ');
-				str = ft_split(str[0], '\'');
-				str = ft_split(str[0], '"');
+				if (*(str = ft_split(bult, ' ')) != NULL)
+				{
+					if (*(str = ft_split(str[0], '\'')) != NULL)
+						str = ft_split(str[0], '"');
+				}
 			}
 			if (*str != NULL)
 			{
@@ -42,7 +46,7 @@ int	print_env(char *bult, char **env, int which_quote)
 			if (*bult == '$' && *(bult + 1) != '\0')
 			{
 				bult++;
-				while (ft_isalnum(*bult) == 1)
+				while (ft_isalnum(*bult) == 1 && *bult)
 					bult++;
 			}
 		}
@@ -84,7 +88,7 @@ void	put_cases(char **bult, char **env)
 				ft_putchar(' ');
 			spaces = 0;
 		}
-		else if (find_how_many(*bult, 39) == 1 && find_how_many(*bult, 34) == 1 && find(*bult, '$') == 0)
+		else if (find_how_many(*bult, 39) == 2 && find_how_many(*bult, 34) == 2 && find(*bult, '$') == 0)
 		{
 			if (**bult == '\'')
 				*bult = ft_strtrim(*bult, "'");
@@ -92,7 +96,7 @@ void	put_cases(char **bult, char **env)
 				*bult = ft_strtrim(*bult, "\"");
 			ft_putstr(*bult);
 		}
-		else if (find_how_many(*bult, 39) == 1 && find_how_many(*bult, 34) == 1)
+		else if (find_how_many(*bult, 39) == 2 && find_how_many(*bult, 34) == 2)
 		{
 			if (**bult == '\'')
 				*bult = ft_strtrim(*bult, "'");
