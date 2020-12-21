@@ -6,7 +6,7 @@
 /*   By: molabhai <molabhai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/12 19:00:21 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/21 11:40:14 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_env
 	char	*in_env;
 	struct s_env	*next;
 }				t_env;
+
 typedef	struct s_spaces
 {
 	char	*bult;
@@ -97,5 +98,14 @@ int		print_env(char *bult, char **env, int which_quote);
 int		echo_strcmp(const char *s1, const char *s2);
 void	put_cases(char **bult, char **env);
 void	put_normal(char **split, char **env, int i);
+int		check_unset(char *str);
+char	*only_before_equal(char *str);
+int		in_match(char *s1, char *s2);
+t_env	*delete_list(t_env *env, int count);
+t_env	*delete_in_env(t_env *env, char **splits);
+char	**copy_all(t_env *take_env, char **env);
+void	execut_command(char **env, char *str, int *check);
+char	**take_it_all(char *s, int c);
+char	*from_to(char *st, int i, int j);
 
 #endif
