@@ -97,5 +97,6 @@ int		print_env(char *bult, char **env, int which_quote);
 int		echo_strcmp(const char *s1, const char *s2);
 void	put_cases(char **bult, char **env);
 void	put_normal(char **split, char **env, int i);
+int		find_how_many(char *s, char c);
 
 #endif

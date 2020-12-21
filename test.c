@@ -137,15 +137,20 @@ char	**keep_split(char *s, char c, char b)
 	return (tab);
 }
 
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
 int main()
 {
   char *s = "hello \" to'world'\"  ' yes' go";
   char **line = keep_split(s, 39, 34);
   int i =0;
-  while (line[i])
-    printf("|%s|\n", line[i++]);
-  // char	*str = "   hello world  ";
-  // printf("|%s|\n", ft_strtrim_left(str, " "));
+  //while (line[i])
+  //  printf("|%s|\n", line[i++]);
+  char *bult = "hello";
+  while (*bult && *bult != '$')
+	ft_putchar(*(bult++));
   return 0;
 }
 

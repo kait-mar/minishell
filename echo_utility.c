@@ -12,11 +12,18 @@ int	print_env(char *bult, char **env, int which_quote)
 	{
 		while (*bult != '$' && *bult != '\0')
 			ft_putchar(*(bult++));
-		if (*bult == '$' && (*(bult + 1) == '\0' || *(bult + 1) == ' '))
+		if ((*bult == '$' && (*(bult + 1) == '\0' || *(bult + 1) == ' ') && (which_quote == 0 || (which_quote == 1 || *(bult  + 1) == 39 || *(bult  + 1) == 34))))
 			ft_putchar(*(bult++));
 		else
 		{
-			str = ft_split(bult, ' ');
+			if (which_quote == 0)
+				str = ft_split(bult, ' ');
+			else if (which_quote == 1)
+			{
+				str = ft_split(bult , ' ');
+				str = ft_split(str[0], '\'');
+				str = ft_split(str[0], '"');
+			}
 			if (*str != NULL)
 			{
 				j = 0;
@@ -42,7 +49,7 @@ int	print_env(char *bult, char **env, int which_quote)
 	}
 	return (i);
 }
- 
+
 void	put_cases(char **bult, char **env)
 {
 	int		which_quote;
@@ -77,6 +84,22 @@ void	put_cases(char **bult, char **env)
 				ft_putchar(' ');
 			spaces = 0;
 		}
+		else if (find_how_many(*bult, 39) == 1 && find_how_many(*bult, 34) == 1 && find(*bult, '$') == 0)
+		{
+			if (**bult == '\'')
+				*bult = ft_strtrim(*bult, "'");
+			else
+				*bult = ft_strtrim(*bult, "\"");
+			ft_putstr(*bult);
+		}
+		else if (find_how_many(*bult, 39) == 1 && find_how_many(*bult, 34) == 1)
+		{
+			if (**bult == '\'')
+				*bult = ft_strtrim(*bult, "'");
+			else
+				*bult = ft_strtrim(*bult, "\"");
+			print_env(*bult, env, 1);
+		}
 		else if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
 		{
 			if (**bult == 39)
@@ -99,7 +122,7 @@ void	put_cases(char **bult, char **env)
 			}
 			else
 			{
-				if (print_env(*bult, env, which_quote) == 1)
+				if (print_env(*bult, env, 0) == 1)
 					write(1, " ", 1);
 			}
 		}
