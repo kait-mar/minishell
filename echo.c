@@ -110,6 +110,8 @@ int	echo(char *argv, char **env)
 	i = 0;
 	spaces = 0;
 	argv = skip_first_word(&argv);
+	if (ft_strcmp(argv, "") == 0)
+		return (0);
 	argv = ft_strtrim(argv, " ");
 	argv = ft_strtrim(argv, "\t");
 	if (find(argv, '<') == 0 && find(argv, '>') == 0)
@@ -164,7 +166,7 @@ int	echo_strcmp(const char *s1, const char *s2)
 {
 	if (s1 == 0 || s2 == 0)
 		return (0);
-	while (*s1 != '\0' && *s2 != '\0')
+	while (*s1 != '\0')
 	{
 		while ((*s1 == '\'' || *s1 == '\"') && *s1 != '\0')
 			s1++;
