@@ -107,5 +107,6 @@ char	**copy_all(t_env *take_env, char **env);
 void	execut_command(char **env, char *str, int *check);
 char	**take_it_all(char *s, int c);
 char	*from_to(char *st, int i, int j);
+int		find_how_many(char *s, char c);
 
 #endif

@@ -42,11 +42,11 @@ int		main(int ac, char **av, char **env)
 	char s[100];
 	int i;
 
-	//char **av;
-	//char **env;
-	//env = malloc(2*sizeof(char *));
-	//*env = "PATH=user/bin";
-	//env[1] = NULL;
+	/*char **av;
+	char **env;
+	env = malloc(2*sizeof(char *));
+	*env = "PATH=user/bin";
+	env[1] = NULL;*/
 	str = NULL;
 	pwd = NULL;
 	cd = malloc(sizeof(t_command_cd));
@@ -58,9 +58,8 @@ int		main(int ac, char **av, char **env)
 		getcwd(s, 100);
 		ft_printf("%s ", s);
 		str = reading_input(str);
-		//str = "echo   \"-n\"  hello yes'no'yes \"hello$PATh    \"    ";
-		//str = "echo hello'world 'yes ";
-		//str = ft_strtrim(str, "\t");
+		//str = "echo \"hello '$'\"";
+		str = ft_strtrim(str, "\t");
 		splits = split_to_tokens(str);
 		i = how_mutch_argument(str, 0);
 		if (i > 0)
@@ -85,6 +84,8 @@ int		main(int ac, char **av, char **env)
 			{
 				//check the case of ech"o"
 				//case of PATH and path
+				//case of *
+				//echo """"hello""""
 				echo(str, env);
 				//return (0);
 			}

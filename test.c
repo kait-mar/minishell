@@ -137,15 +137,42 @@ char	**keep_split(char *s, char c, char b)
 	return (tab);
 }
 
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+int	echo_strcmp(const char *s1, const char *s2)
+{
+	if (s1 == 0 || s2 == 0)
+		return (0);
+	while (*s1 != '\0' && *s2 != '\0')
+	{
+		while ((*s1 == '\'' || *s1 == '\"') && *s1 != '\0')
+			s1++;
+		if (*s1 != '\0' && *s2 != '\0' && *s1 == *s2)
+		{
+			s1++;
+			s2++;
+		}
+		else
+			break ;
+	}
+	if (*s1 != *s2)
+		return ((unsigned char)*s1 - (unsigned char)*s2);
+	else
+		return (0);
+}
+
 int main()
 {
   char *s = "hello \" to'world'\"  ' yes' go";
   char **line = keep_split(s, 39, 34);
   int i =0;
-  while (line[i])
-    printf("|%s|\n", line[i++]);
-  // char	*str = "   hello world  ";
-  // printf("|%s|\n", ft_strtrim_left(str, " "));
+  //while (line[i])
+  //  printf("|%s|\n", line[i++]);
+  char *bult = "ec\"ho\"";
+  printf("%d\n", echo_strcmp(bult, "echo"));
   return 0;
 }
 
