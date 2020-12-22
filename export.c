@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 16:19:20 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/21 18:32:29 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/22 18:38:40 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ t_export		*check_export(char **splits, char **env)
 	return (export);
 }
 
-void	export_command(char **env, char *str)
+void	export_command(char **env, char *str, int *status)
 {	
 	t_export *export;
 	int		i;
@@ -163,6 +163,7 @@ void	export_command(char **env, char *str)
 			i = 0;
 			stop = 0;
 		}
+		*status = 0;
 	}
 	else if (export->flag == 2)
 	{
@@ -171,14 +172,18 @@ void	export_command(char **env, char *str)
 			ft_printf("%s\n", export->env[i]);
 			i += 1;
 		}
+		*status = 0;
 	}
 	else
+	{
 		ft_printf("Error in export command\n");
+		*status = 1;
+	}
 	free_splits(splits);
 	free_export(export);
 }
 
-void	env_command(char **env, char **splits)
+void	env_command(char **env, char **splits, int *status)
 {
 	int i;
 	int j;
@@ -191,6 +196,7 @@ void	env_command(char **env, char **splits)
 		if (check_env(splits[j]) == 1)
 		{
 			ft_printf("Command [%s] doesnt exist\n", splits[j]);
+			*status = 127;
 			return ;
 		}
 		j += 1;
@@ -200,4 +206,5 @@ void	env_command(char **env, char **splits)
 		ft_printf("%s\n", env[i]);
 		i += 1;
 	}
+	*status = 0;
 }

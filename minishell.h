@@ -6,7 +6,7 @@
 /*   By: molabhai <molabhai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/21 11:40:14 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/22 19:33:15 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,27 @@ typedef	struct s_spaces
 	int		spaces;
 }			t_spaces;
 
-void	cd_command(char *argument, int i);
+/*	Metacharacter "Semicolon" */
+
+typedef struct	s_semicolon
+{
+	char	*command;
+	char	*argument;
+	int		flag;
+}				t_semicolon;
+
+void	cd_command(char *argument, int i, int *status);
 char	**taking_command(char *str);
 char	**split_to_tokens(char *str);
 char	*reading_input(char *str);
 char	*without_that(char *str, char c);
 int		how_mutch_argument(char *str, int i);
 char	*ft_toStrLower(char *str);
-void	pwd_command(void);
+void	pwd_command(int *status);
 int		check_pwd(char *str);
 int		check_env(char *str);
-void	env_command(char **str, char **splits);
-void	export_command(char **env, char *splits);
+void	env_command(char **str, char **splits, int *status);
+void	export_command(char **env, char *splits, int *status);
 int		how_mutch_arguments(char **splits, int i);
 int		check_exp_lex(char *str);
 int		match(char *str, char  *export);
@@ -80,7 +89,7 @@ void	free_splits(char **splits);
 char	*front_append(char *string, char *to_append);
 t_export	*check_export(char **splits, char **env);
 int		check_unset(char *str);
-void	unset_command(char **env, char *str);
+void	unset_command(char **env, char *str, int *status);
 t_env		*filling_env(char **env);
 t_env		*adding_last(t_env *head, int i, char *env);
 int			kait_count(char *str);
@@ -88,16 +97,16 @@ int			check_single_quotes(char c);
 int			check_double_quotes(char c);
 int			check_single_double_quote(char c);
 void	ft_putstr(char *s);
-int		print(char **bult, char **env);
+int		print(char **bult, char **env, int *status);
 int		find(char *str, char c);
 void	quote_dquote(char *line);
-int		echo(char *argv, char **env);
+int		echo(char *argv, char **env, int *status);
 int		ft_strcmp(const char *s1, const char *s2);
 char	**keep_split(char *s, char c, char b);
-int		print_env(char *bult, char **env, int which_quote);
+int		print_env(char *bult, char **env, int which_quote, int *status);
 int		echo_strcmp(const char *s1, const char *s2);
-void	put_cases(char **bult, char **env);
-void	put_normal(char **split, char **env, int i);
+void	put_cases(char **bult, char **env, int *status);
+void	put_normal(char **split, char **env, int i, int *status);
 int		check_unset(char *str);
 char	*only_before_equal(char *str);
 int		in_match(char *s1, char *s2);

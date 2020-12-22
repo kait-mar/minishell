@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 12:08:00 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/21 10:18:37 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/22 19:10:25 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ char	**copy_all(t_env *take_env, char **env)
 	return (env);
 }
 
-void	unset_command(char **env, char *str)
+void	unset_command(char **env, char *str, int *status)
 {
 	t_env		*take_env;
 	char		**splits;
@@ -166,6 +166,5 @@ void	unset_command(char **env, char *str)
 	splits = take_only_carac(str);
 	take_env = delete_in_env(take_env, splits);
 	env = copy_all(take_env, env);
-	ft_printf("Here\n");
-
+	*status = 0;
 }

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	print_env(char *bult, char **env, int which_quote)
+int	print_env(char *bult, char **env, int which_quote, int *status)
 {
 	char	**str;
 	int		j;
@@ -54,7 +54,7 @@ int	print_env(char *bult, char **env, int which_quote)
 	return (i);
 }
 
-void	put_cases(char **bult, char **env)
+void	put_cases(char **bult, char **env, int *status)
 {
 	int		which_quote;
 	char	**split;
@@ -79,11 +79,11 @@ void	put_cases(char **bult, char **env)
 				spaces = 1;
 			while (*(split + 1) != NULL)
 			{
-				if (print(split, env) == 1 || i == 1)
+				if (print(split, env, status) == 1 || i == 1)
 					write(1, " ", 1);
 				split++;
 			}
-			print(split, env);
+			print(split, env, status);
 			if (spaces == 1)
 				ft_putchar(' ');
 			spaces = 0;
@@ -102,7 +102,7 @@ void	put_cases(char **bult, char **env)
 				*bult = ft_strtrim(*bult, "'");
 			else
 				*bult = ft_strtrim(*bult, "\"");
-			print_env(*bult, env, 1);
+			print_env(*bult, env, 1, status);
 		}
 		else if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
 		{
@@ -126,7 +126,7 @@ void	put_cases(char **bult, char **env)
 			}
 			else
 			{
-				if (print_env(*bult, env, 0) == 1)
+				if (print_env(*bult, env, 0, status) == 1)
 					write(1, " ", 1);
 			}
 		}
@@ -134,15 +134,15 @@ void	put_cases(char **bult, char **env)
 	}
 }
 
-void	put_normal(char **split, char **env, int i)
+void	put_normal(char **split, char **env, int i, int *status)
 {
 	while (*(split + 1) != NULL)
 	{
-		if (print(split, env) == 1)
+		if (print(split, env, status) == 1)
 			write(1, " ", 1);
 		split++;
 	}
-	print(split, env);
+	print(split, env, status);
 	if (i == 1)
 		ft_putchar(' ');
 }

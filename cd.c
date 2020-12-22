@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:46:24 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/21 18:13:43 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/22 18:13:18 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char 	**taking_command(char *str)
 	return (splits);
 }
 
-void	cd_command(char *argument, int argument_on)
+void	cd_command(char *argument, int argument_on, int *status)
 {
 	char *str;
 	char *s;
@@ -52,5 +52,9 @@ void	cd_command(char *argument, int argument_on)
 		return ;
 	s = without_that(argument, '"' );
 	if (chdir(s) < 0)
+	{
 		ft_printf("%s\n", strerror(errno));
+		*status = 1;
+	}
+	*status = 0;
 }

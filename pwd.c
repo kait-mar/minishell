@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 13:19:17 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/12 17:44:00 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/22 18:17:22 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,19 @@ int		check_pwd(char *str)
 }
 	
 
-void	pwd_command(void)
+void	pwd_command(int *status)
 {
 	char *str;
 
 	if (!(str = (char *) ft_calloc(sizeof(char), 100)))
 		return ;
 	if (getcwd(str, 100) == NULL)
-		ft_printf("Error in command\n");
+	{
+		ft_printf("%s\n", strerror(errno));
+		*status = 1;
+	}
 	else
 		ft_printf("%s\n", str);
 	free(str);
+	*status = 0;
 }

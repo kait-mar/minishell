@@ -12,7 +12,7 @@ void	ft_putstr(char *s)
 	}
 }
 
-int		print(char **bult, char **env)
+int		print(char **bult, char **env, int *status)
 {
 	int		j;
 	char	**tab;
@@ -30,13 +30,18 @@ int		print(char **bult, char **env)
 		(*bult)++;
 		i = 1;
 	}
-	if (**bult == '$' && *(*bult + 1) == '\0')
+	if (**bult == '$' && *(*bult + 1) == '?')
+	{
+		ft_printf("%d", *status);
+		*bult = *bult + 2;
+	}
+	else if (**bult == '$' && *(*bult + 1) == '\0')
 	{
 		ft_putchar(**bult);
 		ft_putchar_fd(**bult, fd);
 		return (1);
 	}
-	else if (**bult == '$')
+	else if (**bult == '$' && *(*bult + 1) != '?')
 	{
 		j = 0;
 		i = 0;
@@ -104,7 +109,7 @@ char	*skip_first_word(char **str)
 	return (*str);
 }
 
-int	echo(char *argv, char **env)
+int	echo(char *argv, char **env, int *status)
 {
 	char	**bult;
 	int		i;
@@ -145,10 +150,11 @@ int	echo(char *argv, char **env)
 			//	spaces = 1;
 			//put_normal(str, env, spaces);
 		}
-		put_cases(bult, env);
+		put_cases(bult, env, status);
 	}
 	if (i == 0)
 		ft_putchar('\n');
+	*status = 0;
 	return (0);
 }
 

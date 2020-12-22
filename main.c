@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/22 14:12:41 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/22 19:59:26 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		main(int ac, char **av, char **env)
 	char s[100];
 	int i;
 	int check;
+	t_semicolon	 *semicolon;
 
 
 	//char **av;
@@ -49,11 +50,14 @@ int		main(int ac, char **av, char **env)
 	//env = malloc(2*sizeof(char *));
 	//*env = "PATH=user/bin";
 	//env[1] = NULL;
+	status = 0;
+	semicolon = (t_semicolon *) malloc(sizeof(t_semicolon));
+	if (semicolon == NULL)
+		return (-1);
 	check = 0;
 	str = NULL;
 	pwd = NULL;
 	cd = malloc(sizeof(t_command_cd));
-
 	if (cd == NULL)
 		return (-1);
 	while (1)
@@ -80,29 +84,32 @@ int		main(int ac, char **av, char **env)
 			else if (i == 0 && (check_wich_command(str) == 1))
 				splits[1] = ft_strdup("/Users/molabhai");
 			if (check_wich_command(splits[0]) == 1)
-				cd_command(splits[1], i);
+				cd_command(splits[1], i, &status);
 			else if (check_wich_command(splits[0]) == 2)
-				pwd_command();
+				pwd_command(&status);
 			else if (check_wich_command(splits[0]) == 3)
-				env_command(env, splits);
+				env_command(env, splits, &status);
 			else if (check_wich_command(splits[0]) == 4)
-				export_command(env, str);
+				export_command(env, str, &status);
 			else if (check_wich_command(splits[0]) == 5)
-				unset_command(env, str);
+				unset_command(env, str, &status);
 			else if (check_wich_command(splits[0]) == 6)
 			{
 				//check the case of ech"o"
 				//case of PATH and path
 				//case of *
 				//echo """"hello""""
-				echo(str, env);
+				echo(str, env, &status);
 				//return (0);
 			}
 			else
 			{
 				execut_command(env, str, &check);
 				if (check == 1)
+				{
 					ft_printf("Command [%s] doesnt exist\n", splits[0]);
+					status = 127;
+				}
 			}
 		}
 		if (av[1])
