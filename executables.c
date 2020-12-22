@@ -6,13 +6,11 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/20 17:25:32 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/21 13:33:38 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/21 18:11:35 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
-
 
 char	*only_after_equal(char *str)
 {
@@ -73,12 +71,7 @@ void	execut_command(char **env, char *str, int *check)
 		while (commands[i])
 		{
 			commands[i] = ft_strjoin(commands[i], path); 
-			i += 1;
-		}
-		i = 0;
-		while (commands[i])
-		{
-			if (execve(commands[i], splits, NULL) == -1)
+			if (execve(commands[i], splits, env) == -1)
 				i += 1;
 		}
 		*check = 1;

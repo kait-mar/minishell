@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 11:56:12 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/12 18:53:06 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/21 13:04:48 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,10 @@ char	**take_only_carac(char *str)
 	k = 0;
 	while (str[i] != '\0')
 	{
-		if (ft_isalnum(str[i]))
+		if (ft_isprint(str[i]))
 		{
 			j = i;
-			while (((ft_isalnum(str[j]) == 1 ) || str[j] == '=') &&
+			while (((ft_isprint(str[j]) == 1 ) || str[j] == '=') &&
 					(check_single_double_quote(str[j]) == 0))
 				j += 1;
 			splits[k++] = from_to(str, i, j);
@@ -150,6 +150,7 @@ char	**take_only_carac(char *str)
 		if (str[i] != '\0')
 			i += 1;
 	}
+	splits[k++] = NULL;
 	return (splits);
 }
 
