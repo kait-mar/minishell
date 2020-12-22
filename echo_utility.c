@@ -34,7 +34,7 @@ int	print_env(char *bult, char **env, int which_quote)
 				while (env[j])
 				{
 					tab = ft_split(env[j], '=');
-					if (ft_strcmp(tab[0], str[0] + 1) == 0)
+					if (ft_strcmp(tab[0], take_first_word(str[0] + 1)) == 0)
 					{
 						ft_putstr(tab[1]);
 						i = 1;
@@ -48,6 +48,11 @@ int	print_env(char *bult, char **env, int which_quote)
 				bult++;
 				while (ft_isalnum(*bult) == 1 && *bult)
 					bult++;
+				while (*bult)
+				{
+					ft_putchar(*bult);
+						bult++;
+				}
 			}
 		}
 	}
