@@ -108,5 +108,6 @@ void	execut_command(char **env, char *str, int *check);
 char	**take_it_all(char *s, int c);
 char	*from_to(char *st, int i, int j);
 int		find_how_many(char *s, char c);
+char	*take_first_word(char *s);
 
 #endif
