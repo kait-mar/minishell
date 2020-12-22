@@ -38,7 +38,7 @@ int		print(char **bult, char **env)
 		while (env[j])
 		{
 			tab = ft_split(env[j], '=');
-			if (ft_strcmp(tab[0], (*bult) + 1) == 0)
+			if (ft_strcmp(tab[0], take_first_word((*bult) + 1)) == 0)
 			{
 				ft_putstr(tab[1]);
 				i = 1;
@@ -46,16 +46,15 @@ int		print(char **bult, char **env)
 			}
 			j++;
 		}
-		//if (i == 1)
+		(*bult)++;
+		while (ft_isalnum(**bult))
 			(*bult)++;
-		//else
-		//	ft_putstr(*bult);
+		while (**bult)
+		{
+			ft_putchar(**bult);
+			(*bult)++;
+		}
 	}
-	//else
-	//{
-		//ft_putstr(*bult);
-		//i = 1;
-	//}
 	return (i);
 }
 
