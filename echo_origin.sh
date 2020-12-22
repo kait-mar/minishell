@@ -19,8 +19,6 @@ echo  >> origin_file.txt
 
 echo '$PATH' >> origin_file.txt
 
-echo "$PAtH" >> origin_file.txt
-
 echo "hello 'world'" >> origin_file.txt
 
 echo hello $ >> origin_file.txt

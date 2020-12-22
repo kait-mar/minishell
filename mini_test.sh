@@ -2,8 +2,6 @@
 
 ./minishell "echo this is $PATH ." >> mini_file.txt
 
- ./minishell "echo $PATh" >> mini_file.txt
-
 ./minishell "echo hello world" >> mini_file.txt
 
 ./minishell "echo    hello    world"    >> mini_file.txt
