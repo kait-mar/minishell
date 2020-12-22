@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:46:24 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/12 17:20:14 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/21 18:13:43 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,5 @@ void	cd_command(char *argument, int argument_on)
 		return ;
 	s = without_that(argument, '"' );
 	if (chdir(s) < 0)
-	{
-		if (errno == 2)
-			ft_printf("%s: No such file or directory\n", s);
-		else
-			ft_printf("errno == > %d\n", errno);
-	}
+		ft_printf("%s\n", strerror(errno));
 }

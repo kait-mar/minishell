@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Libft/libft.h"
+#include "minishell.h"
 
 static int	coun(char *s, char c, char b)
 {
@@ -49,7 +50,7 @@ static char		**ft_tofree(char *tab[], int j)
 	free(tab);
 	return (NULL);
 }
-
+/*
 char	**keep_split(char *s, char c, char b)
 {
 	int			i;
@@ -136,6 +137,7 @@ char	**keep_split(char *s, char c, char b)
 	tab[j] = NULL;
 	return (tab);
 }
+<<<<<<< Updated upstream
 
 void	ft_putchar(char c)
 {
@@ -164,15 +166,21 @@ int	echo_strcmp(const char *s1, const char *s2)
 		return (0);
 }
 
+=======
+*/
 int main()
 {
-  char *s = "hello \" to'world'\"  ' yes' go";
-  char **line = keep_split(s, 39, 34);
+  char *s = "hello \" to'-world'\"  ' yes' go";
+  char **line = take_only_carac(s, 1);
   int i =0;
-  //while (line[i])
-  //  printf("|%s|\n", line[i++]);
-  char *bult = "ec\"ho\"";
-  printf("%d\n", echo_strcmp(bult, "echo"));
+  char *ar[] = {"ls", NULL};
+ // while (line[i])
+   // printf("|%s|\n", line[i++]);
+   int id = execve("/bin/ls", ar, NULL);
+   if (id == -1)
+	   printf("fail\n");
+  // char	*str = "   hello world  ";
+  // printf("|%s|\n", ft_strtrim_left(str, " "));
   return 0;
 }
 

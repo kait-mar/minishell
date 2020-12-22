@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/12 18:16:35 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/22 14:12:41 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,15 @@ int		main(int ac, char **av, char **env)
 	char	*pwd;
 	char s[100];
 	int i;
+	int check;
 
-	/*char **av;
-	char **env;
-	env = malloc(2*sizeof(char *));
-	*env = "PATH=user/bin";
-	env[1] = NULL;*/
+
+	//char **av;
+	//char **env;
+	//env = malloc(2*sizeof(char *));
+	//*env = "PATH=user/bin";
+	//env[1] = NULL;
+	check = 0;
 	str = NULL;
 	pwd = NULL;
 	cd = malloc(sizeof(t_command_cd));
@@ -55,9 +58,15 @@ int		main(int ac, char **av, char **env)
 		return (-1);
 	while (1)
 	{
-		getcwd(s, 100);
-		ft_printf("%s ", s);
-		str = reading_input(str);
+		if (!(av[1]))
+		{
+			getcwd(s, 100);
+			ft_printf("%s ", s);
+		}
+		if (av[1])
+			str = ft_strdup(av[1]);
+		else
+			str = reading_input(str);
 		//str = "echo \"hello '$'\"";
 		str = ft_strtrim(str, "\t");
 		splits = split_to_tokens(str);
@@ -90,8 +99,14 @@ int		main(int ac, char **av, char **env)
 				//return (0);
 			}
 			else
-				ft_printf("Command [%s] doesnt exist\n", splits[0]);
+			{
+				execut_command(env, str, &check);
+				if (check == 1)
+					ft_printf("Command [%s] doesnt exist\n", splits[0]);
+			}
 		}
+		if (av[1])
+			exit(EXIT_SUCCESS);
 	}
 	return(0);
 }

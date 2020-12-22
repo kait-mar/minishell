@@ -104,10 +104,15 @@ void	put_cases(char **bult, char **env)
 		else if (find_how_many(*bult, 39) == 2 && find_how_many(*bult, 34) == 2)
 		{
 			if (**bult == '\'')
-				*bult = ft_strtrim(*bult, "'");
+			{
+					*bult = ft_strtrim(*bult, "'");
+					ft_putstr(*bult);
+			}
 			else
+			{
 				*bult = ft_strtrim(*bult, "\"");
-			print_env(*bult, env, 1);
+				print_env(*bult, env, 1);
+			}
 		}
 		else if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
 		{
