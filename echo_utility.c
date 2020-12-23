@@ -34,7 +34,7 @@ int	print_env(char *bult, char **env, int which_quote, int *status)
 				while (env[j])
 				{
 					tab = ft_split(env[j], '=');
-					if (ft_strcmp(tab[0], str[0] + 1) == 0)
+					if (ft_strcmp(tab[0], take_first_word(str[0] + 1)) == 0)
 					{
 						ft_putstr(tab[1]);
 						i = 1;
@@ -48,6 +48,11 @@ int	print_env(char *bult, char **env, int which_quote, int *status)
 				bult++;
 				while (ft_isalnum(*bult) == 1 && *bult)
 					bult++;
+				while (*bult)
+				{
+					ft_putchar(*bult);
+						bult++;
+				}
 			}
 		}
 	}
@@ -99,10 +104,15 @@ void	put_cases(char **bult, char **env, int *status)
 		else if (find_how_many(*bult, 39) == 2 && find_how_many(*bult, 34) == 2)
 		{
 			if (**bult == '\'')
-				*bult = ft_strtrim(*bult, "'");
+			{
+					*bult = ft_strtrim(*bult, "'");
+					ft_putstr(*bult);
+			}
 			else
+			{
 				*bult = ft_strtrim(*bult, "\"");
 			print_env(*bult, env, 1, status);
+			}
 		}
 		else if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
 		{

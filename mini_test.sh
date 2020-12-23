@@ -26,7 +26,7 @@
 
 ./minishell  "echo this \"is \"a tes't'" >> mini_file.txt
 
- ./minishell "echo hello \"my\"friend" >> mini_file.txt
+ ./minishell "echo hello\"my\"friend" >> mini_file.txt
 
 ./minishell "echo I 'like'\$PATH" >> mini_file.txt
 
@@ -35,4 +35,3 @@
 ./minishell "echo \"hello \$mouad\"" >> mini_file.txt
 
  ./minishell "echo ..." >> mini_file.txt
-

@@ -121,7 +121,10 @@ int	echo(char *argv, char **env, int *status)
 	spaces = 0;
 	argv = skip_first_word(&argv);
 	if (ft_strcmp(argv, "") == 0)
+	{
+		ft_putchar('\n');
 		return (0);
+	}
 	argv = ft_strtrim(argv, " ");
 	argv = ft_strtrim(argv, "\t");
 	if (find(argv, '<') == 0 && find(argv, '>') == 0)
