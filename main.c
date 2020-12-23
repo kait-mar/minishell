@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/22 19:59:26 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/23 18:09:31 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int		main(int ac, char **av, char **env)
 	char s[100];
 	int i;
 	int check;
-	t_semicolon	 *semicolon;
-
+	t_meta	*meta;
+	t_meta	*head;
 
 	//char **av;
 	//char **env;
@@ -51,9 +51,6 @@ int		main(int ac, char **av, char **env)
 	//*env = "PATH=user/bin";
 	//env[1] = NULL;
 	status = 0;
-	semicolon = (t_semicolon *) malloc(sizeof(t_semicolon));
-	if (semicolon == NULL)
-		return (-1);
 	check = 0;
 	str = NULL;
 	pwd = NULL;
@@ -77,6 +74,13 @@ int		main(int ac, char **av, char **env)
 		i = how_mutch_argument(str, 0);
 		if (i > 0)
 		{
+			meta = split_it_all(str);
+			head = meta;
+			while (head != NULL)
+			{
+				printf("==> %d || ==> %s || ==> %c\n", head->command, head->argument, head->meta);
+				head = head->next;
+			}
 			i = how_mutch_argument(str, 2);
 			splits[0] = ft_strtrim(splits[0], "\t");
 			if (i == 1)

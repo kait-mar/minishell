@@ -18,17 +18,22 @@ char	*take_first_word(char *s)
 {
 	char	*string;
 	int		i;
+	int		j;
 
+	i = 0;
+	j = 0;
 	while (ft_isalnum(s[i]) && s[i])
 		i++;
 	if (!(string = malloc(i + 1)))
 		return (0);
 	i = 0;
+	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
+		i++;
 	while (ft_isalnum(s[i]) && s[i])
 	{
-		string[i] = s[i];
-		i++;
+		string[j++] = s[i++];
+	//	i++;
 	}
-	string[i] = '\0';
+	string[j] = '\0';
 	return (string);
 }

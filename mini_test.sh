@@ -20,13 +20,13 @@
 
  ./minishell "echo \"hello 'world'\"" >> mini_file.txt
 
- ./minishell "echo hello $" >> mini_file.txt
+ ./minishell "echo hello \$" >> mini_file.txt
 
 ./minishell "echo 'hello \"world\" '" >> mini_file.txt
 
 ./minishell  "echo this \"is \"a tes't'" >> mini_file.txt
 
- ./minishell "echo hello\"my\"friend" >> mini_file.txt
+ ./minishell "echo hello \"my\"friend" >> mini_file.txt
 
 ./minishell "echo I 'like'\$PATH" >> mini_file.txt
 

@@ -6,7 +6,7 @@
 /*   By: molabhai <molabhai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/22 19:33:15 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/23 17:29:06 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,14 @@ typedef	struct s_spaces
 
 /*	Metacharacter "Semicolon" */
 
-typedef struct	s_semicolon
+
+typedef struct s_meta
 {
-	char	*command;
 	char	*argument;
-	int		flag;
-}				t_semicolon;
+	int		command;
+	char	meta;
+	struct	s_meta	*next;
+}				t_meta;
 
 void	cd_command(char *argument, int i, int *status);
 char	**taking_command(char *str);
@@ -118,5 +120,9 @@ char	**take_it_all(char *s, int c);
 char	*from_to(char *st, int i, int j);
 int		find_how_many(char *s, char c);
 char	*take_first_word(char *s);
+t_meta	*split_it_all(char *str);
+int		check_wich_command(char	*str);
+char	*skip_first_word(char **str);
+
 
 #endif
