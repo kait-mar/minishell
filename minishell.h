@@ -6,12 +6,14 @@
 /*   By: molabhai <molabhai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/23 17:29:06 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/24 15:20:47 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
  #define MINISHELL_H
+ #define TRUE 1
+ #define FALSE 0
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -67,17 +69,17 @@ typedef struct s_meta
 	struct	s_meta	*next;
 }				t_meta;
 
-void	cd_command(char *argument, int i, int *status);
+void	cd_command(char *argument, int *status);
 char	**taking_command(char *str);
 char	**split_to_tokens(char *str);
-char	*reading_input(char *str);
+char	*reading_input(void);
 char	*without_that(char *str, char c);
 int		how_mutch_argument(char *str, int i);
 char	*ft_toStrLower(char *str);
 void	pwd_command(int *status);
 int		check_pwd(char *str);
 int		check_env(char *str);
-void	env_command(char **str, char **splits, int *status);
+void	env_command(char **str, t_meta *meta, int *status);
 void	export_command(char **env, char *splits, int *status);
 int		how_mutch_arguments(char **splits, int i);
 int		check_exp_lex(char *str);

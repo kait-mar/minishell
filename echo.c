@@ -102,7 +102,7 @@ char	*skip_first_word(char **str)
 		s = malloc(ft_strlen(*str) - i + 1);
 		while ((*str)[i] != '\0')
 			s[j++] = (*str)[i++];
-		(*str)[i] = '\0';
+		s[j] = '\0';
 		free(*str);
 		return (s);
 	}
@@ -144,14 +144,10 @@ int	echo(char *argv, char **env, int *status)
 			str = ft_split(*bult, ' ');
 			if (ft_strcmp(*str, "-n") == 0)
 			{
-				//here we use just str[0] so we can free it later!
 				str++;
 				i = 1;
 				*bult = skip_first_word(&(*bult));
 			}
-			//if ((*bult)[ft_strlen(*bult) - 1] == ' ' && ++bult != NULL)
-			//	spaces = 1;
-			//put_normal(str, env, spaces);
 		}
 		put_cases(bult, env, status);
 	}

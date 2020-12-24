@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:46:24 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/22 18:13:18 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/24 15:07:06 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,14 @@
 #include "./Libft/libft.h"
 #include <errno.h>
 
-char     *reading_input(char *str)
+char     *reading_input(void)
 {
+	char	*str;
+
+	str = NULL;
 	get_next_line(1, &str);
+	if (str == NULL)
+		printf("str ==> %s\n", str);
 	return (str);
 }
 
@@ -29,7 +34,8 @@ char		**split_to_tokens(char *str)
 	splits = ft_split(str, ' ');
 	return (splits);
 }
-		
+
+/*
 char 	**taking_command(char *str)
 {
 	char **splits;
@@ -39,9 +45,9 @@ char 	**taking_command(char *str)
 		return (NULL);
 	
 	return (splits);
-}
+}*/
 
-void	cd_command(char *argument, int argument_on, int *status)
+void	cd_command(char *argument, int *status)
 {
 	char *str;
 	char *s;

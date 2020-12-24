@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 15:33:43 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/23 18:13:38 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/24 15:12:27 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_lstadd(t_meta **alst, t_meta *new)
 
 
 
-char	**splits_by_meta(char	*str)
+char	**splits_by_meta(char	*str, int *meta)
 {
 	int	i;
 	int	j;
@@ -41,6 +41,11 @@ char	**splits_by_meta(char	*str)
 	j = 0;
 	k = 0;
 	splits = (char **) ft_calloc(sizeof(char *) , 1000);
+	if (str == NULL)
+	{
+		splits[k++] = ft_strdup(" ");
+		return (NULL);
+	}
 	while (str[i] != '\0')
 	{
 		if (str[i] == ';' || str[i] == '|'
@@ -49,6 +54,7 @@ char	**splits_by_meta(char	*str)
 			splits[k++] = from_to(str, j, i + 1);
 			 i = i + 1;
 			 j = i;
+			 *meta = 1;
 		}
 		else
 			i += 1;
@@ -66,17 +72,23 @@ t_meta	*split_it_all(char *str)
 	char	**splits;
 	char	*s;
 	int		i;
+	int		check;
 
 	i = 0;
+	check = 0;
 	if (!(global = (t_meta *) malloc(sizeof(t_meta))))
 		return (NULL);
-	splits = splits_by_meta(str);
-	s = ft_substr(splits[i], 0, ft_strlen(splits[i]) - 1);
+	splits = splits_by_meta(str, &check);
+	if (splits == NULL)
+		return (NULL);
+	if (check == 1)
+		s = ft_substr(splits[i], 0, ft_strlen(splits[i]) - 1);
+	else if (check == 0)
+		s = ft_substr(splits[i], 0, ft_strlen(splits[i]));
 	global->command = check_wich_command(take_first_word(splits[i]));
 	global->argument = skip_first_word(&s);
 	global->meta = splits[i][ft_strlen(splits[i]) - 1];
 	global->next = NULL;
-		printf("splits[i] == > %s\n", splits[i]);
 	i += 1;
 	while (splits[i])
 	{
@@ -94,7 +106,6 @@ t_meta	*split_it_all(char *str)
 		temp->argument = skip_first_word(&s);
 		temp->next = NULL;
 		ft_lstadd(&global, temp);
-		printf("splits[i] == > %s\n", splits[i]);
 		i += 1;
 	}
 	return (global);

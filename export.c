@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 16:19:20 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/22 18:38:40 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/24 11:56:13 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,23 +183,24 @@ void	export_command(char **env, char *str, int *status)
 	free_export(export);
 }
 
-void	env_command(char **env, char **splits, int *status)
+void	env_command(char **env, t_meta *meta, int *status)
 {
 	int i;
-	int j;
 
 	i = 0;
-	j = 0;
-	while (splits[j] != NULL)
+ 	if (ft_strncmp(meta->argument, "", ft_strlen(meta->argument)) != 0)
 	{
-		splits[j] = ft_strtrim(splits[j], "\t");
-		if (check_env(splits[j]) == 1)
+		while (meta != NULL)
 		{
-			ft_printf("Command [%s] doesnt exist\n", splits[j]);
-			*status = 127;
-			return ;
+			meta->argument = ft_strtrim(meta->argument, "\t");
+			if (check_env(meta->argument) == 1)
+			{
+				ft_printf("Command [%s] doesnt exist\n", meta->argument);
+				*status = 127;
+				return ;
+			}
+			meta = meta->next;
 		}
-		j += 1;
 	}
 	while (env[i])
 	{

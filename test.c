@@ -3,6 +3,13 @@
 #include "Libft/libft.h"
 #include "minishell.h"
 
+
+
+
+
+
+
+
 static int	coun(char *s, char c, char b)
 {
 	int	i;
