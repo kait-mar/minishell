@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/24 15:22:31 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/24 15:36:05 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,18 @@ int		main(int ac, char **av, char **env)
 	str = NULL;
 	while (TRUE)
 	{
-		prompt();
-		str = reading_input();
+		if (av[1])
+			str = ft_strdup(av[1]);
+		else
+		{
+			prompt();
+			str = reading_input();
+		}
 		str = ft_strtrim(str, "\t");
 		meta = split_it_all(str);
 		built_in(meta, str, env, status);
+		if (av[1])
+			exit(EXIT_SUCCESS);
 	}
 	return(0);
 }

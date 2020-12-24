@@ -1,10 +1,6 @@
 
 echo    hello    world    >> origin_file.txt
 
-echo this is $PATH. >> origin_file.txt
-
-echo this is $PATH . >> origin_file.txt
-
 echo hello world >> origin_file.txt
 
 ech"o" hello >> origin_file.txt
@@ -14,6 +10,8 @@ ech'o' hello >> origin_file.txt
 ec"ho" hello >> origin_file.txt
 
 ech"""o""" hello >> origin_file.txt
+
+#echo this is $PATH . >> origin_file.txt
 
 #echo  >> origin_file.txt FAIL
 

@@ -1,10 +1,8 @@
-./minishell "echo this is \$PATH." > mini_file.txt
 
-./minishell "echo this is \$PATH ." >> mini_file.txt
-
-./minishell "echo hello world" >> mini_file.txt
 
 ./minishell "echo    hello    world"    >> mini_file.txt
+
+./minishell "echo hello world" >> mini_file.txt
 
  ./minishell "ech\"o\" hello" >> mini_file.txt
 
@@ -35,3 +33,4 @@
 ./minishell "echo \"hello \$mouad\"" >> mini_file.txt
 
  ./minishell "echo ..." >> mini_file.txt
+

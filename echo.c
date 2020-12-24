@@ -20,13 +20,11 @@ int		print(char **bult, char **env, int *status)
 	int		fd;
 
 	//Adde by The Hell
-	fd = open("/Users/molabhai/Desktop/minishell/mini_file.txt",O_RDWR);
 	//add a split here
 	i = 0;
 	while (**bult != '$' && **bult != '\0')
 	{
 		ft_putchar(**bult);
-		ft_putchar_fd(**bult, fd);
 		(*bult)++;
 		i = 1;
 	}
@@ -38,7 +36,6 @@ int		print(char **bult, char **env, int *status)
 	else if (**bult == '$' && *(*bult + 1) == '\0')
 	{
 		ft_putchar(**bult);
-		ft_putchar_fd(**bult, fd);
 		return (1);
 	}
 	else if (**bult == '$' && *(*bult + 1) != '?')
@@ -51,7 +48,6 @@ int		print(char **bult, char **env, int *status)
 			if (ft_strcmp(tab[0], take_first_word((*bult) + 1)) == 0)
 			{
 				ft_putstr(tab[1]);
-				ft_putstr_fd(tab[1], fd);
 				i = 1;
 				break ;
 			}
