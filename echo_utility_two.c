@@ -37,3 +37,21 @@ char	*take_first_word(char *s)
 	string[j] = '\0';
 	return (string);
 }
+
+void	stream_directory()
+{
+	DIR				*dir;
+	struct dirent	*pdir;
+
+	if ((dir = opendir(".")) != NULL)
+	{
+		while ((pdir = readdir(dir)) != NULL)
+		{
+			if (*pdir->d_name != '.')
+			{
+				ft_putstr(pdir->d_name);
+				write(1, " ", 1);
+			}
+		}
+	}
+}

@@ -12,6 +12,19 @@ void	ft_putstr(char *s)
 	}
 }
 
+int		only_star(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '*' && s[i] != '\0')
+		i++;
+	if ((s[i] == '*' && (s[i + 1] == ' ' || s[i + 1] == '\0' || s[i + 1] == '\t')) ||
+		(s[i] == '*' && (s[i - 1] == ' ' || s[i - 1] == '\0' || s[i - 1] == '\t')))
+		return (1);
+	else
+		return (0);
+}
 int		print(char **bult, char **env, int *status)
 {
 	int		j;
@@ -22,6 +35,8 @@ int		print(char **bult, char **env, int *status)
 	//Adde by The Hell
 	//add a split here
 	i = 0;
+	if (only_star(*bult) == 1)
+		stream_directory();
 	while (**bult != '$' && **bult != '\0')
 	{
 		ft_putchar(**bult);
@@ -99,9 +114,10 @@ char	*skip_first_word(char **str)
 		while ((*str)[i] != '\0')
 			s[j++] = (*str)[i++];
 		s[j] = '\0';
-		if (*str)
+		
+		
 			free(*str);
-		printf("Here Skip \n");
+		//printf("Here Skip \n");
 		return (s);
 	}
 	return (*str);

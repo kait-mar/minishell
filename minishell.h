@@ -126,6 +126,7 @@ t_meta	*split_it_all(char *str);
 int		check_wich_command(char	*str);
 char	*skip_first_word(char **str);
 void	free_meta_struct(t_meta *meta);
-
+int		only_star(char *str);
+void	stream_directory();
 
 #endif
