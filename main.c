@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/24 15:36:05 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/26 12:00:38 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,19 @@ int		main(int ac, char **av, char **env)
 		}
 		str = ft_strtrim(str, "\t");
 		meta = split_it_all(str);
+		head = meta;
 		built_in(meta, str, env, status);
+		if (head->next != NULL)
+		{
+			printf("Here\n");
+			while (head->next != NULL)
+			{
+				printf("meta->command == %d || meta->argument == %s || meta->char == %c\n", head->command, head->argument, head->meta);
+				head = head->next;
+			}
+		}
+		printf("meta->command == %d || meta->argument == %s || meta->char == %c\n", head->command, head->argument, head->meta);
+		free_meta_struct(meta);
 		if (av[1])
 			exit(EXIT_SUCCESS);
 	}

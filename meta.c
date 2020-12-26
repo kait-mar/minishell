@@ -6,13 +6,32 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 15:33:43 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/24 15:12:27 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/26 12:50:59 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "minishell.h"
+
+static int	until_meta(char *str)
+{
+	int i;
+
+	i = 0;
+	while ((str[i] != ';' || str[i] != '<' || str[i] != '>' ||
+				(str[i]  != '>' && str[i + 1] != '>')) && str[i] != '\0')
+		i += 1;
+	return (i);
+}
+
+/*
+static char		*skip_word(char	*str)
+{
+	int	 i;
+
+	i = 0;
+	while 
+}*/
+
 void	ft_lstadd(t_meta **alst, t_meta *new)
 {
 	t_meta *lst;
@@ -28,7 +47,27 @@ void	ft_lstadd(t_meta **alst, t_meta *new)
 	}
 }
 
+static	int		check_meta(char *str)
+{
+	int	i;
 
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == ';' || str[i] == '|'
+			|| str[i] == '<' || str[i] == '>')
+			return (TRUE);
+		i += 1;
+	}
+	return (FALSE);
+}
+
+
+void	free_meta_struct(t_meta *meta)
+{
+	free(meta->argument);
+	free(meta);
+}
 
 char	**splits_by_meta(char	*str, int *meta)
 {
@@ -52,16 +91,14 @@ char	**splits_by_meta(char	*str, int *meta)
 			|| str[i] == '<' || str[i] == '>')
 		{
 			splits[k++] = from_to(str, j, i + 1);
-			 i = i + 1;
-			 j = i;
-			 *meta = 1;
+			i = i + 1;
+			j = i;
+			*meta = 1;
 		}
 		else
 			i += 1;
 	}
 	splits[k++] = from_to(str, j, i);
-	if (splits[k] != NULL)
-		splits[k] = NULL;
 	return (splits);
 }
 
@@ -81,27 +118,42 @@ t_meta	*split_it_all(char *str)
 	splits = splits_by_meta(str, &check);
 	if (splits == NULL)
 		return (NULL);
-	if (check == 1)
-		s = ft_substr(splits[i], 0, ft_strlen(splits[i]) - 1);
-	else if (check == 0)
-		s = ft_substr(splits[i], 0, ft_strlen(splits[i]));
+	s = ft_substr(splits[i], 0, until_meta(splits[i])); 
+	if (check_meta(s) == TRUE)
+	{
+		s = ft_substr(splits[i], 0, until_meta(splits[i]) - 1); 
+		global->meta = splits[i][until_meta(splits[i]) - 1];
+		global->argument = skip_first_word(&s);
+	}
+	else if (check_meta(s) == FALSE)
+	{
+		global->meta = 0;
+		global->argument = skip_first_word(&s);
+	}
 	global->command = check_wich_command(take_first_word(splits[i]));
-	global->argument = skip_first_word(&s);
-	global->meta = splits[i][ft_strlen(splits[i]) - 1];
 	global->next = NULL;
 	i += 1;
 	while (splits[i])
 	{
+		printf("splits ==> %s\n", splits[i]);
 		if (!(temp = (t_meta *) malloc(sizeof(t_meta))))
 			return (NULL);
 		temp->command = check_wich_command(take_first_word(splits[i]));
-		s = ft_substr(splits[i], 0, ft_strlen(splits[i]) - 1);
-		if ((temp->meta = splits[i][ft_strlen(splits[i])]) == ';')
-			s = ft_substr(splits[i], 0, ft_strlen(splits[i]) - 1);
-		else
+		s = ft_substr(splits[i], 0 , until_meta(splits[i])); 
+		if (check_meta(s) == TRUE)
 		{
-			s = splits[i];
+			s = ft_substr(splits[i], 0, until_meta(splits[i]) - 1); 
+			temp->meta = splits[i][until_meta(splits[i]) - 1];
+			printf("s meta == > %s\n", skip_first_word(&s));
+			temp->argument = skip_first_word(&s);
+			printf("temp meta => %s\n", temp->argument);
+		}
+		else if (check_meta(s) == FALSE)
+		{
 			temp->meta = 0;
+			printf("s == > %s\n", skip_first_word(&s));
+			temp->argument = skip_first_word(&s);
+			printf("temp => %s\n", temp->argument);
 		}
 		temp->argument = skip_first_word(&s);
 		temp->next = NULL;

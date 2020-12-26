@@ -6,7 +6,7 @@
 /*   By: molabhai <molabhai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/24 15:20:47 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/26 11:04:09 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ char	*take_first_word(char *s);
 t_meta	*split_it_all(char *str);
 int		check_wich_command(char	*str);
 char	*skip_first_word(char **str);
+void	free_meta_struct(t_meta *meta);
 
 
 #endif
