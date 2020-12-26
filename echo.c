@@ -99,7 +99,9 @@ char	*skip_first_word(char **str)
 		while ((*str)[i] != '\0')
 			s[j++] = (*str)[i++];
 		s[j] = '\0';
-		free(*str);
+		if (*str)
+			free(*str);
+		printf("Here Skip \n");
 		return (s);
 	}
 	return (*str);

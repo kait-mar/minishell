@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 15:33:43 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/26 12:50:59 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/26 14:54:19 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,6 @@ t_meta	*split_it_all(char *str)
 			temp->argument = skip_first_word(&s);
 			printf("temp => %s\n", temp->argument);
 		}
-		temp->argument = skip_first_word(&s);
 		temp->next = NULL;
 		ft_lstadd(&global, temp);
 		i += 1;

@@ -6,7 +6,7 @@
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/26 12:00:38 by molabhai         ###   ########.fr       */
+/*   Updated: 2020/12/26 14:19:30 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int		main(int ac, char **av, char **env)
 		built_in(meta, str, env, status);
 		if (head->next != NULL)
 		{
-			printf("Here\n");
 			while (head->next != NULL)
 			{
 				printf("meta->command == %d || meta->argument == %s || meta->char == %c\n", head->command, head->argument, head->meta);
