@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-
-
 static void	 built_in(t_meta *meta, char *str, char **env, int status)
 {
 	int check;
@@ -70,8 +68,8 @@ int		check_wich_command(char *str)
 	return (0);
 }
 
-int		main()
-//int		main(int ac, char **av, char **env)
+//int		main()
+int		main(int ac, char **av, char **env)
 {
 	char *str;
 	int		status;
@@ -81,20 +79,20 @@ int		main()
 	status = 0;
 	head = NULL;
 	str = NULL;
-	char **env;
-	env = NULL;
+	/*char **env;
+	env = NULL;*/
 	while (TRUE)
 	{
-		/*if (av[1])
+		if (av[1])
 			str = ft_strdup(av[1]);
 		else
 		{
 			prompt();
 			
 			str = reading_input();
-		}*/
+		}
 
-		str = "cd ; echo \"ghdvc\"";
+		//str = "cd ; echo \"ghdvc\"";
 		str = ft_strtrim(str, "\t");
 		meta = split_it_all(str);
 		head = meta;
@@ -103,14 +101,14 @@ int		main()
 		{
 			while (head->next != NULL)
 			{
-			//	printf("meta->command == %d || meta->argument == %s || meta->char == %c\n", head->command, head->argument, head->meta);
+				printf("meta->command == %d || meta->argument == %s || meta->char == %c\n", head->command, head->argument, head->meta);
 				head = head->next;
 			}
-		}*/
-		//printf("meta->command == %d || meta->argument == %s || meta->char == %c\n", head->command, head->argument, head->meta);
+		}
+		printf("meta->command == %d || meta->argument == %s || meta->char == %c\n", head->command, head->argument, head->meta);*/
 		free_meta_struct(meta);
-		//if (av[1])
-		//	exit(EXIT_SUCCESS);
+		if (av[1])
+			exit(EXIT_SUCCESS);
 	}
 	return(0);
 }

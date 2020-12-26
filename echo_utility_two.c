@@ -30,10 +30,7 @@ char	*take_first_word(char *s)
 	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 		i++;
 	while (ft_isalnum(s[i]) && s[i])
-	{
 		string[j++] = s[i++];
-	//	i++;
-	}
 	string[j] = '\0';
 	return (string);
 }
@@ -53,5 +50,6 @@ void	stream_directory()
 				write(1, " ", 1);
 			}
 		}
+		closedir(dir);
 	}
 }
