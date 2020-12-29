@@ -29,11 +29,12 @@ static void	 built_in(t_meta *meta, char *str, char **env, int status)
 		unset_command(env, str, &status);
 	else if (meta->command == 6)
 	{
-		echo(str, env, &status);
+	    printf("==> %s\n", meta->argument);
+		echo(meta->argument, env, &status);
 	}
 	else
 	{
-		execut_command(env, str, &check);
+		execut_command(env, meta->argument, &check);
 		if (check == 1)
 		{
 			ft_printf("Command doesnt exist\n");
@@ -91,21 +92,17 @@ int		main(int ac, char **av, char **env)
 			
 			str = reading_input();
 		}
-
-		//str = "cd ; echo \"ghdvc\"";
 		str = ft_strtrim(str, "\t");
 		meta = split_it_all(str);
 		head = meta;
-		built_in(meta, str, env, status);
-		/*if (head->next != NULL)
-		{
-			while (head->next != NULL)
-			{
-				printf("meta->command == %d || meta->argument == %s || meta->char == %c\n", head->command, head->argument, head->meta);
-				head = head->next;
-			}
-		}
-		printf("meta->command == %d || meta->argument == %s || meta->char == %c\n", head->command, head->argument, head->meta);*/
+        while (head != NULL)
+        {
+            if (head->meta == ';')
+                built_in(head, str, env, status);
+            else if (head->meta == '\0')
+                built_in(head, str, env, status);
+            head = head->next;
+        }
 		free_meta_struct(meta);
 		if (av[1])
 			exit(EXIT_SUCCESS);

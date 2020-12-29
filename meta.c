@@ -115,6 +115,7 @@ t_meta	*split_it_all(char *str)
 	if (!(global = (t_meta *) malloc(sizeof(t_meta))))
 		return (NULL);
 	splits = splits_by_meta(str, &check);
+    global->command = check_wich_command(take_first_word(splits[i]));
 	if (splits == NULL)
 		return (NULL);
 	s = ft_substr(splits[i], 0, until_meta(splits[i])); 
@@ -123,48 +124,55 @@ t_meta	*split_it_all(char *str)
 		s = ft_substr(splits[i], 0, until_meta(splits[i]) - 1);
 		global->meta = splits[i][until_meta(splits[i]) - 1];
 		if (s != NULL)
-			global->argument = skip_first_word(&s);
-		else
-			write (1, "here", 4);
+		{
+            if (global->command != 0&& global->command != 4 && global->command !=  6)
+                global->argument = skip_first_word(&s);
+            else if (global->command == 0 || global->command == 4 || global->command == 6)
+                global->argument = ft_strdup(s);
+        }
 	}
 	else if (check_meta(s) == FALSE)
 	{
 		global->meta = 0;
 		if (s != NULL)
-			global->argument = skip_first_word(&s);
-		else
-			write (1, "here", 4);
+        {
+		    if (global->command != 0&& global->command != 4 && global->command !=  6)
+                global->argument = skip_first_word(&s);
+		    else if (global->command == 0 || global->command == 4 || global->command == 6)
+
+		        global->argument = ft_strdup(s);
+        }
 	}
-	global->command = check_wich_command(take_first_word(splits[i]));
 	global->next = NULL;
 	i += 1;
 	while (splits[i])
 	{
-	//	printf("splits ==> %s\n", splits[i]);
 		if (!(temp = (t_meta *) malloc(sizeof(t_meta))))
 			return (NULL);
 		temp->command = check_wich_command(take_first_word(splits[i]));
 		s = ft_substr(splits[i], 0 , until_meta(splits[i])); 
 		if (check_meta(s) == TRUE)
 		{
-			s = ft_substr(splits[i], 0, until_meta(splits[i]) - 1); 
+			s = ft_substr(splits[i], 0, until_meta(splits[i]) - 1);
 			temp->meta = splits[i][until_meta(splits[i]) - 1];
-		//	printf("s meta == > %s\n", skip_first_word(&s));
 			if (s != NULL)
-			global->argument = skip_first_word(&s);
-		else
-			write (1, "here", 4);
-		//	printf("temp meta => %s\n", temp->argument);
+            {
+			    if (temp->command != 0 && temp->command != 4 && temp->command !=  6)
+                    temp->argument = skip_first_word(&s);
+			    else if (temp->command == 0 || temp->command == 4 || temp->command == 6)
+			        temp->argument = ft_strdup(s);
+            }
 		}
 		else if (check_meta(s) == FALSE)
 		{
 			temp->meta = 0;
-			//printf("s == > %s\n", skip_first_word(&s));
 			if (s != NULL)
-			global->argument = skip_first_word(&s);
-			else
-				write (1, "here", 4);
-			//printf("temp => %s\n", temp->argument);
+            {
+			    if (temp->command != 0 && temp->command != 4 && temp->command !=  6)
+                    temp->argument = skip_first_word(&s);
+                else if (temp->command == 0 || temp->command == 4 || temp->command == 6)
+                    temp->argument = ft_strdup(s);
+            }
 		}
 		temp->next = NULL;
 		ft_lstadd(&global, temp);
