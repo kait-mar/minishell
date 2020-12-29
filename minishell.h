@@ -66,6 +66,7 @@ typedef struct s_meta
 	char	*argument;
 	int		command;
 	char	meta;
+	int     meta_append;
 	struct	s_meta	*next;
 }				t_meta;
 
@@ -128,5 +129,8 @@ char	*skip_first_word(char **str);
 void	free_meta_struct(t_meta *meta);
 int		only_star(char *str);
 void	stream_directory();
+void    built_in(t_meta *meta, char *str, char **env, int status);
+void    append_file(t_meta *meta, char *str, char **env, int status);
+
 
 #endif

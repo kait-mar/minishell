@@ -21,7 +21,7 @@ FLAGS= -Wall -Wextra -Werror
 SRCS=  cd.c cd_utility.c pwd.c export.c \
 	   export_utility.c export_utility_two.c \
 	   unset.c main.c echo.c echo_utility.c keep_split.c\
-	   executables.c echo_utility_two.c meta.c
+	   executables.c echo_utility_two.c meta.c file_append.c
 
 OBJ = $(SRCS:.c=.o)
 
@@ -35,7 +35,6 @@ MAKINGLIBFT= cd Libft && make -f Makefile
 
 MAKINGPRINTF= cd Printf && make -f Makefile
 
-
 all: $(NAME)
 
 $(NAME):
@@ -47,6 +46,5 @@ clean:
 	$(DELETEOBJ) $(DELETENAME)
 	cd Libft && make fclean -f Makefile
 	cd Printf && make fclean -f Makefile
-
 
 re: clean all

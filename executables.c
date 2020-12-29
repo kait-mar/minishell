@@ -48,6 +48,7 @@ void	execut_command(char **env, char *str, int *check)
 	int 	i;
 	pid_t	pid;
 	int		status;
+	int     fd;
 
 	i = 0;
 	if ((pid = fork()) < 0)

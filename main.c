@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	 built_in(t_meta *meta, char *str, char **env, int status)
+void	 built_in(t_meta *meta, char *str, char **env, int status)
 {
 	int check;
 
@@ -28,10 +28,7 @@ static void	 built_in(t_meta *meta, char *str, char **env, int status)
 	else if (meta->command == 5)
 		unset_command(env, str, &status);
 	else if (meta->command == 6)
-	{
-	    printf("==> %s\n", meta->argument);
 		echo(meta->argument, env, &status);
-	}
 	else
 	{
 		execut_command(env, meta->argument, &check);
@@ -89,7 +86,6 @@ int		main(int ac, char **av, char **env)
 		else
 		{
 			prompt();
-			
 			str = reading_input();
 		}
 		str = ft_strtrim(str, "\t");
@@ -99,6 +95,11 @@ int		main(int ac, char **av, char **env)
         {
             if (head->meta == ';')
                 built_in(head, str, env, status);
+            else if (head->meta_append == 1)
+            {
+                printf("here\n");
+                append_file(meta, str, env, status);
+            }
             else if (head->meta == '\0')
                 built_in(head, str, env, status);
             head = head->next;
