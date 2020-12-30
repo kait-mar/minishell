@@ -62,6 +62,8 @@ int		check_wich_command(char *str)
 		return (5);
 	if (echo_strcmp(str, "echo") == 0)
 		return (6);
+	if (ft_strncmp(str, "exit", ft_strlen(str)) == 0)
+	    return (7);
 	return (0);
 }
 
@@ -90,14 +92,14 @@ int		main(int ac, char **av, char **env)
 		head = meta;
         while (head != NULL)
         {
-            printf("argument == %s || command %d\n", meta->argument, meta->command);
             if (head->meta == ';')
                 built_in(head, str, env, status);
             else if (head->meta_append == 1)
                 head = append_file(head, str, env, status);
             else if (head->meta == '\0')
                 built_in(head, str, env, status);
-            head = head->next;
+            if (head != NULL)
+                head = head->next;
         }
 		free_meta_struct(meta);
 		if (av[1])

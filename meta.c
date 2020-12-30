@@ -161,7 +161,6 @@ t_meta	*split_it_all(char *str)
             s = ft_substr(splits[i], 0, until_meta(splits[i]) - 1);
         }
 		global->meta = splits[i][until_meta(splits[i]) - 1];
-		printf("==> %c\n", global->meta);
 		if (s != NULL)
 		{
             if (global->command != 0&& global->command != 4 && global->command !=  6)
@@ -203,10 +202,20 @@ t_meta	*split_it_all(char *str)
 		if (!(temp = (t_meta *) malloc(sizeof(t_meta))))
 			return (NULL);
 		temp->command = check_wich_command(take_first_word(splits[i]));
-		s = ft_substr(splits[i], 0 , until_meta(splits[i])); 
+		s = ft_substr(splits[i], 0 , until_meta(splits[i]));
+		printf("s == > %s\n", s);
 		if (check_meta(s) == TRUE)
 		{
-			s = ft_substr(splits[i], 0, until_meta(splits[i]) - 1);
+            if (check_append(s) == TRUE)
+            {
+                s = ft_substr(splits[i], 0, until_meta(splits[i]) - 2);
+                temp->meta_append = 1;
+            }
+            else if (check_append(s) == FALSE)
+            {
+                temp->meta_append = 0;
+                s = ft_substr(splits[i], 0, until_meta(splits[i]) - 1);
+            }
 			temp->meta = splits[i][until_meta(splits[i]) - 1];
 			if (s != NULL)
             {
@@ -222,10 +231,6 @@ t_meta	*split_it_all(char *str)
                     temp->argument = ft_strtrim(temp->argument, "\t");
                 }
             }
-            if (check_append(s) == TRUE)
-                temp->meta_append = 1;
-            else if (check_append(s) == FALSE)
-                temp->meta_append = 0;
 		}
 		else if (check_meta(s) == FALSE)
 		{

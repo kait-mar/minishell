@@ -22,16 +22,30 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int status)
     int i;
 
     head = meta;
+    i = 0;
     output_from = ft_strdup(head->argument);
-    head = head->next;
-    output_to = ft_strdup(head->argument);
-    output_to = ft_strtrim(output_to, " ");
-    fd = open(output_to, O_CREAT | O_APPEND | O_RDWR, S_IRWXU);
+    output_to = ft_strtrim(head->argument, " ");
+    if ((fd = open(output_to, O_CREAT | O_APPEND | O_RDWR, S_IRWXU)) == -1)
+    {
+        ft_printf("%s", strerror(errno));
+        return (NULL);
+    }
+    while (head->meta_append != 0)
+    {
+        head = head->next;
+        i += 1;
+        output_to = ft_strtrim(head->argument, " ");
+        if ((fd = open(output_to, O_CREAT | O_APPEND | O_RDWR, S_IRWXU)) == -1)
+        {
+            ft_printf("%s", strerror(errno))
+            return (NULL);
+        }
+    }
     if ((pid = fork()) < 0)
         ft_printf("%s\n", strerror(errno));
     else if (pid == 0)
     {
-        if ((i = dup2(fd, 1)) == -1)
+        if (dup2(fd, 1) == -1)
             ft_printf("%s\n", strerror(errno));
         built_in(meta, str, env, status);
         close(fd);
@@ -43,6 +57,10 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int status)
             ft_printf("Error has occured\n");
         close(fd);
     }
-    meta = meta->next;
+    while (i  != 0)
+    {
+        meta = meta->next;
+        i -= 1;
+    }
     return (meta);
 }

@@ -21,7 +21,8 @@ mini_test.sh
 minishell
 minishell.dSYM
 minishell.h
-pq
+pa
+papa
 pwd.c
 run.sh
 test.c
