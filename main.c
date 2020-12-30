@@ -34,7 +34,7 @@ void	 built_in(t_meta *meta, char *str, char **env, int status)
 		execut_command(env, meta->argument, &check);
 		if (check == 1)
 		{
-			ft_printf("Command doesnt exist\n");
+			ft_printf("Command doesnt [%s] exist\n", meta->argument);
 			status = 127;
 		}
 	}
@@ -62,7 +62,6 @@ int		check_wich_command(char *str)
 		return (5);
 	if (echo_strcmp(str, "echo") == 0)
 		return (6);
-	/* Here CHECK your command is lexically correct*/
 	return (0);
 }
 
@@ -77,8 +76,6 @@ int		main(int ac, char **av, char **env)
 	status = 0;
 	head = NULL;
 	str = NULL;
-	/*char **env;
-	env = NULL;*/
 	while (TRUE)
 	{
 		if (av[1])
@@ -93,13 +90,11 @@ int		main(int ac, char **av, char **env)
 		head = meta;
         while (head != NULL)
         {
+            printf("argument == %s || command %d\n", meta->argument, meta->command);
             if (head->meta == ';')
                 built_in(head, str, env, status);
             else if (head->meta_append == 1)
-            {
-                printf("here\n");
-                append_file(meta, str, env, status);
-            }
+                head = append_file(head, str, env, status);
             else if (head->meta == '\0')
                 built_in(head, str, env, status);
             head = head->next;

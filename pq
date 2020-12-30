@@ -1,11 +1,3 @@
- casa
- here
- k
- labhairi
- mouad
- s
- t
- test
 Libft
 Makefile
 Printf
@@ -29,6 +21,7 @@ mini_test.sh
 minishell
 minishell.dSYM
 minishell.h
+pq
 pwd.c
 run.sh
 test.c

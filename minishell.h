@@ -130,7 +130,8 @@ void	free_meta_struct(t_meta *meta);
 int		only_star(char *str);
 void	stream_directory();
 void    built_in(t_meta *meta, char *str, char **env, int status);
-void    append_file(t_meta *meta, char *str, char **env, int status);
+t_meta   *append_file(t_meta *meta, char *str, char **env, int status);
+int     check_append(char *s);
 
 
 #endif
