@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_meta  *append_file(t_meta *meta, char *str, char **env, int status)
+t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
 {
     int fd;
     char *output_from;
@@ -37,7 +37,7 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int status)
         output_to = ft_strtrim(head->argument, " ");
         if ((fd = open(output_to, O_CREAT | O_APPEND | O_RDWR, S_IRWXU)) == -1)
         {
-            ft_printf("%s", strerror(errno))
+            ft_printf("%s", strerror(errno));
             return (NULL);
         }
     }
@@ -53,7 +53,7 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int status)
     }
     else
     {
-        if (waitpid(pid, &status, WUNTRACED) == -1)
+        if (waitpid(pid, status, WUNTRACED) == -1)
             ft_printf("Error has occured\n");
         close(fd);
     }

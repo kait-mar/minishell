@@ -20,8 +20,9 @@ FLAGS= -Wall -Wextra -Werror
 
 SRCS=  cd.c cd_utility.c pwd.c export.c \
 	   export_utility.c export_utility_two.c \
-	   unset.c main.c echo.c echo_utility.c keep_split.c\
-	   executables.c echo_utility_two.c meta.c file_append.c
+	   unset.c main.c echo.c echo_utility.c keep_split.c \
+	   executables.c echo_utility_two.c meta.c file_append.c \
+	   exit.c
 
 OBJ = $(SRCS:.c=.o)
 

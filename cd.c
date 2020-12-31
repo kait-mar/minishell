@@ -62,7 +62,8 @@ void	cd_command(char *argument, int *status)
 		ft_printf("%s\n", strerror(errno));
 		*status = 1;
 	}
+	else
+        *status = 0;
 	free(s);
 	s = NULL;
-	*status = 0;
 }

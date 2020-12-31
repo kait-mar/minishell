@@ -12,33 +12,35 @@
 
 #include "minishell.h"
 
-void	 built_in(t_meta *meta, char *str, char **env, int status)
+void	 built_in(t_meta *meta, char *str, char **env, int *status)
 {
 	int check;
 
 	check = 0;
 	if (meta->command == 1)
-		cd_command(meta->argument, &status);
+		cd_command(meta->argument, status);
 	else if (meta->command == 2)
-		pwd_command(&status);
+		pwd_command(status);
 	else if (meta->command  == 3)
-		env_command(env, meta, &status);
+		env_command(env, meta, status);
 	else if (meta->command == 4)
-		export_command(env, str, &status);
+		export_command(env, str, status);
 	else if (meta->command == 5)
-		unset_command(env, str, &status);
+		unset_command(env, str, status);
 	else if (meta->command == 6)
-		echo(meta->argument, env, &status);
-	else
+		echo(meta->argument, env, status);
+	else if (meta->command == 0)
 	{
 		execut_command(env, meta->argument, &check);
 		if (check == 1)
 		{
 			ft_printf("Command doesnt [%s] exist\n", meta->argument);
-			status = 127;
+			*status = 127;
 		}
 	}
-}	
+    if (meta->command == 7)
+        exit_command(*status, meta->argument);
+}
 
 static	void	prompt(void)
 {
@@ -62,12 +64,11 @@ int		check_wich_command(char *str)
 		return (5);
 	if (echo_strcmp(str, "echo") == 0)
 		return (6);
-	if (ft_strncmp(str, "exit", ft_strlen(str)) == 0)
+	if (check_exit(str) == 1)
 	    return (7);
 	return (0);
 }
 
-//int		main()
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -93,17 +94,18 @@ int		main(int ac, char **av, char **env)
         while (head != NULL)
         {
             if (head->meta == ';')
-                built_in(head, str, env, status);
+                built_in(head, str, env, &status);
             else if (head->meta_append == 1)
-                head = append_file(head, str, env, status);
+                head = append_file(head, str, env, &status);
             else if (head->meta == '\0')
-                built_in(head, str, env, status);
+                built_in(head, str, env, &status);
             if (head != NULL)
                 head = head->next;
         }
-		free_meta_struct(meta);
 		if (av[1])
 			exit(EXIT_SUCCESS);
+		else
+            free_meta_struct(meta);
 	}
 	return(0);
 }
