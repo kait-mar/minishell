@@ -34,15 +34,53 @@ char 	*ft_toStrLower(char *str)
 	return (s);
 }
 
+static  int ft_isupper(int c)
+{
+    if (c >= 65 && c <= 90)
+        return (1);
+    return (0);
+}
 
-int		check_pwd(char *str)
+int     check_first_pwd(char *str)
+{
+    int i;
+
+    i = 0;
+    while (i < 3)
+    {
+        if (ft_isupper(str[i]) == 1)
+            return (1);
+        i += 1;
+    }
+    return (0);
+}
+
+int     check_after_first(char *str)
+{
+    int i;
+
+    i = 3;
+    while (str[i] != '\0')
+    {
+        if (ft_isprint(str[i]) == 1)
+            return (1);
+        i += 1;
+    }
+    return (0);
+}
+
+int		check_pwd(char *str, int *exept)
 {
 	int i;
 	char *s;
 	int on;
 
 	i = 0;
+	*exept = 0;
 	on = 0;
+	if (check_first_pwd(str) == 1)
+	    if (check_after_first(str) == 1)
+	        *exept = 1;
 	str = ft_toStrLower(str);
 	s = "pwd";
 	while (i < 3)
@@ -56,8 +94,7 @@ int		check_pwd(char *str)
 	return (on);
 }
 	
-
-void	pwd_command(int *status)
+void	pwd_command(int *status, int exept)
 {
 	char *str;
 
