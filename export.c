@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 16:19:20 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/24 11:56:13 by molabhai         ###   ########.fr       */
+/*   Updated: 2021/01/02 18:31:06 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
+
+//int     check_meta(char *s)
 
 int		check_quote(char *str)
 {
@@ -180,6 +182,7 @@ void	export_command(char **env, char *str, int *status)
 	}
 	else
 	{
+	    printf("s == > %s\n", splits[i]);
 		ft_printf("Error in export command\n");
 		*status = 1;
 	}

@@ -150,7 +150,6 @@ char	**take_only_carac(char *str)
 		if (str[i] != '\0')
 			i += 1;
 	}
-	splits[k++] = NULL;
 	return (splits);
 }
 

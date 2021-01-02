@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2021/01/02 18:27:22 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/01/02 18:29:47 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,12 @@ int		main(int ac, char **av, char **env)
         while (head != NULL)
         {
             if (head->meta == ';')
+            {
+                printf("Here\n");
                 built_in(head, str, env, &status);
+            }
             else if (head->meta_append == 1)
-			{
 				head = append_file(head, str, env, &status);
-			}
             else if (head->meta == '>')
             {
                 head = redirect_output(head, str, env, &status);
