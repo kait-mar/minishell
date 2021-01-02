@@ -1,57 +1,76 @@
 
-echo  "###### ECHO ######" >> origin_file.txt
+echo  "###### ECHO ######" >> echo_origin.txt
 
-echo    hello    world    >> origin_file.txt
+echo    hello    world    >> echo_origin.txt
 
-echo hello world >> origin_file.txt
+echo hello world >> echo_origin.txt
 
-#ech"o" hello >> origin_file.txt
+#ech"o" hello >> echo_origin.txt
 
-#ech'o' hello >> origin_file.txt
+#ech'o' hello >> echo_origin.txt
 
-#ec"ho" hello >> origin_file.txt
+#ec"ho" hello >> echo_origin.txt
 
-#ech"""o""" hello >> origin_file.txt
+#ech"""o""" hello >> echo_origin.txt
 
-#echo this is $PATH . >> origin_file.txt
+#echo this is $PATH . >> echo_origin.txt
 
-#echo  >> origin_file.txt FAIL
+#echo  >> echo_origin.txt FAIL
 
-echo '$PATH' >> origin_file.txt
+echo '$PATH' >> echo_origin.txt
 
-echo "hello 'world'" >> origin_file.txt
+echo "hello 'world'" >> echo_origin.txt
 
-echo hello $ >> origin_file.txt
+echo hello $ >> echo_origin.txt
 
-echo 'hello "world" ' >> origin_file.txt
+echo 'hello "world" ' >> echo_origin.txt
 
-echo this "is "a tes't' >> origin_file.txt
+echo this "is "a tes't' >> echo_origin.txt
 
-echo hello "my"friend >> origin_file.txt
+echo hello "my"friend >> echo_origin.txt
 
-echo I 'like'$PATH >> origin_file.txt
+echo I 'like'$PATH >> echo_origin.txt
 
-echo mol"abh" 'ai'ri >> origin_file.txt
+echo mol"abh" 'ai'ri >> echo_origin.txt
 
-echo "hello $mouad" >> origin_file.txt
+echo "hello $mouad" >> echo_origin.txt
 
-echo ... >> origin_file.txt
+echo ... >> echo_origin.txt
+
 #               BUILT_IN PWD
 
-echo  "###### PWD ######" >> origin_file.txt
+echo  "###### PWD ######" >> pwd_origin.txt
 
-pwd >> origin_file.txt
+pwd >> pwd_origin.txt
 
-pwd pwd >> origin_file.txt
+pwd pwd >> pwd_origin.txt
 
-pwd pwd pwd pwd pwd pwd >> origin_file.txt
+pwd pwd pwd pwd pwd pwd >> pwd_origin.txt
 
-pwd pwd pwd pWd pwd pwd >> origin_file.txt
+pwd pwd pwd pWd pwd pwd >> pwd_origin.txt
 
-Pwd pwd pwd pwd pwd pwd >> origin_file.txt
+Pwd pwd pwd pwd pwd pwd >> pwd_origin.txt
 
-pwd pwd pwd pwd pwd pwD >> origin_file.txt
+pwd pwd pwd pwd pwd pwD >> pwd_origin.txt
 
-PWD >> origin_file.txt
+PWD >> pwd_origin.txt
 
-PWD pwd >> origin_file.txt
+PWD pwd >> pwd_origin.txt  || >> echo_origin.txt
+
+echo  "###### ENV #######" >> env_origin.txt
+
+env >> env_origin.txt
+
+envi >> env_origin.txt
+
+env env env >> env_origin.txt
+
+env env env en >> env_origin.txt
+
+ENV >> env_origin.txt
+
+Env >> env_origin.txt
+
+eNv >> env_origin.txt
+
+enV >> env_origin.txt

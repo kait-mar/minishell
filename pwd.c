@@ -100,6 +100,12 @@ void	pwd_command(int *status, int exept)
 
 	if (!(str = (char *) ft_calloc(sizeof(char), 100)))
 		return ;
+	if (exept == 1)
+    {
+	    ft_printf("usage: pwd [-L | -P]\n");
+        *status = 1;
+        return ;
+    }
 	if (getcwd(str, 100) == NULL)
 	{
 		ft_printf("%s\n", strerror(errno));
