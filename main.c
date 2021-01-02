@@ -96,15 +96,14 @@ int		main(int ac, char **av, char **env)
         while (head != NULL)
         {
             if (head->meta == ';')
-                built_in(head, str, env, &status);
-            else if (head->meta_append == 1)
-			{
-				head = append_file(head, str, env, &status);
-			}
-            else if (head->meta == '>')
             {
-                redirect_output(head, str, env, &status);
+                printf("Here\n");
+                built_in(head, str, env, &status);
             }
+            else if (head->meta_append == 1)
+				head = append_file(head, str, env, &status);
+            else if (head->meta == '>')
+                redirect_output(head, str, env, &status);
             else if (head->meta == '\0')
                 built_in(head, str, env, &status);
             if (head != NULL)

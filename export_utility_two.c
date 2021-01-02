@@ -51,10 +51,10 @@ int		kait_count(char *str)
 	count = 0;
 	while (str[i] != '\0')
 	{
-		if (ft_isalnum(str[i]))
+		if (ft_isprint(str[i]))
 		{
 			j = i;
-			while (((ft_isalnum(str[j]) == 1 ) || str[j] == '=') &&
+			while (((ft_isprint(str[j]) == 1 ) || str[j] == '=') &&
 					(check_single_double_quote(str[j]) == 0))
 				j += 1;
 			count += 1;

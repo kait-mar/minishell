@@ -14,6 +14,8 @@
 #include "minishell.h"
 
 
+int     check_meta(char *s)
+
 int		check_quote(char *str)
 {
 	int i;
@@ -180,6 +182,7 @@ void	export_command(char **env, char *str, int *status)
 	}
 	else
 	{
+	    printf("s == > %s\n", splits[i]);
 		ft_printf("Error in export command\n");
 		*status = 1;
 	}
