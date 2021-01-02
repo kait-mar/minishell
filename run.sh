@@ -10,15 +10,18 @@
 #                                                                              #
 # **************************************************************************** #
 
-#!/bin/sh
+#!/bin/bash
 
 sh mini_test.sh
-
 sh echo_origin.sh
 
-cmp   echo_origin.txt echo_mini.txt
-#diff  -B -c  -s   mini_file.txt origin_file.txt
+diff  -B -c  -s   echo_origin.txt echo_mini.txt
+diff  -B -c  -s   pwd_origin.txt pwd_mini.txt
+diff  -B -c  -s   env_origin.txt env_mini.txt
+diff  -B -c  -s   export_origin.txt export_mini.txt
 
 rm echo_origin.txt echo_mini.txt
 rm pwd_origin.txt pwd_mini.txt
 rm env_origin.txt env_mini.txt
+#rm export_origin.txt export_mini.txt
+rm *.bak
