@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: molabhai <molabhai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/26 11:04:09 by molabhai         ###   ########.fr       */
+/*   Updated: 2021/01/02 17:18:23 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,6 @@ t_meta   *append_file(t_meta *meta, char *str, char **env, int *status);
 int     check_append(char *s);
 void    exit_command(int status, char *s);
 int     check_exit(char *str);
-void    redirect_output(t_meta *meta, char *str, char **env, int *status);
+t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status);
 
 #endif

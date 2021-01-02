@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2021/01/02 10:27:36 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/01/02 18:27:22 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		check_wich_command(char *str)
 	    return (7);
 	return (0);
 }
-
+//int			main()
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -81,6 +81,13 @@ int		main(int ac, char **av, char **env)
 	status = 0;
 	head = NULL;
 	str = NULL;
+
+	/*char **av;
+	char **env;
+	env = malloc(2*sizeof(char *));
+	*env = "PATH=user/bin";
+	env[1] = NULL;*/
+
 	while (TRUE)
 	{
 		if (av[1])
@@ -90,6 +97,7 @@ int		main(int ac, char **av, char **env)
 			prompt();
 			str = reading_input();
 		}
+		//str = "echo kbsx > pp";
 		str = ft_strtrim(str, "\t");
 		meta = split_it_all(str);
 		head = meta;
@@ -97,17 +105,16 @@ int		main(int ac, char **av, char **env)
         {
             if (head->meta == ';')
                 built_in(head, str, env, &status);
-			else if (head->meta == '>')
-			{
-				//printf("str is %s\nthe cammand : %d\nthe argument : %s\n the meta carac : %c\n", head->next->argument, head->command, head->argument, head->meta);
-				redirect_output(head, str, env, &status);
-				//return (0);
-			}
             else if (head->meta_append == 1)
 			{
 				head = append_file(head, str, env, &status);
-				printf("yes\n");
 			}
+            else if (head->meta == '>')
+            {
+                head = redirect_output(head, str, env, &status);
+				//return (0);
+				//printf("|%s|\n", head->argument);
+            }
             else if (head->meta == '\0')
                 built_in(head, str, env, &status);
             if (head != NULL)

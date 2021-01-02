@@ -100,6 +100,7 @@ t_export		*check_export(char **splits, char **env)
 	{
 		while (splits[i] != NULL)
 		{
+		    printf("==> %s\n", splits[i]);
 			splits[i] = ft_strtrim(splits[i], "\t");
 			if (check_double_quote(splits[i]) == 1)
 				splits[i] = without_that(splits[i], '\"');
