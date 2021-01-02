@@ -1,58 +1,89 @@
 
 #                   BUILT-IN ECHO
 
-echo  "###### ECHO ######" >> mini_file.txt
+echo  "###### ECHO ######" >> echo_mini.txt
 
-./minishell "echo    hello    world"    >> mini_file.txt
+./minishell "echo    hello    world"    >> echo_mini.txt
 
-./minishell "echo hello world" >> mini_file.txt
+./minishell "echo hello world" >> echo_mini.txt
 
-#./minishell "ech\"o\" hello" >> mini_file.txt
+#./minishell "ech\"o\" hello" >> echo_mini.txt
 
-#./minishell "ech'o' hello" >> mini_file.txt
+#./minishell "ech'o' hello" >> echo_mini.txt
 
-#./minishell "ec\"ho\" hello" >> mini_file.txt
+#./minishell "ec\"ho\" hello" >> echo_mini.txt
 
-#./minishell "ech\"\"\"o\"\"\" hello" >> mini_file.txt
+#./minishell "ech\"\"\"o\"\"\" hello" >> echo_mini.txt
 
-# ./minishell "echo"  >> mini_file.txt FAIL
+# ./minishell "echo"  >> echo_mini.txt FAIL
 
-./minishell "echo '\$PATH' " >> mini_file.txt
+./minishell "echo '\$PATH' " >> echo_mini.txt
 
-./minishell "echo \"hello 'world'\"" >> mini_file.txt
+./minishell "echo \"hello 'world'\"" >> echo_mini.txt
 
-./minishell "echo hello \$" >> mini_file.txt
+./minishell "echo hello \$" >> echo_mini.txt
 
-./minishell "echo 'hello \"world\" '" >> mini_file.txt
+./minishell "echo 'hello \"world\" '" >> echo_mini.txt
 
-./minishell  "echo this \"is \"a tes't'" >> mini_file.txt
+./minishell  "echo this \"is \"a tes't'" >> echo_mini.txt
 
- ./minishell "echo hello \"my\"friend" >> mini_file.txt
+ ./minishell "echo hello \"my\"friend" >> echo_mini.txt
 
-./minishell "echo I 'like'\$PATH" >> mini_file.txt
+./minishell "echo I 'like'\$PATH" >> echo_mini.txt
 
-./minishell "echo mol\"abh\" 'ai'ri" >> mini_file.txt
+./minishell "echo mol\"abh\" 'ai'ri" >> echo_mini.txt
 
-./minishell "echo \"hello \$mouad\"" >> mini_file.txt
+./minishell "echo \"hello \$mouad\"" >> echo_mini.txt
 
-./minishell "echo ..." >> mini_file.txt
+./minishell "echo ..." >> echo_mini.txt
 
 #               BUILT_IN PWD
+echo  "###### PWD ######" >> pwd_mini.txt
 
-echo  "###### PWD ######" >> mini_file.txt
+./minishell "pwd" >> pwd_mini.txt
 
-./minishell "pwd" >> mini_file.txt
+./minishell "pwd pwd " >> pwd_mini.txt
 
-./minishell "pwd pwd " >> mini_file.txt
+./minishell "pwd pwd pwd pwd pwd pwd" >> pwd_mini.txt
 
-./minishell "pwd pwd pwd pwd pwd pwd" >> mini_file.txt
+./minishell "pwd pwd pwd pWd pwd pwd" >> pwd_mini.txt
 
-./minishell "pwd pwd pwd pWd pwd pwd" >> mini_file.txt
+./minishell "Pwd pwd pwd pwd pwd pwd" >> pwd_mini.txt
 
-./minishell "Pwd pwd pwd pwd pwd pwd" >> mini_file.txt
+./minishell "pwd pwd pwd pwd pwd pwD" >> pwd_mini.txt
 
-./minishell "pwd pwd pwd pwd pwd pwD" >> mini_file.txt
+./minishell "PWD" >> pwd_mini.txt
 
-./minishell "PWD" >> mini_file.txt
+./minishell "PWD pwd" >> pwd_mini.txt
 
-./minishell "PWD pwd" >> mini_file.txt
+#             BUILT_IN ENV
+
+echo  "###### ENV #######" >> env_mini.txt
+
+./minishell " env " >> env_mini.txt
+
+./minishell "   env" >> env_mini.txt
+
+./minishell "env      " >> env_mini.txt
+
+./minishell " env " >> env_mini.txt
+
+./minishell " \"env\" " >> env_mini.txt
+
+./minishell " \"'env'\" " >> env_mini.txt
+
+./minishell " '\"env\"' " >> env_mini.txt
+
+./minishell "envi" >> env_mini.txt
+
+./minishell "env env env" >> env_mini.txt
+
+./minishell "env env env en" >> env_mini.txt
+
+./minishell "ENV" >> env_mini.txt
+
+./minishell "Env" >> env_mini.txt
+
+./minishell "eNv" >> env_mini.txt
+
+./minishell "enV" >> env_mini.txt

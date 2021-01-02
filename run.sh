@@ -16,6 +16,9 @@ sh mini_test.sh
 
 sh echo_origin.sh
 
-diff  -B -c  -s   mini_file.txt origin_file.txt
+cmp   echo_origin.txt echo_mini.txt
+#diff  -B -c  -s   mini_file.txt origin_file.txt
 
-rm mini_file.txt origin_file.txt
+rm echo_origin.txt echo_mini.txt
+rm pwd_origin.txt pwd_mini.txt
+rm env_origin.txt env_mini.txt

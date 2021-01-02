@@ -15,12 +15,14 @@
 void	 built_in(t_meta *meta, char *str, char **env, int *status)
 {
 	int check;
+	int  exept;
 
 	check = 0;
+	exept = 0;
 	if (meta->command == 1)
 		cd_command(meta->argument, status);
-	else if (meta->command == 2)
-		pwd_command(status);
+	else if (check_pwd(str, &exept) == 0)
+		pwd_command(status, exept);
 	else if (meta->command  == 3)
 		env_command(env, meta, status);
 	else if (meta->command == 4)
@@ -34,7 +36,7 @@ void	 built_in(t_meta *meta, char *str, char **env, int *status)
 		execut_command(env, meta->argument, &check);
 		if (check == 1)
 		{
-			ft_printf("Command doesnt [%s] exist\n", meta->argument);
+			ft_printf("bash: %s: command not found\n", meta->argument);
 			*status = 127;
 		}
 	}
@@ -54,8 +56,8 @@ int		check_wich_command(char *str)
 {
 	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[2]) == 0))
 		return (1);
-	 if (check_pwd(str) == 0)
-		return (2);
+	/*if (check_pwd(str) == 0)
+		return (2);*/
 	if (check_env(str) == 0)
 		return (3);
 	if (ft_strncmp(str, "export", 6) == 0 && (ft_isalpha(str[6]) == 0))
@@ -95,8 +97,17 @@ int		main(int ac, char **av, char **env)
         {
             if (head->meta == ';')
                 built_in(head, str, env, &status);
+			//else if (head->meta == '>')
+		//	{
+				//printf("str is %s\nthe cammand : %d\nthe argument : %s\n the meta carac : %c\n", head->next->argument, head->command, head->argument, head->meta);
+				//redirect_output(head, str, env, &status);
+				//return (0);
+			//}
             else if (head->meta_append == 1)
-                head = append_file(head, str, env, &status);
+			{
+				head = append_file(head, str, env, &status);
+				printf("yes\n");
+			}
             else if (head->meta == '\0')
                 built_in(head, str, env, &status);
             if (head != NULL)

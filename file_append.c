@@ -24,16 +24,11 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
     head = meta;
     i = 0;
     output_from = ft_strdup(head->argument);
-    output_to = ft_strtrim(head->argument, " ");
-    if ((fd = open(output_to, O_CREAT | O_APPEND | O_RDWR, S_IRWXU)) == -1)
-    {
-        ft_printf("%s", strerror(errno));
-        return (NULL);
-    }
     while (head->meta_append != 0)
     {
         head = head->next;
         i += 1;
+        output_to = head->argument;
         output_to = ft_strtrim(head->argument, " ");
         if ((fd = open(output_to, O_CREAT | O_APPEND | O_RDWR, S_IRWXU)) == -1)
         {
