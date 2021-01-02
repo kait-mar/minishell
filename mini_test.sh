@@ -34,5 +34,4 @@ echo  "###### ENV #######" >> env_mini.txt
 ./minishell "enV" >> env_mini.txt ; sed -i '.bak' 's/_\=.*//g' env_mini.txt ; sed -i '.bak' '/^$/d' env_mini.txt
 
 #               BUILT_IN EXPORT
-
-./minishell "export \"labhairi=mouaad\" "; ./minishell "env" >> export_mini.txt ; sed -i '.bak' 's/_\=.*//g' export_mini.txt ; sed -i '.bak' '/^$/d' export_mini.txt
+./minishell "export \"labhairi=mouaad\"; env"; sed -i '.bak' 's/_\=.*//g' export_mini.txt ; sed -i '.bak' '/^$/d' export_mini.txt

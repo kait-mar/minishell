@@ -97,17 +97,14 @@ int		main(int ac, char **av, char **env)
         {
             if (head->meta == ';')
                 built_in(head, str, env, &status);
-			else if (head->meta == '>')
-			{
-				//printf("str is %s\nthe cammand : %d\nthe argument : %s\n the meta carac : %c\n", head->next->argument, head->command, head->argument, head->meta);
-				redirect_output(head, str, env, &status);
-				//return (0);
-			}
             else if (head->meta_append == 1)
 			{
 				head = append_file(head, str, env, &status);
-				printf("yes\n");
 			}
+            else if (head->meta == '>')
+            {
+                redirect_output(head, str, env, &status);
+            }
             else if (head->meta == '\0')
                 built_in(head, str, env, &status);
             if (head != NULL)
