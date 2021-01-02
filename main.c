@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/26 14:19:30 by molabhai         ###   ########.fr       */
+/*   Updated: 2021/01/02 10:27:36 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,12 @@ int		main(int ac, char **av, char **env)
         {
             if (head->meta == ';')
                 built_in(head, str, env, &status);
-			//else if (head->meta == '>')
-		//	{
+			else if (head->meta == '>')
+			{
 				//printf("str is %s\nthe cammand : %d\nthe argument : %s\n the meta carac : %c\n", head->next->argument, head->command, head->argument, head->meta);
-				//redirect_output(head, str, env, &status);
+				redirect_output(head, str, env, &status);
 				//return (0);
-			//}
+			}
             else if (head->meta_append == 1)
 			{
 				head = append_file(head, str, env, &status);

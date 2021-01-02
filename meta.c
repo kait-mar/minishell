@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   meta.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 15:33:43 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/26 14:54:19 by molabhai         ###   ########.fr       */
+/*   Updated: 2021/01/02 10:24:14 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	**splits_by_meta(char	*str, int *meta)
 		    if (str[i + 1] == '>' && str[i] == '>')
             {
                 splits[k++] = from_to(str, j, i + 2);
-                printf("splits == > %s\n", splits[k - 1]);
+              //  printf("splits == > %s\n", splits[k - 1]);
                i += 2;
             }
 		    else
@@ -203,7 +203,7 @@ t_meta	*split_it_all(char *str)
 			return (NULL);
 		temp->command = check_wich_command(take_first_word(splits[i]));
 		s = ft_substr(splits[i], 0 , until_meta(splits[i]));
-		printf("s == > %s\n", s);
+	//	printf("s == > %s\n", s);
 		if (check_meta(s) == TRUE)
 		{
             if (check_append(s) == TRUE)
