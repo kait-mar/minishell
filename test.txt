@@ -1,0 +1,4 @@
+hello
+bash: test.txt: command not found
+/Users/kait-mar/Desktop/minishell it has returnedstr ==> (null)
+/Users/kait-mar/Desktop/minishell it has returnedstr ==> (null)

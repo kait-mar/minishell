@@ -134,5 +134,6 @@ t_meta   *append_file(t_meta *meta, char *str, char **env, int *status);
 int     check_append(char *s);
 void    exit_command(int status, char *s);
 int     check_exit(char *str);
+void    redirect_output(t_meta *meta, char *str, char **env, int *status);
 
 #endif
