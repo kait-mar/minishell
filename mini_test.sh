@@ -34,4 +34,11 @@ echo  "###### ENV #######" >> env_mini.txt
 ./minishell "enV" >> env_mini.txt ; sed -i '.bak' 's/_\=.*//g' env_mini.txt ; sed -i '.bak' '/^$/d' env_mini.txt
 
 #               BUILT_IN EXPORT
-./minishell "export \"labhairi=mouaad\"; env"; sed -i '.bak' 's/_\=.*//g' export_mini.txt ; sed -i '.bak' '/^$/d' export_mini.txt
+echo  "####### EXPORT #######" >> export.txt
+./minishell "export \"casa=negra\"; env" >> export.txt ; sed -i '.bak' 's/_\=.*//g' export.txt ; sed -i '.bak' '/^$/d' export.txt
+./minishell "export \"labhairi=mouaad\"; env" >> export.txt ; sed -i '.bak' 's/_\=.*//g' export.txt ; sed -i '.bak' '/^$/d' export.txt
+#./minishell "export casa=mouaad ; env" >> export_mini.txt ; sed -i '.bak' 's/_\=.*//g' export_mini.txt ; sed -i '.bak' '/^$/d' export_mini.txt
+#./minishell "export 'labhairi=negra'; env" >> export_mini.txt ; sed -i '.bak' 's/_\=.*//g' export_mini.txt ; sed -i '.bak' '/^$/d' export_mini.txt
+#./minishell "export \"labhairi =mouaad\"; env" >> export_mini.txt ; sed -i '.bak' 's/_\=.*//g' export_mini.txt ; sed -i '.bak' '/^$/d' export_mini.txt
+#./minishell "export \"lab= mouaad\"; env" >> export_mini.txt ; sed -i '.bak' 's/_\=.*//g' export_mini.txt ; sed -i '.bak' '/^$/d' export_mini.txt
+sort -o export_mini.txt export.txt

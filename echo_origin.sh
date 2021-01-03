@@ -35,4 +35,11 @@ eNv  >> env_origin.txt 2>&1 ; sed -i '.bak' 's/_\=.*//g' env_origin.txt ; sed -i
 enV  >> env_origin.txt 2>&1 ; sed -i '.bak' 's/_\=.*//g' env_origin.txt ; sed -i '.bak' '/^$/d' env_origin.txt
 
 #               BUILT_IN EXPORT
-export "labhairi=mouaad"; env >> export_origin.txt ; sed -i '.bak' 's/_\=.*//g' export_origin.txt ; sed -i '.bak' '/^$/d' export_origin.txt
+echo  "####### EXPORT #######" >> export_.txt
+export "casa=negra"; env >> export_.txt ; sed -i '.bak' 's/_\=.*//g' export_.txt ; sed -i '.bak' '/^$/d' export_.txt
+export "labhairi=mouaad"; env >> export_.txt ; sed -i '.bak' 's/_\=.*//g' export_.txt ; sed -i '.bak' '/^$/d' export_.txt
+#export casa=mouaad ; env >> export_origin.txt ; sed -i '.bak' 's/_\=.*//g' export_origin.txt ; sed -i '.bak' '/^$/d' export_origin.txt
+#export 'labhairi=negra'; env >> export_origin.txt ; sed -i '.bak' 's/_\=.*//g' export_origin.txt ; sed -i '.bak' '/^$/d' export_origin.txt
+#export "labhairi =mouaad"; env >> export_origin.txt ; sed -i '.bak' 's/_\=.*//g' export_origin.txt ; sed -i '.bak' '/^$/d' export_origin.txt
+#export "lab= mouaad"; env >> export_origin.txt ; sed -i '.bak' 's/_\=.*//g' export_origin.txt ; sed -i '.bak' '/^$/d' export_origin.txt
+sort -o export_origin.txt export_.txt

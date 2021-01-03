@@ -23,5 +23,6 @@ diff  -B -c  -s   export_origin.txt export_mini.txt
 rm echo_origin.txt echo_mini.txt
 rm pwd_origin.txt pwd_mini.txt
 rm env_origin.txt env_mini.txt
-rm export_origin.txt export_mini.txt
+#rm export_origin.txt export_mini.txt
+rm export.txt export_.txt
 rm *.bak

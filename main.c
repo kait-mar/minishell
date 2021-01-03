@@ -12,6 +12,26 @@
 
 #include "minishell.h"
 
+static  char    *semi_split(char *str)
+{
+    int     i;
+    char    *s;
+
+    i = 0;
+    while (str[i] != ';')
+        i += 1;
+    if (!(s = (char *) malloc((sizeof(char) * (i +1) ))))
+        return (NULL);
+    i = 0;
+    while (str[i] != ';')
+    {
+        s[i] = str[i];
+        i += 1;
+    }
+    s[i] = '\0';
+    return (s);
+}
+
 void	 built_in(t_meta *meta, char *str, char **env, int *status)
 {
 	int check;
@@ -74,6 +94,7 @@ int		check_wich_command(char *str)
 int		main(int ac, char **av, char **env)
 {
 	char *str;
+	char    *tmp;
 	int		status;
 	t_meta	*meta;
 	t_meta	*head;
@@ -81,27 +102,25 @@ int		main(int ac, char **av, char **env)
 	status = 0;
 	head = NULL;
 	str = NULL;
-	while (TRUE)
-	{
-		if (av[1])
-			str = ft_strdup(av[1]);
-		else
-		{
-			prompt();
-			str = reading_input();
-		}
-		str = ft_strtrim(str, "\t");
-		meta = split_it_all(str);
-		head = meta;
-        while (head != NULL)
-        {
-            if (head->meta == ';')
-            {
-                printf("Here\n");
-                built_in(head, str, env, &status);
+	tmp = NULL;
+	while (TRUE) {
+        if (av[1])
+            str = ft_strdup(av[1]);
+        else {
+            prompt();
+            str = reading_input();
+        }
+        str = ft_strtrim(str, "\t");
+        meta = split_it_all(str);
+        head = meta;
+        while (head != NULL) {
+            if (head->meta == ';') {
+                tmp = semi_split(str);
+                built_in(head, tmp, env, &status);
             }
+            /*else if (head->meta == '|')*/
             else if (head->meta_append == 1)
-				head = append_file(head, str, env, &status);
+                head = append_file(head, str, env, &status);
             else if (head->meta == '>')
                 redirect_output(head, str, env, &status);
             else if (head->meta == '\0')
@@ -109,10 +128,8 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-		if (av[1])
-			exit(EXIT_SUCCESS);
-		else
-            free_meta_struct(meta);
+        if (av[1])
+            exit(EXIT_SUCCESS);
 	}
 	return(0);
 }
