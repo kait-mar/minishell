@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2021/01/02 18:29:47 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/01/03 16:28:03 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int		main(int ac, char **av, char **env)
 			prompt();
 			str = reading_input();
 		}
-		//str = "echo kbsx > pp";
+		//str = "echo hello > kait";
 		str = ft_strtrim(str, "\t");
 		meta = split_it_all(str);
 		head = meta;
@@ -123,8 +123,8 @@ int		main(int ac, char **av, char **env)
         }
 		if (av[1])
 			exit(EXIT_SUCCESS);
-		else
-            free_meta_struct(meta);
+		//else
+     //       free_meta_struct(meta);
 	}
 	return(0);
 }

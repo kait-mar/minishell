@@ -9,8 +9,11 @@ int main()
 {
   char *ar[] = {"ls", NULL};
   int pid;
-  int fd = open("test.txt", O_WRONLY | O_CREAT);
-  dup2(fd, 1);
-  printf("try this redirection meta\n");
+  int fd = open("test.txt", O_RDWR | O_CREAT, S_IRWXU);
+  write(fd, "hello", 5);
+  close(fd);
+  int fd2 = open("test.txt", O_RDWR | O_CREAT, S_IRWXU);
+  write(fd, "hi", 2);
+  close(fd2);
   return 0;
 }

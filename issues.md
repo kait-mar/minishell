@@ -7,3 +7,4 @@
 *3/* check the case of * and the "" makes difference 
     (exp : echo ca va ? * oui ! Vs  echo "ca va ? * oui !")
 *4/* dquote> when entering a \n before closing the ""
+*5/* the free issue before closing the program
