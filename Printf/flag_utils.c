@@ -24,13 +24,13 @@ static void		string_dot_flag(t_flag *check, int *m, int *l)
 	{
 		while (*m > g_k)
 		{
-            my_putchar(' ');
+            ft_putchar(' ');
 			*m -= 1;
 		}
 	}
 	while (*l > 0)
 	{
-        my_putchar(g_s[g_y]);
+        ft_putchar(g_s[g_y]);
 		*l -= 1;
 		g_y++;
 	}
@@ -38,7 +38,7 @@ static void		string_dot_flag(t_flag *check, int *m, int *l)
 		*m = -*m;
 	while (*m > g_k)
 	{
-        my_putchar(' ');
+        ft_putchar(' ');
 		*m -= 1;
 	}
 	check->minus = 0;
@@ -95,7 +95,7 @@ void			minus_flag(t_flag *check, int m, int l)
 	if (check->int_conversion < 0)
 		check->nmbr_len += 1;
 	while (check->len_before_flag-- > check->nmbr_len)
-        my_putchar(' ');
+        ft_putchar(' ');
 	if (check->wich_conversion == 5 && check->adress_conversion == 0)
 		check->len_before_flag = m;
 }
@@ -108,19 +108,19 @@ void			no_zero_no_minus(t_flag *check, int m, int l)
 		if (l > check->nmbr_len && check->wich_conversion != 8)
 		{
 			while (check->len_before_flag-- > l)
-                my_putchar(' ');
+                ft_putchar(' ');
 			check->zero = 1;
 		}
 		else
 			while (check->len_before_flag-- > check->nmbr_len)
-                my_putchar(' ');
+                ft_putchar(' ');
 	}
 	else
 	{
 		if (check->int_conversion < 0)
 			check->nmbr_len += 1;
 		while (check->len_before_flag-- > check->nmbr_len)
-            my_putchar(' ');
+            ft_putchar(' ');
 	}
 }
 
@@ -128,8 +128,8 @@ void			flag_zero(t_flag *check, int l)
 {
 	if (check->dot == 1)
 		while (l-- > check->nmbr_len)
-            my_putchar('0');
+            ft_putchar('0');
 	else
 		while (check->len_before_flag-- > check->nmbr_len)
-            my_putchar('0');
+            ft_putchar('0');
 }

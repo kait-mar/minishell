@@ -48,7 +48,7 @@ t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
         close(g_fd[1]);
         s = built_in(head, str, env, status);
         if (s->command == 1 || s->command == 2)
-            read(g_fd[1], s->s_pipe, ft_strlen(s->s_pipe));
+            read(g_fd[1], str, ft_strlen(s->s_pipe));
         else if (s->command == 3)
         {
             while (s->c_pipe[i])
@@ -60,6 +60,7 @@ t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
         close(g_fd[0]);
     }
     head = head->next;
-    printf("s == %s\n", s->s_pipe);
+    head->argument = ft_strjoin(head->argument, s->s_pipe);
+    built_in(head, str, env, status);
     return (head);
 }

@@ -41,7 +41,7 @@ void	put_flag_two(t_flag *check)
 void	put_flag_three(t_flag *check)
 {
 	if (!(check->int_conversion == -2147483648))
-        my_putchar('-');
+        ft_putchar('-');
 	if (check->dot == 0)
 		check->nmbr_len += 1;
 	check->int_conversion = -check->int_conversion;

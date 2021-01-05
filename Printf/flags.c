@@ -111,7 +111,7 @@ void			put_flag(char *s, int *i, t_flag *check, va_list ap)
 	if (check->zero == 0 && check->minus == 0)
 		no_zero_no_minus(check, m, l);
 	if (check_condition_four(check))
-        my_putchar('0');
+        ft_putchar('0');
 	if (check->int_conversion < 0 && check->zero == 1)
 		put_flag_three(check);
 	if (check->zero == 1)

@@ -33,8 +33,8 @@ int		print_hex_adress(unsigned long long i, int j)
 	}
 	if (j == 0)
 	{
-        my_putchar('0');
-        my_putchar('x');
+        ft_putchar('0');
+        ft_putchar('x');
 		revers_print(str, k);
 	}
 	free(str);
@@ -43,6 +43,6 @@ int		print_hex_adress(unsigned long long i, int j)
 
 int		print_mod(void)
 {
-    my_putchar('%');
+    ft_putchar('%');
 	return (0);
 }

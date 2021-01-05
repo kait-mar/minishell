@@ -130,6 +130,7 @@ int		main(int ac, char **av, char **env)
             else if (head->meta == '|')
             {
                 g_piping = 1;
+                printf("Here\n");
                 head = pipe_file(meta,str, env, &status);
             }
             else if (head->meta_append == 1)

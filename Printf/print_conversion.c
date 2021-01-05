@@ -14,7 +14,7 @@
 
 int		print_char(int c)
 {
-    my_putchar(c);
+    ft_putchar(c);
 	return (1);
 }
 
@@ -27,7 +27,7 @@ int		print_string(char *s)
 		s = ft_strdup("(null)");
 	while (s[i] != '\0')
 	{
-        my_putchar(s[i]);
+        ft_putchar(s[i]);
 		i++;
 	}
 	return (i);
