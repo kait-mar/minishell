@@ -6,7 +6,7 @@
 #    By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 17:15:38 by molabhai          #+#    #+#              #
-#    Updated: 2021/01/02 10:28:43 by kait-mar         ###   ########.fr        #
+#    Updated: 2021/01/05 10:04:42 by kait-mar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS=  cd.c cd_utility.c pwd.c export.c \
 	   export_utility.c export_utility_two.c \
 	   unset.c main.c echo.c echo_utility.c keep_split.c \
 	   executables.c echo_utility_two.c meta.c file_append.c \
-	   exit.c redirect_output.c
+	   exit.c redirect_output.c redirect_input.c
 
 OBJ = $(SRCS:.c=.o)
 

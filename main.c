@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2021/01/03 18:06:45 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/01/05 10:04:09 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,10 @@ int		main(int ac, char **av, char **env)
                 head = redirect_output(head, str, env, &status);
 				//return (0);
 				//printf("|%s|\n", head->argument);
+            }
+			 else if (head->meta == '<')
+            {
+                head = redirect_intput(head, str, env, &status);
             }
             else if (head->meta == '\0')
                 built_in(head, str, env, &status);

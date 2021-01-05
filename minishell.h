@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2021/01/02 17:18:23 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/01/05 10:21:32 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <errno.h>
 #include <string.h>
 #include <fcntl.h>
+#include <signal.h>
 #include <sys/types.h>
 #include <dirent.h>
 #include "./Libft/libft.h"
@@ -135,5 +136,6 @@ int     check_append(char *s);
 void    exit_command(int status, char *s);
 int     check_exit(char *str);
 t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status);
+t_meta	*redirect_intput(t_meta *meta, char *str, char **env, int *status);
 
 #endif
