@@ -37,7 +37,7 @@ typedef struct		s_flag
 
 int					ft_printf(const char *s, ...);
 void				put_nmbr(long i);
-void				ft_putchar(char c);
+void				my_putchar(char c);
 int					nmbr_len(long i);
 int					convert_hexa(unsigned int i, int z, int y);
 int					print_char(int c);

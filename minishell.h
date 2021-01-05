@@ -70,17 +70,30 @@ typedef struct s_meta
 	struct	s_meta	*next;
 }				t_meta;
 
-void	cd_command(char *argument, int *status);
+/*	Metacharacter "Pipe" */
+
+typedef struct s_pipe
+{
+    char    *s_pipe;
+    char    **c_pipe;
+    int     command;
+}               t_pipe;
+
+
+int     g_piping;
+int     g_fd[2];
+
+char	*cd_command(char *argument, int *status, int piping);
 char	**taking_command(char *str);
 char	**split_to_tokens(char *str);
 char	*reading_input(void);
 char	*without_that(char *str, char c);
 int		how_mutch_argument(char *str, int i);
 char	*ft_toStrLower(char *str);
-void	pwd_command(int *status, int exept);
+char	*pwd_command(int *status, int exept, int piping);
 int		check_pwd(char *str, int *exept);
 int		check_env(char *str);
-void	env_command(char **str, t_meta *meta, int *status);
+char 	**env_command(char **str, t_meta *meta, int *status,int piping);
 void	export_command(char **env, char *splits, int *status);
 int		how_mutch_arguments(char **splits, int i);
 int		check_exp_lex(char *str);
@@ -129,11 +142,13 @@ char	*skip_first_word(char **str);
 void	free_meta_struct(t_meta *meta);
 int		only_star(char *str);
 void	stream_directory();
-void    built_in(t_meta *meta, char *str, char **env, int *status);
+t_pipe   *built_in(t_meta *meta, char *str, char **env, int *status);
 t_meta   *append_file(t_meta *meta, char *str, char **env, int *status);
 int     check_append(char *s);
 void    exit_command(int status, char *s);
 int     check_exit(char *str);
 void    redirect_output(t_meta *meta, char *str, char **env, int *status);
+t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status);
+void     my_putchar(char c);
 
 #endif

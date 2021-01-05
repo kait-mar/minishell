@@ -23,8 +23,8 @@ void	check_minus_dot(int *m, int *l, t_flag *check)
 
 void	put_for_dot(void)
 {
-	ft_putchar('0');
-	ft_putchar('x');
+    my_putchar('0');
+    my_putchar('x');
 }
 
 void	take_char(t_flag *check, va_list ap)

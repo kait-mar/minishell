@@ -39,7 +39,7 @@ int		print(char **bult, char **env, int *status)
 		stream_directory();
 	while (**bult != '$' && **bult != '\0')
 	{
-		ft_putchar(**bult);
+        my_putchar(**bult);
 		(*bult)++;
 		i = 1;
 	}
@@ -50,7 +50,7 @@ int		print(char **bult, char **env, int *status)
 	}
 	else if (**bult == '$' && *(*bult + 1) == '\0')
 	{
-		ft_putchar(**bult);
+        my_putchar(**bult);
 		return (1);
 	}
 	else if (**bult == '$' && *(*bult + 1) != '?')
@@ -73,7 +73,7 @@ int		print(char **bult, char **env, int *status)
 			(*bult)++;
 		while (**bult)
 		{
-			ft_putchar(**bult);
+            my_putchar(**bult);
 			(*bult)++;
 		}
 	}
@@ -135,7 +135,7 @@ int	echo(char *argv, char **env, int *status)
 	argv = skip_first_word(&argv);
 	if (ft_strcmp(argv, "") == 0)
 	{
-		ft_putchar('\n');
+        my_putchar('\n');
 		return (0);
 	}
 	argv = ft_strtrim(argv, " ");
@@ -165,7 +165,7 @@ int	echo(char *argv, char **env, int *status)
 		put_cases(bult, env, status);
 	}
 	if (i == 0)
-		ft_putchar('\n');
+        my_putchar('\n');
 	*status = 0;
 	return (0);
 }
