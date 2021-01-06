@@ -61,8 +61,6 @@ char 	*cd_command(char *argument, int *status, int piping)
 	{
 	    if (piping == 0)
     		ft_printf("%s\n", strerror(errno));
-	    else if (piping == 1)
-	        return (s);
 		*status = 1;
 	}
 	else

@@ -120,7 +120,7 @@ char	*pwd_command(int *status, int exept, int piping)
 		*status = 1;
 	}
 	else if (piping == 0)
-		ft_printf("%s\n", str);
+		printf("%s\n", str);
 	else if (piping == 1)
     {
         *status = 0;
