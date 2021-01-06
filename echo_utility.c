@@ -1,5 +1,16 @@
 #include "minishell.h"
 
+void			my_putchar(char c)
+{
+    if (g_piping == 0)
+        write(1, &c, 1);
+    else if (g_piping == 1)
+    {
+        write(g_fd[1],  &c, 1);
+        printf("Here\n");
+    }
+}
+
 int	print_env(char *bult, char **env, int which_quote, int *status)
 {
 	char	**str;
@@ -11,9 +22,9 @@ int	print_env(char *bult, char **env, int which_quote, int *status)
 	while (*bult)
 	{
 		while (*bult != '$' && *bult != '\0')
-			ft_putchar(*(bult++));
+			my_putchar(*(bult++));
 		if ((*bult == '$' && ((which_quote == 0 && (*(bult + 1) == '\0' || *(bult + 1) == ' ')) || (which_quote == 1 && (*(bult  + 1) == 39 || *(bult  + 1) == 34 || *(bult + 1) == '\0' || *(bult + 1) == ' ')))))
-			ft_putchar(*(bult++));
+			my_putchar(*(bult++));
 		if (*bult == '\0')
 			break ;
 		else
@@ -50,7 +61,7 @@ int	print_env(char *bult, char **env, int which_quote, int *status)
 					bult++;
 				while (*bult)
 				{
-					ft_putchar(*bult);
+					my_putchar(*bult);
 						bult++;
 				}
 			}
@@ -74,7 +85,7 @@ void	put_cases(char **bult, char **env, int *status)
 		{
 			split = ft_split(*bult, ' ');
 			if (**bult == ' ')
-				ft_putchar(' ');
+				my_putchar(' ');
 			if (*split == NULL)
 			{
 				bult++;
@@ -90,7 +101,7 @@ void	put_cases(char **bult, char **env, int *status)
 			}
 			print(split, env, status);
 			if (spaces == 1)
-				ft_putchar(' ');
+				my_putchar(' ');
 			spaces = 0;
 		}
 		else if (find_how_many(*bult, 39) == 2 && find_how_many(*bult, 34) == 2 && find(*bult, '$') == 0)
@@ -154,5 +165,6 @@ void	put_normal(char **split, char **env, int i, int *status)
 	}
 	print(split, env, status);
 	if (i == 1)
-		ft_putchar(' ');
+		my_putchar(' ');
 }
+

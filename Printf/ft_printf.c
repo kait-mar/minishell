@@ -19,8 +19,8 @@ static	void	all_in(t_flag check)
 	if (check.adress_conversion == 0 && check.wich_conversion == 5 &&
 			check.dot == 1 && check.minus == 0)
 	{
-		ft_putchar('0');
-		ft_putchar('x');
+        ft_putchar('0');
+        ft_putchar('x');
 	}
 	if (check.int_conversion == 0 && check.unsigned_conversion == 0 &&
 			check.hexa_conversion == 0 && check.dot == 1 &&
@@ -102,7 +102,7 @@ int				ft_printf(const char *s, ...)
 		}
 		if (s[i] != '%' && s[i] != '\0')
 		{
-			ft_putchar(s[i]);
+            ft_putchar(s[i]);
 			i++;
 		}
 	}

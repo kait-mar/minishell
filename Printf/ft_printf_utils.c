@@ -19,16 +19,16 @@ void	put_nmbr(long i)
 	j = 0;
 	if (i < 0)
 	{
-		ft_putchar('-');
+        ft_putchar('-');
 		i = -i;
 	}
 	if (i >= 0 && i < 10)
-		ft_putchar(i + '0');
+        ft_putchar(i + '0');
 	else
 	{
 		put_nmbr(i / 10);
 		j = i % 10;
-		ft_putchar(j + '0');
+        ft_putchar(j + '0');
 	}
 }
 
@@ -73,7 +73,7 @@ void	revers_print(char *str, int k)
 {
 	while (k > 0)
 	{
-		ft_putchar(str[k - 1]);
+        ft_putchar(str[k - 1]);
 		k--;
 	}
 }

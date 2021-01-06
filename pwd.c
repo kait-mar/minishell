@@ -94,25 +94,40 @@ int		check_pwd(char *str, int *exept)
 	return (on);
 }
 	
-void	pwd_command(int *status, int exept)
+char	*pwd_command(int *status, int exept, int piping)
 {
 	char *str;
 
 	if (!(str = (char *) ft_calloc(sizeof(char), 100)))
-		return ;
+		return (NULL);
 	if (exept == 1)
     {
-	    ft_printf("usage: pwd [-L | -P]\n");
         *status = 1;
-        return ;
+        if (piping == 0)
+        {
+            ft_printf("usage: pwd [-L | -P]\n");
+            return (NULL);
+        }
+	    else if (piping == 1)
+        {
+	        str = "usage: pwd [-L | -P]\n";
+            return (str);
+        }
     }
 	if (getcwd(str, 100) == NULL)
 	{
 		ft_printf("%s\n", strerror(errno));
 		*status = 1;
 	}
-	else
-		ft_printf("%s\n", str);
+	else if (piping == 0)
+		printf("%s\n", str);
+	else if (piping == 1)
+    {
+        *status = 0;
+        return (str);
+    }
 	free(str);
+	str = NULL;
 	*status = 0;
+    return (NULL);
 }

@@ -12,19 +12,45 @@
 
 #include "minishell.h"
 
-void	 built_in(t_meta *meta, char *str, char **env, int *status)
+static  char    *semi_split(char *str)
+{
+    int     i;
+    char    *s;
+
+    i = 0;
+    while (str[i] != ';')
+        i += 1;
+    if (!(s = (char *) malloc((sizeof(char) * (i +1) ))))
+        return (NULL);
+    i = 0;
+    while (str[i] != ';')
+    {
+        s[i] = str[i];
+        i += 1;
+    }
+    s[i] = '\0';
+    return (s);
+}
+
+t_pipe 	 *built_in(t_meta *meta, char *str, char **env, int *status)
 {
 	int check;
 	int  exept;
+	t_pipe *ret;
 
 	check = 0;
 	exept = 0;
+    if (!(ret = (t_pipe *) malloc(sizeof (t_pipe))))
+        return (NULL);
 	if (meta->command == 1)
-		cd_command(meta->argument, status);
+        ret->s_pipe = cd_command(meta->argument, status, g_piping);
 	else if (check_pwd(str, &exept) == 0)
-		pwd_command(status, exept);
+    {
+	    ret->command = 2;
+        ret->s_pipe= pwd_command(status, exept, g_piping);
+    }
 	else if (meta->command  == 3)
-		env_command(env, meta, status);
+		ret->c_pipe = env_command(env, meta, status, g_piping);
 	else if (meta->command == 4)
 		export_command(env, str, status);
 	else if (meta->command == 5)
@@ -42,6 +68,8 @@ void	 built_in(t_meta *meta, char *str, char **env, int *status)
 	}
     if (meta->command == 7)
         exit_command(*status, meta->argument);
+    ret->command = meta->command;
+    return (ret);
 }
 
 static	void	prompt(void)
@@ -74,10 +102,12 @@ int		check_wich_command(char *str)
 int		main(int ac, char **av, char **env)
 {
 	char *str;
+	char    *tmp;
 	int		status;
 	t_meta	*meta;
 	t_meta	*head;
 
+	g_piping = 0;
 	status = 0;
 	head = NULL;
 	str = NULL;
@@ -88,6 +118,7 @@ int		main(int ac, char **av, char **env)
 	*env = "PATH=user/bin";
 	env[1] = NULL;*/
 
+	tmp = NULL;
 	while (TRUE)
 	{
 		if (av[1])
@@ -97,7 +128,6 @@ int		main(int ac, char **av, char **env)
 			prompt();
 			str = reading_input();
 		}
-		//str = "echo hello kbjdcd skjdcs hsdcugd > kait";
 		str = ft_strtrim(str, "\t");
 		meta = split_it_all(str);
 		head = meta;
@@ -105,11 +135,16 @@ int		main(int ac, char **av, char **env)
         {
             if (head->meta == ';')
             {
+                tmp = semi_split(str);
+                built_in(head, tmp, env, &status);
+            }
+            else if (head->meta == '|')
+            {
                 printf("Here\n");
-                built_in(head, str, env, &status);
+                head = pipe_file(meta,str, env, &status);
             }
             else if (head->meta_append == 1)
-				head = append_file(head, str, env, &status);
+                head = append_file(head, str, env, &status);
             else if (head->meta == '>')
             {
                 head = redirect_output(head, str, env, &status);
@@ -124,11 +159,10 @@ int		main(int ac, char **av, char **env)
                 built_in(head, str, env, &status);
             if (head != NULL)
                 head = head->next;
+            g_piping = 0;
         }
-		if (av[1])
-			exit(EXIT_SUCCESS);
-		//else
-     //       free_meta_struct(meta);
+       // if (av[1])
+         //   exit(EXIT_SUCCESS);
 	}
 	return(0);
 }

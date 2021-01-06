@@ -7,13 +7,25 @@
 
 int main()
 {
-  char *ar[] = {"ls", NULL};
-  int pid;
-  int fd = open("test.txt", O_RDWR | O_CREAT, S_IRWXU);
-  write(fd, "hello", 5);
-  close(fd);
-  int fd2 = open("test.txt", O_RDWR | O_CREAT, S_IRWXU);
-  write(fd, "hi", 2);
-  close(fd2);
-  return 0;
+    int    fd[2];
+    int     pid;
+    char    buff[20];
+    pid = fork();
+    pipe(fd);
+    if (pid == 0)
+    {
+        close(fd[0]);
+        write(fd[1], "hello from child", 20);
+        close(fd[1]);
+        exit(EXIT_SUCCESS);
+    }
+    else
+    {
+        close(fd[1]);
+        wait(NULL);
+        read(fd[0], buff, 20);
+        close(fd[0]);
+    }
+    printf("the incoming string is : |%s|\n", buff);
+    return 0;
 }

@@ -47,23 +47,25 @@ char 	**taking_command(char *str)
 	return (splits);
 }*/
 
-void	cd_command(char *argument, int *status)
+char 	*cd_command(char *argument, int *status, int piping)
 {
 	char *str;
 	char *s;
 
 	if (argument == NULL)
-		return ;
+		return (NULL);
 	if (!(str = ft_calloc(sizeof(char), 100)))
-		return ;
+		return (NULL);
 	s = without_that(argument, '"' );
 	if (chdir(s) < 0)
 	{
-		ft_printf("%s\n", strerror(errno));
+	    if (piping == 0)
+    		ft_printf("%s\n", strerror(errno));
 		*status = 1;
 	}
 	else
         *status = 0;
 	free(s);
 	s = NULL;
+    return (s);
 }

@@ -163,13 +163,13 @@ t_meta	*split_it_all(char *str)
 		global->meta = splits[i][until_meta(splits[i]) - 1];
 		if (s != NULL)
 		{
-            if (global->command != 0&& global->command != 4 && global->command !=  6)
+            if (global->command != 0 && global->command !=  6)
             {
                 global->argument = skip_first_word(&s);
                 global->argument = ft_strtrim(global->argument, " ");
                 global->argument = ft_strtrim(global->argument, "\t");
             }
-            else if (global->command == 0 || global->command == 4 || global->command == 6)
+            else if (global->command == 0 || global->command == 6)
             {
                 global->argument = ft_strdup(s);
                 global->argument = ft_strtrim(global->argument, " ");

@@ -13,9 +13,6 @@
 
 #include "minishell.h"
 
-
-//int     check_meta(char *s)
-
 int		check_quote(char *str)
 {
 	int i;
@@ -102,7 +99,6 @@ t_export		*check_export(char **splits, char **env)
 	{
 		while (splits[i] != NULL)
 		{
-		    printf("==> %s\n", splits[i]);
 			splits[i] = ft_strtrim(splits[i], "\t");
 			if (check_double_quote(splits[i]) == 1)
 				splits[i] = without_that(splits[i], '\"');
@@ -182,7 +178,6 @@ void	export_command(char **env, char *str, int *status)
 	}
 	else
 	{
-	    printf("s == > %s\n", splits[i]);
 		ft_printf("Error in export command\n");
 		*status = 1;
 	}
@@ -190,7 +185,7 @@ void	export_command(char **env, char *str, int *status)
 	free_export(export);
 }
 
-void	env_command(char **env, t_meta *meta, int *status)
+char	**env_command(char **env, t_meta *meta, int *status, int piping)
 {
 	int i;
 
@@ -204,15 +199,21 @@ void	env_command(char **env, t_meta *meta, int *status)
 			{
 				ft_printf("Command [%s] doesnt exist\n", meta->argument);
 				*status = 127;
-				return ;
+				return (NULL);
 			}
 			meta = meta->next;
 		}
 	}
-	while (env[i])
-	{
-		ft_printf("%s\n", env[i]);
-		i += 1;
-	}
-	*status = 0;
+ 	if (piping == 0)
+    {
+        while (env[i])
+        {
+            ft_printf("%s\n", env[i]);
+            i += 1;
+        }
+        *status = 0;
+    }
+ 	else if (piping == 1)
+ 	    return (env);
+    return (NULL);
 }
