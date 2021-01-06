@@ -34,7 +34,9 @@ t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
     {
         close(g_fd[0]);
        // printf("in fork == %s\n", head->argument);
-        dup2(g_fd[1], 1);
+
+        if (dup2(g_fd[1], 1) == -1)
+            exit(EXIT_FAILURE);
         built_in(head, str, env, status);
         close(g_fd[1]);
         exit(EXIT_SUCCESS);
@@ -43,7 +45,6 @@ t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
      {
         close(g_fd[1]);
         head = head->next;
-        read(g_fd[0], ss, 100);
         dup2(g_fd[0], 0);
         built_in(head, str, env, status);
         close(g_fd[0]);

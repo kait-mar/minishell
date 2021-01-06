@@ -161,8 +161,8 @@ int		main(int ac, char **av, char **env)
                 head = head->next;
             g_piping = 0;
         }
-       // if (av[1])
-         //   exit(EXIT_SUCCESS);
+        if (av[1])
+            exit(EXIT_SUCCESS);
 	}
 	return(0);
 }
