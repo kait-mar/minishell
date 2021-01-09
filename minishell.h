@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2021/01/05 10:21:32 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/01/06 09:18:42 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,5 +137,8 @@ void    exit_command(int status, char *s);
 int     check_exit(char *str);
 t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status);
 t_meta	*redirect_intput(t_meta *meta, char *str, char **env, int *status);
+void	signal_handler();
+void	quit_signal(int signum);
+void	inter_signal(int signum);
 
 #endif

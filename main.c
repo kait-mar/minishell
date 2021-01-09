@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2021/01/05 10:04:09 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/01/06 09:18:17 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int		main(int ac, char **av, char **env)
 
 	while (TRUE)
 	{
+		signal_handler();
 		if (av[1])
 			str = ft_strdup(av[1]);
 		else

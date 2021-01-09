@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 09:50:00 by kait-mar          #+#    #+#             */
-/*   Updated: 2021/01/05 10:06:14 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/01/05 14:46:44 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_meta	*redirect_intput(t_meta *meta, char *str, char **env, int *status)
 	while (temp->next != NULL && temp->meta == '<')
 	{
 		temp = temp->next;
-		if ((fd = open(temp->argument,  O_RDWR , S_IRWXU)) < 0)
+		if ((fd = open(temp->argument, O_RDWR, S_IRWXU)) < 0)
 		{
 			ft_putstr(strerror(errno));
 			return (NULL);
@@ -35,7 +35,7 @@ t_meta	*redirect_intput(t_meta *meta, char *str, char **env, int *status)
 	{
 		if ((dup2(fd, STDIN_FILENO) != -1))
 		{
-            built_in(meta, str, env, status);
+			built_in(meta, str, env, status);
 			close(fd);
 			exit(EXIT_SUCCESS);
 		}
