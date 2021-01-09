@@ -80,21 +80,19 @@ typedef struct s_pipe
     int     command;
 }               t_pipe;
 
-
-int     g_piping;
 int     g_fd[2];
 
-char	*cd_command(char *argument, int *status, int piping);
+void	cd_command(char *argument, int *status);
 char	**taking_command(char *str);
 char	**split_to_tokens(char *str);
 char	*reading_input(void);
 char	*without_that(char *str, char c);
 int		how_mutch_argument(char *str, int i);
 char	*ft_toStrLower(char *str);
-char	*pwd_command(int *status, int exept, int piping);
+void 	pwd_command(int *status, int exept);
 int		check_pwd(char *str, int *exept);
 int		check_env(char *str);
-char 	**env_command(char **str, t_meta *meta, int *status,int piping);
+void 	env_command(char **str, t_meta *meta, int *status);
 void	export_command(char **env, char *splits, int *status);
 int		how_mutch_arguments(char **splits, int i);
 int		check_exp_lex(char *str);
@@ -143,7 +141,7 @@ char	*skip_first_word(char **str);
 void	free_meta_struct(t_meta *meta);
 int		only_star(char *str);
 void	stream_directory();
-t_pipe   *built_in(t_meta *meta, char *str, char **env, int *status);
+void    built_in(t_meta *meta, char *str, char **env, int *status);
 t_meta   *append_file(t_meta *meta, char *str, char **env, int *status);
 int     check_append(char *s);
 void    exit_command(int status, char *s);

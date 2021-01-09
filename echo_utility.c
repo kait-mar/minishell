@@ -2,13 +2,7 @@
 
 void			my_putchar(char c)
 {
-    if (g_piping == 0)
-        write(1, &c, 1);
-    else if (g_piping == 1)
-    {
-        write(g_fd[1],  &c, 1);
-        printf("Here\n");
-    }
+    write(1, &c, 1);
 }
 
 int	print_env(char *bult, char **env, int which_quote, int *status)

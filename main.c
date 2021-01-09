@@ -32,25 +32,19 @@ static  char    *semi_split(char *str)
     return (s);
 }
 
-t_pipe 	 *built_in(t_meta *meta, char *str, char **env, int *status)
+void 	 built_in(t_meta *meta, char *str, char **env, int *status)
 {
 	int check;
 	int  exept;
-	t_pipe *ret;
 
 	check = 0;
 	exept = 0;
-    if (!(ret = (t_pipe *) malloc(sizeof (t_pipe))))
-        return (NULL);
 	if (meta->command == 1)
-        ret->s_pipe = cd_command(meta->argument, status, g_piping);
+        cd_command(meta->argument, status);
 	else if (check_pwd(str, &exept) == 0)
-    {
-	    ret->command = 2;
-        ret->s_pipe= pwd_command(status, exept, g_piping);
-    }
+        pwd_command(status, exept);
 	else if (meta->command  == 3)
-		ret->c_pipe = env_command(env, meta, status, g_piping);
+		env_command(env, meta, status);
 	else if (meta->command == 4)
 		export_command(env, str, status);
 	else if (meta->command == 5)
@@ -68,8 +62,6 @@ t_pipe 	 *built_in(t_meta *meta, char *str, char **env, int *status)
 	}
     if (meta->command == 7)
         exit_command(*status, meta->argument);
-    ret->command = meta->command;
-    return (ret);
 }
 
 static	void	prompt(void)
@@ -107,7 +99,6 @@ int		main(int ac, char **av, char **env)
 	t_meta	*meta;
 	t_meta	*head;
 
-	g_piping = 0;
 	status = 0;
 	head = NULL;
 	str = NULL;
@@ -139,27 +130,17 @@ int		main(int ac, char **av, char **env)
                 built_in(head, tmp, env, &status);
             }
             else if (head->meta == '|')
-            {
-                printf("Here\n");
                 head = pipe_file(meta,str, env, &status);
-            }
             else if (head->meta_append == 1)
                 head = append_file(head, str, env, &status);
             else if (head->meta == '>')
-            {
                 head = redirect_output(head, str, env, &status);
-				//return (0);
-				//printf("|%s|\n", head->argument);
-            }
 			 else if (head->meta == '<')
-            {
                 head = redirect_intput(head, str, env, &status);
-            }
             else if (head->meta == '\0')
                 built_in(head, str, env, &status);
             if (head != NULL)
                 head = head->next;
-            g_piping = 0;
         }
         if (av[1])
             exit(EXIT_SUCCESS);

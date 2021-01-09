@@ -185,7 +185,7 @@ void	export_command(char **env, char *str, int *status)
 	free_export(export);
 }
 
-char	**env_command(char **env, t_meta *meta, int *status, int piping)
+void 	env_command(char **env, t_meta *meta, int *status)
 {
 	int i;
 
@@ -199,21 +199,15 @@ char	**env_command(char **env, t_meta *meta, int *status, int piping)
 			{
 				ft_printf("Command [%s] doesnt exist\n", meta->argument);
 				*status = 127;
-				return (NULL);
+				return ;
 			}
 			meta = meta->next;
 		}
 	}
- 	if (piping == 0)
-    {
-        while (env[i])
-        {
-            ft_printf("%s\n", env[i]);
-            i += 1;
-        }
-        *status = 0;
-    }
- 	else if (piping == 1)
- 	    return (env);
-    return (NULL);
+ 	while (env[i])
+ 	{
+ 	    ft_printf("%s\n", env[i]);
+ 	    i += 1;
+ 	}
+ 	*status = 0;
 }
