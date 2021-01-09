@@ -75,12 +75,11 @@ typedef struct s_meta
 
 typedef struct s_pipe
 {
-    char    *s_pipe;
-    char    **c_pipe;
-    int     command;
+    pid_t pid;
+    struct s_pipe *next;
 }               t_pipe;
 
-int     g_fd[2];
+int     g_fd[4];
 
 void	cd_command(char *argument, int *status);
 char	**taking_command(char *str);
