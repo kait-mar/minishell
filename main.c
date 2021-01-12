@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2021/01/06 09:18:17 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/01/12 10:28:16 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	 built_in(t_meta *meta, char *str, char **env, int *status)
 		if (check == 1)
 		{
 			ft_printf("bash: %s: command not found\n", meta->argument);
+			g_process = 0;
 			*status = 127;
 		}
 	}
@@ -81,7 +82,6 @@ int		main(int ac, char **av, char **env)
 	status = 0;
 	head = NULL;
 	str = NULL;
-
 	/*char **av;
 	char **env;
 	env = malloc(2*sizeof(char *));
@@ -90,6 +90,7 @@ int		main(int ac, char **av, char **env)
 
 	while (TRUE)
 	{
+		g_process = 0;
 		signal_handler();
 		if (av[1])
 			str = ft_strdup(av[1]);

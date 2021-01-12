@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2021/01/06 09:18:42 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/01/12 08:33:08 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_meta
 	struct	s_meta	*next;
 }				t_meta;
 
+int		g_process;
 void	cd_command(char *argument, int *status);
 char	**taking_command(char *str);
 char	**split_to_tokens(char *str);

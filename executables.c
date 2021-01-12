@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/20 17:25:32 by molabhai          #+#    #+#             */
-/*   Updated: 2021/01/09 12:23:42 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/01/12 08:33:02 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,13 @@ void	execut_command(char **env, char *str, int *check)
 				i += 1;
 		}
 		*check = 1;
-		printf("I have entered in the child of the execv\n");
+		printf("I have entered in the child of the execv and pid is %d\n", getpid());
 	}
 	else
 	{
 		if (waitpid(pid, &status, WUNTRACED) == -1)
 			ft_printf("Error has occured\n");
-			printf("I have entered the execv\n");
+		g_process = pid;
+		printf("I have entered in the execv and child's pid is %d\n", pid);
 	}
 }
