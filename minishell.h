@@ -79,7 +79,7 @@ typedef struct s_pipe
     struct s_pipe *next;
 }               t_pipe;
 
-int     g_fd[4];
+int     g_fd[2];
 
 void	cd_command(char *argument, int *status);
 char	**taking_command(char *str);
