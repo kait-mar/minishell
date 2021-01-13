@@ -80,6 +80,7 @@ typedef struct s_pipe
 }               t_pipe;
 
 int     g_fd[2];
+int     g_fd2[2];
 
 void	cd_command(char *argument, int *status);
 char	**taking_command(char *str);

@@ -15,6 +15,8 @@ int main()
     if (pid == 0)
     {
         close(fd[0]);
+        dup2(g_fd[1], 1)
+
         write(fd[1], "hello from child", 20);
         close(fd[1]);
         exit(EXIT_SUCCESS);
