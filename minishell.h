@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2021/01/12 08:33:08 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/01/12 12:04:21 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,6 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status);
 t_meta	*redirect_intput(t_meta *meta, char *str, char **env, int *status);
 void	signal_handler();
 void	quit_signal(int signum);
-void	inter_signal(int signum);
+int		inter_signal(int signum);
 
 #endif
