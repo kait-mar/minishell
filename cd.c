@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:46:24 by molabhai          #+#    #+#             */
-/*   Updated: 2020/12/24 15:07:06 by molabhai         ###   ########.fr       */
+/*   Updated: 2021/01/19 15:28:07 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@
 char     *reading_input(void)
 {
 	char	*str;
+	int		i;
 
 	str = NULL;
-	get_next_line(1, &str);
-	if (str == NULL)
-		printf("str ==> %s\n", str);
+	i = get_next_line(1, &str);
+	if (str == NULL || i == 0)
+	{
+		printf("ctr-D is detected\n");
+		exit(EXIT_SUCCESS);
+	}
 	return (str);
 }
 
