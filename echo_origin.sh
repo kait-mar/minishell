@@ -14,6 +14,25 @@ echo mol"abh" 'ai'ri >> echo_origin.txt
 echo "hello $mouad" >> echo_origin.txt
 echo ... >> echo_origin.txt
 
+# echo < run.sh < mola < test.c > kait > hello > fin1 > fin2
+# echo yes < run.sh < test.c > kait
+# echo yes < run.sh < test.c >> kait >> mola
+# echo hello\how\are\you doing
+# echo $PATH\hello
+# echo yes \< run.sh
+# echo \< run.sh
+# echo \$PATH
+#echo echo \"hello\"
+# echo echo echo \'hello kd c lbc     jbh\'
+# echo '$PATH' vs echo \'$PATH\'
+# echo hello \' yes
+# echo hello how\are\"you     doing\"
+# echo hello how\are\'you     doing\'
+# echo \no '\hello'
+# echo \no "\ hello "
+# echo hello \ $PATH  yes
+
+
 #               BUILT_IN PWD
 echo  "###### PWD ######" >> pwd_origin.txt
 pwd  >> pwd_origin.txt 2>&1
