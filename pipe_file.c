@@ -55,7 +55,7 @@ int        fd_connector(t_meta *head, char *str, char **env, int *status, int si
     }
     else
     {
-      // wait(NULL);
+        waitpid(pid, status, WUNTRACED);
         close(g_fd2[1]);
         if ((dup2(g_fd2[0], 0)) == -1)
         {
@@ -74,58 +74,97 @@ int        fd_connector(t_meta *head, char *str, char **env, int *status, int si
     exit(EXIT_SUCCESS);
 }
 
-t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status) {
-    pid_t pid;
-    char *ss;
+t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
+{
+    int     index;
+    int     fd_nmbr;
+    int     cmd;
+    int     first_time = 0;
+    int     fd[2];
+    int     pid;
+    int i = 0;
+    t_index   *ind;
+    t_index     *tmp;
+    t_index     *temp;
 
-    ss = (char *) calloc(sizeof(char), 100);
-    if (ss == NULL)
-        return (NULL);
-    ft_printf("Entering in pipe_file\n");
-    if ((pipe(g_fd)) == -1)
+    cmd = pipe_counter(head) + 1;
+    if (!(ind = (t_index *) malloc(sizeof (t_index))))
+        return NULL;
+    printf("Here\n");
+    while (head->meta == '|')
     {
-        ft_printf("Error in dup2 \"%s\" \n");
-        exit(EXIT_FAILURE);
-    }
-    if ((pid = fork()) < 0)
-    {
-        ft_printf("%s\n", strerror(errno));
-        return (NULL);
-    }
-    else if (pid == 0)
-    {
-        close(g_fd[0]);
-        if (pipe_counter(head) > 1)
+        printf("Here\n");
+        if (!(temp = (t_index *) malloc(sizeof (t_index))))
+            return NULL;
+        if (i == 0)
         {
-            ft_printf("\n fd Connector \n");
-            fd_connector(head, str, env, status, pid);
+           pipe(ind->fd);
+            ind->next = NULL;
+           tmp = ind;
         }
         else
         {
-            ft_printf("Entering else\n");
-            if ((dup2(g_fd[1], 1))  == -1)
-            {
-                ft_printf("Error in dup2 \"%s\"\n", strerror(errno));
-                exit (EXIT_FAILURE);
-            }
-            built_in(head, str, env, status);
-            close(g_fd[1]);
+            pipe(temp->fd);
+            while (tmp->next)
+                tmp = tmp->next;
+            tmp->next = temp;
+            tmp->next->next = NULL;
         }
-        exit (EXIT_SUCCESS);
-    }
-    else
-    {
-        waitpid(pid, status, WUNTRACED);
-        ft_printf("In parent\n");
-        close(g_fd[1]);
-        if ((dup2(g_fd[0], 0)) == -1)
+        if ((pid = fork()) < 0)
         {
-            ft_printf("Error in dup2 \"%s\"\n", strerror(errno));
-            exit (EXIT_FAILURE);
+            printf("Error in fork ");
+            exit(EXIT_FAILURE);
         }
+        else if (pid == 0)
+        {
+            if (i > 0)
+            {
+                printf("In i > 0 Enters\n");
+                printf("cmd == %d\n", head->command);
+                if (dup2(ind->fd[0], 0) == - 1)
+                {
+                    printf("Error in dup2 %s\n", strerror(errno));
+                    exit(EXIT_FAILURE);
+                }
+                ind = ind->next;
+                if (dup2(ind->fd[1], 1) == - 1)
+                {
+                    printf("Error in dup2 %s\n", strerror(errno));
+                    exit(EXIT_FAILURE);
+                }
+                built_in(head, str, env, status);
+                close(ind->fd[0]);
+                close(ind->fd[1]);
+                exit(EXIT_SUCCESS);
+            }
+            else
+            {
+                printf("In i == 0 Enters\n");
+                printf("cmd == %d\n", head->command);
+                close(ind->fd[0]);
+                if (dup2(ind->fd[1], 1) == - 1)
+                {
+                    printf("Error in dup2 %s\n", strerror(errno));
+                    exit(EXIT_FAILURE);
+                }
+                built_in(head, str, env, status);
+                close(ind->fd[1]);
+                exit(EXIT_SUCCESS);
+            }
+        }
+        printf("Argument ==> %d\n", head->command);
         head = head->next;
-        built_in(head, str, env, status);
-        close(g_fd[0]);
+        i = i+ 1;
     }
+    waitpid(pid, status, WUNTRACED);
+    printf("End of Process\n");
+    head = head->next->next;
+    close(fd[1]);
+    if (dup2(fd[0], 0) == - 1)
+    {
+        printf("Error in dup2 %s\n", strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+    close(fd[0]);
     return (head);
 }

@@ -76,8 +76,16 @@ typedef struct s_meta
 typedef struct s_pipe
 {
     pid_t pid;
+    int     index;
+    int fd[2];
     struct s_pipe *next;
 }               t_pipe;
+
+typedef struct  s_index
+{
+    int fd[2];
+    struct  s_index *next;
+}               t_index;
 
 int     g_fd[2];
 int     g_fd2[2];
