@@ -83,28 +83,31 @@ t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
     int     fd[2];
     int     pid;
     int i = 0;
-    t_index   *ind;
-    t_index     *tmp;
-    t_index     *temp;
+    int in;
+    t_std *std;
+    t_std *tmp;
+    t_std *temp;
 
     cmd = pipe_counter(head) + 1;
-    if (!(ind = (t_index *) malloc(sizeof (t_index))))
+
+    if (!(std = (t_std *) malloc(sizeof (t_std))))
         return NULL;
-    printf("Here\n");
     while (head->meta == '|')
     {
         printf("Here\n");
-        if (!(temp = (t_index *) malloc(sizeof (t_index))))
-            return NULL;
+        pipe(fd);
         if (i == 0)
         {
-           pipe(ind->fd);
-            ind->next = NULL;
-           tmp = ind;
+            std->in = fd[0];
+            std->out = fd[1];
+            tmp = std;
         }
         else
         {
-            pipe(temp->fd);
+            if (!(temp = (t_std *) malloc(sizeof (t_std))))
+                return NULL;
+            temp->out = fd[1];
+            temp->in = fd[0];
             while (tmp->next)
                 tmp = tmp->next;
             tmp->next = temp;
@@ -121,50 +124,52 @@ t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
             {
                 printf("In i > 0 Enters\n");
                 printf("cmd == %d\n", head->command);
-                if (dup2(ind->fd[0], 0) == - 1)
+                close(fd[0]);
+                if (dup2(in, 0) == - 1)
                 {
                     printf("Error in dup2 %s\n", strerror(errno));
                     exit(EXIT_FAILURE);
                 }
-                ind = ind->next;
-                if (dup2(ind->fd[1], 1) == - 1)
+                if (dup2(fd[1], 1) == - 1)
                 {
                     printf("Error in dup2 %s\n", strerror(errno));
                     exit(EXIT_FAILURE);
                 }
                 built_in(head, str, env, status);
-                close(ind->fd[0]);
-                close(ind->fd[1]);
+                printf("cmd == %d\n", head->command);
+                close(fd[1]);
                 exit(EXIT_SUCCESS);
             }
             else
             {
                 printf("In i == 0 Enters\n");
                 printf("cmd == %d\n", head->command);
-                close(ind->fd[0]);
-                if (dup2(ind->fd[1], 1) == - 1)
+                //close(fd[0]);
+                if (dup2(fd[1], 1) == - 1)
                 {
                     printf("Error in dup2 %s\n", strerror(errno));
                     exit(EXIT_FAILURE);
                 }
                 built_in(head, str, env, status);
-                close(ind->fd[1]);
+                close(fd[1]);
                 exit(EXIT_SUCCESS);
             }
         }
         printf("Argument ==> %d\n", head->command);
         head = head->next;
-        i = i+ 1;
+        i = i + 1;
     }
     waitpid(pid, status, WUNTRACED);
-    printf("End of Process\n");
-    head = head->next->next;
     close(fd[1]);
+    printf("End of Process\n");
+    //head = head->next;
+    printf("Argument ==> %d\n", head->command);
     if (dup2(fd[0], 0) == - 1)
     {
         printf("Error in dup2 %s\n", strerror(errno));
         exit(EXIT_FAILURE);
     }
+    built_in(head, str, env, status);
     close(fd[0]);
     return (head);
 }

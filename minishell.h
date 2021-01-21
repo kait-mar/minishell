@@ -81,11 +81,12 @@ typedef struct s_pipe
     struct s_pipe *next;
 }               t_pipe;
 
-typedef struct  s_index
+typedef struct  s_std
 {
-    int fd[2];
-    struct  s_index *next;
-}               t_index;
+    int in;
+    int out;
+    struct  s_std *next;
+}               t_std;
 
 int     g_fd[2];
 int     g_fd2[2];
