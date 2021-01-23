@@ -51,7 +51,7 @@ void	execut_command(char **env, char *str, int *check)
 	int     fd;
 
 	i = 0;
-	if ((pid = fork()) < 0)
+    if ((pid = fork()) < 0)
 	{
 		ft_printf("Failure\n");
 		exit(EXIT_FAILURE);
@@ -71,10 +71,11 @@ void	execut_command(char **env, char *str, int *check)
 		i = 0;
 		while (commands[i])
 		{
-			commands[i] = ft_strjoin(commands[i], path); 
+			commands[i] = ft_strjoin(commands[i], path);
 			if (execve(commands[i], splits, env) == -1)
 				i += 1;
 		}
+		exit(EXIT_SUCCESS);
 		*check = 1;
 	}
 	else

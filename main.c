@@ -34,6 +34,7 @@ static  char    *semi_split(char *str)
 
 void 	 built_in(t_meta *meta, char *str, char **env, int *status)
 {
+    fprintf(stderr, "Enters in built-in\n");
 	int check;
 	int  exept;
 
@@ -62,6 +63,7 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status)
 	}
     if (meta->command == 7)
         exit_command(*status, meta->argument);
+    fprintf(stderr,"Exit from built-in\n");
 }
 
 static	void	prompt(void)

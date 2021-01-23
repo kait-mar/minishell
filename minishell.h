@@ -85,6 +85,7 @@ typedef struct  s_std
 {
     int in;
     int out;
+    int index;
     struct  s_std *next;
 }               t_std;
 
