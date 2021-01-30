@@ -140,8 +140,8 @@ int	echo(char *argv, char **env, int *status)
 	}
 	argv = ft_strtrim(argv, " ");
 	argv = ft_strtrim(argv, "\t");
-	if (find(argv, '<') == 0 && find(argv, '>') == 0)
-	{
+	//if (find(argv, '<') == 0 && find(argv, '>') == 0)
+	//{
 		bult = keep_split(argv, 39, 34);
 		if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
 		{
@@ -163,7 +163,7 @@ int	echo(char *argv, char **env, int *status)
 			}
 		}
 		put_cases(bult, env, status);
-	}
+	//}
 	if (i == 0)
         my_putchar('\n');
 	*status = 0;
@@ -205,4 +205,26 @@ int	echo_strcmp(const char *s1, const char *s2)
 		return ((unsigned char)*s1 - (unsigned char)*s2);
 	else
 		return (0);
+}
+
+
+
+
+
+int		cate()
+{
+    char *buf = calloc(1, 1024);
+
+    buf[0] = '\n';
+    buf[1] = '\0';
+    while (ft_strchr(buf, '\n'))
+    {
+        memset(buf, 0, 1024);
+        fprintf(stderr, "reading from stdin\n");
+        read(0, buf, 1023);
+        fprintf(stderr, "writing to stdout\n");
+        write(1, buf, 1023);
+    }
+    fprintf(stderr, "exiting\n");
+    return (0);
 }

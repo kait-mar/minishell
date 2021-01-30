@@ -42,7 +42,7 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
     {
         if (dup2(fd, 1) == -1)
             ft_printf("%s\n", strerror(errno));
-        built_in(meta, str, env, status);
+        built_in(meta, str, env, status, 0i);
         close(fd);
         exit(EXIT_SUCCESS);
     }

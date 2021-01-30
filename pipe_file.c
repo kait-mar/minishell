@@ -49,7 +49,7 @@ int        fd_connector(t_meta *head, char *str, char **env, int *status, int si
             ft_printf("Error in dup2 \"%s\"\n", strerror(errno));
             exit(EXIT_FAILURE);
         }
-        built_in(head, str, env, status);
+        built_in(head, str, env, status, 1);
         close(g_fd2[1]);
         exit(EXIT_SUCCESS);
     }
@@ -68,10 +68,25 @@ int        fd_connector(t_meta *head, char *str, char **env, int *status, int si
             exit(EXIT_FAILURE);
         }
         head = head->next;
-        built_in(head, str, env, status);
+        built_in(head, str, env, status, 0);
         close(g_fd2[0]);
     }
     exit(EXIT_SUCCESS);
+}
+
+void	ft_lstadd_std(t_std **alst, t_std *new)
+{
+    t_std *lst;
+
+    if (*alst == NULL)
+        *alst = new;
+    else
+    {
+        lst = *alst;
+        while (lst->next)
+            lst = lst->next;
+        lst->next = new;
+    }
 }
 
 t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
@@ -85,121 +100,63 @@ t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
     int i = 0;
     int in;
     t_std *std;
-    t_std *tmp;
     t_std *temp;
     t_meta *test;
+    int     fd1[2];
+    int     fd2[2];
 
     cmd = pipe_counter(head) + 1;
-
+    fprintf(stderr, "The parent pid ==> %d\n", getpid());
     test = head;
     if (!(std = (t_std *) malloc(sizeof (t_std))))
         return NULL;
-    int pid_d = 0;
    while (test->meta == '|')
    {
        pipe(fd);
-       fprintf(stderr, "%d: fd[0] = %d, fd[1] = %d\n", i, fd[0], fd[1]);
        if (i == 0)
        {
            std->in = fd[0];
            std->out = fd[1];
            std->index = i;
            std->next = NULL;
-           tmp = std;
        }
        else
        {
-           if (!(temp = (t_std *) malloc(sizeof (t_std))))
+          if (!(temp = (t_std *) malloc(sizeof (t_std))))
                return NULL;
            temp->out = fd[1];
            temp->in = fd[0];
            temp->index = i;
-           while (tmp->next)
-               tmp = tmp->next;
-           tmp->next = temp;
-           tmp->next->next = NULL;
+           temp->next = NULL;
+           ft_lstadd_std(&std, temp);
        }
+       if (i == 0)
+           fprintf(stderr, "%d: fd[0] = %d, fd[1] = %d\n", std->index, std->in, std->out);
+       if (i > 0)
+        fprintf(stderr, "%d: fd[0] = %d, fd[1] = %d\n", std->next->index, std->next->in, std->next->out);
        test = test->next;
        i = i + 1;
    }
    i = 0;
+   int  check = 0;
+    char *s = calloc(1, 100);
     while (head->meta == '|')
     {
-        if ((pid = fork()) < 0)
+        if (dup2(std->out, STDOUT_FILENO) == - 1)
         {
-            printf("Error in fork ");
-            exit(EXIT_FAILURE);
+            fprintf(stderr, "Error in dup2 %s\n", strerror(errno));
+            exit(EXIT_SUCCESS);
         }
-        else if (pid == 0)
-        {
-            if (i > 0)
-            {
-                if (pid_d > 0)
-                    fprintf(stderr, "\nYes it's bigger\n");
-                fprintf(stderr, "In Between\n");
-                fprintf(stderr, "child %d: close(%d)\n", pid_d, std->out);
-                close(std->out);
-                fprintf(stderr, "child %d: dup2(%d, %d)\n", pid_d, std->in, 0);
-                if (dup2(std->in, 0) == - 1)
-                {
-                    printf("Error in dup2 %s\n", strerror(errno));
-                    exit(EXIT_FAILURE);
-                }
-                std = std->next;
-                if (pid_d == 0)
-                {
-                    fprintf(stderr, "child %d: dup2(%d, %d)\n", pid_d, std->out, 1);
-                    if (dup2(std->out, 1) == - 1)
-                    {
-                        printf("Error in dup2 %s\n", strerror(errno));
-                        exit(EXIT_FAILURE);
-                    }
-                    built_in(head, str, env, status);
-                    fprintf(stderr, "child %d: close(%d)\n", pid_d, std->out);
-                    close(std->out);
-                    close(std->in);
-                    exit(EXIT_SUCCESS);
-
-                }
-            }
-            else if (i == 0)
-            {
-                fprintf(stderr, "\nFirst Command\n");
-                fprintf(stderr, "child %d: close(%d)\n", pid_d, std->in);
-                close(std->in);
-                fprintf(stderr, "child %d: dup2(%d, %d)\n", pid_d, std->out, 1);
-                if (dup2(std->out, 1) == - 1)
-                {
-                    printf("Error in dup2 %s\n", strerror(errno));
-                    exit(EXIT_FAILURE);
-                }
-                built_in(head, str, env, status);
-                fprintf(stderr, "child %d: close(%d)\n", pid_d, std->out);
-                close(std->out);
-               // exit(EXIT_SUCCESS);
-            }
-
-        }
-        pid_d = pid;
+        if (head->command != 0)
+            built_in(head, str, env, status, 0);
+        else
+            execut_command(env, str, &check, 0);
+        read(0, s, 10);
+        fprintf(stderr, "s ==> %s\n", s);
         head = head->next;
-        i = i + 1;
+        i += 1;
     }
-    waitpid(pid, status, WUNTRACED);
-    while (std->next != NULL)
-        std = std->next;
-    close(std->out);
-    printf("End of Process\n");
-    printf("std_index == > %d\n", std->index);
-    printf("std->in == %d\n", std->in);
-    printf("std->out == %d\n", std->out);
-    //head = head->next;
-    printf("cmd ==> %d\n", head->command);
-    if (dup2(std->in, 0) == - 1)
-    {
-        printf("Error in dup2 %s\n", strerror(errno));
-        exit(EXIT_FAILURE);
-    }
-    built_in(head, str, env, status);
-    close(std->in);
+    fprintf(stderr, "exit head ==> %s\n", head->argument);
+    fprintf(stderr, "exit head ==> %c\n", head->meta);
     return (head);
 }

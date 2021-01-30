@@ -19,18 +19,18 @@ static int	until_meta(char *str)
 	i = 0;
 	while (str[i] != '\0')
     {
-	    if (str[i] == ';')
+	    if (str[i] == ';' && str[i - 1] != '\\')
 	        return (i + 1);
-        if (str[i] == '>')
+        if (str[i] == '>'&& str[i - 1] != '\\')
         {
             if (str[i + 1] == '>')
                 return (i + 2);
             else
                 return (i + 1);
         }
-        if (str[i] == '<')
+        if (str[i] == '<' && str[i - 1] != '\\')
             return (i + 1);
-        if (str[i] == '|')
+        if (str[i] == '|' && str[i - 1] != '\\')
             return (i + 1);
         i += 1;
     }
@@ -59,8 +59,8 @@ static	int		check_meta(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == ';' || str[i] == '|'
-			|| str[i] == '<' || str[i] == '>')
+		if ((str[i] == ';' || str[i] == '|'
+            			|| str[i] == '<' || str[i] == '>') && str[i - 1] != '\\')
 			return (TRUE);
 		i += 1;
 	}
@@ -91,8 +91,8 @@ char	**splits_by_meta(char	*str, int *meta)
 	}
 	while (str[i] != '\0')
 	{
-		if (str[i] == ';' || str[i] == '|'
-			|| str[i] == '<' || str[i] == '>')
+		if ((str[i] == ';' || str[i] == '|'
+			|| str[i] == '<' || str[i] == '>') && (str[i - 1] != '\\'))
 		{
 		    if (str[i + 1] == '>' && str[i] == '>')
             {
@@ -144,6 +144,8 @@ t_meta	*split_it_all(char *str)
 	if (!(global = (t_meta *) malloc(sizeof(t_meta))))
 		return (NULL);
 	splits = splits_by_meta(str, &check);
+	if (splits[i] == NULL)
+        return NULL;
     global->command = check_wich_command(take_first_word(splits[i]));
 	if (splits == NULL)
 		return (NULL);
@@ -206,6 +208,7 @@ t_meta	*split_it_all(char *str)
 	//	printf("s == > %s\n", s);
 		if (check_meta(s) == TRUE)
 		{
+		    fprintf(stderr, "Hereee\n");
             if (check_append(s) == TRUE)
             {
                 s = ft_substr(splits[i], 0, until_meta(splits[i]) - 2);
