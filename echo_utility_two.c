@@ -22,6 +22,8 @@ char	*take_first_word(char *s)
 
 	i = 0;
 	j = 0;
+	if (s == NULL)
+        return NULL;
 	while (ft_isalnum(s[i]) && s[i])
 		i++;
 	if (!(string = malloc(i + 1)))

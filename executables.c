@@ -40,7 +40,7 @@ char	*only_after_equal(char *str)
 	return (s);
 }
 
-void	execut_command(char **env, char *str, int *check)
+void	execut_command(char **env, char *str, int *check, int j)
 {
 	char **splits;
 	char *path;
@@ -55,32 +55,34 @@ void	execut_command(char **env, char *str, int *check)
 	{
 		ft_printf("Failure\n");
 		exit(EXIT_FAILURE);
-	}
-	else if (pid == 0)
-	{
-		splits = take_only_carac(str);
-		while (env[i])
-		{
-			if (in_match(only_before_equal(env[i]), "PATH") == 1)
-				path = only_after_equal(env[i]);
-			i += 1;
-		}
-		commands = ft_split(path, ':');
-		free(path);
-		path = ft_strjoin("/", splits[0]);
-		i = 0;
-		while (commands[i])
-		{
-			commands[i] = ft_strjoin(commands[i], path);
-			if (execve(commands[i], splits, env) == -1)
-				i += 1;
-		}
-		exit(EXIT_SUCCESS);
-		*check = 1;
-	}
+
+    }
+	else if (pid == 0) {
+        splits = take_only_carac(str);
+        while (env[i]) {
+            if (in_match(only_before_equal(env[i]), "PATH") == 1)
+                path = only_after_equal(env[i]);
+            i += 1;
+        }
+        commands = ft_split(path, ':');
+        free(path);
+        path = ft_strjoin("/", splits[0]);
+        i = 0;
+        fprintf(stderr, "In execute command getpid ==> %d\n", getpid());
+        while (commands[i]) {
+            commands[i] = ft_strjoin(commands[i], path);
+            if (execve(commands[i], splits, env) == -1)
+                i += 1;
+        }
+
+        fprintf(stderr, "Succes\n");
+        *check = 1;
+      //  exit(EXIT_SUCCESS);
+    }
 	else
 	{
-		if (waitpid(pid, &status, WUNTRACED) == -1)
-			ft_printf("Error has occured\n");
+	    waitpid(pid, &status, WUNTRACED);
+		fprintf(stderr, "In Parenthh Execution\n");
+		//exit(EXIT_SUCCESS);
 	}
 }

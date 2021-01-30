@@ -32,7 +32,7 @@ static  char    *semi_split(char *str)
     return (s);
 }
 
-void 	 built_in(t_meta *meta, char *str, char **env, int *status)
+void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 {
     fprintf(stderr, "Enters in built-in\n");
 	int check;
@@ -42,7 +42,7 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status)
 	exept = 0;
 	if (meta->command == 1)
         cd_command(meta->argument, status);
-	else if (check_pwd(str, &exept) == 0)
+	else if (meta->command == 2)
         pwd_command(status, exept);
 	else if (meta->command  == 3)
 		env_command(env, meta, status);
@@ -51,10 +51,13 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status)
 	else if (meta->command == 5)
 		unset_command(env, str, status);
 	else if (meta->command == 6)
-		echo(meta->argument, env, status);
+	{
+	    fprintf(stderr, "the argument is %s\n", meta->argument);
+        echo(meta->argument, env, status);
+    }
 	else if (meta->command == 0)
 	{
-		execut_command(env, meta->argument, &check);
+		execut_command(env, meta->argument, &check, i);
 		if (check == 1)
 		{
 			ft_printf("bash: %s: command not found\n", meta->argument);
@@ -71,15 +74,19 @@ static	void	prompt(void)
 	char	s[100];
 
 	getcwd(s, 100);
+
 	ft_printf("%s ", s);
 }
 
 int		check_wich_command(char *str)
 {
+    int exept;
+
+    exept = 0;
 	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[2]) == 0))
 		return (1);
-	/*if (check_pwd(str) == 0)
-		return (2);*/
+	if (check_pwd(str, &exept) == 0)
+		return (2);
 	if (check_env(str) == 0)
 		return (3);
 	if (ft_strncmp(str, "export", 6) == 0 && (ft_isalpha(str[6]) == 0))
@@ -114,25 +121,25 @@ int		main(int ac, char **av, char **env)
 	tmp = NULL;
 	while (TRUE)
 	{
-		if (av[1])
+        if (av[1])
 			str = ft_strdup(av[1]);
 		else
 		{
 			prompt();
 			str = reading_input();
 		}
-		str = ft_strtrim(str, "\t");
-		meta = split_it_all(str);
+        str = ft_strtrim(str, "\t");
+        meta = split_it_all(str);
 		head = meta;
         while (head != NULL)
         {
             if (head->meta == ';')
             {
                 tmp = semi_split(str);
-                built_in(head, tmp, env, &status);
+                built_in(head, tmp, env, &status, 0);
             }
             else if (head->meta == '|')
-                head = pipe_file(meta,str, env, &status);
+                head = pipe_file(head,str, env, &status);
             else if (head->meta_append == 1)
                 head = append_file(head, str, env, &status);
             else if (head->meta == '>')
@@ -140,7 +147,9 @@ int		main(int ac, char **av, char **env)
 			 else if (head->meta == '<')
                 head = redirect_intput(head, str, env, &status);
             else if (head->meta == '\0')
-                built_in(head, str, env, &status);
+            {
+                built_in(head, str, env, &status, 0);
+            }
             if (head != NULL)
                 head = head->next;
         }

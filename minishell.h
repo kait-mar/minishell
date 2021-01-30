@@ -140,7 +140,7 @@ int		in_match(char *s1, char *s2);
 t_env	*delete_list(t_env *env, int count);
 t_env	*delete_in_env(t_env *env, char **splits);
 char	**copy_all(t_env *take_env, char **env);
-void	execut_command(char **env, char *str, int *check);
+void	execut_command(char **env, char *str, int *check, int i);
 char	**take_it_all(char *s, int c);
 char	*from_to(char *st, int i, int j);
 int		find_how_many(char *s, char c);
@@ -151,7 +151,7 @@ char	*skip_first_word(char **str);
 void	free_meta_struct(t_meta *meta);
 int		only_star(char *str);
 void	stream_directory();
-void    built_in(t_meta *meta, char *str, char **env, int *status);
+void    built_in(t_meta *meta, char *str, char **env, int *status, int i);
 t_meta   *append_file(t_meta *meta, char *str, char **env, int *status);
 int     check_append(char *s);
 void    exit_command(int status, char *s);
@@ -160,5 +160,5 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status);
 t_meta	*redirect_intput(t_meta *meta, char *str, char **env, int *status);
 t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status);
 void     my_putchar(char c);
-
+int		cate();
 #endif
