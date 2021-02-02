@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2021/01/05 10:04:09 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/01/30 14:49:08 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static  char    *semi_split(char *str)
 
 void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 {
-    fprintf(stderr, "Enters in built-in\n");
 	int check;
 	int  exept;
 
@@ -52,7 +51,6 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 		unset_command(env, str, status);
 	else if (meta->command == 6)
 	{
-	    fprintf(stderr, "the argument is %s\n", meta->argument);
         echo(meta->argument, env, status);
     }
 	else if (meta->command == 0)
@@ -66,7 +64,6 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 	}
     if (meta->command == 7)
         exit_command(*status, meta->argument);
-    fprintf(stderr,"Exit from built-in\n");
 }
 
 static	void	prompt(void)
@@ -74,7 +71,6 @@ static	void	prompt(void)
 	char	s[100];
 
 	getcwd(s, 100);
-
 	ft_printf("%s ", s);
 }
 
@@ -147,14 +143,12 @@ int		main(int ac, char **av, char **env)
 			 else if (head->meta == '<')
                 head = redirect_intput(head, str, env, &status);
             else if (head->meta == '\0')
-            {
                 built_in(head, str, env, &status, 0);
-            }
             if (head != NULL)
                 head = head->next;
         }
-        if (av[1])
-            exit(EXIT_SUCCESS);
+    //    if (av[1])
+      //      exit(EXIT_SUCCESS);
 	}
 	return(0);
 }

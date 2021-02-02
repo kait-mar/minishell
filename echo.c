@@ -104,7 +104,7 @@ char	*skip_first_word(char **str)
 	j = 0;
 	while (((*str)[i] == ' ' || (*str)[i] == '\t') && (*str)[i] != '\0')
 		i++;
-	if (str[i] != '\0')
+	if (*str[i] != '\0')
 	{
 		while ((*str)[i] != ' ' && (*str)[i] != '\t' && (*str)[i] != '\0')
 			i++;
@@ -205,26 +205,4 @@ int	echo_strcmp(const char *s1, const char *s2)
 		return ((unsigned char)*s1 - (unsigned char)*s2);
 	else
 		return (0);
-}
-
-
-
-
-
-int		cate()
-{
-    char *buf = calloc(1, 1024);
-
-    buf[0] = '\n';
-    buf[1] = '\0';
-    while (ft_strchr(buf, '\n'))
-    {
-        memset(buf, 0, 1024);
-        fprintf(stderr, "reading from stdin\n");
-        read(0, buf, 1023);
-        fprintf(stderr, "writing to stdout\n");
-        write(1, buf, 1023);
-    }
-    fprintf(stderr, "exiting\n");
-    return (0);
 }
