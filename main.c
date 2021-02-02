@@ -46,7 +46,7 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 	else if (meta->command  == 3)
 		env_command(env, meta, status);
 	else if (meta->command == 4)
-		export_command(env, str, status);
+		export_command(env, str, status, NULL);
 	else if (meta->command == 5)
 		unset_command(env, str, status);
 	else if (meta->command == 6)

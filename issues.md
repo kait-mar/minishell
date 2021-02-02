@@ -8,3 +8,16 @@
     (exp : echo ca va ? * oui ! Vs  echo "ca va ? * oui !")
 *4/* dquote> when entering a \n before closing the ""
 *5/* the free issue before closing the program
+
+
+********** Export ***********
+    ***** Execution *****
+-Needs to Add quotes
+-Separate between export and env
+-Make Built-in Extensible
+    ****** Parsing ******
+-Need more Precision
+-Need more test
+
+
+

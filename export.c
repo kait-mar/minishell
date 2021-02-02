@@ -79,22 +79,28 @@ int		check_env(char *str)
 	return (on);
 }
 
-t_export		*check_export(char **splits, char **env)
+t_export		*check_export(char **splits, char **env, t_export *export)
 {
 	int i;
+	int k;
 	int	j;
-	t_export	*export;
 	int			on;
 
 	on = 0;
 	j = 0;
-	if (!(export = (t_export *) malloc(sizeof(t_export))))
-		return (NULL);
-	ft_memset(export, 0, sizeof(t_export));
-	i = 1;
+	k = 0;
+    i = 1;
+	if (export == NULL)
+    {
+        if (!(export = (t_export *) malloc(sizeof(t_export))))
+            return (NULL);
+        if (!(export->argument = (char **) ft_calloc(sizeof(char *), arguments_in(splits, i) + 1)))
+            return (NULL);
+        if (!(export->saver = (char **) ft_calloc(sizeof (char *), arguments_in(splits, i) + 1)))
+            return (NULL);
+    }
+//	ft_memset(export, 0, sizeof(t_export));
 	export->command = ft_strdup(splits[0]);
-	if (!(export->argument = (char **) ft_calloc(sizeof(char *), arguments_in(splits, i) + 1)))
-		return (NULL);
 	if (how_mutch_arguments(splits, i) == 1)
 	{
 		while (splits[i] != NULL)
@@ -110,6 +116,13 @@ t_export		*check_export(char **splits, char **env)
 				j += 1;
 				export->flag = 1;
 			}
+			if(ft_isalpha(splits[i][0]))
+			{
+			    fprintf(stderr, "After\n");
+                export->saver[k] = ft_strdup(splits[i]);
+                fprintf(stderr, "Before\n");
+                k += 1;
+            }
 			else
 				export->flag = 0;
 			i += 1;
@@ -118,11 +131,11 @@ t_export		*check_export(char **splits, char **env)
 	else
 	{
 		i = 0;
-		if (!(export->env = (char **) ft_calloc(sizeof(char *),(arguments_in(env, i) + 1))))
+		if (!(export->env = (char **) ft_calloc(sizeof(char *),(arguments_in(export->saver, i) + 1))))
 			return (NULL);
-		while (env[i])
+		while (export->saver[i])
 		{
-			export->env[i] = front_append(env[i], "declare -x ");
+			export->env[i] = front_append(export->saver[i], "declare -x ");
 			i += 1;
 		}
 		export->flag = 2;
@@ -130,9 +143,8 @@ t_export		*check_export(char **splits, char **env)
 	return (export);
 }
 
-void	export_command(char **env, char *str, int *status)
+t_export 	*export_command(char **env, char *str, int *status, t_export *export)
 {	
-	t_export *export;
 	int		i;
 	int		j;
 	int 	stop;
@@ -142,7 +154,7 @@ void	export_command(char **env, char *str, int *status)
 	j = 0;
 	stop = 0;
 	splits = take_only_carac(str);
-	export = check_export(splits, env);
+	export = check_export(splits, env, export);
 	if (export->flag == 1)
 	{
 		while (export->argument[j] != NULL)
@@ -156,7 +168,7 @@ void	export_command(char **env, char *str, int *status)
 				}
 				i += 1;
 			}
-			if (env[i] == NULL &&  stop == 0)
+			if (env[i] == NULL && stop == 0)
 			{
 				env[i] = ft_strdup(export->argument[j]);
 				env[i + 1] = NULL;
@@ -181,8 +193,7 @@ void	export_command(char **env, char *str, int *status)
 		ft_printf("Error in export command\n");
 		*status = 1;
 	}
-	free_splits(splits);
-	free_export(export);
+    return (export);
 }
 
 void 	env_command(char **env, t_meta *meta, int *status)

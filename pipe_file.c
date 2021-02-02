@@ -96,7 +96,7 @@ int    connecting(t_meta *head, char *str, char **env, int *status, int in , int
 
     if ((pid = fork()) < 0)
     {
-        ft_printf("Erro in fork %s\n", strerror(errno));
+        ft_printf("Error in fork %s\n", strerror(errno));
         exit(EXIT_FAILURE);
     }
     if (pid == 0)
@@ -141,8 +141,6 @@ t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
     while(head->meta == '|')
     {
         pipe(fd);
-        fprintf(stderr, "fd ==> %d\n", fd[0]);
-        fprintf(stderr, "in == > %d\n", in);
         pid = connecting(head, str, env, status, in, fd[1]);
         close(fd[1]);
         in = fd[0];

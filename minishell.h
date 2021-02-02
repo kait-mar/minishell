@@ -36,6 +36,7 @@ typedef struct s_command_cd
 typedef struct s_export
 {
 	char 	*command;
+	char    **saver;
 	char	**argument;
 	char	**env;
 	int 	flag;
@@ -104,7 +105,7 @@ void 	pwd_command(int *status, int exept);
 int		check_pwd(char *str, int *exept);
 int		check_env(char *str);
 void 	env_command(char **str, t_meta *meta, int *status);
-void	export_command(char **env, char *splits, int *status);
+t_export *export_command(char **env, char *splits, int *status, t_export *export);
 int		how_mutch_arguments(char **splits, int i);
 int		check_exp_lex(char *str);
 int		match(char *str, char  *export);
@@ -115,11 +116,11 @@ int		check_quote(char *str);
 int		check_double_quote(char *str);
 void	free_splits(char **splits);
 char	*front_append(char *string, char *to_append);
-t_export	*check_export(char **splits, char **env);
+t_export	*check_export(char **splits, char **env, t_export *export);
 int		check_unset(char *str);
 void	unset_command(char **env, char *str, int *status);
 t_env		*filling_env(char **env);
-t_env		*adding_last(t_env *head, int i, char *env);
+t_env		*adding_last(t_env *head, int i, char *nv);
 int			kait_count(char *str);
 int			check_single_quotes(char c);
 int			check_double_quotes(char c);
@@ -161,7 +162,6 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status);
 t_meta	*redirect_intput(t_meta *meta, char *str, char **env, int *status);
 t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status);
 void     my_putchar(char c);
-int		cate();
 void	signal_handler(int *status);
 void	quit_signal(int signum);
 void		inter_signal(int status);
