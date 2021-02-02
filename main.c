@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2021/01/30 14:49:08 by molabhai         ###   ########.fr       */
+/*   Updated: 2021/02/02 10:19:29 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 		if (check == 1)
 		{
 			ft_printf("bash: %s: command not found\n", meta->argument);
+			g_process = 0;
 			*status = 127;
 		}
 	}
@@ -66,12 +67,14 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
         exit_command(*status, meta->argument);
 }
 
-static	void	prompt(void)
+void	prompt(void)
 {
 	char	s[100];
 
 	getcwd(s, 100);
-	ft_printf("%s ", s);
+	//printf(" entered to prompt\n");
+	ft_printf("\n%s ", s);
+	
 }
 
 int		check_wich_command(char *str)
@@ -95,6 +98,7 @@ int		check_wich_command(char *str)
 	    return (7);
 	return (0);
 }
+
 //int			main()
 int		main(int ac, char **av, char **env)
 {
@@ -107,7 +111,6 @@ int		main(int ac, char **av, char **env)
 	status = 0;
 	head = NULL;
 	str = NULL;
-
 	/*char **av;
 	char **env;
 	env = malloc(2*sizeof(char *));
@@ -117,6 +120,7 @@ int		main(int ac, char **av, char **env)
 	tmp = NULL;
 	while (TRUE)
 	{
+		signal_handler();
         if (av[1])
 			str = ft_strdup(av[1]);
 		else

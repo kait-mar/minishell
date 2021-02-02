@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:29:54 by molabhai          #+#    #+#             */
-/*   Updated: 2021/01/05 10:21:32 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/02/02 10:17:12 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct  s_std
 int     g_fd[2];
 int     g_fd2[2];
 
+int		g_process;
 void	cd_command(char *argument, int *status);
 char	**taking_command(char *str);
 char	**split_to_tokens(char *str);
@@ -161,4 +162,9 @@ t_meta	*redirect_intput(t_meta *meta, char *str, char **env, int *status);
 t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status);
 void     my_putchar(char c);
 int		cate();
+void	signal_handler(int *status);
+void	quit_signal(int signum);
+void		inter_signal(int status);
+void	prompt(void);
+
 #endif
