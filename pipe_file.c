@@ -89,74 +89,61 @@ void	ft_lstadd_std(t_std **alst, t_std *new)
     }
 }
 
+
+int    connecting(t_meta *head, char *str, char **env, int *status, int in , int out)
+{
+    pid_t pid;
+
+    if ((pid = fork()) < 0)
+    {
+        ft_printf("Erro in fork %s\n", strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+    if (pid == 0)
+    {
+        if (in != 0)
+        {
+            dup2(in, 0);
+            close(in);
+        }
+        if (out != 1)
+        {
+            dup2(out, 1);
+            close(out);
+        }
+        built_in(head, str, env, status, 1);
+        exit(EXIT_SUCCESS);
+    }
+    return (pid);
+}
+
+int  last_thing(t_meta *head, char *str,char **env, int *status, int in)
+{
+    if (in != 0)
+        dup2(in, 0);
+    built_in(head, str, env, status, 0);
+    return (0);
+}
+
 t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
 {
-    int     index;
-    int     fd_nmbr;
-    int     cmd;
-    int     first_time = 0;
-    int     fd[2];
-    int     pid;
-    int i = 0;
+    int fd[2];
+    pid_t pid;
+    t_meta *temp;
     int in;
-    t_std *std;
-    t_std *temp;
-    t_meta *test;
-    int     fd1[2];
-    int     fd2[2];
+    int out;
 
-    cmd = pipe_counter(head) + 1;
-    fprintf(stderr, "The parent pid ==> %d\n", getpid());
-    test = head;
-    if (!(std = (t_std *) malloc(sizeof (t_std))))
-        return NULL;
-   while (test->meta == '|')
-   {
-       pipe(fd);
-       if (i == 0)
-       {
-           std->in = fd[0];
-           std->out = fd[1];
-           std->index = i;
-           std->next = NULL;
-       }
-       else
-       {
-          if (!(temp = (t_std *) malloc(sizeof (t_std))))
-               return NULL;
-           temp->out = fd[1];
-           temp->in = fd[0];
-           temp->index = i;
-           temp->next = NULL;
-           ft_lstadd_std(&std, temp);
-       }
-       if (i == 0)
-           fprintf(stderr, "%d: fd[0] = %d, fd[1] = %d\n", std->index, std->in, std->out);
-       if (i > 0)
-        fprintf(stderr, "%d: fd[0] = %d, fd[1] = %d\n", std->next->index, std->next->in, std->next->out);
-       test = test->next;
-       i = i + 1;
-   }
-   i = 0;
-   int  check = 0;
-    char *s = calloc(1, 100);
-    while (head->meta == '|')
+    in = 0;
+    while(head->meta == '|')
     {
-        if (dup2(std->out, STDOUT_FILENO) == - 1)
-        {
-            fprintf(stderr, "Error in dup2 %s\n", strerror(errno));
-            exit(EXIT_SUCCESS);
-        }
-        if (head->command != 0)
-            built_in(head, str, env, status, 0);
-        else
-            execut_command(env, str, &check, 0);
-        read(0, s, 10);
-        fprintf(stderr, "s ==> %s\n", s);
+        pipe(fd);
+        pid = connecting(head, str, env, status, in, fd[1]);
+        close(fd[1]);
+        in = fd[0];
         head = head->next;
-        i += 1;
     }
-    fprintf(stderr, "exit head ==> %s\n", head->argument);
-    fprintf(stderr, "exit head ==> %c\n", head->meta);
+    waitpid(pid, status, WUNTRACED);
+    close(fd[1]);
+    last_thing(head, str, env, status, in);
     return (head);
 }

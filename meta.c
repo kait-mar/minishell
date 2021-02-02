@@ -97,7 +97,6 @@ char	**splits_by_meta(char	*str, int *meta)
 		    if (str[i + 1] == '>' && str[i] == '>')
             {
                 splits[k++] = from_to(str, j, i + 2);
-              //  printf("splits == > %s\n", splits[k - 1]);
                i += 2;
             }
 		    else
@@ -205,10 +204,8 @@ t_meta	*split_it_all(char *str)
 			return (NULL);
 		temp->command = check_wich_command(take_first_word(splits[i]));
 		s = ft_substr(splits[i], 0 , until_meta(splits[i]));
-	//	printf("s == > %s\n", s);
 		if (check_meta(s) == TRUE)
 		{
-		    fprintf(stderr, "Hereee\n");
             if (check_append(s) == TRUE)
             {
                 s = ft_substr(splits[i], 0, until_meta(splits[i]) - 2);
