@@ -101,6 +101,7 @@ int    connecting(t_meta *head, char *str, char **env, int *status, int in , int
     }
     if (pid == 0)
     {
+
         if (in != 0)
         {
             dup2(in, 0);
@@ -120,7 +121,10 @@ int    connecting(t_meta *head, char *str, char **env, int *status, int in , int
 int  last_thing(t_meta *head, char *str,char **env, int *status, int in)
 {
     if (in != 0)
+    {
         dup2(in, 0);
+        close(in);
+    }
     built_in(head, str, env, status, 0);
     return (0);
 }
@@ -131,12 +135,14 @@ t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
     pid_t pid;
     t_meta *temp;
     int in;
-    int out;
+    int old_stdin;
 
-    in = 0;
+    old_stdin = dup(STDIN_FILENO);
     while(head->meta == '|')
     {
         pipe(fd);
+        fprintf(stderr, "fd ==> %d\n", fd[0]);
+        fprintf(stderr, "in == > %d\n", in);
         pid = connecting(head, str, env, status, in, fd[1]);
         close(fd[1]);
         in = fd[0];
@@ -145,5 +151,7 @@ t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
     waitpid(pid, status, WUNTRACED);
     close(fd[1]);
     last_thing(head, str, env, status, in);
+    close(fd[0]);
+    dup2(old_stdin, 0);
     return (head);
 }
