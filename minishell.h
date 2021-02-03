@@ -90,10 +90,11 @@ typedef struct  s_std
     struct  s_std *next;
 }               t_std;
 
-int     g_fd[2];
-int     g_fd2[2];
+/*      Global Variables */
 
+t_export *g_export;
 int		g_process;
+
 void	cd_command(char *argument, int *status);
 char	**taking_command(char *str);
 char	**split_to_tokens(char *str);
@@ -105,7 +106,7 @@ void 	pwd_command(int *status, int exept);
 int		check_pwd(char *str, int *exept);
 int		check_env(char *str);
 void 	env_command(char **str, t_meta *meta, int *status);
-t_export *export_command(char **env, char *splits, int *status, t_export *export);
+void    export_command(char **env, char *splits, int *status, t_export *export);
 int		how_mutch_arguments(char **splits, int i);
 int		check_exp_lex(char *str);
 int		match(char *str, char  *export);
@@ -166,5 +167,7 @@ void	signal_handler(int *status);
 void	quit_signal(int signum);
 void		inter_signal(int status);
 void	prompt(void);
+void    filling_export(char **env);
 
 #endif
+

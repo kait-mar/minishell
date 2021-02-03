@@ -96,8 +96,8 @@ t_export		*check_export(char **splits, char **env, t_export *export)
             return (NULL);
         if (!(export->argument = (char **) ft_calloc(sizeof(char *), arguments_in(splits, i) + 1)))
             return (NULL);
-        if (!(export->saver = (char **) ft_calloc(sizeof (char *), arguments_in(splits, i) + 1)))
-            return (NULL);
+/*        if (!(export->saver = (char **) ft_calloc(sizeof (char *), arguments_in(splits, i) + 1)))
+            return (NULL);*/
     }
 //	ft_memset(export, 0, sizeof(t_export));
 	export->command = ft_strdup(splits[0]);
@@ -143,7 +143,7 @@ t_export		*check_export(char **splits, char **env, t_export *export)
 	return (export);
 }
 
-t_export 	*export_command(char **env, char *str, int *status, t_export *export)
+void 	export_command(char **env, char *str, int *status, t_export *export)
 {	
 	int		i;
 	int		j;
@@ -182,7 +182,7 @@ t_export 	*export_command(char **env, char *str, int *status, t_export *export)
 	else if (export->flag == 2)
 	{
 		while (export->env[i])
-		{		
+		{
 			ft_printf("%s\n", export->env[i]);
 			i += 1;
 		}
@@ -193,7 +193,6 @@ t_export 	*export_command(char **env, char *str, int *status, t_export *export)
 		ft_printf("Error in export command\n");
 		*status = 1;
 	}
-    return (export);
 }
 
 void 	env_command(char **env, t_meta *meta, int *status)

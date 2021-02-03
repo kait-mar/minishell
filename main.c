@@ -50,9 +50,7 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 	else if (meta->command == 5)
 		unset_command(env, str, status);
 	else if (meta->command == 6)
-	{
         echo(meta->argument, env, status);
-    }
 	else if (meta->command == 0)
 	{
 		execut_command(env, meta->argument, &check, i);
@@ -108,15 +106,18 @@ int		main(int ac, char **av, char **env)
 	t_meta	*meta;
 	t_meta	*head;
 
+
 	status = 0;
 	head = NULL;
 	str = NULL;
+	g_export = NULL;
+	filling_export(env);
 	/*char **av;
 	char **env;
 	env = malloc(2*sizeof(char *));
 	*env = "PATH=user/bin";
 	env[1] = NULL;*/
-
+    return  EXIT_SUCCESS;
 	tmp = NULL;
 	while (TRUE)
 	{

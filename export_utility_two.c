@@ -81,3 +81,19 @@ int		kait_count(char *str)
 	}
 	return (count);
 }	
+
+void    filling_export(char **env)
+{
+    int i;
+
+    i = 0;
+    if (!(g_export = (t_export *) malloc(sizeof (t_export))))
+        return ;
+    if (!(g_export->saver = (char **) ft_calloc(sizeof (char *), arguments_in(env, i))))
+        return ;
+    while (env[i])
+    {
+        g_export->saver[i] = ft_strdup(env[i]);
+        i += 1;
+    }
+}
