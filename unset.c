@@ -80,7 +80,7 @@ t_env		*delete_in_env(t_env *env, char **splits)
 		while (tmp != NULL)
 		{
 			s = only_before_equal(tmp->in_env);
-			if (in_match(s, splits[i]) == 1)
+			if (in_match(s, splits[i]) == 0)
 			{
 				check = 1;
 				break ;
@@ -124,7 +124,7 @@ t_env	*filling_env(char **env)
 	int			i;
 
 	i = 0;
-	while (env[i] != '\0')
+	while (env[i])
 	{
 		take_env = adding_last(take_env, i, env[i]);
 		i += 1;
@@ -166,5 +166,9 @@ void	unset_command(char **env, char *str, int *status)
 	splits = take_only_carac(str);
 	take_env = delete_in_env(take_env, splits);
 	env = copy_all(take_env, env);
+    take_env = filling_env(g_export->saver);
+    splits = take_only_carac(str);
+    take_env = delete_in_env(take_env, splits);
+    g_export->saver = copy_all(take_env, g_export->saver);
 	*status = 0;
 }

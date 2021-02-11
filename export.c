@@ -45,6 +45,43 @@ int		check_double_quote(char *str)
 	 return (on);
 }
 
+
+void    export_realloc(void)
+{
+    t_export *tmp;
+    int     i;
+
+    if (!(tmp = (t_export *) malloc(sizeof (t_export))))
+        return ;
+    i = 0;
+    if (!(tmp->saver = (char **) ft_calloc(sizeof (char *), arguments_in(g_export->saver, i) + 1)))
+        return ;
+    while (g_export->saver[i])
+    {
+        tmp->saver[i] = ft_strdup(g_export->saver[i]);
+        i += 1;
+    }
+    if (!(g_export = (t_export *) malloc(sizeof (t_export))))
+        return ;
+    i = 0;
+    if (!(g_export->saver = (char **) ft_calloc(sizeof (char *), arguments_in(tmp->saver, i) + 2)))
+        return ;
+    while (tmp->saver[i])
+    {
+        g_export->saver[i] = ft_strdup(tmp->saver[i]);
+        i += 1;
+    }
+    i = 0;
+    while (tmp->saver[i])
+    {
+        free(tmp->saver[i]);
+        tmp->saver[i] = NULL;
+        i += 1;
+    }
+    free(tmp);
+    tmp = NULL;
+}
+
 int		check_env(char *str)
 {
 	char *s;
@@ -101,6 +138,7 @@ t_export		*check_export(char **splits, char **env, t_export *export)
     }
 //	ft_memset(export, 0, sizeof(t_export));
 	export->command = ft_strdup(splits[0]);
+	export->flag = 0;
 	if (how_mutch_arguments(splits, i) == 1)
 	{
 		while (splits[i] != NULL)
@@ -118,24 +156,32 @@ t_export		*check_export(char **splits, char **env, t_export *export)
 			}
 			if(ft_isalpha(splits[i][0]))
 			{
-			    fprintf(stderr, "After\n");
-                export->saver[k] = ft_strdup(splits[i]);
-                fprintf(stderr, "Before\n");
-                k += 1;
+                k = 0;
+                export_realloc();
+                while (g_export->saver[k])
+                    k += 1;
+                g_export->saver[k] = ft_strdup(splits[i]);
+                g_export->saver[k + 1] = NULL;
+                if (export->flag == 0)
+                    export->flag = 3;
             }
 			else
-				export->flag = 0;
+            {
+			    ft_printf("bash: export: '%s': not a valid identifier\n", splits[i]);
+                export->flag = 0;
+            }
 			i += 1;
 		}
 	}
 	else
 	{
 		i = 0;
-		if (!(export->env = (char **) ft_calloc(sizeof(char *),(arguments_in(export->saver, i) + 1))))
+		if (!(export->env = (char **) ft_calloc(sizeof(char *),(arguments_in(g_export->saver, i) + 1))))
 			return (NULL);
-		while (export->saver[i])
+		while (g_export->saver[i])
 		{
-			export->env[i] = front_append(export->saver[i], "declare -x ");
+			export->env[i] = front_append(g_export->saver[i], "declare -x ");
+			export->env[i][ft_strlen(export->env[i]) + 1] = '\0';
 			i += 1;
 		}
 		export->flag = 2;
@@ -187,11 +233,6 @@ void 	export_command(char **env, char *str, int *status, t_export *export)
 			i += 1;
 		}
 		*status = 0;
-	}
-	else
-	{
-		ft_printf("Error in export command\n");
-		*status = 1;
 	}
 }
 

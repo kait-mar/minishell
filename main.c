@@ -71,8 +71,7 @@ void	prompt(void)
 
 	getcwd(s, 100);
 	//printf(" entered to prompt\n");
-	ft_printf("\n%s ", s);
-	
+	ft_printf("%s ", s);
 }
 
 int		check_wich_command(char *str)
@@ -117,7 +116,6 @@ int		main(int ac, char **av, char **env)
 	env = malloc(2*sizeof(char *));
 	*env = "PATH=user/bin";
 	env[1] = NULL;*/
-    return  EXIT_SUCCESS;
 	tmp = NULL;
 	while (TRUE)
 	{

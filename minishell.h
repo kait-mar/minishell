@@ -168,6 +168,7 @@ void	quit_signal(int signum);
 void		inter_signal(int status);
 void	prompt(void);
 void    filling_export(char **env);
+void    export_realloc(void);
 
 #endif
 

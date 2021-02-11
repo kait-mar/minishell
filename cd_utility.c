@@ -67,8 +67,7 @@ int		how_mutch_arguments(char **str, int i)
 		j = 0;
 		while (str[i][j] != '\0')
 		{
-		    fprintf(stderr, "Here\n");
-			if (ft_isalpha(str[i][j]) == 1)
+			if (ft_isalnum(str[i][j]) == 1)
 				on = 1;
 			j += 1;
 		}
