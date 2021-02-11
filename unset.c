@@ -31,7 +31,7 @@ char	*only_before_equal(char *str)
 	i = 0;
 	if (!(s = (char *) ft_calloc(sizeof(char), ft_strlen(str))))
 		return (NULL);
-	while (str[i] != '=')
+	while (str[i] != '=' &&  str[i] != '\0')
 	{
 		s[i] = str[i];
 		i += 1;
@@ -48,18 +48,21 @@ int		in_match(char *s1, char *s2)
 	return (0);
 }
 
-
 t_env		*delete_list(t_env *env, int count)
 {
 	t_env	*tmp;
 
-	tmp = env;
+    tmp = env;
 	while (count > 1)
 	{
 		tmp = tmp->next;
 		count--;
 	}
-	tmp->next = tmp->next->next;
+	if (tmp->next->next != NULL) {
+        tmp->next = tmp->next->next;
+    }
+	else
+	    tmp->next = NULL;
 	return (env);
 }
 
@@ -80,7 +83,7 @@ t_env		*delete_in_env(t_env *env, char **splits)
 		while (tmp != NULL)
 		{
 			s = only_before_equal(tmp->in_env);
-			if (in_match(s, splits[i]) == 0)
+			if (in_match(s, splits[i]) == 1)
 			{
 				check = 1;
 				break ;
@@ -89,7 +92,8 @@ t_env		*delete_in_env(t_env *env, char **splits)
 			count += 1;
 		}
 		if (check == 1)
-			env = delete_list(env, count); 
+			env = delete_list(env, count);
+		check = 0;
 		count = 0;
 		tmp = env;
 		i += 1;
