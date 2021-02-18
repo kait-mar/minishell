@@ -13,6 +13,8 @@
 
 #include "minishell.h"
 
+
+
 int		check_quote(char *str)
 {
 	int i;
@@ -156,11 +158,20 @@ t_export		*check_export(char **splits, char **env, t_export *export)
                 k = 0;
                 export_realloc();
                 while (g_export->saver[k])
+                {
+                    if (match(g_export->saver[k], splits[i]) == 1)
+                    {
+                       on = 1;
+                       g_export->saver[k] = ft_strdup(splits[i]);
+                    }
                     k += 1;
-                g_export->saver[k] = ft_strdup(splits[i]);
+                }
+                if (on == 0)
+                    g_export->saver[k] = ft_strdup(splits[i]);
                 g_export->saver[k + 1] = NULL;
                 if (export->flag == 0)
                     export->flag = 3;
+                on = 0;
             }
 			else
             {

@@ -175,6 +175,7 @@ void		inter_signal(int status);
 void	prompt(void);
 void    filling_export(char **env);
 void    export_realloc(void);
+char    *split_to_last_cmd(char *str);
 
 #endif
 

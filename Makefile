@@ -20,7 +20,8 @@ SRCS=  cd.c cd_utility.c pwd.c export.c \
 	   export_utility.c export_utility_two.c \
 	   unset.c main.c echo.c echo_utility.c keep_split.c \
 	   executables.c echo_utility_two.c meta.c file_append.c \
-	   exit.c redirect_output.c pipe_file.c redirect_input.c signals.c
+	   exit.c redirect_output.c pipe_file.c redirect_input.c signals.c \
+	   semi_colon.c
 
 OBJ = $(SRCS:.c=.o)
 

@@ -49,8 +49,14 @@ int		match(char *str, char  *export)
 	char *env;
 	char *new_argument;
 
-	env = take_before_equal(str);
-	new_argument = take_before_equal(export);
+	if (check_exp_lex(str) == 1)
+    	env = take_before_equal(str);
+	else
+	    env = ft_strdup(str);
+	if (check_exp_lex(export) == 1)
+    	new_argument = take_before_equal(export);
+	else
+	    new_argument = ft_strdup(export);
 	if (ft_strlen(env) != ft_strlen(new_argument))
 	{
 		free(env);
