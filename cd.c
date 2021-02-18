@@ -61,6 +61,8 @@ void 	cd_command(char *argument, int *status)
 	if (!(str = ft_calloc(sizeof(char), 100)))
 		return ;
 	s = without_that(argument, '"' );
+	if (ft_strncmp(s, "", 1) == 0)
+	    s = ft_strdup("/Users/molabhai");
 	if (chdir(s) < 0)
 	{
 	    ft_printf("%s\n", strerror(errno));

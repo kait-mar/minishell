@@ -104,6 +104,7 @@ int		main(int ac, char **av, char **env)
 	int		status;
 	t_meta	*meta;
 	t_meta	*head;
+	t_semi  *semi;
 
 
 	status = 0;
@@ -135,6 +136,10 @@ int		main(int ac, char **av, char **env)
             if (head->meta == ';')
             {
                 tmp = semi_split(str);
+                fprintf(stderr, "head ==> %s\n", head->argument);
+                fprintf(stderr, "tmp ==> %s\n", tmp);
+            //    if (head->command == 4)
+              //      tmp = ft_strdup(head->argument);
                 built_in(head, tmp, env, &status, 0);
             }
             else if (head->meta == '|')
@@ -146,12 +151,15 @@ int		main(int ac, char **av, char **env)
 			 else if (head->meta == '<')
                 head = redirect_intput(head, str, env, &status);
             else if (head->meta == '\0')
+            {
+                fprintf(stderr, "str ==> %s\n", head->argument);
                 built_in(head, str, env, &status, 0);
+            }
             if (head != NULL)
                 head = head->next;
         }
-    //    if (av[1])
-      //      exit(EXIT_SUCCESS);
+        if (av[1])
+            exit(EXIT_SUCCESS);
 	}
 	return(0);
 }

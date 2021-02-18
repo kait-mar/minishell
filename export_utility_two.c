@@ -40,6 +40,7 @@ char    *adding_quote(char *s)
 
    if (check_equal(s) == 0)
        return (ft_strdup(s));
+
     while (s[i] != '=')
         i += 1;
     if (!(s1 = (char *) ft_calloc(sizeof (char ), i + 1)))

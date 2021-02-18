@@ -72,6 +72,12 @@ typedef struct s_meta
 	struct	s_meta	*next;
 }				t_meta;
 
+typedef struct  s_semi
+{
+    char    *command;
+    struct s_meta *next;
+}               t_semi;
+
 /*	Metacharacter "Pipe" */
 
 typedef struct s_pipe

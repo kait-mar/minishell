@@ -133,10 +133,7 @@ t_export		*check_export(char **splits, char **env, t_export *export)
             return (NULL);
         if (!(export->argument = (char **) ft_calloc(sizeof(char *), arguments_in(splits, i) + 1)))
             return (NULL);
-/*        if (!(export->saver = (char **) ft_calloc(sizeof (char *), arguments_in(splits, i) + 1)))
-            return (NULL);*/
     }
-//	ft_memset(export, 0, sizeof(t_export));
 	export->command = ft_strdup(splits[0]);
 	export->flag = 0;
 	if (how_mutch_arguments(splits, i) == 1)
