@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	until_meta(char *str)
+int	until_meta(char *str)
 {
 	int i;
 
@@ -34,7 +34,7 @@ static int	until_meta(char *str)
             return (i + 1);
         i += 1;
     }
-	return (i);
+	return (0);
 }
 
 void	ft_lstadd(t_meta **alst, t_meta *new)

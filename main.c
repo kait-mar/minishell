@@ -133,6 +133,8 @@ int		main(int ac, char **av, char **env)
 		head = meta;
         while (head != NULL)
         {
+           // str = chang_dollar_sign(str);
+        //    fprintf(stderr, "==> %s\n", str);
             if (head->meta == ';')
             {
                 tmp = semi_split(str);

@@ -176,6 +176,8 @@ void	prompt(void);
 void    filling_export(char **env);
 void    export_realloc(void);
 char    *split_to_last_cmd(char *str);
+int     until_meta(char *str);
+char    *chang_dollar_sign(char *string, char **env);
 
 #endif
 
