@@ -96,6 +96,14 @@ typedef struct  s_std
     struct  s_std *next;
 }               t_std;
 
+/* Buffer */
+
+typedef struct s_buffer
+{
+    char **splits;
+    int check;
+}               t_buffer;
+
 /*      Global Variables */
 
 t_export *g_export;

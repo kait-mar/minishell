@@ -73,16 +73,37 @@ void	free_meta_struct(t_meta *meta)
 	free(meta);
 }
 
-char	**splits_by_meta(char	*str, int *meta)
+int     valid(char *str, int j, int len)
+{
+    char *s;
+    int i;
+
+    s = from_to(str, j, len + 1);
+    i = check_wich_command(str);
+    if (i == 4)
+    {
+        while (j < len + 1)
+        {
+            if (check_single_double_quote(str[j]) == 1)
+                return (1);
+            j += 1;
+        }
+    }
+    return (0);
+}
+
+char	**splits_by_meta(char *str, int *meta)
 {
 	int	i;
 	int	j;
-	int	k;	
+	int	k;
+	int len;
 	char	**splits;
 
 	i = 0;
 	j = 0;
 	k = 0;
+	len = 0;
 	splits = (char **) ft_calloc(sizeof(char *) , 1000);
 	if (str == NULL)
 	{
@@ -96,12 +117,26 @@ char	**splits_by_meta(char	*str, int *meta)
 		{
 		    if (str[i + 1] == '>' && str[i] == '>')
             {
-                splits[k++] = from_to(str, j, i + 2);
+		        if (valid(str, j, i) == 0)
+                    splits[k++] = from_to(str, j, i + 2);
+		        else
+                {
+		            while (str[i] != '\"')
+		                i += 1;
+                    splits[k++] = from_to(str, j, i + 2);
+                }
                i += 2;
             }
 		    else
             {
-                splits[k++] = from_to(str, j, i + 1);
+                if (valid(str, j, i) == 0)
+                    splits[k++] = from_to(str, j, i + 2);
+                else
+                {
+                    while (str[i] != '\"')
+                        i += 1;
+                    splits[k++] = from_to(str, j, i + 1);
+                }
                 i = i + 1;
             }
 			j = i;
@@ -133,13 +168,18 @@ t_meta	*split_it_all(char *str)
 {
 	t_meta	*global;
 	t_meta	*temp;
+	t_buffer *buffer;
 	char	**splits;
 	char	*s;
 	int		i;
+	int j;
 	int		check;
+	int on;
 
 	i = 0;
+	j = 0;
 	check = 0;
+	on = 0;
 	if (!(global = (t_meta *) malloc(sizeof(t_meta))))
 		return (NULL);
 	splits = splits_by_meta(str, &check);
@@ -148,7 +188,22 @@ t_meta	*split_it_all(char *str)
     global->command = check_wich_command(take_first_word(splits[i]));
 	if (splits == NULL)
 		return (NULL);
-	s = ft_substr(splits[i], 0, until_meta(splits[i]));
+	if (check_wich_command(splits[i]) == 4)
+    {
+	    while (splits[i][j] != '\0')
+        {
+	        if (check_single_double_quote(splits[i][j]) == 1)
+            {
+	            on = 1;
+                break ;
+            }
+	        j += 1;
+        }
+    }
+	if (on == 1)
+	    s = ft_strdup(splits[i]);
+	else
+    	s = ft_substr(splits[i], 0, until_meta(splits[i]));
 	if (check_meta(s) == TRUE)
 	{
         if (check_append(s) == TRUE)
@@ -159,12 +214,18 @@ t_meta	*split_it_all(char *str)
         else if (check_append(s) == FALSE)
         {
             global->meta_append = 0;
-            s = ft_substr(splits[i], 0, until_meta(splits[i]) - 1);
+            if (on == 1)
+                s = ft_strdup(splits[i]);
+            else
+                s = ft_substr(splits[i], 0, until_meta(splits[i]) - 1);
         }
-		global->meta = splits[i][until_meta(splits[i]) - 1];
+        if (on == 1)
+            global->meta = 0;
+        else
+            global->meta = splits[i][until_meta(splits[i]) - 1];
 		if (s != NULL)
 		{
-            if (global->command != 0 && global->command !=  6)
+            if (global->command != 0 && global->command != 6)
             {
                 global->argument = skip_first_word(&s);
                 global->argument = ft_strtrim(global->argument, " ");
@@ -198,6 +259,22 @@ t_meta	*split_it_all(char *str)
 	i += 1;
 	while (splits[i])
 	{
+        if (check_wich_command(splits[i]) == 4)
+        {
+            while (splits[i][j] != '\0')
+            {
+                if (check_single_double_quote(splits[i][j]) == 1)
+                {
+                    on = 1;
+                    break ;
+                }
+                j += 1;
+            }
+        }
+        if (on == 1)
+            s = ft_strdup(splits[i]);
+        else
+            s = ft_substr(splits[i], 0, until_meta(splits[i]));
 		if (!(temp = (t_meta *) malloc(sizeof(t_meta))))
 			return (NULL);
 		temp->command = check_wich_command(take_first_word(splits[i]));
@@ -212,9 +289,16 @@ t_meta	*split_it_all(char *str)
             else if (check_append(s) == FALSE)
             {
                 temp->meta_append = 0;
-                s = ft_substr(splits[i], 0, until_meta(splits[i]) - 1);
+                if (on == 1)
+                    s = ft_strdup(splits[i]);
+                else
+                    s = ft_substr(splits[i], 0, until_meta(splits[i]) - 1);
+                on = 0;
             }
-			temp->meta = splits[i][until_meta(splits[i]) - 1];
+            if (on == 1)
+                temp->meta = 0;
+            else
+                temp->meta = splits[i][until_meta(splits[i]) - 1];
 			if (s != NULL)
             {
 			    if (temp->command != 0 && temp->command != 4 && temp->command !=  6) {

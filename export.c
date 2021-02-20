@@ -136,13 +136,13 @@ t_export		*check_export(char **splits, char **env, t_export *export)
         if (!(export->argument = (char **) ft_calloc(sizeof(char *), arguments_in(splits, i) + 1)))
             return (NULL);
     }
-	export->command = ft_strdup(splits[0]);
 	export->flag = 0;
+	if (splits[i] == NULL)
+	    splits[i] = ft_strdup("");
 	if (how_mutch_arguments(splits, i) == 1)
 	{
 		while (splits[i] != NULL)
 		{
-            fprintf(stderr, "splits ==> %s\n", splits[i]);
 			splits[i] = ft_strtrim(splits[i], "\t");
 			if (check_double_quote(splits[i]) == 1)
 				splits[i] = without_that(splits[i], '\"');

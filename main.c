@@ -39,7 +39,6 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 
 	check = 0;
 	exept = 0;
-    fprintf(stderr, "argument ==> [%s]\n", meta->argument);
     if (meta->command == 1)
         cd_command(meta->argument, status);
 	else if (meta->command == 2)
@@ -105,7 +104,6 @@ int		main(int ac, char **av, char **env)
 	t_meta	*meta;
 	t_meta	*head;
 	t_semi  *semi;
-
 
 	status = 0;
 	head = NULL;

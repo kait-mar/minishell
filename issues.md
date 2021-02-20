@@ -1,7 +1,5 @@
 
-********** Export ***********
--Fix the declaration of export "export"
+***** Expansion *****
+- Expansion with multiple CMD in environment
 
--Fix export with semicolon
-
-
+-NEED MORE TESTS
