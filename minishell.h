@@ -178,6 +178,7 @@ void    export_realloc(void);
 char    *split_to_last_cmd(char *str);
 int     until_meta(char *str);
 char    *chang_dollar_sign(char *string, char **env);
+char	**take_only_carac_for_export(char *str);
 
 #endif
 

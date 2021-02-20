@@ -39,14 +39,15 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 
 	check = 0;
 	exept = 0;
-	if (meta->command == 1)
+    fprintf(stderr, "argument ==> [%s]\n", meta->argument);
+    if (meta->command == 1)
         cd_command(meta->argument, status);
 	else if (meta->command == 2)
         pwd_command(status, exept);
 	else if (meta->command  == 3)
 		env_command(env, meta, status);
 	else if (meta->command == 4)
-		export_command(env, str, status, NULL);
+        export_command(env, meta->argument, status, NULL);
 	else if (meta->command == 5)
 		unset_command(env, str, status);
 	else if (meta->command == 6)
@@ -70,7 +71,6 @@ void	prompt(void)
 	char	s[100];
 
 	getcwd(s, 100);
-	//printf(" entered to prompt\n");
 	ft_printf("%s ", s);
 }
 
@@ -127,14 +127,13 @@ int		main(int ac, char **av, char **env)
 		{
 			prompt();
 			str = reading_input();
+            str = chang_dollar_sign(str, env);
 		}
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
 		head = meta;
         while (head != NULL)
         {
-           // str = chang_dollar_sign(str);
-        //    fprintf(stderr, "==> %s\n", str);
             if (head->meta == ';')
             {
                 tmp = semi_split(str);

@@ -128,7 +128,7 @@ t_export		*check_export(char **splits, char **env, t_export *export)
 	on = 0;
 	j = 0;
 	k = 0;
-    i = 1;
+    i = 0;
 	if (export == NULL)
     {
         if (!(export = (t_export *) malloc(sizeof(t_export))))
@@ -142,6 +142,7 @@ t_export		*check_export(char **splits, char **env, t_export *export)
 	{
 		while (splits[i] != NULL)
 		{
+            fprintf(stderr, "splits ==> %s\n", splits[i]);
 			splits[i] = ft_strtrim(splits[i], "\t");
 			if (check_double_quote(splits[i]) == 1)
 				splits[i] = without_that(splits[i], '\"');
@@ -207,7 +208,7 @@ void 	export_command(char **env, char *str, int *status, t_export *export)
 	i = 0;
 	j = 0;
 	stop = 0;
-	splits = take_only_carac(str);
+	splits = take_only_carac_for_export(str);
 	export = check_export(splits, env, export);
 	if (export->flag == 1)
 	{

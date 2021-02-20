@@ -34,7 +34,7 @@ int	until_meta(char *str)
             return (i + 1);
         i += 1;
     }
-	return (0);
+	return (i);
 }
 
 void	ft_lstadd(t_meta **alst, t_meta *new)
@@ -183,16 +183,14 @@ t_meta	*split_it_all(char *str)
 		global->meta = 0;
 		if (s != NULL)
         {
-		    if (global->command != 0 && global->command != 4 && global->command !=  6)
+		    if (global->command != 0 && global->command !=  6)
             {
                 global->argument = skip_first_word(&s);
                 global->argument = ft_strtrim(global->argument, " ");
                 global->argument = ft_strtrim(global->argument, "\t");
             }
-		    else if (global->command == 0 || global->command == 4 || global->command == 6)
-            {
+		    else if (global->command == 0 || global->command == 6)
                 global->argument = ft_strdup(s);
-            }
         }
 		global->meta_append = 0;
 	}

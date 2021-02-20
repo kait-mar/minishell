@@ -115,6 +115,55 @@ char	*from_to(char *str, int i, int j)
 	return (s);
 }
 
+
+int		ft_isprint_mod(int c)
+{
+    return (c >= 32 && c <= 126);
+}
+
+char	**take_only_carac_for_export(char *str)
+{
+    int i;
+    char **splits;
+    int	j;
+    int k;
+
+    i = 0;
+    if (!(splits = (char **) ft_calloc(sizeof(char *) , kait_count(str) + 1)))
+        return (NULL);
+    k = 0;
+    while (str[i] != '\0')
+    {
+        if (ft_isprint(str[i]))
+        {
+            j = i;
+            while (((ft_isprint_mod(str[j]) == 1 ) || str[j] == '='))
+                j += 1;
+            splits[k++] = from_to(str, i, j);
+            i = j;
+        }
+        if (check_double_quotes(str[i]))
+        {
+            j = i + 1;
+            while (check_double_quotes(str[j]) == 0)
+                j += 1;
+            splits[k++] = from_to(str, i, j + 1);
+            i = j;
+        }
+        if (check_single_quotes(str[i]))
+        {
+            j = i + 1;
+            while (check_single_quotes(str[j]) == 0)
+                j += 1;
+            splits[k++] = from_to(str, i, j + 1);
+            i = j;
+        }
+        if (str[i] != '\0')
+            i += 1;
+    }
+    return (splits);
+}
+
 char	**take_only_carac(char *str)
 {
 	int i;
