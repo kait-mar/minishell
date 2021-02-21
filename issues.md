@@ -1,5 +1,8 @@
 
-***** Expansion *****
-- Expansion with multiple CMD in environment
 
--NEED MORE TESTS
+
+    ****** Backslash *****
+
+- Parsing and fixing backslash in all bash
+
+

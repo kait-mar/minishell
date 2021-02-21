@@ -139,6 +139,55 @@ char    *chang_dollar(char *s, char **env)
     return (string);
 }
 
+int  counting_meta(char *s)
+{
+    int i;
+    int count;
+
+    i = 0;
+    count = 0;
+    while (s[i] != '\0')
+    {
+        if (s[i] == ';' || s[i] == '|'
+            || s[i] == '<' || s[i] == '>')
+        {
+            if (s[i] == '>' &&  s[i + 1] == '>')
+                i += 1;
+            count += 1;
+        }
+        i += 1;
+    }
+    return (count);
+}
+
+char    *ignoring_meta(char *s)
+{
+    int i;
+    int len;
+    int j;
+    char *string;
+
+    i = 0;
+    len = counting_meta(s);
+    len += ft_strlen(s);
+    j = 0;
+    if (!(string = (char *) ft_calloc(sizeof (char ), len + 2)))
+        return (NULL);
+    while (s[i] != '\0')
+    {
+        string[j] = s[i];
+        if (s[i + 1] == ';' || s[i + 1] == '|'
+            || s[i + 1] == '<' || s[i + 1] == '>') {
+            j += 1;
+            string[j] = '\\';
+        }
+        i += 1;
+        j += 1;
+    }
+    string[j] = '\0';
+    return (string);
+}
+
 char    *realloc_input(char *str, char *s, int len)
 {
     int i;
@@ -167,13 +216,13 @@ char    *realloc_input(char *str, char *s, int len)
     if (!(string = (char *) ft_calloc(sizeof (char), (len_cmd + len_after + len_before) + 1)))
         return (NULL);
     i = 0;
-    while (len_before > 0)
-    {
+    while (len_before > 0) {
         string[i] = str[i];
         i += 1;
         len_before--;
     }
-    while (len_cmd > 0)
+    s = ignoring_meta(s);
+    while (len_cmd >= 0)
     {
         string[i] = s[j];
         i += 1;
@@ -211,7 +260,9 @@ char    *chang_dollar_sign(char *str, char **env)
             if (valid == 1)
             {
                 s = chang_dollar(s, env);
+                fprintf(stderr, "After str ==> %s\n", str);
                 str = realloc_input(str, s, j);
+                fprintf(stderr, "Before str ==> %s\n", str);
             }
             i = (j + 1);
         }

@@ -69,6 +69,7 @@ typedef struct s_meta
 	int		command;
 	char	meta;
 	int     meta_append;
+	int     backslash;
 	struct	s_meta	*next;
 }				t_meta;
 

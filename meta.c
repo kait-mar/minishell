@@ -164,6 +164,43 @@ int     check_append(char *s)
     return (FALSE);
 }
 
+int     backslash_on(char *s)
+{
+    int i;
+
+    i = 0;
+    while (s[i] != '\0')
+    {
+        if (s[i] == '\\')
+            return (1);
+        i += 1;
+    }
+    return (0);
+}
+
+char    *removing_backslash(char *s)
+{
+    int i;
+    int j;
+    char *str;
+
+    if (!(str = (char *) ft_calloc(sizeof (char ), ft_strlen(s) + 1)))
+        return (NULL);
+    i = 0;
+    j = 0;
+    while (s[i] != '\0')
+    {
+        if (s[i] != '\\')
+        {
+            str[j] = s[i];
+            j += 1;
+        }
+        i += 1;
+    }
+    str[j] = '\0';
+    return (str);
+}
+
 t_meta	*split_it_all(char *str)
 {
 	t_meta	*global;
@@ -204,7 +241,12 @@ t_meta	*split_it_all(char *str)
 	    s = ft_strdup(splits[i]);
 	else
     	s = ft_substr(splits[i], 0, until_meta(splits[i]));
-	if (check_meta(s) == TRUE)
+	if (backslash_on(s) == 1)
+    {
+	    fprintf(stderr, "Here\n");
+	    s = removing_backslash(s);
+    }
+    if (check_meta(s) == TRUE && backslash_on(splits[i]) == 0)
 	{
         if (check_append(s) == TRUE)
         {
@@ -239,9 +281,10 @@ t_meta	*split_it_all(char *str)
             }
         }
 	}
-	else if (check_meta(s) == FALSE)
+	else if (check_meta(s) == FALSE || backslash_on(splits[i]) == 1)
 	{
 		global->meta = 0;
+		fprintf(stderr, "splits --> %s\n", s);
 		if (s != NULL)
         {
 		    if (global->command != 0 && global->command !=  6)
@@ -279,7 +322,9 @@ t_meta	*split_it_all(char *str)
 			return (NULL);
 		temp->command = check_wich_command(take_first_word(splits[i]));
 		s = ft_substr(splits[i], 0 , until_meta(splits[i]));
-		if (check_meta(s) == TRUE)
+        if (backslash_on(s) == 1)
+            s = removing_backslash(s);
+		if (check_meta(s) == TRUE &&  backslash_on(splits[i]) == 0)
 		{
             if (check_append(s) == TRUE)
             {
@@ -314,7 +359,7 @@ t_meta	*split_it_all(char *str)
                 }
             }
 		}
-		else if (check_meta(s) == FALSE)
+		else if (check_meta(s) == FALSE ||  backslash_on(splits[i]) == 1)
 		{
 			temp->meta = 0;
 			if (s != NULL)
