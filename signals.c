@@ -12,11 +12,13 @@
 
 #include "minishell.h"
 
-void		inter_signal(int status)
+void		inter_signal(int on)
 {
 	int	pid;
+    int statut;
 
-	//printf("\nCTR-C is pressed\n");
+    //printf("\nCTR-C is pressed\n");
+    on = 1;
 	if ((pid = fork()) < 0)
 		printf("error in fork signal : %s\n", strerror(errno));
 	else if (pid == 0)
@@ -38,10 +40,10 @@ void		inter_signal(int status)
 	else
 	{
 		//printf("in parent\n");
-		if (waitpid(pid, &status, WUNTRACED) == -1)
+		if (waitpid(pid, &statut, WUNTRACED) == -1)
 			printf("error in waipid signal : %s\n", strerror(errno));
 	}
-	prompt();
+	prompt(2);
 }
 
 void	quit_signal(int signum)
@@ -50,8 +52,9 @@ void	quit_signal(int signum)
 	exit(EXIT_SUCCESS);
 }
 
-void	signal_handler(int *status)
+void	signal_handler(int *status, int *on)
 {
+    *on = 1;
 	signal(SIGINT, inter_signal);
 	signal(SIGQUIT, inter_signal);
 	//printf("before termination signal handler\n");

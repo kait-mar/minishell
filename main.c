@@ -50,10 +50,7 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 	else if (meta->command == 5)
 		unset_command(env, str, status);
 	else if (meta->command == 6)
-    {
-	    fprintf(stderr, "==> %s\n", meta->argument);
         echo(meta->argument, env, status);
-    }
 	else if (meta->command == 0)
 	{
 		execut_command(env, meta->argument, &check, i);
@@ -68,12 +65,15 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
         exit_command(*status, meta->argument);
 }
 
-void	prompt(void)
+void	prompt(int in)
 {
 	char	s[100];
 
 	getcwd(s, 100);
-	ft_printf("%s ", s);
+	if (in == 1)
+        ft_printf("\n%s ", s);
+    else if (in == 0)
+        ft_printf("%s ", s);
 }
 
 int		check_wich_command(char *str)
@@ -107,8 +107,10 @@ int		main(int ac, char **av, char **env)
 	t_meta	*meta;
 	t_meta	*head;
 	t_semi  *semi;
+	int     on;
 
 	status = 0;
+	on = 0;
 	head = NULL;
 	str = NULL;
 	g_export = NULL;
@@ -121,12 +123,12 @@ int		main(int ac, char **av, char **env)
 	tmp = NULL;
 	while (TRUE)
 	{
-		signal_handler(&status);
+		signal_handler(&status, &on);
         if (av[1])
 			str = ft_strdup(av[1]);
 		else
 		{
-			prompt();
+			prompt(on);
 			str = reading_input();
 		}
         str = chang_dollar_sign(str, env);
@@ -156,6 +158,7 @@ int		main(int ac, char **av, char **env)
         }
         if (av[1])
             exit(EXIT_SUCCESS);
+        on = 0;
 	}
 	return(0);
 }
