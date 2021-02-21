@@ -50,7 +50,10 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 	else if (meta->command == 5)
 		unset_command(env, str, status);
 	else if (meta->command == 6)
+    {
+	    fprintf(stderr, "==> %s\n", meta->argument);
         echo(meta->argument, env, status);
+    }
 	else if (meta->command == 0)
 	{
 		execut_command(env, meta->argument, &check, i);
@@ -125,8 +128,8 @@ int		main(int ac, char **av, char **env)
 		{
 			prompt();
 			str = reading_input();
-            str = chang_dollar_sign(str, env);
 		}
+        str = chang_dollar_sign(str, env);
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
 		head = meta;

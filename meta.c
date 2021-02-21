@@ -242,10 +242,7 @@ t_meta	*split_it_all(char *str)
 	else
     	s = ft_substr(splits[i], 0, until_meta(splits[i]));
 	if (backslash_on(s) == 1)
-    {
-	    fprintf(stderr, "Here\n");
 	    s = removing_backslash(s);
-    }
     if (check_meta(s) == TRUE && backslash_on(splits[i]) == 0)
 	{
         if (check_append(s) == TRUE)
@@ -284,7 +281,6 @@ t_meta	*split_it_all(char *str)
 	else if (check_meta(s) == FALSE || backslash_on(splits[i]) == 1)
 	{
 		global->meta = 0;
-		fprintf(stderr, "splits --> %s\n", s);
 		if (s != NULL)
         {
 		    if (global->command != 0 && global->command !=  6)

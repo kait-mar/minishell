@@ -1,8 +1,6 @@
 
 
 
-    ****** Backslash *****
-
-- Parsing and fixing backslash in all bash
-
-
+******** SIGNALS ******
+- Fixing Controls\c
+- Adding Controls-\

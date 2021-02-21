@@ -29,19 +29,19 @@ int     dollar_len(char *str, int i)
     return (count);
 }
 
-char    *take_word(char *str, int i)
+char    *take_word(char *str, int i, int len)
 {
     char *s;
     int j;
 
     j = 0;
-    if (!(s = (char *) ft_calloc(sizeof (char), i + 1)))
+    if (!(s = (char *) ft_calloc(sizeof (char), len + 1)))
         return (NULL);
-    while (i > 0)
+    while (i <= len)
     {
-        s[j] = str[j];
+        s[j] = str[i];
+        i += 1;
         j += 1;
-        i--;
     }
     s[j] = '\0';
     return (s);
@@ -120,22 +120,26 @@ char    *take_away_dollar(char *s)
     return (string);
 }
 
-char    *chang_dollar(char *s, char **env)
+char    *chang_dollar(char *s, char **env, int *on)
 {
     int i;
     char *string;
+    char *ss;
 
     i = 0;
-    s = take_away_dollar(s);
+    ss = take_away_dollar(s);
     while (env[i] != NULL)
     {
-        if (match(env[i], s) == 1)
+        if (match(env[i], ss) == 1)
         {
             string = ft_strdup(env[i]);
             string = take_after_equal(string);
+            *on = 1;
         }
         i += 1;
     }
+    if (*on == 0)
+        string = ft_strdup(s);
     return (string);
 }
 
@@ -202,7 +206,7 @@ char    *realloc_input(char *str, char *s, int len)
     len_cmd = ft_strlen(s);
     i = 0;
     j = 0;
-    while (str[i] != '$')
+    while (str[i] != '$' && str[i] != '\0')
     {
         len_before += 1;
         i += 1;
@@ -213,6 +217,7 @@ char    *realloc_input(char *str, char *s, int len)
         len_after += 1;
         i += 1;
     }
+
     if (!(string = (char *) ft_calloc(sizeof (char), (len_cmd + len_after + len_before) + 1)))
         return (NULL);
     i = 0;
@@ -245,27 +250,29 @@ char    *chang_dollar_sign(char *str, char **env)
 {
     int i;
     int j;
+    int on;
     char *s;
     char *changed;
     int valid;
 
     i = 0;
+    on = 0;
     while (str[i] != '\0')
     {
         if (str[i] == '$')
         {
             j = dollar_len(str, i);
-            s = take_word(str, j + 1);
+            s = take_word(str, i, j);
             valid = dollar_parsing(s);
             if (valid == 1)
             {
-                s = chang_dollar(s, env);
-                fprintf(stderr, "After str ==> %s\n", str);
-                str = realloc_input(str, s, j);
-                fprintf(stderr, "Before str ==> %s\n", str);
+                s = chang_dollar(s, env, &on);
+                if (on == 1)
+                    str = realloc_input(str, s, j);
             }
-            i = (j + 1);
+           // i = j;
         }
+        on = 0;
         i += 1;
     }
     return (str);
