@@ -52,6 +52,7 @@ int		search(char *str)
 	{
 		if (str[i] == '\n')
 		{
+		    g_in_line = 1;
 			str[i] = '\0';
 			return (TRUE);
 		}

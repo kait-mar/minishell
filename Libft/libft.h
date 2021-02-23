@@ -67,6 +67,8 @@ typedef	struct			s_list
 	struct s_list		*next;
 }						t_list;
 
+int g_in_line;
+
 t_list					*ft_lstnew(void *content);
 t_list					*ft_lstlas(t_list *lst);
 void					ft_lstadd_back(t_list **alst, t_list *new);

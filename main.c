@@ -53,7 +53,11 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
         echo(meta->argument, env, status);
 	else if (meta->command == 0)
 	{
-		execut_command(env, meta->argument, &check, i);
+	    if (ft_strcmp(meta->argument, "") != 0)
+	    {
+            g_process = 1;
+            execut_command(env, meta->argument, &check, i);
+        }
 		if (check == 1)
 		{
 			ft_printf("bash: %s: command not found\n", meta->argument);
@@ -71,8 +75,11 @@ void	prompt(int in)
 
 	getcwd(s, 100);
 	if (in == 1)
+    {
         ft_printf("\n%s ", s);
-    else if (in == 0)
+        return ;
+    }
+	else if (in == 0)
         ft_printf("%s ", s);
 }
 
@@ -110,6 +117,10 @@ int		main(int ac, char **av, char **env)
 	int     on;
 
 	status = 0;
+	g_on = 0;
+	g_in_signal = 0;
+	g_first_time = 0;
+	g_in_line = 0;
 	on = 0;
 	head = NULL;
 	str = NULL;
@@ -123,12 +134,12 @@ int		main(int ac, char **av, char **env)
 	tmp = NULL;
 	while (TRUE)
 	{
-		signal_handler(&status, &on);
+        signal_handler(&status);
         if (av[1])
 			str = ft_strdup(av[1]);
 		else
 		{
-			prompt(on);
+			prompt(g_in_signal);
 			str = reading_input();
 		}
         str = chang_dollar_sign(str, env);
@@ -159,6 +170,8 @@ int		main(int ac, char **av, char **env)
         if (av[1])
             exit(EXIT_SUCCESS);
         on = 0;
+        g_first_time = 1;
+        g_in_signal = 0;
 	}
 	return(0);
 }

@@ -12,21 +12,44 @@
 
 #include "minishell.h"
 #include <dirent.h>
-#include "./Libft/libft.h"
 #include <errno.h>
 
 char     *reading_input(void)
 {
 	char	*str;
 	int		i;
+	int     on;
+	int     k;
+	int check;
+	char    *s;
 
 	str = NULL;
-	i = get_next_line(1, &str);
-	if (str == NULL || i == 0)
+	i = 0;
+	k = 0;
+	check = 0;
+	int j=0;
+	while (i == 0)
 	{
-		printf("ctr-D is detected\n");
-		exit(EXIT_SUCCESS);
-	}
+	    if (k == 0 ||  (g_in_line == 0 && i == 0))
+        {
+            i = get_next_line(1, &str);
+            if (k == 0)
+                s = ft_strdup(str);
+            if (g_in_line == 1 && i == 1)
+            {
+                g_in_line = 0;
+                return (s);
+            }
+        }
+        if (ft_strcmp(str, "") == 0 && i == 0 && check == 0)
+        {
+            ft_printf("exit\n");
+            exit(EXIT_SUCCESS);
+        }
+        else if (i == 0 && ft_strcmp(str, "") != 0 && k == 0)
+            check = 1;
+        k += 1;
+    }
 	return (str);
 }
 

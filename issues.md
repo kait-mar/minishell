@@ -1,6 +1,6 @@
 
 
 
-******** SIGNALS ******
-- Fixing Controls\c
-- Adding Controls-\
+    ******** SIGNALS ******
+
+- Adding to string after using "CTRL-D"

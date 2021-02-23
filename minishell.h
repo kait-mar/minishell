@@ -109,6 +109,11 @@ typedef struct s_buffer
 
 t_export *g_export;
 int		g_process;
+int     g_first_time;
+int     g_in_signal;
+pid_t   g_pid;
+int     g_on;
+int     g_in_line;
 
 void	cd_command(char *argument, int *status);
 char	**taking_command(char *str);
@@ -178,7 +183,7 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status);
 t_meta	*redirect_intput(t_meta *meta, char *str, char **env, int *status);
 t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status);
 void     my_putchar(char c);
-void	signal_handler(int *status, int *on);
+void	signal_handler(int *status);
 void	quit_signal(int signum);
 void		inter_signal(int status);
 void	prompt(int i);

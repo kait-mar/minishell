@@ -90,6 +90,7 @@ void	execut_command(char **env, char *str, int *check, int j)
             free(path);
             path = ft_strjoin("/", splits[0]);
             i = 0;
+            *check = 2;
             while (commands[i]) {
                 commands[i] = ft_strjoin(commands[i], path);
                 if (execve(commands[i], splits, env) == -1)
@@ -100,8 +101,10 @@ void	execut_command(char **env, char *str, int *check, int j)
         }
         else
         {
+            g_pid = pid;
+            g_on = 1;
             waitpid(pid, &status, WUNTRACED);
-            //exit(EXIT_SUCCESS);
+            g_on = 0;
         }
     }
 }

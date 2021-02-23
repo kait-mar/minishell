@@ -12,50 +12,32 @@
 
 #include "minishell.h"
 
-void		inter_signal(int on)
+void		inter_signal(int status)
 {
-	int	pid;
-    int statut;
-
-    //printf("\nCTR-C is pressed\n");
-    on = 1;
-	if ((pid = fork()) < 0)
-		printf("error in fork signal : %s\n", strerror(errno));
-	else if (pid == 0)
+    g_in_signal = 1;
+	if (g_on == 1)
+	    kill(g_pid, SIGINT);
+	if (g_on == 1)
 	{
-		//printf("in Child\n");
-		if (g_process == 0)
-		{
-			//printf("the signal is ignored\n");
-			g_process = 0;
-		}
-		else
-		{
-			//printf("the signal is handled\n");
-			kill(g_process, SIGKILL);
-			g_process = 0;
-		}
-		exit(EXIT_SUCCESS);
-	}
+        g_process = 0;
+        prompt(2);
+    }
 	else
-	{
-		//printf("in parent\n");
-		if (waitpid(pid, &statut, WUNTRACED) == -1)
-			printf("error in waipid signal : %s\n", strerror(errno));
-	}
-	prompt(2);
+	    prompt(g_in_signal);
 }
 
 void	quit_signal(int signum)
 {
-	printf("\nCTR-D is pressed\n");
-	exit(EXIT_SUCCESS);
+    if (g_on == 1)
+    {
+        kill(g_pid, SIGQUIT);
+        ft_printf("Quit: 3\n");
+    }
 }
 
-void	signal_handler(int *status, int *on)
+void	signal_handler(int *status)
 {
-    *on = 1;
 	signal(SIGINT, inter_signal);
-	signal(SIGQUIT, inter_signal);
+	signal(SIGQUIT, quit_signal);
 	//printf("before termination signal handler\n");
 }
