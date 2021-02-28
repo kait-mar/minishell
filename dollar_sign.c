@@ -21,7 +21,7 @@ int     dollar_len(char *str, int i)
     count = 0;
     j = i + 1;
     while (str[j] != '\0' && str[j] != '$' && str[j] != '\\' && str[j] != ' '
-           && str[j] != '>' &&  str[j] != '<' &&  str[j] != ';')
+           && str[j] != '>' &&  str[j] != '<' &&  str[j] != ';' && str[j] != '\t')
     {
         count += 1;
         j += 1;
@@ -192,9 +192,9 @@ char    *ignoring_meta(char *s)
     return (string);
 }
 
-char    *realloc_input(char *str, char *s, int len)
+char    *realloc_input(char *str, char *s, int len, int string_len, int i)
 {
-    int i;
+    int o;
     int len_before;
     int len_after;
     int len_cmd;
@@ -204,37 +204,37 @@ char    *realloc_input(char *str, char *s, int len)
     len_after = 0;
     len_before = 0;
     len_cmd = ft_strlen(s);
-    i = 0;
+    o = 0;
     j = 0;
-    while (str[i] != '$' && str[i] != '\0')
+    while (o < i && str[o] != '\0')
     {
         len_before += 1;
-        i += 1;
+        o += 1;
     }
-     i += len;
-    while (str[i] != '\0')
+     o += (len + 1);
+    while (str[o] != '\0')
     {
         len_after += 1;
-        i += 1;
+        o += 1;
     }
-
     if (!(string = (char *) ft_calloc(sizeof (char), (len_cmd + len_after + len_before) + 1)))
         return (NULL);
     i = 0;
-    while (len_before > 0) {
+    while (len_before > 0)
+    {
         string[i] = str[i];
         i += 1;
         len_before--;
     }
     s = ignoring_meta(s);
-    while (len_cmd >= 0)
+    while (len_cmd >= 0 && s[j] != '\0')
     {
         string[i] = s[j];
         i += 1;
         j += 1;
         len_cmd--;
     }
-    len_before += len + 1;
+    len_before  = string_len + 1;
     while (len_after > 0)
     {
         string[i] = str[len_before];
@@ -262,15 +262,15 @@ char    *chang_dollar_sign(char *str, char **env)
         if (str[i] == '$')
         {
             j = dollar_len(str, i);
-            s = take_word(str, i, j);
+            s = take_word(str, i, j + i);
             valid = dollar_parsing(s);
             if (valid == 1)
             {
                 s = chang_dollar(s, env, &on);
                 if (on == 1)
-                    str = realloc_input(str, s, j);
+                    str = realloc_input(str, s, j, j + i, i);
             }
-           // i = j;
+            //i = j;
         }
         on = 0;
         i += 1;

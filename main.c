@@ -40,7 +40,7 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 	check = 0;
 	exept = 0;
     if (meta->command == 1)
-        cd_command(meta->argument, status);
+        cd_command(meta->argument, status, env);
 	else if (meta->command == 2)
         pwd_command(status, exept);
 	else if (meta->command  == 3)
@@ -125,6 +125,8 @@ int		main(int ac, char **av, char **env)
 	head = NULL;
 	str = NULL;
 	g_export = NULL;
+    if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
+        return -1;
 	filling_export(env);
 	/*char **av;
 	char **env;
@@ -142,12 +144,13 @@ int		main(int ac, char **av, char **env)
 			prompt(g_in_signal);
 			str = reading_input();
 		}
-        str = chang_dollar_sign(str, env);
+        //str = chang_dollar_sign(str, env);
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
 		head = meta;
         while (head != NULL)
         {
+            head->argument = chang_dollar_sign(head->argument, env);
             if (head->meta == ';')
             {
                 tmp = semi_split(str);
@@ -155,7 +158,7 @@ int		main(int ac, char **av, char **env)
                 str = split_to_last_cmd(str);
             }
             else if (head->meta == '|')
-                head = pipe_file(head,str, env, &status);
+                head = pipe_file(head, str, env, &status);
             else if (head->meta_append == 1)
                 head = append_file(head, str, env, &status);
             else if (head->meta == '>')

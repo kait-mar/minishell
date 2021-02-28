@@ -18,9 +18,9 @@ int		check_exp_lex(char *str)
 	int i;
 
 	i = 0;
-	if (ft_isalpha(str[i]) == 0)
+	if (ft_isalpha(str[i]) == 0 || str[i] == '_')
 		return (0);
-	while (ft_isalpha(str[i]))
+	while (ft_isalpha(str[i]) || str[i] == '_')
 		i += 1;
 	if (str[i] == '=')
 		return (1);
@@ -33,7 +33,7 @@ static char		*take_before_equal(char *str)
 	char *s;
 
 	i = 0;
-	if (!(s = (char *) malloc(sizeof(char) * ft_strlen(str) + 1)))
+	if (!(s = (char *) ft_calloc(sizeof(char), ft_strlen(str) + 1)))
 		return (NULL);
 	while (str[i] != '=')
 	{
@@ -118,8 +118,10 @@ char	*from_to(char *str, int i, int j)
 
 int		ft_isprint_mod(int c)
 {
-    return (c >= 32 && c <= 126);
+    return (c > 32 && c <= 126);
 }
+
+
 
 char	**take_only_carac_for_export(char *str)
 {
@@ -138,7 +140,15 @@ char	**take_only_carac_for_export(char *str)
         {
             j = i;
             while (((ft_isprint_mod(str[j]) == 1 ) || str[j] == '='))
+            {
+                if (str[j] == '\"')
+                {
+                    j += 1;
+                    while (str[j] != '\"')
+                        j += 1;
+                }
                 j += 1;
+            }
             splits[k++] = from_to(str, i, j);
             i = j;
         }

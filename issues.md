@@ -1,6 +1,8 @@
 
 
+ **** Double-quotes *****
+ 
+-Preserve value exept for "$" && "\"
 
-    ******** SIGNALS ******
+***  Baclslash **
 
-- Adding to string after using "CTRL-D"

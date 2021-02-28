@@ -109,7 +109,7 @@ void 	pwd_command(int *status, int exept)
 	if (getcwd(str, 100) == NULL)
 	{
 		ft_printf("%s\n", strerror(errno));
-		*status = 1;
+		*status = 11;
 	}
 	ft_printf("%s\n", str);
 	free(str);
