@@ -171,7 +171,8 @@ int     backslash_on(char *s)
     i = 0;
     while (s[i] != '\0')
     {
-        if (s[i] == '\\')
+        if (s[i] == '\\' && (s[i + 1] == ';' || s[i + 1] == '>' || s[i + 1] == '<'
+            || s[i + 1] == '|'))
             return (1);
         i += 1;
     }

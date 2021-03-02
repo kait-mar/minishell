@@ -155,18 +155,79 @@ int		kait_count(char *str)
 	return (count);
 }	
 
+char    *append(char *s1, char *s2)
+{
+    char *str;
+    int len;
+    int i;
+    int j;
+
+    i = 0;
+    j = 0;
+    len = ft_strlen(s1) + ft_strlen(s2);
+    if (!(str = (char *) ft_calloc(sizeof (char), len + 1)))
+        return (NULL);
+    while (s1[i] != '\0')
+    {
+        str[i] = s1[i];
+        i += 1;
+    }
+    while (s2[j] != '\0')
+    {
+        str[i] = s2[j];
+        i += 1;
+        j += 1;
+    }
+    str[i] = '\0';
+    return (str);
+}
+
 void    filling_export(char **env)
 {
     int i;
+    int pwd;
+    int shlvl;
+    char *s;
+    char *string;
 
     i = 0;
+    pwd = 0;
+    shlvl = 0;
+    if (!(s = (char *) ft_calloc(sizeof(char ), 100)))
+        return ;
     if (!(g_export = (t_export *) malloc(sizeof (t_export))))
         return ;
-    if (!(g_export->saver = (char **) ft_calloc(sizeof (char *), arguments_in(env, i) + 1)))
+    if (!(g_export->saver = (char **) ft_calloc(sizeof (char *), arguments_in(env, i) + 3)))
         return ;
     while (env[i])
     {
         g_export->saver[i] = ft_strdup(env[i]);
+        i += 1;
+    }
+    i = 0;
+    while (g_export->saver[i])
+    {
+        if (match("PWD", g_export->saver[i]) == 1)
+            pwd = 1;
+        else if (match("SHLVL", g_export->saver[i]) == 1)
+            shlvl = 1;
+        i += 1;
+    }
+    if (pwd == 0)
+    {
+        getcwd(s, 100);
+        string = append("PWD=", s);
+        g_export->saver[i] = ft_strdup(string);
+        free(string);
+        string = NULL;
+        i += 1;
+    }
+    if (shlvl == 0)
+    {
+        string = append("SHLVL=", "1");
+        g_export->saver[i] = ft_strdup(string);
+        free(string);
+        string = NULL;
         i += 1;
     }
 }
@@ -216,7 +277,7 @@ char    *add_backslash(char *s)
     {
         if (s[i + 1] == '\"' || s[i + 1] == '\\' || s[i + 1] == '$')
         {
-            str[j] = str[i];
+            str[j] = s[i];
             j += 1;
             str[j] = '\\';
             j += 1;

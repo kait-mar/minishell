@@ -150,6 +150,7 @@ int		main(int ac, char **av, char **env)
         while (head != NULL)
         {
             head->argument = chang_dollar_sign(head->argument, env);
+            ft_printf("==> %s\n", head->argument);
             if (head->meta == ';')
             {
                 tmp = semi_split(str);

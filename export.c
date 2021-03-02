@@ -150,9 +150,6 @@ t_export		*check_export(char **splits, char **env, t_export *export)
 				splits[i] = without_that(splits[i], '\"');
 			else if (check_quote(splits[i]) == 1 && check_single_inside_double(splits[i]) == 0)
 				splits[i] = without_that(splits[i], '\'');
-			if (in_it(splits[i]) == 1)
-			    splits[i] = add_backslash(splits[i]);
-			ft_printf("splits[i] ==> %s\n", splits[i]);
 			if (check_exp_lex(splits[i]) == 1)
 			{
 				export->argument[j] = ft_strdup(splits[i]);
@@ -161,6 +158,8 @@ t_export		*check_export(char **splits, char **env, t_export *export)
 			}
 			if(ft_isalpha(splits[i][0]))
 			{
+                if (in_it(splits[i]) == 1)
+                    splits[i] = add_backslash(splits[i]);
                 k = 0;
                 export_realloc();
                 while (g_export->saver[k])
@@ -194,7 +193,9 @@ t_export		*check_export(char **splits, char **env, t_export *export)
 			return (NULL);
 		while (g_export->saver[i])
 		{
-			export->env[i] = front_append(g_export->saver[i], "declare -x ");
+            if (in_it(g_export->saver[i]) == 1)
+                g_export->saver[i] = add_backslash(g_export->saver[i]);
+            export->env[i] = front_append(g_export->saver[i], "declare -x ");
 			i += 1;
 		}
 		export->flag = 2;

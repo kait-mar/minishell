@@ -19,7 +19,15 @@ int     dollar_len(char *str, int i)
     int j;
 
     count = 0;
-    j = i + 1;
+
+    if (str[i] == '\\' && str[i + 1] == '$')
+    {
+        j = i;
+        j += 2;
+        count += 2;
+    }
+    else
+        j = i + 1;
     while (str[j] != '\0' && str[j] != '$' && str[j] != '\\' && str[j] != ' '
            && str[j] != '>' &&  str[j] != '<' &&  str[j] != ';' && str[j] != '\t')
     {
@@ -120,6 +128,24 @@ char    *take_away_dollar(char *s)
     return (string);
 }
 
+
+int     check_backslash(char *s)
+{
+    int i;
+
+    i = 0;
+    while (s[i] != '\0')
+    {
+        if (s[i] == '$')
+        {
+            if (s[i - 1] == '\\')
+                return (1);
+        }
+        i += 1;
+    }
+    return (0);
+}
+
 char    *chang_dollar(char *s, char **env, int *on)
 {
     int i;
@@ -128,7 +154,8 @@ char    *chang_dollar(char *s, char **env, int *on)
 
     i = 0;
     ss = take_away_dollar(s);
-    while (env[i] != NULL)
+    ft_printf("check_back ==> %d\n", check_backslash(s));
+    while (env[i] != NULL && (check_backslash(s) == 0))
     {
         if (match(env[i], ss) == 1)
         {
@@ -137,6 +164,11 @@ char    *chang_dollar(char *s, char **env, int *on)
             *on = 1;
         }
         i += 1;
+    }
+    if (check_backslash(s) == 1)
+    {
+        *on = 1;
+        string =ft_strdup(s);
     }
     if (*on == 0)
         string = ft_strdup(s);
@@ -181,7 +213,8 @@ char    *ignoring_meta(char *s)
     {
         string[j] = s[i];
         if (s[i + 1] == ';' || s[i + 1] == '|'
-            || s[i + 1] == '<' || s[i + 1] == '>') {
+            || s[i + 1] == '<' || s[i + 1] == '>')
+        {
             j += 1;
             string[j] = '\\';
         }
@@ -259,7 +292,7 @@ char    *chang_dollar_sign(char *str, char **env)
     on = 0;
     while (str[i] != '\0')
     {
-        if (str[i] == '$')
+        if (str[i] == '$' || (str[i] == '\\' && str[i + 1] == '$'))
         {
             j = dollar_len(str, i);
             s = take_word(str, i, j + i);
@@ -268,12 +301,18 @@ char    *chang_dollar_sign(char *str, char **env)
             {
                 s = chang_dollar(s, env, &on);
                 if (on == 1)
+                {
+                    ft_printf("s == > %s || str ==> %s\n", s, str);
                     str = realloc_input(str, s, j, j + i, i);
+                }
             }
             //i = j;
         }
         on = 0;
-        i += 1;
+        if (str[i] == '\\' &&  str[i + 1] == '$')
+            i += 2;
+        else
+            i += 1;
     }
     return (str);
 }
