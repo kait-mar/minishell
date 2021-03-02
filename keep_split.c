@@ -11,7 +11,7 @@ static int	coun(char *s, char c, char b)
 	while (s[i] != '\0')
 	{
 		k = 0;
-		while (s[i] != c && s[i] != b && s[i] != '\0')
+		while (((s[i] != c && s[i] != b) || ((s[i] == c || s[i] == b) && i - 1 >= 0 && s[i-1] == '\\')) && s[i] != '\0' )
 		{
 			k++;
 			i++;
@@ -66,7 +66,7 @@ char	**keep_split(char *s, char c, char b)
 	while (s[i] != '\0' && j < count)
 	{
 		k = 0;
-		while (s[i] != c && s[i] != b && s[i] != '\0')
+		while (((s[i] != c && s[i] != b) || ((s[i] == c || s[i] == b) && i - 1 >= 0 && s[i-1] == '\\')) && s[i] != '\0' )
 		{
 			i++;
 			k++;
@@ -77,22 +77,22 @@ char	**keep_split(char *s, char c, char b)
 				return (ft_tofree(tab, j));
 			i -= k;
 			k = 0;
-			while (s[i] != c && s[i] != b && s[i] != '\0')
+		while (((s[i] != c && s[i] != b) || ((s[i] == c || s[i] == b) && i - 1 >= 0 && s[i-1] == '\\')) && s[i] != '\0' )
 			{
 				tab[j][k++] = s[i++];
 			}
 			tab[j][k] = '\0';
 		}
-        else if (s[i] == c)
+        else if (s[i] == c && (i == 0 || (i-1 >= 0 && s[i-1] != '\\')))
 		{
 			i++;
 			k++;
-			while (s[i] != c && s[i] != '\0')
+			while ((s[i] != c || (i-1 >=0 && s[i-1] == '\\' && s[i] == c)) && s[i] != '\0')
 			{
 				i++;
 				k++;
 			}
-			if (s[i] == c)
+			if (s[i] == c && (i == 0 || (i-1 >= 0 && s[i-1] != '\\')))
 			{
 				i++;
 				k++;
@@ -106,16 +106,16 @@ char	**keep_split(char *s, char c, char b)
 				tab[j][k++] = s[i++];
 			tab[j][k] = '\0';
 		}
-		else if (s[i] == b)
+		else if (s[i] == b && (i == 0 || (i-1 >= 0 && s[i-1] != '\\')))
 		{
 			i++;
 			k++;
-			while (s[i] != b && s[i] != '\0')
+			while ((s[i] != b || (i-1 >=0 && s[i-1] == '\\' && s[i] == b)) && s[i] != '\0')
 			{
 				i++;
 				k++;
 			}
-			if (s[i] == b)
+			if (s[i] == b && (i == 0 || (i-1 >= 0 && s[i-1] != '\\')))
 			{
 				i++;
 				k++;

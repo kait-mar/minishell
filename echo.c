@@ -25,6 +25,7 @@ int		only_star(char *s)
 	else
 		return (0);
 }
+
 int		print(char **bult, char **env, int *status)
 {
 	int		j;
@@ -87,7 +88,7 @@ int		find(char *str, char c)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == c)
+		if (str[i] == c && (i == 0 || (i - 1 >= 0 && str[i - 1] != '\\')))
 			return (1);
 		i++;
 	}
@@ -132,6 +133,7 @@ int	echo(char *argv, char **env, int *status)
 
 	i = 0;
 	spaces = 0;
+	ft_printf("the argv is %s\n", argv);
 	argv = skip_first_word(&argv);
 	if (ft_strcmp(argv, "") == 0)
 	{
@@ -140,8 +142,6 @@ int	echo(char *argv, char **env, int *status)
 	}
 	argv = ft_strtrim(argv, " ");
 	argv = ft_strtrim(argv, "\t");
-	//if (find(argv, '<') == 0 && find(argv, '>') == 0)
-	//{
 		bult = keep_split(argv, 39, 34);
 		if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
 		{
@@ -163,7 +163,6 @@ int	echo(char *argv, char **env, int *status)
 			}
 		}
 		put_cases(bult, env, status);
-	//}
 	if (i == 0)
         my_putchar('\n');
 	*status = 0;
@@ -193,7 +192,7 @@ int	echo_strcmp(const char *s1, const char *s2)
 	{
 		while ((*s1 == '\'' || *s1 == '\"') && *s1 != '\0')
 			s1++;
-		if (*s1 != '\0' && *s2 != '\0' && *s1 == *s2)
+		if (*s1 != '\0' && *s2 != '\0' && (*s1 == *s2 || *s1 == *s2 - 32))
 		{
 			s1++;
 			s2++;
