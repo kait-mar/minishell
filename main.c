@@ -144,7 +144,6 @@ int		main(int ac, char **av, char **env)
 			prompt(g_in_signal);
 			str = reading_input();
 		}
-        //str = chang_dollar_sign(str, env);
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
 		head = meta;

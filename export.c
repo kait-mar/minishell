@@ -138,16 +138,21 @@ t_export		*check_export(char **splits, char **env, t_export *export)
     }
 	export->flag = 0;
 	if (splits[i] == NULL)
-	    splits[i] = ft_strdup("");
+    {
+        splits[i] = ft_strdup("");
+    }
 	if (how_mutch_arguments(splits, i) == 1)
 	{
 		while (splits[i] != NULL)
 		{
 			splits[i] = ft_strtrim(splits[i], "\t");
-			if (check_double_quote(splits[i]) == 1)
+			if (check_double_quote(splits[i]) == 1 && check_double_inside_single(splits[i]) == 0)
 				splits[i] = without_that(splits[i], '\"');
-			else if (check_quote(splits[i]) == 1)
+			else if (check_quote(splits[i]) == 1 && check_single_inside_double(splits[i]) == 0)
 				splits[i] = without_that(splits[i], '\'');
+			if (in_it(splits[i]) == 1)
+			    splits[i] = add_backslash(splits[i]);
+			ft_printf("splits[i] ==> %s\n", splits[i]);
 			if (check_exp_lex(splits[i]) == 1)
 			{
 				export->argument[j] = ft_strdup(splits[i]);
@@ -190,7 +195,6 @@ t_export		*check_export(char **splits, char **env, t_export *export)
 		while (g_export->saver[i])
 		{
 			export->env[i] = front_append(g_export->saver[i], "declare -x ");
-			export->env[i][ft_strlen(export->env[i]) + 1] = '\0';
 			i += 1;
 		}
 		export->flag = 2;

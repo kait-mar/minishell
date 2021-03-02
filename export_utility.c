@@ -131,7 +131,7 @@ char	**take_only_carac_for_export(char *str)
     int k;
 
     i = 0;
-    if (!(splits = (char **) ft_calloc(sizeof(char *) , kait_count(str) + 1)))
+    if (!(splits = (char **) ft_calloc(sizeof(char *) , kait_count(str) + 2)))
         return (NULL);
     k = 0;
     while (str[i] != '\0')
@@ -144,7 +144,13 @@ char	**take_only_carac_for_export(char *str)
                 if (str[j] == '\"')
                 {
                     j += 1;
-                    while (str[j] != '\"')
+                    while (str[j] != '\"' && str[j] != '\0')
+                        j += 1;
+                }
+                else if (str[j] == '\'')
+                {
+                    j += 1;
+                    while (str[j] != '\'' && str[j] != '\0')
                         j += 1;
                 }
                 j += 1;
@@ -229,4 +235,56 @@ void	free_splits(char **splits)
 		i += 1;
 	}
 	free(splits);
+}
+
+int     check_single_inside_double(char *s)
+{
+    int i;
+    int first;
+
+    i = 0;
+    first = 0;
+    while (s[i] != '\0')
+    {
+        if (s[i] == '\'')
+            first = 1;
+        else if (s[i] == '\"' && first == 0)
+        {
+            i += 1;
+            while (s[i] != '\"' && s[i] != '\0')
+            {
+                if (s[i] == '\'')
+                    return (1);
+                i++;
+            }
+        }
+        i++;
+    }
+    return (0);
+}
+
+int     check_double_inside_single(char *s)
+{
+    int i;
+    int first;
+
+    i = 0;
+    first = 0;
+    while (s[i] != '\0')
+    {
+        if (s[i] == '\"')
+            first = 1;
+        else if (s[i] == '\'' && first == 0)
+        {
+            i += 1;
+            while (s[i] != '\'' && s[i] != '\0')
+            {
+                if (s[i] == '\"')
+                    return (1);
+                i++;
+            }
+        }
+        i++;
+    }
+    return (0);
 }

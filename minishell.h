@@ -178,7 +178,7 @@ void	stream_directory();
 void    built_in(t_meta *meta, char *str, char **env, int *status, int i);
 t_meta   *append_file(t_meta *meta, char *str, char **env, int *status);
 int     check_append(char *s);
-void    exit_command(int status, char *s);
+void    exit_command(long long status, char *s);
 int     check_exit(char *str);
 t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status);
 t_meta	*redirect_intput(t_meta *meta, char *str, char **env, int *status);
@@ -194,6 +194,10 @@ char    *split_to_last_cmd(char *str);
 int     until_meta(char *str);
 char    *chang_dollar_sign(char *string, char **env);
 char	**take_only_carac_for_export(char *str);
-
+char    *take_only(char *s);
+int     check_double_inside_single(char *s);
+int     check_single_inside_double(char *s);
+char    *add_backslash(char *s);
+int     in_it(char *s);
 #endif
 

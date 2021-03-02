@@ -40,11 +40,8 @@ char    *adding_quote(char *s)
 
    if (check_equal(s) == 0)
        return (ft_strdup(s));
-
     while (s[i] != '=')
         i += 1;
-    if (!(s1 = (char *) ft_calloc(sizeof (char ), i + 1)))
-        return (NULL);
     while (s[i] != '\0')
     {
         j += 1;
@@ -52,15 +49,15 @@ char    *adding_quote(char *s)
     }
     if (!(s2 = (char *) ft_calloc(sizeof (char ), j + 3)))
         return (NULL);
+    if (!(str = (char *) ft_calloc(sizeof(char ), j + i + 1)))
+        return (NULL);
+    s2[0] = '\"';
+    j = 1;
     i = 0;
     while (s[i] != '=')
         i += 1;
     if (s[i] == '=')
         i += 1;
-    if (!(str = (char *) ft_calloc(sizeof(char ), j + i + 1)))
-        return (NULL);
-    s2[0] = '\"';
-    j = 1;
     while (s[i] != '\0')
     {
         s2[j] = s[i];
@@ -172,4 +169,66 @@ void    filling_export(char **env)
         g_export->saver[i] = ft_strdup(env[i]);
         i += 1;
     }
+}
+
+int     in_it(char *s)
+{
+    int i;
+
+    i = 0;
+    while (s[i] != '\0')
+    {
+        if (s[i] == '\"' || s[i] == '\\' || s[i] == '$')
+            return (1);
+        i += 1;
+    }
+    return (0);
+}
+
+int     how_mutch(char *s)
+{
+    int i;
+    int count;
+
+    i = 0;
+    count = 0;
+    while (s[i] != '\0')
+    {
+        if (s[i] == '\"' || s[i] == '\\' || s[i] == '$')
+            count++;
+        i += 1;
+    }
+    return (count);
+}
+
+char    *add_backslash(char *s)
+{
+    int i;
+    int j;
+    char *str;
+
+    i = 0;
+    j = how_mutch(s);
+    if (!(str = (char *) ft_calloc(sizeof (char), ft_strlen(s) + (j * 2) + 1)))
+        return (NULL);
+    j = 0;
+    while (s[i] != '\0')
+    {
+        if (s[i + 1] == '\"' || s[i + 1] == '\\' || s[i + 1] == '$')
+        {
+            str[j] = str[i];
+            j += 1;
+            str[j] = '\\';
+            j += 1;
+            i += 1;
+        }
+        else
+        {
+            str[j] = s[i];
+            i += 1;
+            j += 1;
+        }
+    }
+    str[j] = '\0';
+    return (str);
 }
