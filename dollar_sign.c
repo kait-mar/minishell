@@ -154,7 +154,6 @@ char    *chang_dollar(char *s, char **env, int *on)
 
     i = 0;
     ss = take_away_dollar(s);
-    ft_printf("check_back ==> %d\n", check_backslash(s));
     while (env[i] != NULL && (check_backslash(s) == 0))
     {
         if (match(env[i], ss) == 1)
@@ -301,10 +300,7 @@ char    *chang_dollar_sign(char *str, char **env)
             {
                 s = chang_dollar(s, env, &on);
                 if (on == 1)
-                {
-                    ft_printf("s == > %s || str ==> %s\n", s, str);
                     str = realloc_input(str, s, j, j + i, i);
-                }
             }
             //i = j;
         }

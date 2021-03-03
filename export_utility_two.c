@@ -128,12 +128,12 @@ int		kait_count(char *str)
 		{
 			j = i;
 			while (((ft_isprint(str[j]) == 1 ) || str[j] == '=') &&
-					(check_single_double_quote(str[j]) == 0))
+                    ((check_single_double_quote(str[j]) == 0)  || (check_single_double_quote(str[j]) == 1 && str[j - 1] == '\\') ))
 				j += 1;
 			count += 1;
 			i = j;
 		}
-		if (check_double_quotes(str[i]))
+		if (check_double_quotes(str[i]) && str[i - 1] != '\\')
 		{
 			j = i + 1;
 			while (check_double_quotes(str[j]) == 0)
@@ -141,7 +141,7 @@ int		kait_count(char *str)
 			count += 1;
 		   i = j;
 		}
-		if (check_single_quotes(str[i]))
+		if (check_single_quotes(str[i]) && str[i - 1] != '\\')
 		{
 			j = i + 1;
 			while (check_single_quotes(str[j]) == 0)
@@ -239,8 +239,15 @@ int     in_it(char *s)
     i = 0;
     while (s[i] != '\0')
     {
-        if (s[i] == '\"' || s[i] == '\\' || s[i] == '$')
-            return (1);
+        if (s[i] == '=')
+        {
+            while (s[i] != '\0')
+            {
+                if (s[i] == '\"' || s[i] == '\\' || s[i] == '$')
+                    return (1);
+                i += 1;
+            }
+        }
         i += 1;
     }
     return (0);

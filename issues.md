@@ -1,8 +1,7 @@
 
 
- **** Double-quotes *****
- 
--Preserve value exept for "$" && "\"
+Issue to fix :
 
-***  Baclslash **
-
+    - Check Signals
+    - Echo Merging
+    

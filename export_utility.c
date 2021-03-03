@@ -13,17 +13,62 @@
 #include "minishell.h"
 
 
+
+int     last_check(char *str, int on)
+{
+    int i;
+
+    i = 0;
+    if (on == 0)
+    {
+        while (str[i] != '=')
+        {
+            if (str[i] == '\\' && (str[i + 1] == '\\' || str[i + 1] == '\'' || str[i + 1] == '\"'
+                                   ||  str[i + 1] == '$' || str[i + 1] == '&' || str[i + 1] == '|' || str[i + 1] == ';'))
+                return (1);
+            i++;
+        }
+    }
+    else if (on == 1)
+    {
+        if (check_exp_lex(str) == 1)
+        {
+            while (str[i] != '=')
+            {
+                if (str[i] == '\\' && (str[i + 1] == '\\' || str[i + 1] == '\'' || str[i + 1] == '\"'
+                                       ||  str[i + 1] == '$' || str[i + 1] == '&' || str[i + 1] == '|' || str[i + 1] == ';'))
+                    return (1);
+                i++;
+            }
+        }
+        else
+        {
+            while (str[i] != '\0')
+            {
+                if (str[i] == '\\' && (str[i + 1] == '\\' || str[i + 1] == '\'' || str[i + 1] == '\"'
+                                       ||  str[i + 1] == '$' || str[i + 1] == '&' || str[i + 1] == '|' || str[i + 1] == ';'))
+                    return (1);
+                i++;
+            }
+        }
+    }
+    return (0);
+}
+
 int		check_exp_lex(char *str)
 {
 	int i;
 
 	i = 0;
-	if (ft_isalpha(str[i]) == 0 || str[i] == '_')
+	if (ft_isalpha(str[i]) == 0 && str[i] != '_')
 		return (0);
-	while (ft_isalpha(str[i]) || str[i] == '_')
+	while (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i]))
 		i += 1;
 	if (str[i] == '=')
-		return (1);
+    {
+	    if (last_check(str, 0) == 0)
+            return (1);
+    }
 	return (0);
 }
 
@@ -141,13 +186,13 @@ char	**take_only_carac_for_export(char *str)
             j = i;
             while (((ft_isprint_mod(str[j]) == 1 ) || str[j] == '='))
             {
-                if (str[j] == '\"')
+                if (str[j] == '\"' && str[j - 1] != '\\')
                 {
                     j += 1;
                     while (str[j] != '\"' && str[j] != '\0')
                         j += 1;
                 }
-                else if (str[j] == '\'')
+                else if (str[j] == '\'' && str[j - 1] != '\\')
                 {
                     j += 1;
                     while (str[j] != '\'' && str[j] != '\0')
