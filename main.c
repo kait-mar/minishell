@@ -60,7 +60,7 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
         }
 		if (check == 1)
 		{
-			ft_printf("bash: %s: command not found\n", meta->argument);
+			ft_printf("minishell: %s: command not found\n", meta->argument);
 			g_process = 0;
 			*status = 127;
 		}
@@ -137,8 +137,8 @@ int		main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[1])
-			str = ft_strdup(av[1]);
+        if (av[2])
+			str = ft_strdup(av[2]);
 		else
 		{
 			prompt(g_in_signal);
@@ -169,11 +169,11 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        if (av[1])
-            exit(EXIT_SUCCESS);
+        if (av[2])
+            exit(status);
         on = 0;
         g_first_time = 1;
         g_in_signal = 0;
 	}
-	return(0);
+	return(status);
 }

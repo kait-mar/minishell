@@ -199,5 +199,6 @@ int     check_double_inside_single(char *s);
 int     check_single_inside_double(char *s);
 char    *add_backslash(char *s);
 int     in_it(char *s);
-#endif
+int     last_check(char *str, int i);
 
+#endif
