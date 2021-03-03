@@ -33,13 +33,18 @@ int		print(char **bult, char **env, int *status)
 	int		i;
 	int		fd;
 
-	//Adde by The Hell
-	//add a split here
 	i = 0;
 	if (only_star(*bult) == 1)
 		stream_directory();
-	while (**bult != '$' && **bult != '\0')
+	while ((**bult != '$' || (**bult == '\\' && *(*bult + 1) == '$')) && **bult != '\0')
 	{
+		if (**bult == '\\' && *(*bult + 1) == '$')
+			(*bult)++;
+		else if (**bult == '\\')
+		{
+			(*bult)++;
+			continue ;
+		}
         my_putchar(**bult);
 		(*bult)++;
 		i = 1;
@@ -133,7 +138,7 @@ int	echo(char *argv, char **env, int *status)
 
 	i = 0;
 	spaces = 0;
-	//ft_printf("the argv is %s\n", argv);
+	ft_printf("the argv is %s\n", argv);
 	argv = skip_first_word(&argv);
 	if (ft_strcmp(argv, "") == 0)
 	{
@@ -142,27 +147,30 @@ int	echo(char *argv, char **env, int *status)
 	}
 	argv = ft_strtrim(argv, " ");
 	argv = ft_strtrim(argv, "\t");
-		bult = keep_split(argv, 39, 34);
-		if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
+	bult = keep_split(argv, 39, 34);
+	int k = 0;
+	while (bult[k] != NULL)
+		ft_printf("|%s|\n", bult[k++]);
+	if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
+	{
+		if (ft_strcmp(*bult, "-n") == 0 || ft_strcmp(*bult, "'-n'") == 0 || ft_strcmp(*bult, "\"-n\"") == 0)
 		{
-			if (ft_strcmp(*bult, "-n") == 0 || ft_strcmp(*bult, "'-n'") == 0 || ft_strcmp(*bult, "\"-n\"") == 0)
-			{
-				bult++;
-				i = 1;
-				*bult = ft_strtrim_left(*bult, " ");
-			}
+			bult++;
+			i = 1;
+			*bult = ft_strtrim_left(*bult, " ");
 		}
-		else
+	}
+	else
+	{
+		str = ft_split(*bult, ' ');
+		if (ft_strcmp(*str, "-n") == 0)
 		{
-			str = ft_split(*bult, ' ');
-			if (ft_strcmp(*str, "-n") == 0)
-			{
-				str++;
-				i = 1;
-				*bult = skip_first_word(&(*bult));
-			}
+			str++;
+			i = 1;
+			*bult = skip_first_word(&(*bult));
 		}
-		put_cases(bult, env, status);
+	}
+	put_cases(bult, env, status);
 	if (i == 0)
         my_putchar('\n');
 	*status = 0;
@@ -202,12 +210,12 @@ int	echo_strcmp(const char *s1, const char *s2)
 	}
 	if (*s1 != *s2)
 	{
-		printf("echo returned %d\n", (unsigned char)*s1 - (unsigned char)*s2);
+	//	printf("echo returned %d\n", (unsigned char)*s1 - (unsigned char)*s2);
 		return ((unsigned char)*s1 - (unsigned char)*s2);
 	}
 	else
 	{
-		printf("echo returned 0\n");
+	//	printf("echo returned 0\n");
 		return (0);
 	}
 }
