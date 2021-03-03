@@ -203,12 +203,12 @@ int	echo_strcmp(const char *s1, const char *s2)
 	}
 	if (*s1 != *s2)
 	{
-		printf("echo returned %d\n", (unsigned char)*s1 - (unsigned char)*s2);
+	//	printf("echo returned %d\n", (unsigned char)*s1 - (unsigned char)*s2);
 		return ((unsigned char)*s1 - (unsigned char)*s2);
 	}
 	else
 	{
-		printf("echo returned 0\n");
+	//	printf("echo returned 0\n");
 		return (0);
 	}
 }
