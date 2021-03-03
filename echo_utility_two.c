@@ -24,14 +24,14 @@ char	*take_first_word(char *s)
 	j = 0;
 	if (s == NULL)
         return NULL;
-	while (ft_isalnum(s[i]) && s[i])
+	while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"') && s[i])
 		i++;
 	if (!(string = malloc(i + 1)))
 		return (0);
 	i = 0;
 	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 		i++;
-	while (ft_isalnum(s[i]) && s[i])
+	while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"') && s[i])
 		string[j++] = s[i++];
 	string[j] = '\0';
 	return (string);

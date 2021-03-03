@@ -133,7 +133,7 @@ int	echo(char *argv, char **env, int *status)
 
 	i = 0;
 	spaces = 0;
-	ft_printf("the argv is %s\n", argv);
+	//ft_printf("the argv is %s\n", argv);
 	argv = skip_first_word(&argv);
 	if (ft_strcmp(argv, "") == 0)
 	{
@@ -192,7 +192,7 @@ int	echo_strcmp(const char *s1, const char *s2)
 	{
 		while ((*s1 == '\'' || *s1 == '\"') && *s1 != '\0')
 			s1++;
-		if (*s1 != '\0' && *s2 != '\0' && *s1 == *s2)
+		if (*s1 != '\0' && *s2 != '\0' && (*s1 == *s2 || *s1 == *s2 - 32))
 		{
 			s1++;
 			s2++;
