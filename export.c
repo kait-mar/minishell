@@ -24,7 +24,7 @@ int		check_quote(char *str)
 	 on = 0;
 	 while (str[i] != '\0')
 	 {
-		 if (str[i] == '\'')
+		 if (str[i] == '\'' && str[i - 1] != '\\')
 			 on = 1;
 		 i += 1;
 	 }
@@ -40,13 +40,12 @@ int		check_double_quote(char *str)
 	 on = 0;
 	 while (str[i] != '\0')
 	 {
-		 if (str[i] == '\"')
+		 if (str[i] == '\"' && str[i - 1] != '\\')
 			 on = 1;
 		 i += 1;
 	 }
 	 return (on);
 }
-
 
 void    export_realloc(void)
 {
@@ -138,9 +137,7 @@ t_export		*check_export(char **splits, char **env, t_export *export)
     }
 	export->flag = 0;
 	if (splits[i] == NULL)
-    {
         splits[i] = ft_strdup("");
-    }
 	if (how_mutch_arguments(splits, i) == 1)
 	{
 		while (splits[i] != NULL)
@@ -156,7 +153,7 @@ t_export		*check_export(char **splits, char **env, t_export *export)
 				j += 1;
 				export->flag = 1;
 			}
-			if(ft_isalpha(splits[i][0]))
+			if((ft_isalpha(splits[i][0]) || splits[i][0] == '_') && last_check(splits[i], 1) == 0)
 			{
                 if (in_it(splits[i]) == 1)
                     splits[i] = add_backslash(splits[i]);
@@ -180,7 +177,7 @@ t_export		*check_export(char **splits, char **env, t_export *export)
             }
 			else
             {
-			    ft_printf("bash: export: '%s': not a valid identifier\n", splits[i]);
+			    ft_printf("minishell: export: '%s': not a valid identifier\n", splits[i]);
                 export->flag = 0;
             }
 			i += 1;
@@ -193,8 +190,8 @@ t_export		*check_export(char **splits, char **env, t_export *export)
 			return (NULL);
 		while (g_export->saver[i])
 		{
-            if (in_it(g_export->saver[i]) == 1)
-                g_export->saver[i] = add_backslash(g_export->saver[i]);
+           /* if (in_it(g_export->saver[i]) == 1)
+                g_export->saver[i] = add_backslash(g_export->saver[i]);*/
             export->env[i] = front_append(g_export->saver[i], "declare -x ");
 			i += 1;
 		}
@@ -248,6 +245,8 @@ void 	export_command(char **env, char *str, int *status, t_export *export)
 		}
 		*status = 0;
 	}
+	if (export->flag == 0)
+	    *status = 1;
 }
 
 void 	env_command(char **env, t_meta *meta, int *status)
