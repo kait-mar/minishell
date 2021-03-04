@@ -38,8 +38,31 @@ int		print(char **bult, char **env, int *status)
 		stream_directory();
 	while ((**bult != '$' || (**bult == '\\' && *(*bult + 1) == '$')) && **bult != '\0')
 	{
-		if (**bult == '\\' && *(*bult + 1) == '$')
+		if (**bult == '\\' && *(*bult + 1) == '\\')
+		{
+			j = how_many_escape(*bult);
+			if (j % 2 != 0)
+			{
+				while (*(*bult + 1) == '\\')
+				(*bult)++;
+			}
+			else
+			{
+				while (**bult == '\\')
+					(*bult)++;
+			}
+			j /= 2;
+			while (--j >= 0)
+				ft_putchar('\\');
+			continue ;
+		}
+		else if (**bult == '\\' && *(*bult + 1) == '$')
 			(*bult)++;
+		else if (**bult == '\\' && *(*bult + 1) == '\0')
+		{
+			(*bult)++;
+			return (1);
+		}
 		else if (**bult == '\\')
 		{
 			(*bult)++;
@@ -83,6 +106,7 @@ int		print(char **bult, char **env, int *status)
 			(*bult)++;
 		}
 	}
+	//ft_printf("\nit returned %d\n", i);
 	return (i);
 }
 
@@ -138,7 +162,7 @@ int	echo(char *argv, char **env, int *status)
 
 	i = 0;
 	spaces = 0;
-	ft_printf("the argv is %s\n", argv);
+	//ft_printf("the argv is %s\n", argv);
 	argv = skip_first_word(&argv);
 	if (ft_strcmp(argv, "") == 0)
 	{
@@ -149,8 +173,8 @@ int	echo(char *argv, char **env, int *status)
 	argv = ft_strtrim(argv, "\t");
 	bult = keep_split(argv, 39, 34);
 	int k = 0;
-	while (bult[k] != NULL)
-		ft_printf("|%s|\n", bult[k++]);
+	//while (bult[k] != NULL)
+	//	ft_printf("|%s|\n", bult[k++]);
 	if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
 	{
 		if (ft_strcmp(*bult, "-n") == 0 || ft_strcmp(*bult, "'-n'") == 0 || ft_strcmp(*bult, "\"-n\"") == 0)

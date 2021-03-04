@@ -55,3 +55,29 @@ void	stream_directory()
 		closedir(dir);
 	}
 }
+
+int		how_many_escape(char *bult)
+{
+	int	i;
+
+	i = 0;
+//	printf("the bult is %s\n", bult);
+	while (bult[i] != '\0' && bult[i] == '\\')
+		i++;
+//	ft_printf("it returned %d\n", i);
+	return (i);
+}
+
+int		find_dollar_esacpe(char *bult, char c)
+{
+	int	i;
+
+	i = 0;
+	while (bult[i] != '\0')
+	{
+		if (bult[i + 1] != '\0' && bult[i] == '\\' && bult[i + 1] == '$')
+			return (1);
+		i++;
+	}
+	return (0);
+}

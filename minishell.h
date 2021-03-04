@@ -200,5 +200,7 @@ int     check_single_inside_double(char *s);
 char    *add_backslash(char *s);
 int     in_it(char *s);
 int     last_check(char *str, int i);
+int		how_many_escape(char *bult);
+int		find_dollar_esacpe(char *bult, char c);
 
 #endif
