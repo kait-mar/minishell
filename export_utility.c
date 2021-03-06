@@ -12,7 +12,19 @@
 
 #include "minishell.h"
 
+int     not_before(char *s)
+{
+    int i;
 
+    i = 0;
+    while (s[i] != '\0')
+    {
+        if (s[i] == '\\' && (s[i + 1] == '_' || ft_isdigit(s[i + 1])))
+            return (1);
+        i += 1;
+    }
+    return (0);
+}
 
 int     last_check(char *str, int on)
 {
@@ -41,6 +53,8 @@ int     last_check(char *str, int on)
                 i++;
             }
         }
+        else if (check_equal(str) == 1 && check_exp_lex(str) == 0 && not_before(str) == 0)
+            return (1);
         else
         {
             while (str[i] != '\0')
@@ -332,4 +346,29 @@ int     check_double_inside_single(char *s)
         i++;
     }
     return (0);
+}
+
+char    *error_reformulation(char *string)
+{
+    int i;
+    int j;
+    char *s;
+
+    i = 0;
+    j = 0;
+    if (!(s = (char *) ft_calloc(sizeof (char), ft_strlen(string))))
+        return (NULL);
+    while (string[i])
+    {
+        if (string[i] == '\\' && string[i - 1] != '\\')
+            i += 1;
+        else
+        {
+            s[j] = string[i];
+            j += 1;
+            i += 1;
+        }
+    }
+    s[j] = '\0';
+    return (s);
 }

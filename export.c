@@ -153,7 +153,7 @@ t_export		*check_export(char **splits, char **env, t_export *export)
 				j += 1;
 				export->flag = 1;
 			}
-			if((ft_isalpha(splits[i][0]) || splits[i][0] == '_') && last_check(splits[i], 1) == 0)
+			if ((ft_isalpha(splits[i][0]) || splits[i][0] == '_') && last_check(splits[i], 1) == 0)
 			{
                 if (in_it(splits[i]) == 1)
                     splits[i] = add_backslash(splits[i]);
@@ -177,7 +177,8 @@ t_export		*check_export(char **splits, char **env, t_export *export)
             }
 			else
             {
-			    ft_printf("minishell: export: '%s': not a valid identifier\n", splits[i]);
+			    splits[i] = error_reformulation(splits[i]);
+			    ft_printf("minishell: export: `%s': not a valid identifier\n", splits[i]);
                 export->flag = 0;
             }
 			i += 1;

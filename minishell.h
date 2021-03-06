@@ -200,5 +200,7 @@ int     check_single_inside_double(char *s);
 char    *add_backslash(char *s);
 int     in_it(char *s);
 int     last_check(char *str, int i);
+char    *error_reformulation(char *string);
+int     check_equal(char *s);
 
 #endif
