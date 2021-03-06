@@ -106,7 +106,7 @@ int		check_wich_command(char *str)
 }
 
 
-/*int		main(int ac, char **av, char **env)
+int		main(int ac, char **av, char **env)
 {
 	char *str;
 	char    *tmp;
@@ -171,9 +171,9 @@ int		check_wich_command(char *str)
         g_in_signal = 0;
 	}
 	return(status);
-}*/
+}
 
-
+/*
 int			main()
 {
 	char *str;
@@ -216,7 +216,7 @@ int			main()
 	//	{
 			prompt(g_in_signal);
 			//str = reading_input();
-			str = "export A='hi my name';";
+			str = "echo \a";
 		//}
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
@@ -250,4 +250,4 @@ int			main()
         g_in_signal = 0;
 	}
 	return(status);
-}
+}*/

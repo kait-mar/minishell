@@ -165,9 +165,18 @@ char	**keep_split(char *s, char c, char b)
 
 int main()
 {
-    char *s = "\\\"  hello yes '\" no  okay \" oki ' \\\"";
+    char *s = "\\abc";
+	int i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		printf("%c\n", s[i]);
+		i += 1;	
+	}
+	/*write(1,"\n",1);
     char **s2 = keep_split(s, 39, 34);
     while (*s2 != NULL)
-        printf("|%s|\n", *s2++);
+        printf("|%s|\n", *s2++);*/
     return 0;
 }

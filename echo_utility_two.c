@@ -97,3 +97,22 @@ int		find_without(char *bult, char c)
 	}
 	return (0);
 }
+
+char	*trim_once(char *s)
+{
+	char	*str;
+	int		i;
+	int		j;
+
+	if (s == NULL)
+		return (NULL);
+	str = malloc(ft_strlen(s) - 1);
+	i = 1;
+	j = 0;
+	while (s[i + 1] != '\0')
+	{
+		str[j++] = s[i++];
+	}
+	str[j] = '\0';
+	return (str);
+}

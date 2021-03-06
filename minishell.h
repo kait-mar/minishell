@@ -203,6 +203,6 @@ int     last_check(char *str, int i);
 int		how_many_escape(char *bult);
 int		find_dollar_esacpe(char *bult, char c);
 int		find_without(char *bult, char c);
-
+char	*trim_once(char *s1);
 
 #endif
