@@ -198,7 +198,7 @@ char	**take_only_carac_for_export(char *str)
         if (ft_isprint(str[i]))
         {
             j = i;
-            while (((ft_isprint_mod(str[j]) == 1 ) || str[j] == '='))
+            while (((ft_isprint_mod(str[j]) == 1 ) || str[j] == '=') || (str[j] == ' ' && str[j - 1] == '\\'))
             {
                 if (str[j] == '\"' && str[j - 1] != '\\')
                 {

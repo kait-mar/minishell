@@ -149,6 +149,7 @@ t_export		*check_export(char **splits, char **env, t_export *export)
 				splits[i] = without_that(splits[i], '\'');
 			if (check_exp_lex(splits[i]) == 1)
 			{
+			    splits[i] = error_reformulation(splits[i]);
 				export->argument[j] = ft_strdup(splits[i]);
 				j += 1;
 				export->flag = 1;
@@ -159,6 +160,7 @@ t_export		*check_export(char **splits, char **env, t_export *export)
                     splits[i] = add_backslash(splits[i]);
                 k = 0;
                 export_realloc();
+                splits[i] = error_reformulation(splits[i]);
                 while (g_export->saver[k])
                 {
                     if (match(g_export->saver[k], splits[i]) == 1)
