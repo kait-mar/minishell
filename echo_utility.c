@@ -165,10 +165,10 @@ void	put_cases(char **bult, char **env, int *status)
 			//if ((find(*bult, '$') == 0 && find_dollar_esacpe(*bult, '$') == 0) || which_quote == 39)
 			if ((find_without(*bult, '$') == 0 && find_without(*bult, '"') == 0 && find_without(*bult, '\'') == 0) || which_quote == 39)
 			{
-				//ft_printf("here1\n");
+				ft_printf("here1\n");
 				if (find_without(*bult, '\\') == 0 || which_quote == 39)
 				{
-					//ft_printf("here2\n");
+					ft_printf("here2\n");
 					if (i == 1)
 						write(1, " ", 1);
 					ft_putstr(*bult);
@@ -176,10 +176,12 @@ void	put_cases(char **bult, char **env, int *status)
 				}
 				else
 				{
+					ft_printf("here\n");
 					while (**bult != '\0')
 					{
 						if (**bult == '\\' && (*(*bult + 1) == '$' || *(*bult + 1) == '"' || *(*bult + 1) == '\'' || *(*bult + 1) == '\\'))
 						{
+							ft_printf("here\n");
 							j = how_many_escape(*bult);
 							if (j % 2 != 0)
 							{
@@ -195,8 +197,11 @@ void	put_cases(char **bult, char **env, int *status)
 							while (--j >= 0)
 								ft_putchar('\\');
 						}
-						else if (**bult == '\\' && (*(*bult + 1) == '$' || *(*bult + 1) == '"' || *(*bult + 1) == '\''))
+						if (**bult == '\\' && (*(*bult + 1) == '$' || *(*bult + 1) == '"' || *(*bult + 1) == '\''))
+						{
+							ft_printf("here\n");
 							(*bult)++;
+						}
 						else if (**bult == '\\')
 						{
 							my_putchar(**bult);

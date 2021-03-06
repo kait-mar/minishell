@@ -105,6 +105,10 @@ int		check_wich_command(char *str)
 	return (0);
 }
 
+echo "AH\""
+/*echo "\\""                                                                                                                           [FAIL]
+echo bonjour > "fi le"                                                                                                               [FAIL]
+echo bonjour > 'fi le'*/
 
 int		main(int ac, char **av, char **env)
 {

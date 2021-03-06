@@ -173,8 +173,8 @@ int	echo(char *argv, char **env, int *status)
 	argv = ft_strtrim(argv, "\t");
 	bult = keep_split(argv, 39, 34);
 	int k = 0;
-	//while (bult[k] != NULL)
-	//	ft_printf("|%s|\n", bult[k++]);
+	while (bult[k] != NULL)
+		ft_printf("|%s|\n", bult[k++]);
 	if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
 	{
 		if (ft_strcmp(*bult, "-n") == 0 || ft_strcmp(*bult, "'-n'") == 0 || ft_strcmp(*bult, "\"-n\"") == 0)
