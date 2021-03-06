@@ -19,6 +19,24 @@ int	until_meta(char *str)
 	i = 0;
 	while (str[i] != '\0')
     {
+        if (str[i] == '"')
+        {
+            i += 1;
+            while (str[i] != '\0' && str[i] != '"')
+            {
+                i += 1;
+            }
+            if (str[i] == '"')
+                i += 1;
+        }
+        if (str[i] == '\'')
+        {
+            i += 1;
+            while (str[i] != '\0' && str[i] != '\'')
+                i += 1;
+            if (str[i] == '\'')
+                i += 1;
+        }
 	    if (str[i] == ';' && str[i - 1] != '\\')
 	        return (i + 1);
         if (str[i] == '>'&& str[i - 1] != '\\')
@@ -113,10 +131,12 @@ char	**splits_by_meta(char *str, int *meta)
 	while (str[i] != '\0')
 	{
 	    if (str[i] == '"')
-        {
-	        i += 1;
-	        while (str[i] != '\0' && str[i] != '"')
-	            i += 1;
+	    {
+            i += 1;
+            while (str[i] != '\0' && str[i] != '"')
+            {
+                i += 1;
+            }
 	        if (str[i] == '"')
     	        i += 1;
         }
