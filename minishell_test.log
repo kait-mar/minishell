@@ -1,0 +1,262 @@
+|> WITH [EXPORTS A='"'] export
+|---------------------------------------EXPECTED--------------------------------
+$
+declare -x A="\""$
+declare -x PATH="/Users/molabhai/.cache/minishell_test/bin"$
+declare -x PWD="/Users/molabhai/.cache/minishell_test/sandbox"$
+declare -x SHLVL="1"$
+declare -x TERM="xterm-256color"
+|---------------------------------------ACTUAL----------------------------------
+$
+declare -x A="""$
+declare -x PATH="/Users/molabhai/.cache/minishell_test/bin"$
+declare -x PWD="/Users/molabhai/.cache/minishell_test/sandbox"$
+declare -x SHLVL="1"$
+declare -x TERM="xterm-256color"
+================================================================================
+
+|> WITH [EXPORTS A='\'] export
+|---------------------------------------EXPECTED--------------------------------
+$
+declare -x A="\\"$
+declare -x PATH="/Users/molabhai/.cache/minishell_test/bin"$
+declare -x PWD="/Users/molabhai/.cache/minishell_test/sandbox"$
+declare -x SHLVL="1"$
+declare -x TERM="xterm-256color"
+|---------------------------------------ACTUAL----------------------------------
+$
+declare -x A="\"$
+declare -x PATH="/Users/molabhai/.cache/minishell_test/bin"$
+declare -x PWD="/Users/molabhai/.cache/minishell_test/sandbox"$
+declare -x SHLVL="1"$
+declare -x TERM="xterm-256color"
+================================================================================
+
+|> WITH [EXPORTS A='$'] export
+|---------------------------------------EXPECTED--------------------------------
+$
+declare -x A="\$"$
+declare -x PATH="/Users/molabhai/.cache/minishell_test/bin"$
+declare -x PWD="/Users/molabhai/.cache/minishell_test/sandbox"$
+declare -x SHLVL="1"$
+declare -x TERM="xterm-256color"
+|---------------------------------------ACTUAL----------------------------------
+$
+declare -x A="$"$
+declare -x PATH="/Users/molabhai/.cache/minishell_test/bin"$
+declare -x PWD="/Users/molabhai/.cache/minishell_test/sandbox"$
+declare -x SHLVL="1"$
+declare -x TERM="xterm-256color"
+================================================================================
+
+|> WITH export A=a B=b C=c D=d E=e F=f G=g H=h I=i J=j K=k L=lM=m N=n O=o P=p Q=q R=r S=s T=t U=u V=v W=w X=x Y=y Z=z; echo $A$B$C$D$E$F$G$H$I$J$K$L$M$N$O$P$Q$R$S$T$U$V$W$X$Y$Z
+|---------------------------------------EXPECTED--------------------------------
+abcdefghijklM=mnopqrstuvwxyz$
+|---------------------------------------ACTUAL----------------------------------
+abcdefghijkm$
+================================================================================
+
+|> WITH export BONJOURJESUIS1=a; echo $BONJOURJESUIS1
+|  STATUS: expected 0 actual -11
+|---------------------------------------EXPECTED--------------------------------
+a$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH export _=a; echo $_a
+|---------------------------------------EXPECTED--------------------------------
+$
+|---------------------------------------ACTUAL----------------------------------
+_a$
+================================================================================
+
+|> WITH export A='bonjour je suis charles'; echo $A
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+bonjour je suis charles$
+|---------------------------------------ACTUAL----------------------------------
+UNICODE ERROR: <_io.BufferedReader name=3>
+================================================================================
+
+|> WITH export A="bonjour je suis charles"; echo $A
+|  STATUS: expected 0 actual -11
+|---------------------------------------EXPECTED--------------------------------
+bonjour je suis charles$
+|---------------------------------------ACTUAL----------------------------------
+minishell: export: `$A': not a valid identifier$
+minishell: bonjour je suis charles";: command not found$
+================================================================================
+
+|> WITH export A==a; echo $A
+|---------------------------------------EXPECTED--------------------------------
+=a$
+|---------------------------------------ACTUAL----------------------------------
+a$
+================================================================================
+
+|> WITH export A===a; echo $A
+|---------------------------------------EXPECTED--------------------------------
+==a$
+|---------------------------------------ACTUAL----------------------------------
+a$
+================================================================================
+
+|> WITH export A====a; echo $A
+|---------------------------------------EXPECTED--------------------------------
+===a$
+|---------------------------------------ACTUAL----------------------------------
+a$
+================================================================================
+
+|> WITH export A=====a; echo $A
+|---------------------------------------EXPECTED--------------------------------
+====a$
+|---------------------------------------ACTUAL----------------------------------
+a$
+================================================================================
+
+|> WITH export A======a; echo $A
+|---------------------------------------EXPECTED--------------------------------
+=====a$
+|---------------------------------------ACTUAL----------------------------------
+a$
+================================================================================
+
+|> WITH export A=a=a=a=a=a; echo $A
+|---------------------------------------EXPECTED--------------------------------
+a=a=a=a=a$
+|---------------------------------------ACTUAL----------------------------------
+a$
+================================================================================
+
+|> WITH export A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C
+|  STATUS: expected 0 actual -11
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `asdf ': not a valid identifier$
+minishell: export: ` asdf asdf asd f': not a valid identifier$
+minishell: export: ` asdf ': not a valid identifier$
+minishell: export: `': not a valid identifier$
+minishell: export: `asdf ': not a valid identifier$
+$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH export 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C
+|  STATUS: expected 0 actual -11
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `asdf ': not a valid identifier$
+minishell: export: ` asdf asdf asd f': not a valid identifier$
+minishell: export: ` asdf ': not a valid identifier$
+minishell: export: `': not a valid identifier$
+minishell: export: `asdf ': not a valid identifier$
+$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH export A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf '; echo $A$B$C
+|  STATUS: expected 0 actual -11
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `asdf ': not a valid identifier$
+minishell: export: ` asdf asdf asd f': not a valid identifier$
+minishell: export: ` asdf ': not a valid identifier$
+minishell: export: `': not a valid identifier$
+minishell: export: `asdf ': not a valid identifier$
+$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH export A B C; echo $A$B$C
+|---------------------------------------EXPECTED--------------------------------
+$
+|---------------------------------------ACTUAL----------------------------------
+$B$C$
+================================================================================
+
+|> WITH export A B C; env
+|---------------------------------------EXPECTED--------------------------------
+$
+PATH=/Users/molabhai/.cache/minishell_test/bin$
+PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+SHLVL=1$
+TERM=xterm-256color$
+_=/Users/molabhai/.cache/minishell_test/bin/env
+|---------------------------------------ACTUAL----------------------------------
+$
+PATH=/Users/molabhai/.cache/minishell_test/bin$
+TERM=xterm-256color
+================================================================================
+
+|> WITH export 'AH|'=nop
+|  STATUS: expected 1 actual -11
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `AH|=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH export 'AH;'=nop
+|  STATUS: expected 1 actual -11
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `AH;=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH export 'AH\'=nop
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `AH\=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+minishell: export: `AH=nop': not a valid identifier$
+================================================================================
+
+|> WITH export BONJOUR\$JESUIS
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `BONJOUR$JESUIS': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+minishell: export: `BONJOUR$JESUIS$JESUIS': not a valid identifier$
+================================================================================
+
+|> WITH export BONJOUR\|JESUIS
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `BONJOUR|JESUIS': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH export BONJOUR\;JESUIS
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `BONJOUR;JESUIS': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH Export B=bonjour
+|  STATUS: expected 127 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: Export: command not found$
+|---------------------------------------ACTUAL----------------------------------
+minishell: Export B=bonjour: command not found$
+================================================================================
+
+|> WITH exporT B=bonjour
+|  STATUS: expected 127 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: exporT: command not found$
+|---------------------------------------ACTUAL----------------------------------
+minishell: exporT B=bonjour: command not found$
+================================================================================
+
+|> WITH [EXPORTS PATH='/bin:/usr/bin'] Export B=bonjour
+|  STATUS: expected 127 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: Export: command not found$
+|---------------------------------------ACTUAL----------------------------------
+minishell: Export B=bonjour: command not found$
+================================================================================
+
+|> WITH [EXPORTS PATH='/bin:/usr/bin'] exporT B=bonjour
+|  STATUS: expected 127 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: exporT: command not found$
+|---------------------------------------ACTUAL----------------------------------
+minishell: exporT B=bonjour: command not found$
+================================================================================
+
