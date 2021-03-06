@@ -115,6 +115,8 @@ pid_t   g_pid;
 int     g_on;
 int     g_in_line;
 char    *g_old_pwd;
+int     g_check_single_quote;
+int     g_check_double_quote;
 
 void	cd_command(char *argument, int *status, char **env);
 char	**taking_command(char *str);

@@ -121,8 +121,8 @@ char	**splits_by_meta(char *str, int *meta)
                     splits[k++] = from_to(str, j, i + 2);
 		        else
                 {
-		            while (str[i] != '\"')
-		                i += 1;
+		          /*  while (str[i] != '\"')
+		                i += 1;*/
                     splits[k++] = from_to(str, j, i + 2);
                 }
                i += 2;
@@ -133,9 +133,9 @@ char	**splits_by_meta(char *str, int *meta)
                     splits[k++] = from_to(str, j, i + 2);
                 else
                 {
-                    while (str[i] != '\0' && str[i] != '\"')
-                        i += 1;
-                    splits[k++] = from_to(str, j, i + 1);
+                   /* while (str[i] != '\0' && str[i] != '\"')
+                        i += 1;*/
+                    splits[k++] = from_to(str, j, i);
                 }
                 i = i + 1;
             }

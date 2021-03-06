@@ -105,7 +105,20 @@ int		check_wich_command(char *str)
 	return (0);
 }
 
-/*
+int    seach_for(char *s)
+{
+    int i;
+
+    i = 0 ;
+    while (s[i] != '\0')
+    {
+        if (s[i] == '\\')
+            return (1);
+        i += 1;
+    }
+    return (0);
+}
+
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -121,6 +134,8 @@ int		main(int ac, char **av, char **env)
 	g_in_signal = 0;
 	g_first_time = 0;
 	g_in_line = 0;
+	g_check_single_quote = 0;
+    g_check_double_quote = 0;
 	on = 0;
 	head = NULL;
 	str = NULL;
@@ -132,8 +147,8 @@ int		main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[2])
-			str = ft_strdup(av[2]);
+        if (av[1])
+			str = ft_strdup(av[1]);
 		else
 		{
 			prompt(g_in_signal);
@@ -164,15 +179,15 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        if (av[2])
+        if (av[1])
             exit(status);
         on = 0;
         g_first_time = 1;
         g_in_signal = 0;
 	}
 	return(status);
-}*/
-
+}
+/*
 int			main()
 {
 	char *str;
@@ -249,4 +264,4 @@ int			main()
         g_in_signal = 0;
 	}
 	return(status);
-}
+}*/

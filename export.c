@@ -14,6 +14,20 @@
 #include "minishell.h"
 
 
+int no_space(char *s)
+{
+    int i;
+
+    i = 0;
+    while (s[i] != '\0')
+    {
+        if (s[i] == ' ')
+            return (1);
+        i += 1;
+    }
+    return (0);
+}
+
 
 int		check_quote(char *str)
 {
@@ -28,6 +42,7 @@ int		check_quote(char *str)
 			 on = 1;
 		 i += 1;
 	 }
+	 g_check_single_quote = on;
 	 return (on);
 }
 
@@ -44,6 +59,7 @@ int		check_double_quote(char *str)
 			 on = 1;
 		 i += 1;
 	 }
+	 g_check_double_quote = on;
 	 return (on);
 }
 
@@ -154,7 +170,8 @@ t_export		*check_export(char **splits, char **env, t_export *export)
 				j += 1;
 				export->flag = 1;
 			}
-			if ((ft_isalpha(splits[i][0]) || splits[i][0] == '_') && last_check(splits[i], 1) == 0)
+			if (((ft_isalpha(splits[i][0]) || splits[i][0] == '_') && last_check(splits[i], 1) == 0 && (no_space(splits[i]) == 0))
+			    || (check_exp_lex(splits[i]) == 1))
 			{
                 if (in_it(splits[i]) == 1)
                     splits[i] = add_backslash(splits[i]);

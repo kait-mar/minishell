@@ -78,17 +78,20 @@ char    *take_after_equal(char *s)
     int j;
     int on;
     int k;
+    int one_time;
     char *string;
 
     i = 0;
     j = 0;
     on = 0;
+    one_time = 0;
     while (s[i] != '\0')
     {
-        if (s[i] == '=')
+        if (s[i] == '=' && one_time == 0)
         {
             on = 1;
             k = i + 1;
+            one_time = 1;
         }
         if (on == 1)
             j += 1;

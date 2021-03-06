@@ -53,7 +53,7 @@ declare -x TERM="xterm-256color"
 |---------------------------------------EXPECTED--------------------------------
 abcdefghijklM=mnopqrstuvwxyz$
 |---------------------------------------ACTUAL----------------------------------
-abcdefghijkm$
+abcdefghijklM=m$
 ================================================================================
 
 |> WITH export BONJOURJESUIS1=a; echo $BONJOURJESUIS1
@@ -70,67 +70,7 @@ $
 _a$
 ================================================================================
 
-|> WITH export A='bonjour je suis charles'; echo $A
-|  STATUS: expected 0 actual 1
-|---------------------------------------EXPECTED--------------------------------
-bonjour je suis charles$
-|---------------------------------------ACTUAL----------------------------------
-UNICODE ERROR: <_io.BufferedReader name=3>
-================================================================================
-
-|> WITH export A="bonjour je suis charles"; echo $A
-|  STATUS: expected 0 actual -11
-|---------------------------------------EXPECTED--------------------------------
-bonjour je suis charles$
-|---------------------------------------ACTUAL----------------------------------
-minishell: export: `$A': not a valid identifier$
-minishell: bonjour je suis charles";: command not found$
-================================================================================
-
-|> WITH export A==a; echo $A
-|---------------------------------------EXPECTED--------------------------------
-=a$
-|---------------------------------------ACTUAL----------------------------------
-a$
-================================================================================
-
-|> WITH export A===a; echo $A
-|---------------------------------------EXPECTED--------------------------------
-==a$
-|---------------------------------------ACTUAL----------------------------------
-a$
-================================================================================
-
-|> WITH export A====a; echo $A
-|---------------------------------------EXPECTED--------------------------------
-===a$
-|---------------------------------------ACTUAL----------------------------------
-a$
-================================================================================
-
-|> WITH export A=====a; echo $A
-|---------------------------------------EXPECTED--------------------------------
-====a$
-|---------------------------------------ACTUAL----------------------------------
-a$
-================================================================================
-
-|> WITH export A======a; echo $A
-|---------------------------------------EXPECTED--------------------------------
-=====a$
-|---------------------------------------ACTUAL----------------------------------
-a$
-================================================================================
-
-|> WITH export A=a=a=a=a=a; echo $A
-|---------------------------------------EXPECTED--------------------------------
-a=a=a=a=a$
-|---------------------------------------ACTUAL----------------------------------
-a$
-================================================================================
-
 |> WITH export A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C
-|  STATUS: expected 0 actual -11
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `asdf ': not a valid identifier$
 minishell: export: ` asdf asdf asd f': not a valid identifier$
@@ -139,10 +79,15 @@ minishell: export: `': not a valid identifier$
 minishell: export: `asdf ': not a valid identifier$
 $
 |---------------------------------------ACTUAL----------------------------------
+minishell: export: `asdf ': not a valid identifier$
+minishell: export: ` asdf asdf asd f': not a valid identifier$
+minishell: export: ` asdf ': not a valid identifier$
+minishell: export: `': not a valid identifier$
+minishell: export: `asdf ': not a valid identifier$
+$B$C$
 ================================================================================
 
 |> WITH export 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C
-|  STATUS: expected 0 actual -11
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `asdf ': not a valid identifier$
 minishell: export: ` asdf asdf asd f': not a valid identifier$
@@ -151,10 +96,15 @@ minishell: export: `': not a valid identifier$
 minishell: export: `asdf ': not a valid identifier$
 $
 |---------------------------------------ACTUAL----------------------------------
+minishell: export: `asdf ': not a valid identifier$
+minishell: export: ` asdf asdf asd f': not a valid identifier$
+minishell: export: ` asdf ': not a valid identifier$
+minishell: export: `': not a valid identifier$
+minishell: export: `asdf ': not a valid identifier$
+$B$C$
 ================================================================================
 
 |> WITH export A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf '; echo $A$B$C
-|  STATUS: expected 0 actual -11
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `asdf ': not a valid identifier$
 minishell: export: ` asdf asdf asd f': not a valid identifier$
@@ -163,6 +113,12 @@ minishell: export: `': not a valid identifier$
 minishell: export: `asdf ': not a valid identifier$
 $
 |---------------------------------------ACTUAL----------------------------------
+minishell: export: `asdf ': not a valid identifier$
+minishell: export: ` asdf asdf asd f': not a valid identifier$
+minishell: export: ` asdf ': not a valid identifier$
+minishell: export: `': not a valid identifier$
+minishell: export: `asdf ': not a valid identifier$
+$B$C$
 ================================================================================
 
 |> WITH export A B C; echo $A$B$C
@@ -187,17 +143,19 @@ TERM=xterm-256color
 ================================================================================
 
 |> WITH export 'AH|'=nop
-|  STATUS: expected 1 actual -11
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `AH|=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: '=nop: command not found$
 ================================================================================
 
 |> WITH export 'AH;'=nop
-|  STATUS: expected 1 actual -11
+|  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: export: `AH;=nop': not a valid identifier$
 |---------------------------------------ACTUAL----------------------------------
+minishell: '=nop: command not found$
 ================================================================================
 
 |> WITH export 'AH\'=nop
