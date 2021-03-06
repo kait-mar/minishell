@@ -3,27 +3,6 @@
 #include "Libft/libft.h"
 
 
-int	echo_strcmp(const char *s1, const char *s2)
-{
-	if (s1 == 0 || s2 == 0)
-		return (0);
-	while (*s1 != '\0')
-	{
-		while ((*s1 == '\'' || *s1 == '\"') && *s1 != '\0')
-			s1++;
-		if (*s1 != '\0' && *s2 != '\0' && (*s1 == *s2 || *s1 == *s2 - 32))
-		{
-			s1++;
-			s2++;
-		}
-		else
-			break ;
-	}
-	if (*s1 != *s2)
-		return ((unsigned char)*s1 - (unsigned char)*s2);
-	else
-		return (0);
-}
 
 #include "minishell.h"
 
@@ -163,20 +142,39 @@ char	**keep_split(char *s, char c, char b)
 }
 
 
+int	echo_strcmp(const char *s1, const char *s2)
+{
+	if (s1 == 0 || s2 == 0)
+		return (0);
+	while (*s1 != '\0')
+	{
+		while ((*s1 == '\'' || *s1 == '\"') && *s1 != '\0')
+			s1++;
+		if (*s1 != '\0' && *s2 != '\0' && (*s1 == *s2 || *s1 == *s2 - 32))
+		{
+			s1++;
+			s2++;
+		}
+		else
+			break ;
+	}
+	if (*s1 != *s2)
+	{
+	//	printf("echo returned %d\n", (unsigned char)*s1 - (unsigned char)*s2);
+		return ((unsigned char)*s1 - (unsigned char)*s2);
+	}
+	else
+	{
+	//	printf("echo returned 0\n");
+		return (0);
+	}
+}
+
 int main()
 {
-    char *s = "\\abc";
-	int i;
+    char *s = "echo";
+	char *s2 = "\" echo\"";
 
-	i = 0;
-	while (s[i] != '\0')
-	{
-		printf("%c\n", s[i]);
-		i += 1;	
-	}
-	/*write(1,"\n",1);
-    char **s2 = keep_split(s, 39, 34);
-    while (*s2 != NULL)
-        printf("|%s|\n", *s2++);*/
+	printf("it's %d\n", echo_strcmp(s2, s));
     return 0;
 }
