@@ -114,7 +114,6 @@ int		check_env(char *str)
 		str = without_that(str, '\'');
 	else if (check_double_quote(str) == 1)
 		str = without_that(str, '\"');
-
 	if (check_quote(str) == 0 && check_double_quote(str) == 0)
 	{
 		str = ft_toStrLower(str);

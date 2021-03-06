@@ -112,7 +112,23 @@ char	**splits_by_meta(char *str, int *meta)
 	}
 	while (str[i] != '\0')
 	{
-		if ((str[i] == ';' || str[i] == '|'
+	    if (str[i] == '"')
+        {
+	        i += 1;
+	        while (str[i] != '\0' && str[i] != '"')
+	            i += 1;
+	        if (str[i] == '"')
+    	        i += 1;
+        }
+        if (str[i] == '\'')
+        {
+            i += 1;
+            while (str[i] != '\0' && str[i] != '\'')
+                i += 1;
+            if (str[i] == '\'')
+                i += 1;
+        }
+        if ((str[i] == ';' || str[i] == '|'
 			|| str[i] == '<' || str[i] == '>') && (str[i - 1] != '\\'))
 		{
 		    if (str[i + 1] == '>' && str[i] == '>')
@@ -148,7 +164,6 @@ char	**splits_by_meta(char *str, int *meta)
 	splits[k++] = from_to(str, j, i);
 	return (splits);
 }
-
 
 int     check_append(char *s)
 {
@@ -220,6 +235,7 @@ t_meta	*split_it_all(char *str)
 	on = 0;
 	if (!(global = (t_meta *) malloc(sizeof(t_meta))))
 		return (NULL);
+
 	splits = splits_by_meta(str, &check);
 	if (splits[i] == NULL)
         return NULL;
