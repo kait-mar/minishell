@@ -32,8 +32,18 @@ int	print_env(char *bult, char **env, int which_quote, int *status)
 			while (--j >= 0)
 				ft_putchar('\\');
 		}
-		while (*bult != '$' && *bult != '\0')
+		if (*bult == '\\' && (*(bult + 1) == '$' || *(bult + 1) == '"' || *(bult + 1) == '\''))
+		{
+			bult++;
 			my_putchar(*(bult++));
+		}
+		while (*bult != '$' && *bult != '\0')
+		{
+			// here
+			if (*bult != '\\' && *(bult + 1) != '$')
+				continue ;
+			my_putchar(*(bult++));
+		}
 		if ((*bult == '$' && ((which_quote == 0 && (*(bult + 1) == '\0' || *(bult + 1) == ' ')) || (which_quote == 1 && (*(bult  + 1) == 39 || *(bult  + 1) == 34 || *(bult + 1) == '\0' || *(bult + 1) == ' ')))))
 			my_putchar(*(bult++));
 		if (*bult == '\0')
@@ -95,6 +105,7 @@ void	put_cases(char **bult, char **env, int *status)
 	{
 		if (find(*bult, 39) == 0 && find(*bult, 34) == 0)
 		{
+			//ft_printf("here\n");
 			split = ft_split(*bult, ' ');
 			if (**bult == ' ')
 				my_putchar(' ');
@@ -139,6 +150,7 @@ void	put_cases(char **bult, char **env, int *status)
 		}
 		else if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
 		{
+			//printf("here2 \n");
 			if (**bult == 39)
 			{
 				*bult = ft_strtrim(*bult, "'");
@@ -146,12 +158,14 @@ void	put_cases(char **bult, char **env, int *status)
 			}
 			else if (**bult == 34)
 			{
+				
 				*bult = ft_strtrim(*bult, "\"");
 				which_quote = 34;
 			}
-			if ((find(*bult, '$') == 0 && find_dollar_esacpe(*bult, '$') == 0) || which_quote == 39)
+			//if ((find(*bult, '$') == 0 && find_dollar_esacpe(*bult, '$') == 0) || which_quote == 39)
+			if (find_without(*bult, '$') == 0 || which_quote == 39)
 			{
-				//printf("here \n");
+				//printf("here3 \n");
 				if (i == 1)
 					write(1, " ", 1);
 				ft_putstr(*bult);
@@ -159,6 +173,7 @@ void	put_cases(char **bult, char **env, int *status)
 			}
 			else
 			{
+				//ft_printf("here\n");
 				if (print_env(*bult, env, 0, status) == 1)
 					write(1, " ", 1);
 			}

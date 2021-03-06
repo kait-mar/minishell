@@ -44,7 +44,7 @@ int		print(char **bult, char **env, int *status)
 			if (j % 2 != 0)
 			{
 				while (*(*bult + 1) == '\\')
-				(*bult)++;
+					(*bult)++;
 			}
 			else
 			{

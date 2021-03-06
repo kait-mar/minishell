@@ -105,8 +105,8 @@ int		check_wich_command(char *str)
 	return (0);
 }
 
-//int			main()
-int		main(int ac, char **av, char **env)
+
+/*int		main(int ac, char **av, char **env)
 {
 	char *str;
 	char    *tmp;
@@ -128,11 +128,6 @@ int		main(int ac, char **av, char **env)
     if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
         return -1;
 	filling_export(env);
-	/*char **av;
-	char **env;
-	env = malloc(2*sizeof(char *));
-	*env = "PATH=user/bin";
-	env[1] = NULL;*/
 	tmp = NULL;
 	while (TRUE)
 	{
@@ -144,6 +139,85 @@ int		main(int ac, char **av, char **env)
 			prompt(g_in_signal);
 			str = reading_input();
 		}
+        str = ft_strtrim(str, "\t");
+        meta = split_it_all(str);
+		head = meta;
+        while (head != NULL)
+        {
+            head->argument = chang_dollar_sign(head->argument, env);
+            if (head->meta == ';')
+            {
+                tmp = semi_split(str);
+                built_in(head, tmp, env, &status, 0);
+                str = split_to_last_cmd(str);
+            }
+            else if (head->meta == '|')
+                head = pipe_file(head, str, env, &status);
+            else if (head->meta_append == 1)
+                head = append_file(head, str, env, &status);
+            else if (head->meta == '>')
+                head = redirect_output(head, str, env, &status);
+			 else if (head->meta == '<')
+                head = redirect_intput(head, str, env, &status);
+            else if (head->meta == '\0')
+                built_in(head, str, env, &status, 0);
+            if (head != NULL)
+                head = head->next;
+        }
+        if (av[1])
+            exit(status);
+        on = 0;
+        g_first_time = 1;
+        g_in_signal = 0;
+	}
+	return(status);
+}*/
+
+
+int			main()
+{
+	char *str;
+	char    *tmp;
+	int		status;
+	t_meta	*meta;
+	t_meta	*head;
+	t_semi  *semi;
+	int     on;
+
+
+	char **av;
+	char **env;
+	env = malloc(2*sizeof(char *));
+	*env = "PATH=user/bin";
+	env[1] = NULL;
+
+
+
+
+	status = 0;
+	g_on = 0;
+	g_in_signal = 0;
+	g_first_time = 0;
+	g_in_line = 0;
+	on = 0;
+	head = NULL;
+	str = NULL;
+	g_export = NULL;
+    if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
+        return -1;
+	filling_export(env);
+	tmp = NULL;
+	while (TRUE)
+	{
+        signal_handler(&status);
+       // if (av[1])
+		//	str = ft_strdup(av[1]);
+		//else
+	//	{
+			prompt(g_in_signal);
+			//str = reading_input();
+			str = "export A='hi my name';";
+		//}
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
 		head = meta;
