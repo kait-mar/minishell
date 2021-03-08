@@ -25,6 +25,7 @@ int		only_star(char *s)
 	else
 		return (0);
 }
+
 int		print(char **bult, char **env, int *status)
 {
 	int		j;
@@ -32,13 +33,41 @@ int		print(char **bult, char **env, int *status)
 	int		i;
 	int		fd;
 
-	//Adde by The Hell
-	//add a split here
 	i = 0;
 	if (only_star(*bult) == 1)
 		stream_directory();
-	while (**bult != '$' && **bult != '\0')
+	while ((**bult != '$' || (**bult == '\\' && *(*bult + 1) == '$')) && **bult != '\0')
 	{
+		if (**bult == '\\' && *(*bult + 1) == '\\')
+		{
+			j = how_many_escape(*bult);
+			if (j % 2 != 0)
+			{
+				while (*(*bult + 1) == '\\')
+					(*bult)++;
+			}
+			else
+			{
+				while (**bult == '\\')
+					(*bult)++;
+			}
+			j /= 2;
+			while (--j >= 0)
+				ft_putchar('\\');
+			continue ;
+		}
+		else if (**bult == '\\' && *(*bult + 1) == '$')
+			(*bult)++;
+		else if (**bult == '\\' && *(*bult + 1) == '\0')
+		{
+			(*bult)++;
+			return (1);
+		}
+		else if (**bult == '\\')
+		{
+			(*bult)++;
+			continue ;
+		}
         my_putchar(**bult);
 		(*bult)++;
 		i = 1;
@@ -77,6 +106,7 @@ int		print(char **bult, char **env, int *status)
 			(*bult)++;
 		}
 	}
+	//ft_printf("\nit returned %d\n", i);
 	return (i);
 }
 
@@ -87,7 +117,7 @@ int		find(char *str, char c)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == c)
+		if (str[i] == c && (i == 0 || (i - 1 >= 0 && str[i - 1] != '\\')))
 			return (1);
 		i++;
 	}
@@ -132,6 +162,7 @@ int	echo(char *argv, char **env, int *status)
 
 	i = 0;
 	spaces = 0;
+	//ft_printf("the argv is %s\n", argv);
 	argv = skip_first_word(&argv);
 	if (ft_strcmp(argv, "") == 0)
 	{
@@ -140,30 +171,30 @@ int	echo(char *argv, char **env, int *status)
 	}
 	argv = ft_strtrim(argv, " ");
 	argv = ft_strtrim(argv, "\t");
-	//if (find(argv, '<') == 0 && find(argv, '>') == 0)
-	//{
-		bult = keep_split(argv, 39, 34);
-		if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
+	bult = keep_split(argv, 39, 34);
+	int k = 0;
+	//while (bult[k] != NULL)
+	//	ft_printf("|%s|\n", bult[k++]);
+	if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
+	{
+		if (ft_strcmp(*bult, "-n") == 0 || ft_strcmp(*bult, "'-n'") == 0 || ft_strcmp(*bult, "\"-n\"") == 0)
 		{
-			if (ft_strcmp(*bult, "-n") == 0 || ft_strcmp(*bult, "'-n'") == 0 || ft_strcmp(*bult, "\"-n\"") == 0)
-			{
-				bult++;
-				i = 1;
-				*bult = ft_strtrim_left(*bult, " ");
-			}
+			bult++;
+			i = 1;
+			*bult = ft_strtrim_left(*bult, " ");
 		}
-		else
+	}
+	else
+	{
+		str = ft_split(*bult, ' ');
+		if (ft_strcmp(*str, "-n") == 0)
 		{
-			str = ft_split(*bult, ' ');
-			if (ft_strcmp(*str, "-n") == 0)
-			{
-				str++;
-				i = 1;
-				*bult = skip_first_word(&(*bult));
-			}
+			str++;
+			i = 1;
+			*bult = skip_first_word(&(*bult));
 		}
-		put_cases(bult, env, status);
-	//}
+	}
+	put_cases(bult, env, status);
 	if (i == 0)
         my_putchar('\n');
 	*status = 0;
@@ -193,7 +224,7 @@ int	echo_strcmp(const char *s1, const char *s2)
 	{
 		while ((*s1 == '\'' || *s1 == '\"') && *s1 != '\0')
 			s1++;
-		if (*s1 != '\0' && *s2 != '\0' && *s1 == *s2)
+		if (*s1 != '\0' && *s2 != '\0' && (*s1 == *s2 || *s1 == *s2 - 32))
 		{
 			s1++;
 			s2++;

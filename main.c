@@ -118,7 +118,12 @@ int    seach_for(char *s)
     }
     return (0);
 }
-/*
+
+
+/*echo "\\""                                                                                                                           [FAIL]
+echo bonjour > "fi le"                                                                                                               [FAIL]
+echo bonjour > 'fi le'*/
+
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -186,8 +191,10 @@ int		main(int ac, char **av, char **env)
         g_in_signal = 0;
 	}
 	return(status);
-}*/
+}
 
+
+/*
 int			main()
 {
 	char *str;
@@ -230,7 +237,7 @@ int			main()
 	//	{
 			prompt(g_in_signal);
 			//str = reading_input();
-			str = "echo \"he | \"";
+			str = "echo \"AH\\\"\"";
 		//}
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
@@ -264,4 +271,4 @@ int			main()
         g_in_signal = 0;
 	}
 	return(status);
-}
+}*/
