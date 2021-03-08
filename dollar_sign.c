@@ -269,6 +269,7 @@ char    *realloc_input(char *str, char *s, int len, int string_len, int i)
         j += 1;
         len_cmd--;
     }
+    string[i] = '\0';
     len_before  = string_len + 1;
     while (len_after > 0)
     {

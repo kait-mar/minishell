@@ -182,29 +182,19 @@ char    *append(char *s1, char *s2)
     return (str);
 }
 
-void    filling_export(char **env)
+void    export_init(void)
 {
     int i;
-    int pwd;
-    int shlvl;
     char *s;
     char *string;
+    int pwd;
+    int shlvl;
 
     i = 0;
     pwd = 0;
     shlvl = 0;
     if (!(s = (char *) ft_calloc(sizeof(char ), 100)))
         return ;
-    if (!(g_export = (t_export *) malloc(sizeof (t_export))))
-        return ;
-    if (!(g_export->saver = (char **) ft_calloc(sizeof (char *), arguments_in(env, i) + 3)))
-        return ;
-    while (env[i])
-    {
-        g_export->saver[i] = ft_strdup(env[i]);
-        i += 1;
-    }
-    i = 0;
     while (g_export->saver[i])
     {
         if (match("PWD", g_export->saver[i]) == 1)
@@ -232,6 +222,132 @@ void    filling_export(char **env)
     }
 }
 
+int     env_found(DIR *direct)
+{
+    struct dirent *dirent;
+
+    while ((dirent = readdir(direct)) != NULL)
+    {
+        if (match(dirent->d_name, "env") == 1)
+            return (1);
+    }
+    return (0);
+}
+
+char    *right_path(char **path)
+{
+    int i;
+    DIR *direct;
+
+    i = 0;
+    while (path[i])
+    {
+        direct = opendir(path[i]);
+        if (env_found(direct) == 1)
+            return (ft_strdup(path[i]));
+        i += 1;
+    }
+    return (NULL);
+}
+
+char    *findin_env(char **env)
+{
+    int i;
+    char *path;
+    char **paths;
+
+    i = 0;
+    while (env[i])
+    {
+        if (match("PATH", env[i]) == 1)
+            path = only_after_equal(env[i]);
+        i += 1;
+    }
+    paths = ft_split(path, ':');
+    return (right_path(paths));
+}
+
+void   env_init(char **env)
+{
+    int i;
+    char *s;
+    char *ss;
+    char *string;
+    int pwd;
+    int shlvl;
+    int start;
+
+    i = 0;
+    pwd = 0;
+    shlvl = 0;
+    start = 0;
+    if (!(s = (char *) ft_calloc(sizeof(char ), 100)))
+        return ;
+    while (env[i])
+    {
+        if (match("PWD", env[i]) == 1)
+            pwd = 1;
+        else if (match("SHLVL", env[i]) == 1)
+            shlvl = 1;
+        else if ((match("_", env[i]) == 1))
+            start = 1;
+        i += 1;
+    }
+    if (pwd == 0)
+    {
+        getcwd(s, 100);
+        string = append("PWD=", s);
+        env[i] = ft_strdup(string);
+        free(string);
+        string = NULL;
+        i += 1;
+        env[i] = NULL;
+    }
+    if (shlvl == 0)
+    {
+        string = append("SHLVL=", "1");
+        env[i] = ft_strdup(string);
+        free(string);
+        string = NULL;
+        i += 1;
+        env[i] = NULL;
+    }
+    if (start == 0)
+    {
+        ss = findin_env(env);
+        string = append("_=", ss);
+        string = ft_strjoin(string, "/env");
+        env[i] = ft_strdup(string);
+        free(string);
+        string = NULL;
+        i += 1;
+        env[i] = NULL;
+    }
+}
+
+void    filling_export(char **env)
+{
+    int i;
+    int pwd;
+    int shlvl;
+    char *string;
+
+    i = 0;
+    pwd = 0;
+    shlvl = 0;
+    if (!(g_export = (t_export *) malloc(sizeof (t_export))))
+        return ;
+    if (!(g_export->saver = (char **) ft_calloc(sizeof (char *), arguments_in(env, i) + 3)))
+        return ;
+    while (env[i])
+    {
+        g_export->saver[i] = ft_strdup(env[i]);
+        i += 1;
+    }
+    export_init();
+    env_init(env);
+}
+
 int     in_it(char *s)
 {
     int i;
@@ -241,7 +357,9 @@ int     in_it(char *s)
     {
         if (s[i] == '=')
         {
-            while (s[i] != '\0')
+            if (s[i] == '\'')
+                i += 1;
+            while (s[i] != '\0' &&  s[i] != '\'')
             {
                 if (s[i] == '\"' || s[i] == '\\' || s[i] == '$')
                     return (1);
