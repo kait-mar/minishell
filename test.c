@@ -43,8 +43,7 @@ int main()
         head = head->next;
     }
    printf("End of process\n");*/
-    int x  = fork();
-    int y = fork();
-    printf("x == > %d ||  y == > %d\n", x, y);
+char *argv[] = {"/bin/ls", "-l", NULL};
+    execve("/bin/ls", argv, NULL);
     return 0;
 }

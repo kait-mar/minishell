@@ -1,39 +1,10 @@
-|> WITH [SETUP touch a b c] /bin/ls
-|---------------------------------------EXPECTED--------------------------------
-a$
-b$
-c$
-|---------------------------------------ACTUAL----------------------------------
-minishell: /bin/ls: command not found$
-================================================================================
-
-|> WITH [SETUP touch a b c] /bin/ls -l
-|---------------------------------------EXPECTED--------------------------------
-total 0$
--rw-r--r--  1 molabhai  2019  0 Mar  8 09:35 a$
--rw-r--r--  1 molabhai  2019  0 Mar  8 09:35 b$
--rw-r--r--  1 molabhai  2019  0 Mar  8 09:35 c$
-|---------------------------------------ACTUAL----------------------------------
-minishell: /bin/ls -l: command not found$
-================================================================================
-
-|> WITH [SETUP touch a b c; cp /bin/ls bonjour] ./bonjour
-|---------------------------------------EXPECTED--------------------------------
-a$
-b$
-bonjour$
-c$
-|---------------------------------------ACTUAL----------------------------------
-minishell: ./bonjour: command not found$
-================================================================================
-
 |> WITH [SETUP touch a b c; cp /bin/ls bonjour] ./bonjour -l
 |---------------------------------------EXPECTED--------------------------------
 total 80$
--rw-r--r--  1 molabhai  2019      0 Mar  8 09:35 a$
--rw-r--r--  1 molabhai  2019      0 Mar  8 09:35 b$
--rwxr-xr-x  1 molabhai  2019  38704 Mar  8 09:35 bonjour$
--rw-r--r--  1 molabhai  2019      0 Mar  8 09:35 c$
+-rw-r--r--  1 molabhai  2019      0 Mar  8 10:18 a$
+-rw-r--r--  1 molabhai  2019      0 Mar  8 10:18 b$
+-rwxr-xr-x  1 molabhai  2019  38704 Mar  8 10:18 bonjour$
+-rw-r--r--  1 molabhai  2019      0 Mar  8 10:18 c$
 |---------------------------------------ACTUAL----------------------------------
 minishell: ./bonjour -l: command not found$
 ================================================================================
@@ -41,10 +12,10 @@ minishell: ./bonjour -l: command not found$
 |> WITH [SETUP mkdir somedir; touch a b c; touch somedir/d somedir/e;cp /bin/ls somedir/bonjour] ./somedir/bonjour -l
 |---------------------------------------EXPECTED--------------------------------
 total 0$
--rw-r--r--  1 molabhai  2019    0 Mar  8 09:35 a$
--rw-r--r--  1 molabhai  2019    0 Mar  8 09:35 b$
--rw-r--r--  1 molabhai  2019    0 Mar  8 09:35 c$
-drwxr-xr-x  5 molabhai  2019  170 Mar  8 09:35 somedir$
+-rw-r--r--  1 molabhai  2019    0 Mar  8 10:18 a$
+-rw-r--r--  1 molabhai  2019    0 Mar  8 10:18 b$
+-rw-r--r--  1 molabhai  2019    0 Mar  8 10:18 c$
+drwxr-xr-x  5 molabhai  2019  170 Mar  8 10:18 somedir$
 |---------------------------------------ACTUAL----------------------------------
 minishell: ./somedir/bonjour -l: command not found$
 ================================================================================

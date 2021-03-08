@@ -40,6 +40,22 @@ char	*only_after_equal(char *str)
 	return (s);
 }
 
+int     check_for_bin(char *path)
+{
+    int i;
+    char **check;
+
+    i = 0;
+    check = ft_split(path, '/');
+    while (check[i] != NULL)
+    {
+        if (match(check[i], "bin") == 1)
+            return (1);
+        i += 1;
+    }
+    return (0);
+}
+
 void	execut_command(char **env, char *str, int *check, int j)
 {
 	char **splits;
@@ -69,7 +85,6 @@ void	execut_command(char **env, char *str, int *check, int j)
                 i += 1;
         }
         *check = 1;
-
     }
 	else
     {
@@ -77,7 +92,6 @@ void	execut_command(char **env, char *str, int *check, int j)
         {
             ft_printf("Failure\n");
             exit(EXIT_FAILURE);
-
         }
         else if (pid == 0) {
             splits = take_only_carac(str);
@@ -92,10 +106,14 @@ void	execut_command(char **env, char *str, int *check, int j)
             i = 0;
             *check = 2;
             while (commands[i]) {
-                commands[i] = ft_strjoin(commands[i], path);
+                if (check_for_bin(splits[0]) == 0)
+                    commands[i] = ft_strjoin(commands[i], path);
+                else if (check_for_bin(splits[0]) == 1)
+                    commands[i] = ft_strdup(splits[0]);
                 if (execve(commands[i], splits, env) == -1)
                     i += 1;
             }
+            execve(str, splits, env);
             *check = 1;
             //  exit(EXIT_SUCCESS);
         }
