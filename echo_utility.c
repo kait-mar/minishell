@@ -38,7 +38,7 @@ int	print_env(char *bult, char **env, int which_quote, int *status)
 			bult++;
 			my_putchar(*(bult++));
 		}
-		while ((*bult != '$' && !(*bult == '\\' && (*(bult + 1) == '\\' || *(bult + 1) == '$'))) && *bult != '\0')
+		while (*bult != '$' && *bult != '\0' && (*bult != '\\' || *(bult + 1) != '\\') && (*bult != '\\' || *(bult + 1) != '$') && (*bult != '\\' || *(bult + 1) != '\'') && (*bult != '\\' || *(bult + 1) != '"'))
 		{
 			my_putchar(*(bult++));
 		}

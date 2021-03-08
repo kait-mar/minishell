@@ -105,7 +105,7 @@ int		check_wich_command(char *str)
 	return (0);
 }
 
-echo "AH\""
+
 /*echo "\\""                                                                                                                           [FAIL]
 echo bonjour > "fi le"                                                                                                               [FAIL]
 echo bonjour > 'fi le'*/
@@ -220,7 +220,7 @@ int			main()
 	//	{
 			prompt(g_in_signal);
 			//str = reading_input();
-			str = "echo \a";
+			str = "echo \"AH\\\"\"";
 		//}
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
