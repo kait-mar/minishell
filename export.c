@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
-
 
 int no_space(char *s)
 {
@@ -209,8 +207,8 @@ t_export		*check_export(char **splits, char **env, t_export *export)
 			return (NULL);
 		while (g_export->saver[i])
 		{
-           /* if (in_it(g_export->saver[i]) == 1)
-                g_export->saver[i] = add_backslash(g_export->saver[i]);*/
+            if (in_it(g_export->saver[i]) == 1)
+                g_export->saver[i] = add_backslash(g_export->saver[i]);
             export->env[i] = front_append(g_export->saver[i], "declare -x ");
 			i += 1;
 		}
