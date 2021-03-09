@@ -207,5 +207,9 @@ int     last_check(char *str, int i);
 char    *error_reformulation(char *string);
 int     check_equal(char *s);
 char	*only_after_equal(char *str);
+int		how_many_escape(char *bult);
+int		find_dollar_esacpe(char *bult, char c);
+int		find_without(char *bult, char c);
+char	*trim_once(char *s1);
 
 #endif

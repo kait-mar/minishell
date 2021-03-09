@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 |> WITH [SETUP touch a b c; echo bonjour > a; cp /bin/cat ls] ./ls . a b c
 |  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
@@ -45,15 +46,87 @@ minishell: ./somefile: Permission denied$
 
 |> WITH [SETUP echo > somefile; chmod 500 somefile] ./somefile
 |  STATUS: expected 0 actual 126
+=======
+|> WITH [EXPORTS TEST='bonjour'] echo $TEST_
 |---------------------------------------EXPECTED--------------------------------
+$
 |---------------------------------------ACTUAL----------------------------------
+bonjour_$
+================================================================================
+
+|> WITH [EXPORTS TEST='bonjour'] echo "|$TEST|"
+|---------------------------------------EXPECTED--------------------------------
+|bonjour|$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH [EXPORTS TEST='bonjour'] echo "|$TEST_|"
+|---------------------------------------EXPECTED--------------------------------
+||$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH [EXPORTS TEST='bonjour'] echo '|$TEST|'
+|---------------------------------------EXPECTED--------------------------------
+|$TEST|$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH [EXPORTS TEST='bonjour'] echo '|$TEST_|'
+|---------------------------------------EXPECTED--------------------------------
+|$TEST_|$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH [EXPORTS A='foo' B='bar' C='baz'] echo "$A$B$C"
+|---------------------------------------EXPECTED--------------------------------
+foobarbaz$
+|---------------------------------------ACTUAL----------------------------------
+foobarbaz $
+================================================================================
+
+|> WITH [EXPORTS A='foo' B='bar' C='baz'] echo '$A$B$C'
+|---------------------------------------EXPECTED--------------------------------
+$A$B$C$
+|---------------------------------------ACTUAL----------------------------------
+foobar$C$
+================================================================================
+
+|> WITH [EXPORTS A='foo' B='bar' C='baz'] echo $A,$B,$C
+|---------------------------------------EXPECTED--------------------------------
+foo,bar,baz$
+|---------------------------------------ACTUAL----------------------------------
+foo,$B,baz$
+================================================================================
+
+|> WITH [EXPORTS A='foo' B='bar' C='baz'] echo "$A,$B,$C"
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+|---------------------------------------EXPECTED--------------------------------
+foo,bar,baz$
+|---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 minishell: ./somefile: Permission denied$
 ================================================================================
 
 |> WITH [SETUP echo > somefile; chmod 700 somefile] ./somefile
 |  STATUS: expected 0 actual 126
+=======
+foo,$B,$C $
+================================================================================
+
+|> WITH [EXPORTS A='foo' B='bar' C='baz'] echo $A"$B"$C"A"$B"$C"
 |---------------------------------------EXPECTED--------------------------------
+foobarbazAbarbaz$
 |---------------------------------------ACTUAL----------------------------------
+foobar bazAbarbaz $
+================================================================================
+
+|> WITH [EXPORTS A='foo ' B=' bar  ' C='baz '] echo $A"$B"$C"A"$B"$C"
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+|---------------------------------------EXPECTED--------------------------------
+foo  bar  baz A bar baz $
+|---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 minishell: ./somefile: Permission denied$
 ================================================================================
 
@@ -149,33 +222,96 @@ minishell: somedirsoftlink: command not found$
 ================================================================================
 
 |> WITH [SETUP touch somefile; ln -s somefile someremovedlink; rm -f somefile] ./someremovedlink
+=======
+foo  bar   baz A bar  baz  $
+================================================================================
+
+|> WITH [EXPORTS A='foo ' B=' bar  ' C='baz '] echo $A'$B'$C'A'$B'$C'
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./someremovedlink: No such file or directory$
+foo $Bbaz A bar $C$
 |---------------------------------------ACTUAL----------------------------------
+foo $Bbaz A bar  $C$
+================================================================================
+
+|> WITH echo $A$B
+|---------------------------------------EXPECTED--------------------------------
+$
+|---------------------------------------ACTUAL----------------------------------
+$B$
+================================================================================
+
+|> WITH echo $A$B$C
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+|---------------------------------------EXPECTED--------------------------------
+$
+|---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 minishell: ./someremovedlink: No such file or directory$
 minishell: ./someremovedlink: command not found$
 ================================================================================
 
 |> WITH [SETUP cp /bin/ls somefile;ln -s somefile somelink1; ln -s somelink1 somelink2] ./somelink2ls
+=======
+$B$C$
+================================================================================
+
+|> WITH echo $A$B$C$D
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somelink2ls: No such file or directory$
+$
 |---------------------------------------ACTUAL----------------------------------
+$B$C$D$
+================================================================================
+
+|> WITH [EXPORTS A='   \b\\o\\\nj\\\\\\\our\\je\\\\'] echo [$A]
+|---------------------------------------EXPECTED--------------------------------
+[ \b\\o\\\nj\\\\\\\our\\je\\\\]$
+|---------------------------------------ACTUAL----------------------------------
+[   \b\\o\\\nj\\\\\\\our\\je\\\\]$
+================================================================================
+
+|> WITH [EXPORTS A='\b\\o\\\nj\\\\\\\our\\je\\\\   '] echo [$A]
+|---------------------------------------EXPECTED--------------------------------
+[\b\\o\\\nj\\\\\\\our\\je\\\\ ]$
+|---------------------------------------ACTUAL----------------------------------
+[\b\\o\\\nj\\\\\\\our\\je\\\\   ]$
+================================================================================
+
+|> WITH [EXPORTS A='  \b\\o\\\nj\\\\\\\our\\je\\\\ '] echo [$A]
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+|---------------------------------------EXPECTED--------------------------------
+[ \b\\o\\\nj\\\\\\\our\\je\\\\ ]$
+|---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 minishell: ./somelink2ls: No such file or directory$
 minishell: ./somelink2ls: command not found$
 ================================================================================
 
 |> WITH [SETUP cp /bin/ls somefile;ln -s somefile somelink1; ln -s somelink1 somelink2;ln -s somelink2 somelink3] ./somelink3ls
+=======
+[  \b\\o\\\nj\\\\\\\our\\je\\\\ ]$
+================================================================================
+
+|> WITH [EXPORTS A='a  \b\\o\\\nj\\\\\\\our\\je\\\\ b'] echo [$A]
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somelink3ls: No such file or directory$
+[a \b\\o\\\nj\\\\\\\our\\je\\\\ b]$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 minishell: ./somelink3ls: No such file or directory$
 minishell: ./somelink3ls: command not found$
 ================================================================================
 
 |> WITH [SETUP cp /bin/ls somefile;ln -s somefile somelink1; ln -s somelink1 somelink2;ln -s somelink2 somelink3; ln -s somelink3 somelink4] ./somelink4ls
+=======
+[a  \b\\o\\\nj\\\\\\\our\\je\\\\ b]$
+================================================================================
+
+|> WITH [EXPORTS A=' a  \b\\o\\\nj\\\\\\\our\\je\\\\ b '] echo [$A]
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somelink4ls: No such file or directory$
+[ a \b\\o\\\nj\\\\\\\our\\je\\\\ b ]$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 minishell: ./somelink4ls: No such file or directory$
 minishell: ./somelink4ls: command not found$
 ================================================================================
@@ -189,129 +325,368 @@ minishell: _: Permission denied$
 ================================================================================
 
 |> WITH [SETUP touch -] '-'
+=======
+[ a  \b\\o\\\nj\\\\\\\our\\je\\\\ b ]$
+================================================================================
+
+|> WITH [EXPORTS A='    '] echo [$A]
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-minishell: -: command not found$
+[ ]$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 minishell: : No such file or directory$
 minishell: '-': command not found$
 ================================================================================
 
 |> WITH [SETUP touch .] ./.
 |  STATUS: expected 126 actual 0
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./.: is a directory$
-|---------------------------------------ACTUAL----------------------------------
+=======
+[    ]$
 ================================================================================
 
-|> WITH [SETUP touch ..] ./..
-|  STATUS: expected 126 actual 0
+|> WITH [EXPORTS A=' \  '] echo [$A]
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./..: is a directory$
+[ \ ]$
 |---------------------------------------ACTUAL----------------------------------
+[ \  ]$
 ================================================================================
 
-|> WITH [SETUP mkdir -m 0777 somedir] ./somedir
-|  STATUS: expected 126 actual 0
+|> WITH [EXPORTS A='bonjour'] echo \ \ \ \ \ \ \ $A\ \ \ \ \ \ 
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somedir: is a directory$
+       bonjour      $
 |---------------------------------------ACTUAL----------------------------------
+       bonjour     $
+================================================================================
+
+|> WITH [EXPORTS A='bonjour je suis'] echo \ \ \ \ \ \ \ $A\ \ \ \ \ \ 
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+|---------------------------------------EXPECTED--------------------------------
+       bonjour je suis      $
+|---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
+=======
+       bonjour je suis     $
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+================================================================================
+
+|> WITH [EXPORTS A='  bonjour je suis  '] echo \ \ \ \ \ \ \ $A\ \ \ \ \ \ 
+|---------------------------------------EXPECTED--------------------------------
+        bonjour je suis       $
+|---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
+=======
+       bonjour je suis      $
+================================================================================
+
+|> WITH [EXPORTS A='bonjour     je     suis    splited'] echo [$A]
+|---------------------------------------EXPECTED--------------------------------
+[bonjour je suis splited]$
+|---------------------------------------ACTUAL----------------------------------
+[bonjour     je     suis    splited]$
+================================================================================
+
+|> WITH [EXPORTS A='   bonjour     je     suis    splited   '] echo [$A]
+|---------------------------------------EXPECTED--------------------------------
+[ bonjour je suis splited ]$
+|---------------------------------------ACTUAL----------------------------------
+[   bonjour     je     suis    splited   ]$
+================================================================================
+
+|> WITH [EXPORTS A='bonjour je suis splited'] echo "[$A]"
+|---------------------------------------EXPECTED--------------------------------
+[bonjour je suis splited]$
+|---------------------------------------ACTUAL----------------------------------
+[bonjour je suis splited] $
+================================================================================
+
+|> WITH [EXPORTS A='bonjour     je     suis    splited'] echo "[$A]"
+|---------------------------------------EXPECTED--------------------------------
+[bonjour     je     suis    splited]$
+|---------------------------------------ACTUAL----------------------------------
+[bonjour     je     suis    splited] $
+================================================================================
+
+|> WITH [EXPORTS A='   bonjour     je     suis    splited   '] echo "[$A]"
+|---------------------------------------EXPECTED--------------------------------
+[   bonjour     je     suis    splited   ]$
+|---------------------------------------ACTUAL----------------------------------
+[   bonjour     je     suis    splited   ] $
+================================================================================
+
+|> WITH [EXPORTS A='   bonjour     je     suis    splited   '] echo \ $A
+|---------------------------------------EXPECTED--------------------------------
+  bonjour je suis splited$
+|---------------------------------------ACTUAL----------------------------------
+ bonjour je suis splited$
+================================================================================
+
+|> WITH [EXPORTS A='bonjour je suis splited'] echo $A\ 
+|---------------------------------------EXPECTED--------------------------------
+bonjour je suis splited $
+|---------------------------------------ACTUAL----------------------------------
+bonjour je suis splited$
+================================================================================
+
+|> WITH [EXPORTS A='bonjour     je     suis    splited'] echo $A\ 
+|---------------------------------------EXPECTED--------------------------------
+bonjour je suis splited $
+|---------------------------------------ACTUAL----------------------------------
+bonjour je suis splited$
+================================================================================
+
+|> WITH [EXPORTS A='   bonjour     je     suis    splited   '] echo $A\ 
+|---------------------------------------EXPECTED--------------------------------
+bonjour je suis splited  $
+|---------------------------------------ACTUAL----------------------------------
+bonjour je suis splited $
+================================================================================
+
+|> WITH [EXPORTS A=''Mollitia asperiores assumenda excepturi et ipsa. Nihil corporis facere aut a rem consequatur. Quas molestiae corporis et quibusdam maiores. Molestiae sed unde aut at sed. Deserunt quidem quidem aspernatur pariatur vel illum voluptatum. Culpa unde dolor aspernatur sit. Mollitia tenetur sed eaque autem placeat a aut in. Ipsam ea consequuntur omnis. Non et qui vel corrupti similique eum aut voluptatibus. Iste consequatur voluptatum et omnis debitis. Sit quia neque nihil consequatur sint. Velit libero ut aut et et rerum. Placeat cumque incidunt non repellat sunt perspiciatis ullam. Repellendus repudiandae nostrum quia quis corrupti. Rerum veniam earum cumque pariatur accusantium voluptatum omnis. Alias ut et et adipisci. Tempore omnis numquam ullam et animi et eveniet. Dolor itaque distinctio in. Magnam rerum quia est laboriosam repellat perspiciatis eos. Consequuntur quae corrupti atque. Numquam enim ut ut. Perspiciatis ut maxime et libero quo voluptas consequatur illum. Pariatur porro dolor cumque molestiae harum. ''] echo $A
+|---------------------------------------EXPECTED--------------------------------
+'Mollitia asperiores assumenda excepturi et ipsa. Nihil corporis facere aut a rem consequatur. Quas molestiae corporis et quibusdam maiores. Molestiae sed unde aut at sed. Deserunt quidem quidem aspernatur pariatur vel illum voluptatum. Culpa unde dolor aspernatur sit. Mollitia tenetur sed eaque autem placeat a aut in. Ipsam ea consequuntur omnis. Non et qui vel corrupti similique eum aut voluptatibus. Iste consequatur voluptatum et omnis debitis. Sit quia neque nihil consequatur sint. Velit libero ut aut et et rerum. Placeat cumque incidunt non repellat sunt perspiciatis ullam. Repellendus repudiandae nostrum quia quis corrupti. Rerum veniam earum cumque pariatur accusantium voluptatum omnis. Alias ut et et adipisci. Tempore omnis numquam ullam et animi et eveniet. Dolor itaque distinctio in. Magnam rerum quia est laboriosam repellat perspiciatis eos. Consequuntur quae corrupti atque. Numquam enim ut ut. Perspiciatis ut maxime et libero quo voluptas consequatur illum. Pariatur porro dolor cumque molestiae harum. '$
+|---------------------------------------ACTUAL----------------------------------
+Mollitia asperiores assumenda excepturi et ipsa. Nihil corporis facere aut a rem consequatur. Quas molestiae corporis et quibusdam maiores. Molestiae sed unde aut at sed. Deserunt quidem quidem aspernatur pariatur vel illum voluptatum. Culpa unde dolor aspernatur sit. Mollitia tenetur sed eaque autem placeat a aut in. Ipsam ea consequuntur omnis. Non et qui vel corrupti similique eum aut voluptatibus. Iste consequatur voluptatum et omnis debitis. Sit quia neque nihil consequatur sint. Velit libero ut aut et et rerum. Placeat cumque incidunt non repellat sunt perspiciatis ullam. Repellendus repudiandae nostrum quia quis corrupti. Rerum veniam earum cumque pariatur accusantium voluptatum omnis. Alias ut et et adipisci. Tempore omnis numquam ullam et animi et eveniet. Dolor itaque distinctio in. Magnam rerum quia est laboriosam repellat perspiciatis eos. Consequuntur quae corrupti atque. Numquam enim ut ut. Perspiciatis ut maxime et libero quo voluptas consequatur illum. Pariatur porro dolor cumque molestiae harum. $
+================================================================================
+
+|> WITH [EXPORTS A=''Mollitia asperiores assumenda excepturi et ipsa. Nihil corporis facere aut a rem consequatur. Quas molestiae corporis et quibusdam maiores. Molestiae sed unde aut at sed. Deserunt quidem quidem aspernatur pariatur vel illum voluptatum. Culpa unde dolor aspernatur sit. Mollitia tenetur sed eaque autem placeat a aut in. Ipsam ea consequuntur omnis. Non et qui vel corrupti similique eum aut voluptatibus. Iste consequatur voluptatum et omnis debitis. Sit quia neque nihil consequatur sint. Velit libero ut aut et et rerum. Placeat cumque incidunt non repellat sunt perspiciatis ullam. Repellendus repudiandae nostrum quia quis corrupti. Rerum veniam earum cumque pariatur accusantium voluptatum omnis. Alias ut et et adipisci. Tempore omnis numquam ullam et animi et eveniet. Dolor itaque distinctio in. Magnam rerum quia est laboriosam repellat perspiciatis eos. Consequuntur quae corrupti atque. Numquam enim ut ut. Perspiciatis ut maxime et libero quo voluptas consequatur illum. Pariatur porro dolor cumque molestiae harum. ''] echo "$A"
+|---------------------------------------EXPECTED--------------------------------
+'Mollitia asperiores assumenda excepturi et ipsa. Nihil corporis facere aut a rem consequatur. Quas molestiae corporis et quibusdam maiores. Molestiae sed unde aut at sed. Deserunt quidem quidem aspernatur pariatur vel illum voluptatum. Culpa unde dolor aspernatur sit. Mollitia tenetur sed eaque autem placeat a aut in. Ipsam ea consequuntur omnis. Non et qui vel corrupti similique eum aut voluptatibus. Iste consequatur voluptatum et omnis debitis. Sit quia neque nihil consequatur sint. Velit libero ut aut et et rerum. Placeat cumque incidunt non repellat sunt perspiciatis ullam. Repellendus repudiandae nostrum quia quis corrupti. Rerum veniam earum cumque pariatur accusantium voluptatum omnis. Alias ut et et adipisci. Tempore omnis numquam ullam et animi et eveniet. Dolor itaque distinctio in. Magnam rerum quia est laboriosam repellat perspiciatis eos. Consequuntur quae corrupti atque. Numquam enim ut ut. Perspiciatis ut maxime et libero quo voluptas consequatur illum. Pariatur porro dolor cumque molestiae harum. '$
+|---------------------------------------ACTUAL----------------------------------
+'Mollitia asperiores assumenda excepturi et ipsa. Nihil corporis facere aut a rem consequatur. Quas molestiae corporis et quibusdam maiores. Molestiae sed unde aut at sed. Deserunt quidem quidem aspernatur pariatur vel illum voluptatum. Culpa unde dolor aspernatur sit. Mollitia tenetur sed eaque autem placeat a aut in. Ipsam ea consequuntur omnis. Non et qui vel corrupti similique eum aut voluptatibus. Iste consequatur voluptatum et omnis debitis. Sit quia neque nihil consequatur sint. Velit libero ut aut et et rerum. Placeat cumque incidunt non repellat sunt perspiciatis ullam. Repellendus repudiandae nostrum quia quis corrupti. Rerum veniam earum cumque pariatur accusantium voluptatum omnis. Alias ut et et adipisci. Tempore omnis numquam ullam et animi et eveniet. Dolor itaque distinctio in. Magnam rerum quia est laboriosam repellat perspiciatis eos. Consequuntur quae corrupti atque. Numquam enim ut ut. Perspiciatis ut maxime et libero quo voluptas consequatur illum. Pariatur porro dolor cumque molestiae harum. ' $
+================================================================================
+
+|> WITH [EXPORTS ECHO='echo'] $ECHO $ECHO
+|---------------------------------------EXPECTED--------------------------------
+echo$
+|---------------------------------------ACTUAL----------------------------------
+minishell: echo echo: command not found$
+================================================================================
+
+|> WITH [EXPORTS A='ec' B='ho'] $A$B bonjour
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+minishell: echo bonjour: command not found$
+================================================================================
+
+|> WITH echo \$$\$$
+|---------------------------------------EXPECTED--------------------------------
+$$$$$
+|---------------------------------------ACTUAL----------------------------------
+$\$$$
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b'] echo $\A $\B
+|---------------------------------------EXPECTED--------------------------------
+$A $B$
+|---------------------------------------ACTUAL----------------------------------
+\A\B$
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b'] echo $\A$\B
+|---------------------------------------EXPECTED--------------------------------
+$A$B$
+|---------------------------------------ACTUAL----------------------------------
+\A$\B$
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+================================================================================
+
+|> WITH [EXPORTS A=' '] echo @ $A@
+|---------------------------------------EXPECTED--------------------------------
+@ @$
+|---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 ================================================================================
 
 |> WITH [SETUP mkdir -m 1000 somedir] ./somedir
+=======
+@  @$
+================================================================================
+
+|> WITH [EXPORTS A='       '] echo @$A@
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somedir: is a directory$
+@ @$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 minishell: ./somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 2000 somedir] ./somedir
+=======
+@       @$
+================================================================================
+
+|> WITH [EXPORTS A=' '] echo '@' $A'@'
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somedir: is a directory$
+@ @$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 minishell: ./somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 3000 somedir] ./somedir
+=======
+@  @$
+================================================================================
+
+|> WITH [EXPORTS A=' '] echo "@" $A"@"
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somedir: is a directory$
+@ @$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 minishell: ./somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 4000 somedir] ./somedir
+=======
+@  @$
+================================================================================
+
+|> WITH [EXPORTS A=' '] echo @"$A"@
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somedir: is a directory$
+@ @$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 minishell: ./somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 5000 somedir] ./somedir
+=======
+@  @$
+================================================================================
+
+|> WITH [EXPORTS A=' '] echo @ "$A"@
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somedir: is a directory$
+@  @$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 minishell: ./somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 6000 somedir] ./somedir
+=======
+@   @$
+================================================================================
+
+|> WITH [EXPORTS A=' '] echo @"$A" @
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somedir: is a directory$
+@  @$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 minishell: ./somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 7000 somedir] ./somedir
+=======
+@   @$
+================================================================================
+
+|> WITH [EXPORTS A='       '] echo @"$A"@
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somedir: is a directory$
+@       @$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 minishell: ./somedir: Permission denied$
+=======
+@        @$
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 ================================================================================
 
-|> WITH [SETUP mkdir -m 1777 somedir] ./somedir
-|  STATUS: expected 126 actual 0
+|> WITH [EXPORTS A=' '] echo '@'"$A"'@'
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somedir: is a directory$
+@ @$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
+=======
+@  @$
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 ================================================================================
 
-|> WITH [SETUP mkdir -m 2777 somedir] ./somedir
-|  STATUS: expected 126 actual 0
+|> WITH [EXPORTS A=' '] echo '@' "$A"'@'
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somedir: is a directory$
+@  @$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
+=======
+@   @$
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 ================================================================================
 
-|> WITH [SETUP mkdir -m 3777 somedir] ./somedir
-|  STATUS: expected 126 actual 0
+|> WITH [EXPORTS A=' '] echo '@'"$A" '@'
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somedir: is a directory$
+@  @$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
+=======
+@   @$
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 ================================================================================
 
-|> WITH [SETUP mkdir -m 4777 somedir] ./somedir
-|  STATUS: expected 126 actual 0
+|> WITH [EXPORTS A=' '] echo "@""$A""@"
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somedir: is a directory$
+@ @$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
+=======
+@  @$
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 ================================================================================
 
-|> WITH [SETUP mkdir -m 5777 somedir] ./somedir
-|  STATUS: expected 126 actual 0
+|> WITH [EXPORTS A=' '] echo "@" "$A""@"
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somedir: is a directory$
+@  @$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
+=======
+@   @$
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 ================================================================================
 
-|> WITH [SETUP mkdir -m 6777 somedir] ./somedir
-|  STATUS: expected 126 actual 0
+|> WITH [EXPORTS A=' '] echo "@""$A" "@"
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somedir: is a directory$
+@  @$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 ================================================================================
 
 |> WITH [SETUP mkdir -m 0000 somedir] ./somedir
+=======
+@   @$
+================================================================================
+
+|> WITH [EXPORTS A='file'] echo bonjour > $A
+|# FILE file
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-minishell: ./somedir: is a directory$
+bonjour$
 |---------------------------------------ACTUAL----------------------------------
+<<<<<<< HEAD
 minishell: ./somedir: Permission denied$
+=======
+FROM TEST: File not created
+================================================================================
+
+|> WITH [EXPORTS A='fi le'] echo bonjour > $A
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: $A: ambiguous redirect$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH [EXPORTS A='fi le'] echo bonjour > "$A"
+|# FILE fi le
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+>>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 ================================================================================
 
