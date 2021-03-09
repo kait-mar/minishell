@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "Libft/libft.h"
 //#include "minishell.h"
 
@@ -13,6 +14,7 @@ typedef struct s_pipe
 
 int main()
 {
+    //struct  stat stats;
 /*
     t_pipe *nmbr;
     t_pipe *head;
@@ -43,7 +45,9 @@ int main()
         head = head->next;
     }
    printf("End of process\n");*/
-char *argv[] = {"/bin/ls", "-l", NULL};
+    /*if (stat("/Users/molabhai/Desktop/minishell/a.out", &stats) == -1)
+        ft_printf("error ==> %s\n", strerror(errno));*/
+    char *argv[] = {"ls", "-l", NULL};
     execve("/bin/ls", argv, NULL);
-    return 0;
+    return (0);
 }

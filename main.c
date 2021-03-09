@@ -56,14 +56,31 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 	    if (ft_strcmp(meta->argument, "") != 0)
 	    {
             g_process = 1;
-            execut_command(env, meta->argument, &check, i);
+            execut_command(env, meta->argument, &check, i, status);
         }
-		if (check == 1)
+	    if (*status != 0)
+	        ft_printf("minishell: %s: %s\n", meta->argument, strerror(errno));
+/*	    if (*status == 126)
+            ft_printf("minishell: %s: Permission denied\n", meta->argument);
+	    if (*status == 127)
+            ft_printf("minishell: %s: command not found\n", meta->argument);*/
+	    /*if (check == 3)
+        {
+            ft_printf("minishell: %s: Permission denied\n", meta->argument);
+            g_process = 0;
+            *status = 126;
+        }
+		else if (check == 1)
 		{
 			ft_printf("minishell: %s: command not found\n", meta->argument);
 			g_process = 0;
 			*status = 127;
 		}
+		else if (check == 4)
+        {
+		    g_process = 0;
+		    *status = 127;
+        }*/
 	}
     if (meta->command == 7)
         exit_command(*status, meta->argument);
@@ -172,7 +189,7 @@ int		main(int ac, char **av, char **env)
                 head = append_file(head, str, env, &status);
             else if (head->meta == '>')
                 head = redirect_output(head, str, env, &status);
-			 else if (head->meta == '<')
+            else if (head->meta == '<')
                 head = redirect_intput(head, str, env, &status);
             else if (head->meta == '\0')
                 built_in(head, str, env, &status, 0);
@@ -181,12 +198,14 @@ int		main(int ac, char **av, char **env)
         }
         if (av[1])
             exit(status);
+        status = 0;
         on = 0;
         g_first_time = 1;
         g_in_signal = 0;
 	}
 	return(status);
 }
+
 /*
 int			main()
 {
@@ -198,15 +217,11 @@ int			main()
 	t_semi  *semi;
 	int     on;
 
-
 	char **av;
 	char **env;
 	env = malloc(2*sizeof(char *));
 	*env = "PATH=user/bin";
 	env[1] = NULL;
-
-
-
 
 	status = 0;
 	g_on = 0;
