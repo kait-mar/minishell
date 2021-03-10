@@ -86,7 +86,6 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
 	int status;
 
 	i = 0;
-	status = 0;
 	if (j == 1)
     {
         splits = take_only_carac(str);
@@ -144,15 +143,22 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
            else
                 status = 127;*/
            execve(splits[0], splits, env);
-           exit(EXIT_FAILURE);
+           ft_printf("errno ==> %d\n", errno);
+           if (errno == 8)
+               ft_printf("minishell: %s: Permission denied\n", splits[0]);
+           else
+               ft_printf("minishell: %s: %s\n", splits[0], strerror(errno));
+           if (errno == 2)
+               exit(127);
+           else
+               exit(126);
         }
         else
         {
             g_pid = pid;
             g_on = 1;
             waitpid(pid, &status, WUNTRACED);
-            if (WIFEXITED(status))
-           *statut = WEXITSTATUS(status);
+            *statut = WEXITSTATUS(status);
             g_on = 0;
         }
     }

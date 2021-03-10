@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 |> WITH [SETUP touch a b c; echo bonjour > a; cp /bin/cat ls] ./ls . a b c
 |  STATUS: expected 1 actual 0
 |---------------------------------------EXPECTED--------------------------------
@@ -16,304 +15,368 @@ c$
 ls$
 ================================================================================
 
-|> WITH [SETUP echo > somefile; chmod 001 somefile] ./somefile
-|  STATUS: expected 126 actual 0
+|> WITH [SETUP echo > somefile; chmod 000 somefile] ./somefile
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 001 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 002 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
 |> WITH [SETUP echo > somefile; chmod 003 somefile] ./somefile
-|  STATUS: expected 126 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 004 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
 |> WITH [SETUP echo > somefile; chmod 005 somefile] ./somefile
-|  STATUS: expected 126 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 006 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
 |> WITH [SETUP echo > somefile; chmod 007 somefile] ./somefile
-|  STATUS: expected 126 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 010 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 020 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 030 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 040 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 050 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 060 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 070 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 100 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 8$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 200 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 300 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 8$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 400 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
 |> WITH [SETUP echo > somefile; chmod 500 somefile] ./somefile
 |  STATUS: expected 0 actual 126
-=======
-|> WITH [EXPORTS TEST='bonjour'] echo $TEST_
 |---------------------------------------EXPECTED--------------------------------
-$
 |---------------------------------------ACTUAL----------------------------------
-bonjour_$
+errno ==> 8$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS TEST='bonjour'] echo "|$TEST|"
+|> WITH [SETUP echo > somefile; chmod 600 somefile] ./somefile
 |---------------------------------------EXPECTED--------------------------------
-|bonjour|$
+minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
-================================================================================
-
-|> WITH [EXPORTS TEST='bonjour'] echo "|$TEST_|"
-|---------------------------------------EXPECTED--------------------------------
-||$
-|---------------------------------------ACTUAL----------------------------------
-================================================================================
-
-|> WITH [EXPORTS TEST='bonjour'] echo '|$TEST|'
-|---------------------------------------EXPECTED--------------------------------
-|$TEST|$
-|---------------------------------------ACTUAL----------------------------------
-================================================================================
-
-|> WITH [EXPORTS TEST='bonjour'] echo '|$TEST_|'
-|---------------------------------------EXPECTED--------------------------------
-|$TEST_|$
-|---------------------------------------ACTUAL----------------------------------
-================================================================================
-
-|> WITH [EXPORTS A='foo' B='bar' C='baz'] echo "$A$B$C"
-|---------------------------------------EXPECTED--------------------------------
-foobarbaz$
-|---------------------------------------ACTUAL----------------------------------
-foobarbaz $
-================================================================================
-
-|> WITH [EXPORTS A='foo' B='bar' C='baz'] echo '$A$B$C'
-|---------------------------------------EXPECTED--------------------------------
-$A$B$C$
-|---------------------------------------ACTUAL----------------------------------
-foobar$C$
-================================================================================
-
-|> WITH [EXPORTS A='foo' B='bar' C='baz'] echo $A,$B,$C
-|---------------------------------------EXPECTED--------------------------------
-foo,bar,baz$
-|---------------------------------------ACTUAL----------------------------------
-foo,$B,baz$
-================================================================================
-
-|> WITH [EXPORTS A='foo' B='bar' C='baz'] echo "$A,$B,$C"
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
-|---------------------------------------EXPECTED--------------------------------
-foo,bar,baz$
-|---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
+errno ==> 13$
 minishell: ./somefile: Permission denied$
 ================================================================================
 
 |> WITH [SETUP echo > somefile; chmod 700 somefile] ./somefile
 |  STATUS: expected 0 actual 126
-=======
-foo,$B,$C $
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 8$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='foo' B='bar' C='baz'] echo $A"$B"$C"A"$B"$C"
+|> WITH [SETUP echo > somefile; chmod 755 somefile] ./somefile
+|  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
-foobarbazAbarbaz$
 |---------------------------------------ACTUAL----------------------------------
-foobar bazAbarbaz $
+errno ==> 8$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='foo ' B=' bar  ' C='baz '] echo $A"$B"$C"A"$B"$C"
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+|> WITH [SETUP echo > somefile; chmod 644 somefile] ./somefile
 |---------------------------------------EXPECTED--------------------------------
-foo  bar  baz A bar baz $
+minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
+errno ==> 13$
 minishell: ./somefile: Permission denied$
 ================================================================================
 
 |> WITH [SETUP echo > somefile; chmod 311 somefile] ./somefile
-|  STATUS: expected 126 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 8$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
 |> WITH [SETUP echo > somefile; chmod 111 somefile] ./somefile
-|  STATUS: expected 126 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 8$
+minishell: ./somefile: Permission denied$
+================================================================================
+
+|> WITH [SETUP echo > somefile; chmod 222 somefile] ./somefile
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somefile: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
 |> WITH [SETUP echo > somefile; chmod 333 somefile] ./somefile
-|  STATUS: expected 126 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 8$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir] somedir/
-|  STATUS: expected 126 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: somedir/: is a directory$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: somedir/: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir] ./somedir/
-|  STATUS: expected 126 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir/: is a directory$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somedir/: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir] somedir
-|  STATUS: expected 127 actual 0
+|  STATUS: expected 127 actual 126
 |---------------------------------------EXPECTED--------------------------------
 minishell: somedir: command not found$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir] ./somedir
-|  STATUS: expected 126 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir] somedir
-|  STATUS: expected 127 actual 0
+|  STATUS: expected 127 actual 126
 |---------------------------------------EXPECTED--------------------------------
 minishell: somedir: command not found$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir; ln -s somedir somedirsoftlink] somedirsoftlink/
-|  STATUS: expected 126 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: somedirsoftlink/: is a directory$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: somedirsoftlink/: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir; ln -s somedir somedirsoftlink] ./somedirsoftlink/
-|  STATUS: expected 126 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedirsoftlink/: is a directory$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somedirsoftlink/: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir; ln -s somedir somedirsoftlink] somedirsoftlink
-|  STATUS: expected 127 actual 0
+|  STATUS: expected 127 actual 126
 |---------------------------------------EXPECTED--------------------------------
 minishell: somedirsoftlink: command not found$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: somedirsoftlink: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir; ln -s somedir somedirsoftlink] ./somedirsoftlink
-|  STATUS: expected 126 actual 0
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedirsoftlink: is a directory$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somedirsoftlink: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir; ln -s somedir somedirsoftlink] somedirsoftlink
-|  STATUS: expected 127 actual 0
+|  STATUS: expected 127 actual 126
 |---------------------------------------EXPECTED--------------------------------
 minishell: somedirsoftlink: command not found$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: somedirsoftlink: Permission denied$
 ================================================================================
 
 |> WITH [SETUP touch somefile; ln -s somefile someremovedlink; rm -f somefile] ./someremovedlink
-=======
-foo  bar   baz A bar  baz  $
-================================================================================
-
-|> WITH [EXPORTS A='foo ' B=' bar  ' C='baz '] echo $A'$B'$C'A'$B'$C'
 |---------------------------------------EXPECTED--------------------------------
-foo $Bbaz A bar $C$
-|---------------------------------------ACTUAL----------------------------------
-foo $Bbaz A bar  $C$
-================================================================================
-
-|> WITH echo $A$B
-|---------------------------------------EXPECTED--------------------------------
-$
-|---------------------------------------ACTUAL----------------------------------
-$B$
-================================================================================
-
-|> WITH echo $A$B$C
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
-|---------------------------------------EXPECTED--------------------------------
-$
-|---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
 minishell: ./someremovedlink: No such file or directory$
-minishell: ./someremovedlink: command not found$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 2$
+minishell: ./someremovedlink: No such file or directory$
+================================================================================
+
+|> WITH [SETUP touch somefile; ln -s somefile somelink1; ln -s somelink1 somelink2] ./somelink2
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somelink2: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somelink2: Permission denied$
+================================================================================
+
+|> WITH [SETUP touch somefile; ln -s somefile somelink1; ln -s somelink1 somelink2;ln -s somelink2 somelink3] ./somelink3
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somelink3: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somelink3: Permission denied$
+================================================================================
+
+|> WITH [SETUP touch somefile; ln -s somefile somelink1; ln -s somelink1 somelink2;ln -s somelink2 somelink3; ln -s somelink3 somelink4] ./somelink4
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./somelink4: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./somelink4: Permission denied$
 ================================================================================
 
 |> WITH [SETUP cp /bin/ls somefile;ln -s somefile somelink1; ln -s somelink1 somelink2] ./somelink2ls
-=======
-$B$C$
-================================================================================
-
-|> WITH echo $A$B$C$D
 |---------------------------------------EXPECTED--------------------------------
-$
-|---------------------------------------ACTUAL----------------------------------
-$B$C$D$
-================================================================================
-
-|> WITH [EXPORTS A='   \b\\o\\\nj\\\\\\\our\\je\\\\'] echo [$A]
-|---------------------------------------EXPECTED--------------------------------
-[ \b\\o\\\nj\\\\\\\our\\je\\\\]$
-|---------------------------------------ACTUAL----------------------------------
-[   \b\\o\\\nj\\\\\\\our\\je\\\\]$
-================================================================================
-
-|> WITH [EXPORTS A='\b\\o\\\nj\\\\\\\our\\je\\\\   '] echo [$A]
-|---------------------------------------EXPECTED--------------------------------
-[\b\\o\\\nj\\\\\\\our\\je\\\\ ]$
-|---------------------------------------ACTUAL----------------------------------
-[\b\\o\\\nj\\\\\\\our\\je\\\\   ]$
-================================================================================
-
-|> WITH [EXPORTS A='  \b\\o\\\nj\\\\\\\our\\je\\\\ '] echo [$A]
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
-|---------------------------------------EXPECTED--------------------------------
-[ \b\\o\\\nj\\\\\\\our\\je\\\\ ]$
-|---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
 minishell: ./somelink2ls: No such file or directory$
-minishell: ./somelink2ls: command not found$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 2$
+minishell: ./somelink2ls: No such file or directory$
 ================================================================================
 
 |> WITH [SETUP cp /bin/ls somefile;ln -s somefile somelink1; ln -s somelink1 somelink2;ln -s somelink2 somelink3] ./somelink3ls
-=======
-[  \b\\o\\\nj\\\\\\\our\\je\\\\ ]$
-================================================================================
-
-|> WITH [EXPORTS A='a  \b\\o\\\nj\\\\\\\our\\je\\\\ b'] echo [$A]
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-[a \b\\o\\\nj\\\\\\\our\\je\\\\ b]$
-|---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
 minishell: ./somelink3ls: No such file or directory$
-minishell: ./somelink3ls: command not found$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 2$
+minishell: ./somelink3ls: No such file or directory$
 ================================================================================
 
 |> WITH [SETUP cp /bin/ls somefile;ln -s somefile somelink1; ln -s somelink1 somelink2;ln -s somelink2 somelink3; ln -s somelink3 somelink4] ./somelink4ls
-=======
-[a  \b\\o\\\nj\\\\\\\our\\je\\\\ b]$
-================================================================================
-
-|> WITH [EXPORTS A=' a  \b\\o\\\nj\\\\\\\our\\je\\\\ b '] echo [$A]
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-[ a \b\\o\\\nj\\\\\\\our\\je\\\\ b ]$
-|---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
 minishell: ./somelink4ls: No such file or directory$
-minishell: ./somelink4ls: command not found$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 2$
+minishell: ./somelink4ls: No such file or directory$
 ================================================================================
 
 |> WITH [SETUP touch _] _
@@ -321,372 +384,311 @@ minishell: ./somelink4ls: command not found$
 |---------------------------------------EXPECTED--------------------------------
 minishell: _: command not found$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
 minishell: _: Permission denied$
 ================================================================================
 
 |> WITH [SETUP touch -] '-'
-=======
-[ a  \b\\o\\\nj\\\\\\\our\\je\\\\ b ]$
+|---------------------------------------EXPECTED--------------------------------
+minishell: -: command not found$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 2$
+minishell: : No such file or directory$
 ================================================================================
 
-|> WITH [EXPORTS A='    '] echo [$A]
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+|> WITH [SETUP touch _] ./_
 |---------------------------------------EXPECTED--------------------------------
-[ ]$
+minishell: ./_: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
-minishell: : No such file or directory$
-minishell: '-': command not found$
+errno ==> 13$
+minishell: ./_: Permission denied$
+================================================================================
+
+|> WITH [SETUP touch a; mv a ./-] ./-
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./-: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./-: Permission denied$
 ================================================================================
 
 |> WITH [SETUP touch .] ./.
-|  STATUS: expected 126 actual 0
-=======
-[    ]$
+|---------------------------------------EXPECTED--------------------------------
+minishell: ./.: is a directory$
+|---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./.: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A=' \  '] echo [$A]
+|> WITH [SETUP touch ..] ./..
 |---------------------------------------EXPECTED--------------------------------
-[ \ ]$
+minishell: ./..: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-[ \  ]$
+errno ==> 13$
+minishell: ./..: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='bonjour'] echo \ \ \ \ \ \ \ $A\ \ \ \ \ \ 
+|> WITH [SETUP echo > somefile && chmod 0777 somefile] ./somefile
+|  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
-       bonjour      $
 |---------------------------------------ACTUAL----------------------------------
-       bonjour     $
+errno ==> 8$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='bonjour je suis'] echo \ \ \ \ \ \ \ $A\ \ \ \ \ \ 
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+|> WITH [SETUP echo > somefile && chmod 1000 somefile] ./somefile
 |---------------------------------------EXPECTED--------------------------------
-       bonjour je suis      $
+minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
-=======
-       bonjour je suis     $
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+errno ==> 13$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='  bonjour je suis  '] echo \ \ \ \ \ \ \ $A\ \ \ \ \ \ 
+|> WITH [SETUP echo > somefile && chmod 2000 somefile] ./somefile
 |---------------------------------------EXPECTED--------------------------------
-        bonjour je suis       $
+minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
-=======
-       bonjour je suis      $
+errno ==> 13$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='bonjour     je     suis    splited'] echo [$A]
+|> WITH [SETUP echo > somefile && chmod 3000 somefile] ./somefile
 |---------------------------------------EXPECTED--------------------------------
-[bonjour je suis splited]$
+minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
-[bonjour     je     suis    splited]$
+errno ==> 13$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='   bonjour     je     suis    splited   '] echo [$A]
+|> WITH [SETUP echo > somefile && chmod 4000 somefile] ./somefile
 |---------------------------------------EXPECTED--------------------------------
-[ bonjour je suis splited ]$
+minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
-[   bonjour     je     suis    splited   ]$
+errno ==> 13$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='bonjour je suis splited'] echo "[$A]"
+|> WITH [SETUP echo > somefile && chmod 5000 somefile] ./somefile
 |---------------------------------------EXPECTED--------------------------------
-[bonjour je suis splited]$
+minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
-[bonjour je suis splited] $
+errno ==> 13$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='bonjour     je     suis    splited'] echo "[$A]"
+|> WITH [SETUP echo > somefile && chmod 6000 somefile] ./somefile
 |---------------------------------------EXPECTED--------------------------------
-[bonjour     je     suis    splited]$
+minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
-[bonjour     je     suis    splited] $
+errno ==> 13$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='   bonjour     je     suis    splited   '] echo "[$A]"
+|> WITH [SETUP echo > somefile && chmod 7000 somefile] ./somefile
 |---------------------------------------EXPECTED--------------------------------
-[   bonjour     je     suis    splited   ]$
+minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
-[   bonjour     je     suis    splited   ] $
+errno ==> 13$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='   bonjour     je     suis    splited   '] echo \ $A
+|> WITH [SETUP echo > somefile && chmod 1777 somefile] ./somefile
+|  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
-  bonjour je suis splited$
 |---------------------------------------ACTUAL----------------------------------
- bonjour je suis splited$
+errno ==> 8$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='bonjour je suis splited'] echo $A\ 
+|> WITH [SETUP echo > somefile && chmod 2777 somefile] ./somefile
+|  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
-bonjour je suis splited $
 |---------------------------------------ACTUAL----------------------------------
-bonjour je suis splited$
+errno ==> 8$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='bonjour     je     suis    splited'] echo $A\ 
+|> WITH [SETUP echo > somefile && chmod 3777 somefile] ./somefile
+|  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
-bonjour je suis splited $
 |---------------------------------------ACTUAL----------------------------------
-bonjour je suis splited$
+errno ==> 8$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='   bonjour     je     suis    splited   '] echo $A\ 
+|> WITH [SETUP echo > somefile && chmod 4777 somefile] ./somefile
+|  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
-bonjour je suis splited  $
 |---------------------------------------ACTUAL----------------------------------
-bonjour je suis splited $
+errno ==> 8$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A=''Mollitia asperiores assumenda excepturi et ipsa. Nihil corporis facere aut a rem consequatur. Quas molestiae corporis et quibusdam maiores. Molestiae sed unde aut at sed. Deserunt quidem quidem aspernatur pariatur vel illum voluptatum. Culpa unde dolor aspernatur sit. Mollitia tenetur sed eaque autem placeat a aut in. Ipsam ea consequuntur omnis. Non et qui vel corrupti similique eum aut voluptatibus. Iste consequatur voluptatum et omnis debitis. Sit quia neque nihil consequatur sint. Velit libero ut aut et et rerum. Placeat cumque incidunt non repellat sunt perspiciatis ullam. Repellendus repudiandae nostrum quia quis corrupti. Rerum veniam earum cumque pariatur accusantium voluptatum omnis. Alias ut et et adipisci. Tempore omnis numquam ullam et animi et eveniet. Dolor itaque distinctio in. Magnam rerum quia est laboriosam repellat perspiciatis eos. Consequuntur quae corrupti atque. Numquam enim ut ut. Perspiciatis ut maxime et libero quo voluptas consequatur illum. Pariatur porro dolor cumque molestiae harum. ''] echo $A
+|> WITH [SETUP echo > somefile && chmod 5777 somefile] ./somefile
+|  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
-'Mollitia asperiores assumenda excepturi et ipsa. Nihil corporis facere aut a rem consequatur. Quas molestiae corporis et quibusdam maiores. Molestiae sed unde aut at sed. Deserunt quidem quidem aspernatur pariatur vel illum voluptatum. Culpa unde dolor aspernatur sit. Mollitia tenetur sed eaque autem placeat a aut in. Ipsam ea consequuntur omnis. Non et qui vel corrupti similique eum aut voluptatibus. Iste consequatur voluptatum et omnis debitis. Sit quia neque nihil consequatur sint. Velit libero ut aut et et rerum. Placeat cumque incidunt non repellat sunt perspiciatis ullam. Repellendus repudiandae nostrum quia quis corrupti. Rerum veniam earum cumque pariatur accusantium voluptatum omnis. Alias ut et et adipisci. Tempore omnis numquam ullam et animi et eveniet. Dolor itaque distinctio in. Magnam rerum quia est laboriosam repellat perspiciatis eos. Consequuntur quae corrupti atque. Numquam enim ut ut. Perspiciatis ut maxime et libero quo voluptas consequatur illum. Pariatur porro dolor cumque molestiae harum. '$
 |---------------------------------------ACTUAL----------------------------------
-Mollitia asperiores assumenda excepturi et ipsa. Nihil corporis facere aut a rem consequatur. Quas molestiae corporis et quibusdam maiores. Molestiae sed unde aut at sed. Deserunt quidem quidem aspernatur pariatur vel illum voluptatum. Culpa unde dolor aspernatur sit. Mollitia tenetur sed eaque autem placeat a aut in. Ipsam ea consequuntur omnis. Non et qui vel corrupti similique eum aut voluptatibus. Iste consequatur voluptatum et omnis debitis. Sit quia neque nihil consequatur sint. Velit libero ut aut et et rerum. Placeat cumque incidunt non repellat sunt perspiciatis ullam. Repellendus repudiandae nostrum quia quis corrupti. Rerum veniam earum cumque pariatur accusantium voluptatum omnis. Alias ut et et adipisci. Tempore omnis numquam ullam et animi et eveniet. Dolor itaque distinctio in. Magnam rerum quia est laboriosam repellat perspiciatis eos. Consequuntur quae corrupti atque. Numquam enim ut ut. Perspiciatis ut maxime et libero quo voluptas consequatur illum. Pariatur porro dolor cumque molestiae harum. $
+errno ==> 8$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A=''Mollitia asperiores assumenda excepturi et ipsa. Nihil corporis facere aut a rem consequatur. Quas molestiae corporis et quibusdam maiores. Molestiae sed unde aut at sed. Deserunt quidem quidem aspernatur pariatur vel illum voluptatum. Culpa unde dolor aspernatur sit. Mollitia tenetur sed eaque autem placeat a aut in. Ipsam ea consequuntur omnis. Non et qui vel corrupti similique eum aut voluptatibus. Iste consequatur voluptatum et omnis debitis. Sit quia neque nihil consequatur sint. Velit libero ut aut et et rerum. Placeat cumque incidunt non repellat sunt perspiciatis ullam. Repellendus repudiandae nostrum quia quis corrupti. Rerum veniam earum cumque pariatur accusantium voluptatum omnis. Alias ut et et adipisci. Tempore omnis numquam ullam et animi et eveniet. Dolor itaque distinctio in. Magnam rerum quia est laboriosam repellat perspiciatis eos. Consequuntur quae corrupti atque. Numquam enim ut ut. Perspiciatis ut maxime et libero quo voluptas consequatur illum. Pariatur porro dolor cumque molestiae harum. ''] echo "$A"
+|> WITH [SETUP echo > somefile && chmod 6777 somefile] ./somefile
+|  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
-'Mollitia asperiores assumenda excepturi et ipsa. Nihil corporis facere aut a rem consequatur. Quas molestiae corporis et quibusdam maiores. Molestiae sed unde aut at sed. Deserunt quidem quidem aspernatur pariatur vel illum voluptatum. Culpa unde dolor aspernatur sit. Mollitia tenetur sed eaque autem placeat a aut in. Ipsam ea consequuntur omnis. Non et qui vel corrupti similique eum aut voluptatibus. Iste consequatur voluptatum et omnis debitis. Sit quia neque nihil consequatur sint. Velit libero ut aut et et rerum. Placeat cumque incidunt non repellat sunt perspiciatis ullam. Repellendus repudiandae nostrum quia quis corrupti. Rerum veniam earum cumque pariatur accusantium voluptatum omnis. Alias ut et et adipisci. Tempore omnis numquam ullam et animi et eveniet. Dolor itaque distinctio in. Magnam rerum quia est laboriosam repellat perspiciatis eos. Consequuntur quae corrupti atque. Numquam enim ut ut. Perspiciatis ut maxime et libero quo voluptas consequatur illum. Pariatur porro dolor cumque molestiae harum. '$
 |---------------------------------------ACTUAL----------------------------------
-'Mollitia asperiores assumenda excepturi et ipsa. Nihil corporis facere aut a rem consequatur. Quas molestiae corporis et quibusdam maiores. Molestiae sed unde aut at sed. Deserunt quidem quidem aspernatur pariatur vel illum voluptatum. Culpa unde dolor aspernatur sit. Mollitia tenetur sed eaque autem placeat a aut in. Ipsam ea consequuntur omnis. Non et qui vel corrupti similique eum aut voluptatibus. Iste consequatur voluptatum et omnis debitis. Sit quia neque nihil consequatur sint. Velit libero ut aut et et rerum. Placeat cumque incidunt non repellat sunt perspiciatis ullam. Repellendus repudiandae nostrum quia quis corrupti. Rerum veniam earum cumque pariatur accusantium voluptatum omnis. Alias ut et et adipisci. Tempore omnis numquam ullam et animi et eveniet. Dolor itaque distinctio in. Magnam rerum quia est laboriosam repellat perspiciatis eos. Consequuntur quae corrupti atque. Numquam enim ut ut. Perspiciatis ut maxime et libero quo voluptas consequatur illum. Pariatur porro dolor cumque molestiae harum. ' $
+errno ==> 8$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS ECHO='echo'] $ECHO $ECHO
+|> WITH [SETUP echo > somefile && chmod 7777 somefile] ./somefile
+|  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
-echo$
 |---------------------------------------ACTUAL----------------------------------
-minishell: echo echo: command not found$
+errno ==> 8$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='ec' B='ho'] $A$B bonjour
+|> WITH [SETUP echo > somefile && chmod 0000 somefile] ./somefile
 |---------------------------------------EXPECTED--------------------------------
-bonjour$
+minishell: ./somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
-minishell: echo bonjour: command not found$
+errno ==> 13$
+minishell: ./somefile: Permission denied$
 ================================================================================
 
-|> WITH echo \$$\$$
+|> WITH [SETUP mkdir -m 0777 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
-$$$$$
+minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-$\$$$
-================================================================================
-
-|> WITH [EXPORTS A='a' B='b'] echo $\A $\B
-|---------------------------------------EXPECTED--------------------------------
-$A $B$
-|---------------------------------------ACTUAL----------------------------------
-\A\B$
-================================================================================
-
-|> WITH [EXPORTS A='a' B='b'] echo $\A$\B
-|---------------------------------------EXPECTED--------------------------------
-$A$B$
-|---------------------------------------ACTUAL----------------------------------
-\A$\B$
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
-================================================================================
-
-|> WITH [EXPORTS A=' '] echo @ $A@
-|---------------------------------------EXPECTED--------------------------------
-@ @$
-|---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
+errno ==> 13$
+minishell: ./somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 1000 somedir] ./somedir
-=======
-@  @$
-================================================================================
-
-|> WITH [EXPORTS A='       '] echo @$A@
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-@ @$
+minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
+errno ==> 13$
 minishell: ./somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 2000 somedir] ./somedir
-=======
-@       @$
-================================================================================
-
-|> WITH [EXPORTS A=' '] echo '@' $A'@'
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-@ @$
+minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
+errno ==> 13$
 minishell: ./somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 3000 somedir] ./somedir
-=======
-@  @$
-================================================================================
-
-|> WITH [EXPORTS A=' '] echo "@" $A"@"
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-@ @$
+minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
+errno ==> 13$
 minishell: ./somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 4000 somedir] ./somedir
-=======
-@  @$
-================================================================================
-
-|> WITH [EXPORTS A=' '] echo @"$A"@
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-@ @$
+minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
+errno ==> 13$
 minishell: ./somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 5000 somedir] ./somedir
-=======
-@  @$
-================================================================================
-
-|> WITH [EXPORTS A=' '] echo @ "$A"@
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-@  @$
+minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
+errno ==> 13$
 minishell: ./somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 6000 somedir] ./somedir
-=======
-@   @$
-================================================================================
-
-|> WITH [EXPORTS A=' '] echo @"$A" @
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-@  @$
+minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
+errno ==> 13$
 minishell: ./somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 7000 somedir] ./somedir
-=======
-@   @$
-================================================================================
-
-|> WITH [EXPORTS A='       '] echo @"$A"@
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-@       @$
+minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
+errno ==> 13$
 minishell: ./somedir: Permission denied$
-=======
-@        @$
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 ================================================================================
 
-|> WITH [EXPORTS A=' '] echo '@'"$A"'@'
+|> WITH [SETUP mkdir -m 1777 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
-@ @$
+minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
-=======
-@  @$
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+errno ==> 13$
+minishell: ./somedir: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A=' '] echo '@' "$A"'@'
+|> WITH [SETUP mkdir -m 2777 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
-@  @$
+minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
-=======
-@   @$
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+errno ==> 13$
+minishell: ./somedir: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A=' '] echo '@'"$A" '@'
+|> WITH [SETUP mkdir -m 3777 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
-@  @$
+minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
-=======
-@   @$
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+errno ==> 13$
+minishell: ./somedir: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A=' '] echo "@""$A""@"
+|> WITH [SETUP mkdir -m 4777 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
-@ @$
+minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
-=======
-@  @$
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+errno ==> 13$
+minishell: ./somedir: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A=' '] echo "@" "$A""@"
+|> WITH [SETUP mkdir -m 5777 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
-@  @$
+minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
-=======
-@   @$
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+errno ==> 13$
+minishell: ./somedir: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A=' '] echo "@""$A" "@"
+|> WITH [SETUP mkdir -m 6777 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
-@  @$
+minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
+errno ==> 13$
+minishell: ./somedir: Permission denied$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 0000 somedir] ./somedir
-=======
-@   @$
-================================================================================
-
-|> WITH [EXPORTS A='file'] echo bonjour > $A
-|# FILE file
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
 |---------------------------------------EXPECTED--------------------------------
-bonjour$
+minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-<<<<<<< HEAD
+errno ==> 13$
 minishell: ./somedir: Permission denied$
-=======
-FROM TEST: File not created
 ================================================================================
 
-|> WITH [EXPORTS A='fi le'] echo bonjour > $A
-|  STATUS: expected 1 actual 0
+|> WITH [SETUP echo > somefile && chmod 000 somefile] ./Somefile
 |---------------------------------------EXPECTED--------------------------------
-minishell: $A: ambiguous redirect$
+minishell: ./Somefile: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
+errno ==> 13$
+minishell: ./Somefile: Permission denied$
 ================================================================================
 
-|> WITH [EXPORTS A='fi le'] echo bonjour > "$A"
-|# FILE fi le
+|> WITH [SETUP echo > somefile && chmod 000 somefile] ./someFILE
 |---------------------------------------EXPECTED--------------------------------
-bonjour$
+minishell: ./someFILE: Permission denied$
 |---------------------------------------ACTUAL----------------------------------
-FROM TEST: File not created
->>>>>>> 44a17a5ca1ab37499352900fc150c3bd69912c78
+errno ==> 13$
+minishell: ./someFILE: Permission denied$
 ================================================================================
 

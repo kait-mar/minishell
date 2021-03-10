@@ -173,7 +173,7 @@ int	echo_strcmp(const char *s1, const char *s2)
 
 int main()
 {
-    //struct  stat stats;
+    struct  stat stats;
 /*
     t_pipe *nmbr;
     t_pipe *head;
@@ -206,7 +206,11 @@ int main()
    printf("End of process\n");*/
     /*if (stat("/Users/molabhai/Desktop/minishell/a.out", &stats) == -1)
         ft_printf("error ==> %s\n", strerror(errno));*/
-    char *argv[] = {"ls", "-l", NULL};
-    execve("/bin/ls", argv, NULL);
+    if (stat("c.c", &stats) == -1)
+        printf("FALSe");
+    else if (stats.st_mode & S_IFDIR)
+            printf("Yes is directory");
+    else
+        printf("Nada\n");
     return (0);
 }

@@ -58,8 +58,8 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
             g_process = 1;
             execut_command(env, meta->argument, &check, i, status);
         }
-	    if (*status != 0)
-	        ft_printf("minishell: %s: %s\n", meta->argument, strerror(errno));
+	   /* if (*status != 0)
+	        ft_printf("minishell: %s: %s\n", meta->argument, strerror(errno));*/
 /*	    if (*status == 126)
             ft_printf("minishell: %s: Permission denied\n", meta->argument);
 	    if (*status == 127)
@@ -169,8 +169,8 @@ int		main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[1])
-			str = ft_strdup(av[1]);
+        if (av[2])
+			str = ft_strdup(av[2]);
 		else
 		{
 			prompt(g_in_signal);
@@ -201,9 +201,8 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        if (av[1])
+        if (av[2])
             exit(status);
-        status = 0;
         on = 0;
         g_first_time = 1;
         g_in_signal = 0;
