@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executables.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: molabhai <molabhai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/20 17:25:32 by molabhai          #+#    #+#             */
-/*   Updated: 2021/02/02 10:14:32 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/03/10 15:28:05 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	*only_after_equal(char *str)
 
 	i = 0;
 	j = 0;
+
 
 	while (str[i] != '=')
 		i += 1;
@@ -84,6 +85,7 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
 	pid_t	pid;
 	int     fd;
 	int status;
+    struct stat stats;
 
 	i = 0;
 	if (j == 1)
@@ -125,6 +127,12 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
             path = ft_strjoin("/", splits[0]);
             i = 0;
             *check = 2;
+            stat(splits[0], &stats);
+            if (S_ISDIR(stats.st_mode))
+            {
+                ft_printf("minishell: %s: Is a directory\n", splits[0]);
+                exit(126);
+            }
             while (commands[i])
             {
                 if (check_for_bin(splits[0]) == 0)
@@ -143,7 +151,6 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
            else
                 status = 127;*/
            execve(splits[0], splits, env);
-           ft_printf("errno ==> %d\n", errno);
            if (errno == 8)
                ft_printf("minishell: %s: Permission denied\n", splits[0]);
            else

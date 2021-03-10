@@ -15,171 +15,10 @@ c$
 ls$
 ================================================================================
 
-|> WITH [SETUP echo > somefile; chmod 000 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 001 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 002 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 003 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 004 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 005 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 006 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 007 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 010 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 020 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 030 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 040 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 050 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 060 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 070 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 100 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 200 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 300 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 400 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
 |> WITH [SETUP echo > somefile; chmod 500 somefile] ./somefile
 |  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 600 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
 minishell: ./somefile: Permission denied$
 ================================================================================
 
@@ -187,7 +26,6 @@ minishell: ./somefile: Permission denied$
 |  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
 minishell: ./somefile: Permission denied$
 ================================================================================
 
@@ -195,47 +33,6 @@ minishell: ./somefile: Permission denied$
 |  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 644 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 311 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 111 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 222 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile; chmod 333 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
 minishell: ./somefile: Permission denied$
 ================================================================================
 
@@ -243,16 +40,14 @@ minishell: ./somefile: Permission denied$
 |---------------------------------------EXPECTED--------------------------------
 minishell: somedir/: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: somedir/: Permission denied$
+minishell: somedir/: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir] ./somedir/
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir/: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir/: Permission denied$
+minishell: ./somedir/: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir] somedir
@@ -260,16 +55,14 @@ minishell: ./somedir/: Permission denied$
 |---------------------------------------EXPECTED--------------------------------
 minishell: somedir: command not found$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: somedir: Permission denied$
+minishell: somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir] somedir
@@ -277,24 +70,21 @@ minishell: ./somedir: Permission denied$
 |---------------------------------------EXPECTED--------------------------------
 minishell: somedir: command not found$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: somedir: Permission denied$
+minishell: somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir; ln -s somedir somedirsoftlink] somedirsoftlink/
 |---------------------------------------EXPECTED--------------------------------
 minishell: somedirsoftlink/: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: somedirsoftlink/: Permission denied$
+minishell: somedirsoftlink/: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir; ln -s somedir somedirsoftlink] ./somedirsoftlink/
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedirsoftlink/: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedirsoftlink/: Permission denied$
+minishell: ./somedirsoftlink/: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir; ln -s somedir somedirsoftlink] somedirsoftlink
@@ -302,16 +92,14 @@ minishell: ./somedirsoftlink/: Permission denied$
 |---------------------------------------EXPECTED--------------------------------
 minishell: somedirsoftlink: command not found$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: somedirsoftlink: Permission denied$
+minishell: somedirsoftlink: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir; ln -s somedir somedirsoftlink] ./somedirsoftlink
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedirsoftlink: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedirsoftlink: Permission denied$
+minishell: ./somedirsoftlink: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir somedir; ln -s somedir somedirsoftlink] somedirsoftlink
@@ -319,64 +107,7 @@ minishell: ./somedirsoftlink: Permission denied$
 |---------------------------------------EXPECTED--------------------------------
 minishell: somedirsoftlink: command not found$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: somedirsoftlink: Permission denied$
-================================================================================
-
-|> WITH [SETUP touch somefile; ln -s somefile someremovedlink; rm -f somefile] ./someremovedlink
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./someremovedlink: No such file or directory$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 2$
-minishell: ./someremovedlink: No such file or directory$
-================================================================================
-
-|> WITH [SETUP touch somefile; ln -s somefile somelink1; ln -s somelink1 somelink2] ./somelink2
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somelink2: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somelink2: Permission denied$
-================================================================================
-
-|> WITH [SETUP touch somefile; ln -s somefile somelink1; ln -s somelink1 somelink2;ln -s somelink2 somelink3] ./somelink3
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somelink3: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somelink3: Permission denied$
-================================================================================
-
-|> WITH [SETUP touch somefile; ln -s somefile somelink1; ln -s somelink1 somelink2;ln -s somelink2 somelink3; ln -s somelink3 somelink4] ./somelink4
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somelink4: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somelink4: Permission denied$
-================================================================================
-
-|> WITH [SETUP cp /bin/ls somefile;ln -s somefile somelink1; ln -s somelink1 somelink2] ./somelink2ls
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somelink2ls: No such file or directory$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 2$
-minishell: ./somelink2ls: No such file or directory$
-================================================================================
-
-|> WITH [SETUP cp /bin/ls somefile;ln -s somefile somelink1; ln -s somelink1 somelink2;ln -s somelink2 somelink3] ./somelink3ls
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somelink3ls: No such file or directory$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 2$
-minishell: ./somelink3ls: No such file or directory$
-================================================================================
-
-|> WITH [SETUP cp /bin/ls somefile;ln -s somefile somelink1; ln -s somelink1 somelink2;ln -s somelink2 somelink3; ln -s somelink3 somelink4] ./somelink4ls
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somelink4ls: No such file or directory$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 2$
-minishell: ./somelink4ls: No such file or directory$
+minishell: somedirsoftlink: Is a directory$
 ================================================================================
 
 |> WITH [SETUP touch _] _
@@ -384,7 +115,6 @@ minishell: ./somelink4ls: No such file or directory$
 |---------------------------------------EXPECTED--------------------------------
 minishell: _: command not found$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
 minishell: _: Permission denied$
 ================================================================================
 
@@ -392,103 +122,27 @@ minishell: _: Permission denied$
 |---------------------------------------EXPECTED--------------------------------
 minishell: -: command not found$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 2$
 minishell: : No such file or directory$
-================================================================================
-
-|> WITH [SETUP touch _] ./_
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./_: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./_: Permission denied$
-================================================================================
-
-|> WITH [SETUP touch a; mv a ./-] ./-
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./-: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./-: Permission denied$
 ================================================================================
 
 |> WITH [SETUP touch .] ./.
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./.: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./.: Permission denied$
+minishell: ./.: Is a directory$
 ================================================================================
 
 |> WITH [SETUP touch ..] ./..
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./..: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./..: Permission denied$
+minishell: ./..: Is a directory$
 ================================================================================
 
 |> WITH [SETUP echo > somefile && chmod 0777 somefile] ./somefile
 |  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile && chmod 1000 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile && chmod 2000 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile && chmod 3000 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile && chmod 4000 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile && chmod 5000 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile && chmod 6000 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile && chmod 7000 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
 minishell: ./somefile: Permission denied$
 ================================================================================
 
@@ -496,7 +150,6 @@ minishell: ./somefile: Permission denied$
 |  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
 minishell: ./somefile: Permission denied$
 ================================================================================
 
@@ -504,7 +157,6 @@ minishell: ./somefile: Permission denied$
 |  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
 minishell: ./somefile: Permission denied$
 ================================================================================
 
@@ -512,7 +164,6 @@ minishell: ./somefile: Permission denied$
 |  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
 minishell: ./somefile: Permission denied$
 ================================================================================
 
@@ -520,7 +171,6 @@ minishell: ./somefile: Permission denied$
 |  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
 minishell: ./somefile: Permission denied$
 ================================================================================
 
@@ -528,7 +178,6 @@ minishell: ./somefile: Permission denied$
 |  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
 minishell: ./somefile: Permission denied$
 ================================================================================
 
@@ -536,7 +185,6 @@ minishell: ./somefile: Permission denied$
 |  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
 minishell: ./somefile: Permission denied$
 ================================================================================
 
@@ -544,15 +192,6 @@ minishell: ./somefile: Permission denied$
 |  STATUS: expected 0 actual 126
 |---------------------------------------EXPECTED--------------------------------
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 8$
-minishell: ./somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile && chmod 0000 somefile] ./somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
 minishell: ./somefile: Permission denied$
 ================================================================================
 
@@ -560,135 +199,104 @@ minishell: ./somefile: Permission denied$
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 1000 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 2000 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 3000 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 4000 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 5000 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 6000 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 7000 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 1777 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 2777 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 3777 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 4777 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 5777 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 6777 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
 |> WITH [SETUP mkdir -m 0000 somedir] ./somedir
 |---------------------------------------EXPECTED--------------------------------
 minishell: ./somedir: is a directory$
 |---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./somedir: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile && chmod 000 somefile] ./Somefile
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./Somefile: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./Somefile: Permission denied$
-================================================================================
-
-|> WITH [SETUP echo > somefile && chmod 000 somefile] ./someFILE
-|---------------------------------------EXPECTED--------------------------------
-minishell: ./someFILE: Permission denied$
-|---------------------------------------ACTUAL----------------------------------
-errno ==> 13$
-minishell: ./someFILE: Permission denied$
+minishell: ./somedir: Is a directory$
 ================================================================================
 
