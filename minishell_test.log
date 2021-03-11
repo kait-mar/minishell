@@ -1,0 +1,1111 @@
+|> WITH echo $PWD; echo $OLDPWD; cd; echo $OLDPWD
+|  STATUS: expected 0 actual 2
+|---------------------------------------EXPECTED--------------------------------
+/Users/molabhai/.cache/minishell_test/sandbox$
+$
+minishell: cd: HOME not set$
+$
+|---------------------------------------ACTUAL----------------------------------
+minishell: syntax error near unexpected token `;'$
+================================================================================
+
+|> WITH [EXPORTS HOME='/Users/molabhai'] echo $PWD; echo $OLDPWD; cd; echo $PWD; echo $OLDPWD
+|  STATUS: expected 0 actual 2
+|---------------------------------------EXPECTED--------------------------------
+/Users/molabhai/.cache/minishell_test/sandbox$
+$
+/Users/molabhai$
+/Users/molabhai/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+minishell: syntax error near unexpected token `;'$
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd /; echo $PWD; echo $OLDPWD; unset PWD; cd /dev; echo $OLDPWD
+|---------------------------------------EXPECTED--------------------------------
+/Users/molabhai/.cache/minishell_test/sandbox$
+$
+/$
+/Users/molabhai/.cache/minishell_test/sandbox$
+$
+|---------------------------------------ACTUAL----------------------------------
+/Users/molabhai/.cache/minishell_test/sandbox$
+$
+/$
+/Users/molabhai/.cache/minishell_test/sandbox$
+/$
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd /; echo $PWD; echo $OLDPWD; export PWD=bonjour; cd /dev; echo $OLDPWD
+|---------------------------------------EXPECTED--------------------------------
+/Users/molabhai/.cache/minishell_test/sandbox$
+$
+/$
+/Users/molabhai/.cache/minishell_test/sandbox$
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+/Users/molabhai/.cache/minishell_test/sandbox$
+$
+/$
+/Users/molabhai/.cache/minishell_test/sandbox$
+/$
+================================================================================
+
+|> WITH                         echo                     bonjour             je
+|---------------------------------------EXPECTED--------------------------------
+bonjour je$
+|---------------------------------------ACTUAL----------------------------------
+echo bonjour je$
+================================================================================
+
+|> WITH                         echo       -n            bonjour             je
+|---------------------------------------EXPECTED--------------------------------
+bonjour je
+|---------------------------------------ACTUAL----------------------------------
+echo -n bonjour je$
+================================================================================
+
+|> WITH Echo bonjour
+|  STATUS: expected 127 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: Echo: command not found$
+|---------------------------------------ACTUAL----------------------------------
+bonjour$
+================================================================================
+
+|> WITH eCho bonjour
+|  STATUS: expected 127 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: eCho: command not found$
+|---------------------------------------ACTUAL----------------------------------
+bonjour$
+================================================================================
+
+|> WITH ecHo bonjour
+|  STATUS: expected 127 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: ecHo: command not found$
+|---------------------------------------ACTUAL----------------------------------
+bonjour$
+================================================================================
+
+|> WITH echO bonjour
+|  STATUS: expected 127 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: echO: command not found$
+|---------------------------------------ACTUAL----------------------------------
+bonjour$
+================================================================================
+
+|> WITH EchO bonjour
+|  STATUS: expected 127 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: EchO: command not found$
+|---------------------------------------ACTUAL----------------------------------
+bonjour$
+================================================================================
+
+|> WITH eCHo bonjour
+|  STATUS: expected 127 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: eCHo: command not found$
+|---------------------------------------ACTUAL----------------------------------
+bonjour$
+================================================================================
+
+|> WITH EcHo bonjour
+|  STATUS: expected 127 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: EcHo: command not found$
+|---------------------------------------ACTUAL----------------------------------
+bonjour$
+================================================================================
+
+|> WITH eChO bonjour
+|  STATUS: expected 127 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: eChO: command not found$
+|---------------------------------------ACTUAL----------------------------------
+bonjour$
+================================================================================
+
+|> WITH echo -n -n -n -n bonjour
+|---------------------------------------EXPECTED--------------------------------
+bonjour
+|---------------------------------------ACTUAL----------------------------------
+-n -n -n bonjour
+================================================================================
+
+|> WITH echo -nnnnnnnnnnnnnnnnnnnnn bonjour
+|---------------------------------------EXPECTED--------------------------------
+bonjour
+|---------------------------------------ACTUAL----------------------------------
+-nnnnnnnnnnnnnnnnnnnnn bonjour$
+================================================================================
+
+|> WITH echo -nnnnnnnnnnnnnnnnnnnnn -n -n -n bonjour -n -n
+|---------------------------------------EXPECTED--------------------------------
+bonjour -n -n
+|---------------------------------------ACTUAL----------------------------------
+-nnnnnnnnnnnnnnnnnnnnn -n -n -n bonjour -n -n$
+================================================================================
+
+|> WITH [SETUP export A=a B=b C=c] env | cat -e
+|  STATUS: expected 0 actual 2
+|---------------------------------------EXPECTED--------------------------------
+$
+PATH=/Users/molabhai/.cache/minishell_test/bin$$
+PWD=/Users/molabhai/.cache/minishell_test/sandbox$$
+SHLVL=1$$
+TERM=xterm-256color$$
+_=/Users/molabhai/.cache/minishell_test/bin/env$
+|---------------------------------------ACTUAL----------------------------------
+$
+minishell: syntax error near unexpected token `|'
+================================================================================
+
+|> WITH Env
+|---------------------------------------EXPECTED--------------------------------
+TERM=xterm-256color$
+PATH=/Users/molabhai/.cache/minishell_test/bin$
+PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+SHLVL=1$
+_=/Users/molabhai/.cache/minishell_test/bin/Env$
+|---------------------------------------ACTUAL----------------------------------
+PATH=/Users/molabhai/.cache/minishell_test/bin$
+TERM=xterm-256color$
+PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+SHLVL=1$
+_=/Users/molabhai/.cache/minishell_test/bin/env$
+================================================================================
+
+|> WITH enV
+|---------------------------------------EXPECTED--------------------------------
+TERM=xterm-256color$
+PATH=/Users/molabhai/.cache/minishell_test/bin$
+PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+SHLVL=1$
+_=/Users/molabhai/.cache/minishell_test/bin/enV$
+|---------------------------------------ACTUAL----------------------------------
+PATH=/Users/molabhai/.cache/minishell_test/bin$
+TERM=xterm-256color$
+PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+SHLVL=1$
+_=/Users/molabhai/.cache/minishell_test/bin/env$
+================================================================================
+
+|> WITH [EXPORTS PATH='/bin:/usr/bin'] Env
+|---------------------------------------EXPECTED--------------------------------
+TERM=xterm-256color$
+PATH=/bin:/usr/bin$
+PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+SHLVL=1$
+_=/usr/bin/Env$
+|---------------------------------------ACTUAL----------------------------------
+PATH=/bin:/usr/bin$
+TERM=xterm-256color$
+PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+SHLVL=1$
+_=/usr/bin/env$
+================================================================================
+
+|> WITH [EXPORTS PATH='/bin:/usr/bin'] enV
+|---------------------------------------EXPECTED--------------------------------
+TERM=xterm-256color$
+PATH=/bin:/usr/bin$
+PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+SHLVL=1$
+_=/usr/bin/enV$
+|---------------------------------------ACTUAL----------------------------------
+PATH=/bin:/usr/bin$
+TERM=xterm-256color$
+PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+SHLVL=1$
+_=/usr/bin/env$
+================================================================================
+
+|> WITH exit ' 3'
+|  STATUS: expected 3 actual 255
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+minishell: exit:  3: numeric argument required$
+================================================================================
+
+|> WITH exit '\t3'
+|  STATUS: expected 3 actual 255
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+minishell: exit: 	3: numeric argument required$
+================================================================================
+
+|> WITH exit '\t\f\r 3'
+|  STATUS: expected 3 actual 255
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+minishell: exit: 	 3: numeric argument required$
+================================================================================
+
+|> WITH exit '3 '
+|  STATUS: expected 3 actual 255
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+minishell: exit: 3 : numeric argument required$
+================================================================================
+
+|> WITH exit '3\t'
+|  STATUS: expected 3 actual 255
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+minishell: exit: 3	: numeric argument required$
+================================================================================
+
+|> WITH exit -9223372036854775809
+|---------------------------------------EXPECTED--------------------------------
+minishell: exit: -9223372036854775809: numeric argument required$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH exit 9223372036854775808
+|  STATUS: expected 255 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: exit: 9223372036854775808: numeric argument required$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH exit 18446744073709551615
+|---------------------------------------EXPECTED--------------------------------
+minishell: exit: 18446744073709551615: numeric argument required$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH exit 18446744073709551616
+|  STATUS: expected 255 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: exit: 18446744073709551616: numeric argument required$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH exit -9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+|  STATUS: expected 255 actual 1
+|---------------------------------------EXPECTED--------------------------------
+minishell: exit: -9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999: numeric argument required$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH exit 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+|---------------------------------------EXPECTED--------------------------------
+minishell: exit: 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999: numeric argument required$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH exit 0 bonjour
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: exit: too many arguments$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH exit 0 1
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: exit: too many arguments$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH exit 0 1 2 3 4 5 6 7 8 9
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: exit: too many arguments$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH exit 99999999999999999999999999999999999999999999999999999; echo should have exited
+|---------------------------------------EXPECTED--------------------------------
+minishell: exit: 99999999999999999999999999999999999999999999999999999: numeric argument required$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH export A=a B=b C=c D=d E=e F=f G=g H=h I=i J=j K=k L=lM=m N=n O=o P=p Q=q R=r S=s T=t U=u V=v W=w X=x Y=y Z=z; echo $A$B$C$D$E$F$G$H$I$J$K$L$M$N$O$P$Q$R$S$T$U$V$W$X$Y$Z
+|---------------------------------------EXPECTED--------------------------------
+abcdefghijklM=mnopqrstuvwxyz$
+|---------------------------------------ACTUAL----------------------------------
+abcdefghijklM=m$
+================================================================================
+
+|> WITH export BONJOURJESUIS1=a; echo $BONJOURJESUIS1
+|  STATUS: expected 0 actual -11
+|---------------------------------------EXPECTED--------------------------------
+a$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH export _=a; echo $_a
+|---------------------------------------EXPECTED--------------------------------
+$
+|---------------------------------------ACTUAL----------------------------------
+_a$
+================================================================================
+
+|> WITH export A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `asdf ': not a valid identifier$
+minishell: export: ` asdf asdf asd f': not a valid identifier$
+minishell: export: ` asdf ': not a valid identifier$
+minishell: export: `': not a valid identifier$
+minishell: export: `asdf ': not a valid identifier$
+$
+|---------------------------------------ACTUAL----------------------------------
+minishell: export: `asdf ': not a valid identifier$
+minishell: export: ` asdf asdf asd f': not a valid identifier$
+minishell: export: ` asdf ': not a valid identifier$
+minishell: export: `': not a valid identifier$
+minishell: export: `asdf ': not a valid identifier$
+$B$C$
+================================================================================
+
+|> WITH export 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `asdf ': not a valid identifier$
+minishell: export: ` asdf asdf asd f': not a valid identifier$
+minishell: export: ` asdf ': not a valid identifier$
+minishell: export: `': not a valid identifier$
+minishell: export: `asdf ': not a valid identifier$
+$
+|---------------------------------------ACTUAL----------------------------------
+minishell: export: `asdf ': not a valid identifier$
+minishell: export: ` asdf asdf asd f': not a valid identifier$
+minishell: export: ` asdf ': not a valid identifier$
+minishell: export: `': not a valid identifier$
+minishell: export: `asdf ': not a valid identifier$
+$B$C$
+================================================================================
+
+|> WITH export A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf '; echo $A$B$C
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `asdf ': not a valid identifier$
+minishell: export: ` asdf asdf asd f': not a valid identifier$
+minishell: export: ` asdf ': not a valid identifier$
+minishell: export: `': not a valid identifier$
+minishell: export: `asdf ': not a valid identifier$
+$
+|---------------------------------------ACTUAL----------------------------------
+minishell: export: `asdf ': not a valid identifier$
+minishell: export: ` asdf asdf asd f': not a valid identifier$
+minishell: export: ` asdf ': not a valid identifier$
+minishell: export: `': not a valid identifier$
+minishell: export: `asdf ': not a valid identifier$
+$B$C$
+================================================================================
+
+|> WITH export A B C; echo $A$B$C
+|---------------------------------------EXPECTED--------------------------------
+$
+|---------------------------------------ACTUAL----------------------------------
+$B$C$
+================================================================================
+
+|> WITH export 'AH\'=nop
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `AH\=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+minishell: export: `AH=nop': not a valid identifier$
+================================================================================
+
+|> WITH export BONJOUR\$JESUIS
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `BONJOUR$JESUIS': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+minishell: export: `BONJOUR$JESUIS$JESUIS': not a valid identifier$
+================================================================================
+
+|> WITH export BONJOUR\|JESUIS
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `BONJOUR|JESUIS': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH export BONJOUR\;JESUIS
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: export: `BONJOUR;JESUIS': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH Pwd
+|  STATUS: expected 127 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: Pwd: command not found$
+|---------------------------------------ACTUAL----------------------------------
+/Users/molabhai/.cache/minishell_test/sandbox$
+================================================================================
+
+|> WITH pwD
+|  STATUS: expected 127 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: pwD: command not found$
+|---------------------------------------ACTUAL----------------------------------
+/Users/molabhai/.cache/minishell_test/sandbox$
+================================================================================
+
+|> WITH [EXPORTS A='a'] unset 'A '; echo $A
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `A ': not a valid identifier$
+a$
+|---------------------------------------ACTUAL----------------------------------
+a$
+================================================================================
+
+|> WITH [EXPORTS A='a'] unset 'A='; echo $A
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `A=': not a valid identifier$
+a$
+|---------------------------------------ACTUAL----------------------------------
+a$
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset A B C; echo $A$B$C
+|---------------------------------------EXPECTED--------------------------------
+$
+|---------------------------------------ACTUAL----------------------------------
+$B$C$
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `asdf ': not a valid identifier$
+minishell: unset: ` asdf asdf asd f': not a valid identifier$
+minishell: unset: ` asdf ': not a valid identifier$
+minishell: unset: `': not a valid identifier$
+minishell: unset: `asdf ': not a valid identifier$
+$
+|---------------------------------------ACTUAL----------------------------------
+$B$C$
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `asdf ': not a valid identifier$
+minishell: unset: ` asdf asdf asd f': not a valid identifier$
+minishell: unset: ` asdf ': not a valid identifier$
+minishell: unset: `': not a valid identifier$
+minishell: unset: `asdf ': not a valid identifier$
+a$
+|---------------------------------------ACTUAL----------------------------------
+a$C$
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf '; echo $A$B$C
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `asdf ': not a valid identifier$
+minishell: unset: ` asdf asdf asd f': not a valid identifier$
+minishell: unset: ` asdf ': not a valid identifier$
+minishell: unset: `': not a valid identifier$
+minishell: unset: `asdf ': not a valid identifier$
+c$
+|---------------------------------------ACTUAL----------------------------------
+$Bc$
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset A; echo $A$B$C
+|---------------------------------------EXPECTED--------------------------------
+bc$
+|---------------------------------------ACTUAL----------------------------------
+$
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `asdf ': not a valid identifier$
+minishell: unset: ` asdf asdf asd f': not a valid identifier$
+minishell: unset: ` asdf ': not a valid identifier$
+minishell: unset: `': not a valid identifier$
+minishell: unset: `asdf ': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `asdf ': not a valid identifier$
+minishell: unset: ` asdf asdf asd f': not a valid identifier$
+minishell: unset: ` asdf ': not a valid identifier$
+minishell: unset: `': not a valid identifier$
+minishell: unset: `asdf ': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf '
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `asdf ': not a valid identifier$
+minishell: unset: ` asdf asdf asd f': not a valid identifier$
+minishell: unset: ` asdf ': not a valid identifier$
+minishell: unset: `': not a valid identifier$
+minishell: unset: `asdf ': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH@'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH@=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset "AH'"=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH'=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH"'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH"=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH$'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH$=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH!'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH!=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH|'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH|=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH;'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH;=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH&'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH&=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH\'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH\=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH echo "\"" >>a"b""c"  
+|# FILE abc
+|---------------------------------------EXPECTED--------------------------------
+"$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH echo \t\v\f\r !#$%*+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_abcdefghijklmnopqrstuvwxyz{}~
+|---------------------------------------EXPECTED--------------------------------
+  !#$%*+,-./0123456789:$
+minishell: =?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{}~: command not found$
+|---------------------------------------ACTUAL----------------------------------
+	 !#%*+,-./0123456789:$
+minishell: =?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_abcdefghijklmnopqrstuvwxyz{}~: command not found$
+================================================================================
+
+|> WITH [SETUP touch a b c; echo bonjour > a; cp /bin/cat ls] ./ls . a b c
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+ls: .: Is a directory$
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+a$
+b$
+c$
+$
+.:$
+a$
+b$
+c$
+ls$
+================================================================================
+
+|> WITH echo > test bonjour
+|# FILE test
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH > test echo bonjour
+|# FILE test
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH echo >> test bonjour
+|# FILE test
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH >> test echo bonjour
+|# FILE test
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH echo > test'sticked' bonjour
+|# FILE teststicked
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH > test'sticked' echo bonjour
+|# FILE teststicked
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH echo bonjour >> test'sticked'
+|# FILE teststicked
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH echo >> test'sticked' bonjour
+|# FILE teststicked
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH >> test'sticked' echo bonjour
+|# FILE teststicked
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH [SETUP echo bonjour > test'sticked'] cat < test'sticked'
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH [SETUP echo bonjour > test'sticked'] < test'sticked' cat
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH echo > test"sticked" bonjour
+|# FILE teststicked
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH > test"sticked" echo bonjour
+|# FILE teststicked
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH echo bonjour >> test"sticked"
+|# FILE teststicked
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH echo >> test"sticked" bonjour
+|# FILE teststicked
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH >> test"sticked" echo bonjour
+|# FILE teststicked
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH [SETUP echo bonjour > test"sticked"] cat < test"sticked"
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH [SETUP echo bonjour > test"sticked"] < test"sticked" cat
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH echo > test'yo'"sticked" bonjour
+|  STATUS: expected 0 actual -11
+|# FILE testyosticked
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH > test'yo'"sticked" echo bonjour
+|  STATUS: expected 0 actual -11
+|# FILE testyosticked
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH echo bonjour >> test'yo'"sticked"
+|  STATUS: expected 0 actual -11
+|# FILE testyosticked
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH echo >> test'yo'"sticked" bonjour
+|  STATUS: expected 0 actual -11
+|# FILE testyosticked
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH >> test'yo'"sticked" echo bonjour
+|  STATUS: expected 0 actual -11
+|# FILE testyosticked
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH [SETUP echo bonjour > test'yo'"sticked"] cat < test'yo'"sticked"
+|  STATUS: expected 0 actual -11
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH [SETUP echo bonjour > test'yo'"sticked"] < test'yo'"sticked" cat
+|  STATUS: expected 0 actual -11
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH echo > test > je bonjour > suis
+|# FILE je
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+
+|# FILE suis
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+$
+================================================================================
+
+|> WITH > test echo bonjour > je > suis
+|# FILE test
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+
+|# FILE suis
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH echo bonjour >> test > je >> suis
+|# FILE test
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+bonjour$
+
+|# FILE je
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+
+|# FILE suis
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+minishell: je: command not found$
+================================================================================
+
+|> WITH echo >> test bonjour > je > suis
+|# FILE test
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+
+|# FILE je
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+
+|# FILE suis
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+minishell: je: command not found$
+================================================================================
+
+|> WITH >> test echo > je bonjour > suis
+|# FILE test
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+
+|# FILE je
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+
+|# FILE suis
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+minishell: je: command not found$
+================================================================================
+
+|> WITH >test echo bonjour>je>suis
+|# FILE test
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+
+|# FILE suis
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH echo bonjour>>test>je>>suis
+|# FILE test
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+bonjour$
+
+|# FILE je
+|---------------------------------------EXPECTED--------------------------------
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+
+|# FILE suis
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+minishell: je: command not found$
+================================================================================
+
+|> WITH echo bonjour > a'b'c'd'e'f'g'h'i'j'k'l'm'n'o'p'q'r's't'u'v'w'x'y'z'
+|  STATUS: expected 0 actual -11
+|# FILE abcdefghijklmnopqrstuvwxyz
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH echo bonjour > a"b"c"d"e"f"g"h"i"j"k"l"m"n"o"p"q"r"s"t"u"v"w"x"y"z"
+|  STATUS: expected 0 actual -11
+|# FILE abcdefghijklmnopqrstuvwxyz
+|---------------------------------------EXPECTED--------------------------------
+bonjour$
+|---------------------------------------ACTUAL----------------------------------
+FROM TEST: File not created
+================================================================================
+
+|> WITH echo bonjour > a'b'c"d"e'f'g"h"i'j'k"l"m'n'o"p'q'r"s't'u"v"w"x"y'z'
+|  STATUS: expected 0 actual -11
+================================================================================
+
+|> WITH >
+|  STATUS: expected 2 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: syntax error near unexpected token `newline'$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH >>
+|  STATUS: expected 2 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: syntax error near unexpected token `newline'$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH <
+|  STATUS: expected 2 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: syntax error near unexpected token `newline'$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH echo >
+|  STATUS: expected 2 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: syntax error near unexpected token `newline'$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH echo >>
+|  STATUS: expected 2 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: syntax error near unexpected token `newline'$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH echo <
+|  STATUS: expected 2 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: syntax error near unexpected token `newline'$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH echo foo >>> bar
+|  STATUS: expected 2 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: syntax error near unexpected token `>'$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH echo foo >>>> bar
+|  STATUS: expected 2 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: syntax error near unexpected token `>>'$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH echo foo >>>>> bar
+|  STATUS: expected 2 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: syntax error near unexpected token `>>'$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH [SETUP echo bonjour > bar] cat << < bar
+|  STATUS: expected 2 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: syntax error near unexpected token `<'$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH [SETUP echo bonjour > bar] cat << << bar
+|  STATUS: expected 2 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: syntax error near unexpected token `<<'$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH [SETUP echo bonjour > bar] cat <<<<< bar
+|  STATUS: expected 2 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: syntax error near unexpected token `<<'$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH cat < doesnotexist
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: doesnotexist: No such file or directory$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH cat < doesntexist; echo $?
+|---------------------------------------EXPECTED--------------------------------
+minishell: doesntexist: No such file or directory$
+1$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH [SETUP echo bonjour > noperm; chmod 000 noperm] cat < noperm; echo $?
+|---------------------------------------EXPECTED--------------------------------
+minishell: noperm: Permission denied$
+1$
+|---------------------------------------ACTUAL----------------------------------
+Permission denied
+================================================================================
+
+|> WITH cat < doesntexist
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: doesntexist: No such file or directory$
+|---------------------------------------ACTUAL----------------------------------
+No such file or directory
+================================================================================
+
+|> WITH [SETUP echo bonjour > noperm; chmod 000 noperm] cat < noperm
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: noperm: Permission denied$
+|---------------------------------------ACTUAL----------------------------------
+Permission denied
+================================================================================
+
