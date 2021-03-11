@@ -76,6 +76,19 @@ int    check_prermission(char *string)
     return (0);
 }
 
+int     check_slash(char *s)
+{
+    int i;
+
+    i = 0;
+    while (s[i] != '\0')
+    {
+        if (s[i] == '/')
+            return (1);
+        i += 1;
+    }
+    return (0);
+}
 void	execut_command(char **env, char *str, int *check, int j, int *statut)
 {
 	char **splits;
@@ -128,9 +141,14 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
             i = 0;
             *check = 2;
             stat(splits[0], &stats);
+            if (check_slash(splits[0]) == 0 && S_ISDIR(stats.st_mode))
+            {
+                ft_printf("minishell: %s: command not found\n", splits[0]);
+                exit(127);
+            }
             if (S_ISDIR(stats.st_mode))
             {
-                ft_printf("minishell: %s: Is a directory\n", splits[0]);
+                ft_printf("minishell: %s: is a directory\n", splits[0]);
                 exit(126);
             }
             while (commands[i])
@@ -151,14 +169,24 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
            else
                 status = 127;*/
            execve(splits[0], splits, env);
-           if (errno == 8)
-               ft_printf("minishell: %s: Permission denied\n", splits[0]);
-           else
-               ft_printf("minishell: %s: %s\n", splits[0], strerror(errno));
-           if (errno == 2)
+           if (check_slash(splits[0]) == 0)
+           {
+               ft_printf("minishell: %s: command not found\n", without_that(splits[0], '\''));
                exit(127);
+           }
+           if (errno == 2)
+           {
+               ft_printf("minishell: %s: %s\n", splits[0], strerror(errno));
+               exit(127);
+           }
+           else if (((S_IRUSR & stats.st_mode) && (S_IXUSR & stats.st_mode))
+                || ((S_IRUSR & stats.st_mode) && (S_IXUSR & stats.st_mode) && (S_IWUSR & stats.st_mode)))
+                exit(0);
            else
+           {
+               ft_printf("minishell: %s: Permission denied\n", splits[0]);
                exit(126);
+           }
         }
         else
         {

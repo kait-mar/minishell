@@ -252,6 +252,22 @@ char	**take_only_carac(char *str)
 	k = 0;
 	while (str[i] != '\0')
 	{
+        if (check_double_quotes(str[i]))
+        {
+            j = i + 1;
+            while (check_double_quotes(str[j]) == 0)
+                j += 1;
+            splits[k++] = from_to(str, i, j + 1);
+            i = j;
+        }
+        if (check_single_quotes(str[i]))
+        {
+            j = i + 1;
+            while (check_single_quotes(str[j]) == 0)
+                j += 1;
+            splits[k++] = from_to(str, i, j + 1);
+            i = j;
+        }
 		if (ft_isprint(str[i]))
 		{
 			j = i;
@@ -260,22 +276,6 @@ char	**take_only_carac(char *str)
 				j += 1;
 			splits[k++] = from_to(str, i, j);
 			i = j;
-		}
-		if (check_double_quotes(str[i]))
-		{
-			j = i + 1;
-			while (check_double_quotes(str[j]) == 0)
-				j += 1;
-			splits[k++] = from_to(str, i, j + 1);
-		   i = j;	
-		}
-		if (check_single_quotes(str[i]))
-		{
-			j = i + 1;
-			while (check_single_quotes(str[j]) == 0)
-				j += 1;
-			splits[k++] = from_to(str, i, j + 1);
-		   i = j;	
 		}
 		if (str[i] != '\0')
 			i += 1;
