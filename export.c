@@ -27,6 +27,26 @@ int no_space(char *s)
 }
 
 
+int     check_shlvl(char *s)
+{
+    int i;
+    char *number;
+    long nmb;
+    unsigned long long nmbr;
+
+    i = 0;
+    number = only_after_equal(s);
+    nmb = ft_atoi(number);
+    if (nmb >= 709 && nmb < INT32_MAX)
+    {
+        ft_printf("minishell: warning: shell level (%d) too high, resetting to 1\n", nmb + 1);
+        return (1);
+    }
+    else if (nmb >= INT32_MAX || nmb < 0)
+        return (0);
+    return (nmb + 1);
+}
+
 int		check_quote(char *str)
 {
 	int i;
