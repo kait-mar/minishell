@@ -137,6 +137,26 @@ int    seach_for(char *s)
 }
 
 
+int   token_error(t_meta *head, int *status)
+{
+    t_meta *a_head;
+
+    a_head = head;
+    while (a_head != NULL)
+    {
+        if (ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|'))
+        {
+            ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
+            *status = 258;
+            return (1);
+        }
+        a_head = a_head->next;
+    }
+    return (0);
+}
+
+
+
 /*echo "\\""                                                                                                                           [FAIL]
 echo bonjour > "fi le"                                                                                                               [FAIL]
 echo bonjour > 'fi le'*/
@@ -182,6 +202,8 @@ int		main(int ac, char **av, char **env)
         while (head != NULL)
         {
             head->argument = chang_dollar_sign(head->argument, env);
+            if (token_error(head, &status) == 1)
+                break ;
             if (head->meta == ';')
             {
                 tmp = semi_split(str);
