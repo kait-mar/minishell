@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: molabhai <molabhai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 18:18:33 by molabhai          #+#    #+#             */
-/*   Updated: 2021/02/02 10:35:40 by kait-mar         ###   ########.fr       */
+/*   Updated: 2021/03/10 15:28:59 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,31 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 	    if (ft_strcmp(meta->argument, "") != 0)
 	    {
             g_process = 1;
-            execut_command(env, meta->argument, &check, i);
+            execut_command(env, meta->argument, &check, i, status);
         }
-		if (check == 1)
+	   /* if (*status != 0)
+	        ft_printf("minishell: %s: %s\n", meta->argument, strerror(errno));*/
+/*	    if (*status == 126)
+            ft_printf("minishell: %s: Permission denied\n", meta->argument);
+	    if (*status == 127)
+            ft_printf("minishell: %s: command not found\n", meta->argument);*/
+	    /*if (check == 3)
+        {
+            ft_printf("minishell: %s: Permission denied\n", meta->argument);
+            g_process = 0;
+            *status = 126;
+        }
+		else if (check == 1)
 		{
 			ft_printf("minishell: %s: command not found\n", meta->argument);
 			g_process = 0;
 			*status = 127;
 		}
+		else if (check == 4)
+        {
+		    g_process = 0;
+		    *status = 127;
+        }*/
 	}
     if (meta->command == 7)
         exit_command(*status, meta->argument);
@@ -120,6 +137,27 @@ int    seach_for(char *s)
 }
 
 
+int   token_error(t_meta *head, int *status)
+{
+    t_meta *a_head;
+
+    a_head = head;
+    while (a_head != NULL)
+    {
+        if (ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|')
+        && a_head->command != 2)
+        {
+            ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
+            *status = 258;
+            return (1);
+        }
+        a_head = a_head->next;
+    }
+    return (0);
+}
+
+
+
 /*echo "\\""                                                                                                                           [FAIL]
 echo bonjour > "fi le"                                                                                                               [FAIL]
 echo bonjour > 'fi le'*/
@@ -152,8 +190,8 @@ int		main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[1])
-			str = ft_strdup(av[1]);
+        if (av[2])
+			str = ft_strdup(av[2]);
 		else
 		{
 			prompt(g_in_signal);
@@ -165,6 +203,8 @@ int		main(int ac, char **av, char **env)
         while (head != NULL)
         {
             head->argument = chang_dollar_sign(head->argument, env);
+            if (token_error(head, &status) == 1)
+                break ;
             if (head->meta == ';')
             {
                 tmp = semi_split(str);
@@ -177,14 +217,14 @@ int		main(int ac, char **av, char **env)
                 head = append_file(head, str, env, &status);
             else if (head->meta == '>')
                 head = redirect_output(head, str, env, &status);
-			 else if (head->meta == '<')
+            else if (head->meta == '<')
                 head = redirect_intput(head, str, env, &status);
             else if (head->meta == '\0')
                 built_in(head, str, env, &status, 0);
             if (head != NULL)
                 head = head->next;
         }
-        if (av[1])
+        if (av[2])
             exit(status);
         on = 0;
         g_first_time = 1;
@@ -192,7 +232,6 @@ int		main(int ac, char **av, char **env)
 	}
 	return(status);
 }
-
 
 /*
 int			main()
@@ -205,15 +244,11 @@ int			main()
 	t_semi  *semi;
 	int     on;
 
-
 	char **av;
 	char **env;
 	env = malloc(2*sizeof(char *));
 	*env = "A=\\hel\\\\\\oo\\";
 	env[1] = NULL;
-
-
-
 
 	status = 0;
 	g_on = 0;

@@ -288,7 +288,10 @@ void   env_init(char **env)
         if (match("PWD", env[i]) == 1)
             pwd = 1;
         else if (match("SHLVL", env[i]) == 1)
+        {
+            env[i] = append("SHLVL=", ft_itoa(check_shlvl(env[i])));
             shlvl = 1;
+        }
         else if ((match("_", env[i]) == 1))
             start = 1;
         i += 1;

@@ -1,7 +1,6 @@
 
 
-Issue to fix :
-
-    - Check Signals
-    - Echo Merging
-    
+Issue to fix : 
+    -ChangiNG Path
+    - Expansion
+t

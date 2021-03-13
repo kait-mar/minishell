@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "Libft/libft.h"
 
 
@@ -172,6 +173,7 @@ int	echo_strcmp(const char *s1, const char *s2)
 
 int main()
 {
+    struct  stat stats;
 /*
     t_pipe *nmbr;
     t_pipe *head;
@@ -202,11 +204,13 @@ int main()
         head = head->next;
     }
    printf("End of process\n");*/
-char *argv[] = {"/bin/ls", "-l", NULL};
-    execve("/bin/ls", argv, NULL);
-    char *s = "echo";
-	char *s2 = "\" echo\"";
-
-	printf("it's %d\n", echo_strcmp(s2, s));
-    return 0;
+    /*if (stat("/Users/molabhai/Desktop/minishell/a.out", &stats) == -1)
+        ft_printf("error ==> %s\n", strerror(errno));*/
+    if (stat("c.c", &stats) == -1)
+        printf("FALSe");
+    else if (stats.st_mode & S_IFDIR)
+            printf("Yes is directory");
+    else
+        printf("Nada\n");
+    return (0);
 }

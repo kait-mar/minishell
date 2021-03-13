@@ -15,7 +15,7 @@
 t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
 {
     int fd;
-    char *output_from;
+    //char *output_from;
     char *output_to;
     pid_t pid;
     t_meta *head;
@@ -23,13 +23,15 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
 
     head = meta;
     i = 0;
-    output_from = ft_strdup(head->argument);
+    //output_from = ft_strdup(head->argument);
     while (head->meta_append != 0)
     {
         head = head->next;
         i += 1;
-        output_to = head->argument;
+     //   output_to = head->argument;
         output_to = ft_strtrim(head->argument, " ");
+        output_to = chang_dollar_sign(output_to, env);
+        output_to = without_that(output_to, '\"');
         if ((fd = open(output_to, O_CREAT | O_APPEND | O_RDWR, S_IRWXU)) == -1)
         {
             ft_printf("%s", strerror(errno));

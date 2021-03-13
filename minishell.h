@@ -23,6 +23,8 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <dirent.h>
+#include <unistd.h>
+#include <sys/stat.h>
 #include "./Libft/libft.h"
 
 typedef struct s_command_cd
@@ -166,7 +168,7 @@ int		in_match(char *s1, char *s2);
 t_env	*delete_list(t_env *env, int count);
 t_env	*delete_in_env(t_env *env, char **splits);
 char	**copy_all(t_env *take_env, char **env);
-void	execut_command(char **env, char *str, int *check, int i);
+void	execut_command(char **env, char *str, int *check, int i, int *status);
 char	**take_it_all(char *s, int c);
 char	*from_to(char *st, int i, int j);
 int		find_how_many(char *s, char c);
@@ -209,5 +211,6 @@ int		how_many_escape(char *bult);
 int		find_dollar_esacpe(char *bult, char c);
 int		find_without(char *bult, char c);
 char	*trim_once(char *s1);
+int     check_shlvl(char *s);
 
 #endif
