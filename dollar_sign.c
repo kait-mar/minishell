@@ -13,6 +13,9 @@
 #include "minishell.h"
 
 
+
+
+
 int     dollar_len(char *str, int i)
 {
     int count;
@@ -173,7 +176,10 @@ char    *chang_dollar(char *s, char **env, int *on)
         string =ft_strdup(s);
     }
     if (*on == 0)
-        string = ft_strdup(s);
+    {
+        string = ft_strdup("");
+
+    }
     return (string);
 }
 
@@ -303,8 +309,8 @@ char    *chang_dollar_sign(char *str, char **env)
             if (valid == 1)
             {
                 s = chang_dollar(s, env, &on);
-                if (on == 1)
-                    str = realloc_input(str, s, j, j + i, i);
+               // if (on == 1)
+               str = realloc_input(str, s, j, j + i, i);
             }
             //i = j;
         }
