@@ -209,7 +209,7 @@ int			main()
 	char **av;
 	char **env;
 	env = malloc(2*sizeof(char *));
-	*env = "PATH=user/bin";
+	*env = "A=\\hel\\\\\\oo\\";
 	env[1] = NULL;
 
 
@@ -237,7 +237,7 @@ int			main()
 	//	{
 			prompt(g_in_signal);
 			//str = reading_input();
-			str = "echo \"AH\\\"\"";
+			str = "echo $A";
 		//}
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
