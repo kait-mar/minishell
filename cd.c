@@ -119,14 +119,35 @@ int     find_pwd(char *s)
 void    old_pwd(char **env)
 {
     char *old_pwd;
+    char *take_it;
     int i;
+    int j;
     int k;
 
     i = 0;
     k = 0;
-    if (getcwd(g_old_pwd, 100) == NULL)
-        ft_printf("%s\n", strerror(errno));
-    old_pwd = add_in("OLDPWD=", g_old_pwd);
+    j = 0;
+    while (env[j])
+    {
+        if (find_pwd(env[j]) == 1)
+        {
+            take_it = only_after_equal(ft_strdup(env[j]));
+            i = 1;
+            break ;
+        }
+        j += 1;
+    }
+    if (i == 0 && g_pwd_on == 0)
+    {
+        if (getcwd(g_old_pwd, 100) == NULL)
+            ft_printf("%s\n", strerror(errno));
+        old_pwd = add_in("OLDPWD=", g_old_pwd);
+    }
+    else if (i == 1)
+        old_pwd = add_in("OLDPWD=", take_it);
+    else
+        old_pwd = add_in("OLDPWD=", "");
+    g_oldpwd_only = ft_strdup(add_in("OLDPWD=", g_old_pwd));
     while (env[i])
     {
         if (find_old_pwd(env[i]) == 1)
@@ -154,6 +175,7 @@ void    new_pwd(char **env, char *str)
     i = 0;
     k = 0;
     old_pwd = add_in("PWD=", str);
+    g_pwd_only = ft_strdup(old_pwd);
     while (env[i])
     {
         if (find_pwd(env[i]) == 1)
@@ -164,7 +186,7 @@ void    new_pwd(char **env, char *str)
         }
         i += 1;
     }
-    if (env[i] == NULL && k == 0)
+    if (env[i] == NULL && k == 0 && g_pwd_on == 0)
     {
         env[i] = ft_strdup(old_pwd);
         env[i + 1] = NULL;
@@ -336,5 +358,6 @@ void 	cd_command(char *argument, int *status, char **env)
 	if (getcwd(str, 100) == NULL)
 	    ft_printf("%s\n", strerror(errno));
 	new_pwd(env, str);
+	g_pwd_on = 0;
     first_time = 1;
 }

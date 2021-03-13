@@ -286,7 +286,10 @@ void   env_init(char **env)
     while (env[i])
     {
         if (match("PWD", env[i]) == 1)
+        {
+            g_pwd_only = ft_strdup(env[i]);
             pwd = 1;
+        }
         else if (match("SHLVL", env[i]) == 1)
         {
             env[i] = append("SHLVL=", ft_itoa(check_shlvl(env[i])));
@@ -301,6 +304,7 @@ void   env_init(char **env)
         getcwd(s, 100);
         string = append("PWD=", s);
         env[i] = ft_strdup(string);
+        g_pwd_only = ft_strdup(env[i]);
         free(string);
         string = NULL;
         i += 1;

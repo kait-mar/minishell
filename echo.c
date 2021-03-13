@@ -167,6 +167,7 @@ int	echo(char *argv, char **env, int *status)
 	if (ft_strcmp(argv, "") == 0)
 	{
         my_putchar('\n');
+        *status = 0;
 		return (0);
 	}
 	argv = ft_strtrim(argv, " ");

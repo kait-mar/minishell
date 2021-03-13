@@ -119,6 +119,10 @@ int     g_in_line;
 char    *g_old_pwd;
 int     g_check_single_quote;
 int     g_check_double_quote;
+char    *g_pwd_only;
+char    *g_oldpwd_only;
+int     g_pwd_on;
+int     g_oldpwd_on;
 
 void	cd_command(char *argument, int *status, char **env);
 char	**taking_command(char *str);

@@ -145,7 +145,7 @@ int   token_error(t_meta *head, int *status)
     while (a_head != NULL)
     {
         if (ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|')
-        && a_head->command != 2)
+        && a_head->command == 0)
         {
             ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
             *status = 258;
@@ -179,6 +179,7 @@ int		main(int ac, char **av, char **env)
 	g_in_line = 0;
 	g_check_single_quote = 0;
     g_check_double_quote = 0;
+    g_pwd_on = 0;
 	on = 0;
 	head = NULL;
 	str = NULL;
