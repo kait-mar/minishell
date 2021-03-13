@@ -27,8 +27,10 @@ char	*without_that(char *str, char c)
 	j = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == c)
+		if (str[i] == c && str[i - 1] != '\\')
 			i += 1;
+		else if (str[i] == '\\' && str[i + 1] == '\"')
+		    i += 1;
 		else
 		{
 			s[j] = str[i];

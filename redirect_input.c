@@ -22,6 +22,7 @@ t_meta	*redirect_intput(t_meta *meta, char *str, char **env, int *status)
 	while (temp->next != NULL && temp->meta == '<')
 	{
 		temp = temp->next;
+        temp->argument = chang_dollar_sign(temp->argument, env);
 		if ((fd = open(temp->argument, O_RDWR, S_IRWXU)) < 0)
 		{
 			ft_putstr(strerror(errno));

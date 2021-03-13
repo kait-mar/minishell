@@ -22,6 +22,8 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
 	while (temp->next != NULL && temp->meta == '>')
 	{
 		temp = temp->next;
+		temp->argument = chang_dollar_sign(temp->argument, env);
+		temp->argument = without_that(temp->argument, '\"');
 		if ((fd = open(temp->argument,  O_RDWR | O_CREAT | O_TRUNC, S_IRWXU)) < 0)
 		{
 			ft_putstr(strerror(errno));
