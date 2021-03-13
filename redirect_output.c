@@ -15,15 +15,29 @@
 t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
 {
 	int		fd;
+	int     i;
 	int		pid;
+	char    **split;
 	t_meta	*temp;
 
 	temp = meta;
+	i = 1;
 	while (temp->next != NULL && temp->meta == '>')
 	{
 		temp = temp->next;
 		temp->argument = chang_dollar_sign(temp->argument, env);
 		temp->argument = without_that(temp->argument, '\"');
+		split = ft_split(temp->argument, ' ');
+		free(temp->argument);
+		temp->argument = NULL;
+		temp->argument = ft_strdup(split[0]);
+        while (split[i] != NULL)
+        {
+            split[i] = ft_strjoin(" ", split[i]);
+            meta->argument = ft_strjoin(meta->argument, split[i]);
+            i += 1;
+        }
+        i = 1;
 		if ((fd = open(temp->argument,  O_RDWR | O_CREAT | O_TRUNC, S_IRWXU)) < 0)
 		{
 			ft_putstr(strerror(errno));
