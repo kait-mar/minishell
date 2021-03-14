@@ -161,7 +161,7 @@ int   token_error(t_meta *head, int *status)
 /*echo "\\""                                                                                                                           [FAIL]
 echo bonjour > "fi le"                                                                                                               [FAIL]
 echo bonjour > 'fi le'*/
-
+/*
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -235,9 +235,8 @@ int		main(int ac, char **av, char **env)
         g_in_signal = 0;
 	}
 	return(status);
-}
+} */
 
-/*
 int			main()
 {
 	char *str;
@@ -271,7 +270,7 @@ int			main()
 	{
         signal_handler(&status);
 			prompt(g_in_signal);
-			str = "echo bonjour >> \"fi6 le2\"";
+			str = "echo hi >> \"labhairi   mouaad\"";
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
 		head = meta;
@@ -304,4 +303,4 @@ int			main()
         g_in_signal = 0;
 	}
 	return(status);
-}*/
+}

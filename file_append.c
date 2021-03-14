@@ -12,6 +12,56 @@
 
 #include "minishell.h"
 
+int     count_file(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i] != '\0' && str[i] != ' ')
+    {
+        if (str[i] == '"')
+        {
+            while (str[i] != '\0' && str[i] != '"')
+                i++;
+        }
+        else if (str[i] == '\'')
+        {
+            while (str[i] !=  '\0' && str[i] != '\'')
+                i++;
+        }
+       i++;
+    }
+    return (i);
+}
+
+char    *file_name(char *str)
+{
+    char *name;
+    int  i;
+    int    j;
+
+    i = 0;
+    j = 0;
+    name = ft_calloc(1, count_file(str));
+    while (str[i] != '\0' && str[i] != ' ')
+    {
+        if (str[i] == '"')
+        {
+            name[j++] = str[i++];
+            while (str[i] != '\0' && str[i] != '"')
+                name[j++] = str[i++];
+        }
+        else if (str[i] == '\'')
+        {
+            name[j++] = str[i++];
+            while (str[i] !=  '\0' && str[i] != '\'')
+                name[j++] = str[i++];
+        }
+        name[j++] = str[i++];
+    }
+    return (name);
+}
+
 t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
 {
     int fd;
@@ -32,8 +82,12 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
      //   output_to = head->argument;
         output_to = ft_strtrim(head->argument, " ");
         output_to = chang_dollar_sign(output_to, env);
-        output_to = without_that(output_to, '\"');
-        split = ft_split(output_to, ' ');
+        output_to = file_name(output_to);
+        if (*output_to == '\'')
+            output_to = ft_strtrim(output_to, "'");
+        else if (*output_to == '"')
+            output_to = ft_strtrim(output_to, "\"");
+       /* split = ft_split(output_to, ' ');
         free(output_to);
         output_to = NULL;
         output_to = ft_strdup(split[0]);
@@ -42,7 +96,7 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
             split[i] = ft_strjoin(" ", split[i]);
             output_to = ft_strjoin(output_to, split[i]);
             i += 1;
-        }
+        }*/
         i = 1;
         if ((fd = open(output_to, O_CREAT | O_APPEND | O_RDWR, S_IRWXU)) == -1)
         {
