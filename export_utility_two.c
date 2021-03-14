@@ -247,11 +247,24 @@ char    *right_path(char **path)
             return (ft_strdup(path[i]));
         i += 1;
     }
-    return (NULL);
+    return (ft_strdup(""));
 }
 
-char    *findin_env(char **env)
+int     check_double_dot(char *s)
 {
+    int i;
+
+    i = 0;
+    while (s[i] != '\0')
+    {
+        if (s[i] == ':')
+            return (1);
+        i += 1;
+    }
+    return (0);
+}
+
+char    *findin_env(char **env) {
     int i;
     char *path;
     char **paths;
@@ -263,7 +276,15 @@ char    *findin_env(char **env)
             path = only_after_equal(env[i]);
         i += 1;
     }
-    paths = ft_split(path, ':');
+    if (check_double_dot(path) == 1)
+        paths = ft_split(path, ':');
+    else
+    {
+        if (!(paths = (char **) ft_calloc(sizeof (char), 2)))
+            return (NULL);
+        paths[0] = ft_strdup(path);
+        paths[1] = NULL;
+    }
     return (right_path(paths));
 }
 
@@ -286,7 +307,10 @@ void   env_init(char **env)
     while (env[i])
     {
         if (match("PWD", env[i]) == 1)
+        {
+            g_pwd_only = ft_strdup(env[i]);
             pwd = 1;
+        }
         else if (match("SHLVL", env[i]) == 1)
         {
             env[i] = append("SHLVL=", ft_itoa(check_shlvl(env[i])));
@@ -301,6 +325,7 @@ void   env_init(char **env)
         getcwd(s, 100);
         string = append("PWD=", s);
         env[i] = ft_strdup(string);
+        g_pwd_only = ft_strdup(env[i]);
         free(string);
         string = NULL;
         i += 1;

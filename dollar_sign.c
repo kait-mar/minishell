@@ -160,15 +160,36 @@ char    *chang_dollar(char *s, char **env, int *on)
 
     i = 0;
     ss = take_away_dollar(s);
-    while (env[i] != NULL && (check_backslash(s) == 0))
+    if (ft_strcmp(ss, "PWD") == 0 && g_pwd_on == 0)
     {
-        if (match(env[i], ss) == 1)
+        string = ft_strdup(g_pwd_only);
+        string = take_after_equal(string);
+        *on = 1;
+    }
+    if (ft_strcmp(ss, "OLDPWD") == 0 && g_oldpwd_on == 0)
+    {
+        if (g_check == 0)
+            string = ft_strdup("");
+        else
         {
-            string = ft_strdup(env[i]);
+            string = ft_strdup(g_oldpwd_only);
             string = take_after_equal(string);
             *on = 1;
         }
-        i += 1;
+    }
+    else
+    {
+        while (env[i] != NULL && (check_backslash(s) == 0))
+        {
+            if (match(env[i], ss) == 1)
+            {
+                string = ft_strdup(env[i]);
+                string = take_after_equal(string);
+                *on = 1;
+            }
+            i += 1;
+        }
+
     }
     if (check_backslash(s) == 1)
     {
@@ -288,6 +309,8 @@ char    *realloc_input(char *str, char *s, int len, int string_len, int i)
     return (string);
 }
 
+
+
 char    *chang_dollar_sign(char *str, char **env)
 {
     int i;
@@ -301,7 +324,7 @@ char    *chang_dollar_sign(char *str, char **env)
     on = 0;
     while (str[i] != '\0')
     {
-        if (str[i] == '$' || (str[i] == '\\' && str[i + 1] == '$'))
+        if ((str[i] == '$' && str[i + 1] != '?') || (str[i] == '\\' && str[i + 1] == '$'))
         {
             j = dollar_len(str, i);
             s = take_word(str, i, j + i);
