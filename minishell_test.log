@@ -1,13 +1,28 @@
 |> WITH echo $PWD; echo $OLDPWD; cd; echo $OLDPWD
 |---------------------------------------EXPECTED--------------------------------
-/Users/molabhai/.cache/minishell_test/sandbox$
+/Users/kait-mar/.cache/minishell_test/sandbox$
 $
 minishell: cd: HOME not set$
 $
 |---------------------------------------ACTUAL----------------------------------
-/Users/molabhai/.cache/minishell_test/sandbox$
+/Users/kait-mar/.cache/minishell_test/sandbox$
 $
-/Users/molabhai/.cache/minishell_test/sandbox$
+minishell: cd: /Users/molabhai: No such file or directory$
+$
+================================================================================
+
+|> WITH [EXPORTS HOME='/Users/kait-mar'] echo $PWD; echo $OLDPWD; cd; echo $PWD; echo $OLDPWD
+|---------------------------------------EXPECTED--------------------------------
+/Users/kait-mar/.cache/minishell_test/sandbox$
+$
+/Users/kait-mar$
+/Users/kait-mar/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+/Users/kait-mar/.cache/minishell_test/sandbox$
+$
+minishell: cd: /Users/molabhai: No such file or directory$
+/Users/kait-mar/.cache/minishell_test/sandbox$
+$
 ================================================================================
 
 |> WITH                         echo                     bonjour             je
@@ -112,44 +127,44 @@ bonjour -n -n
 |> WITH Env
 |---------------------------------------EXPECTED--------------------------------
 TERM=xterm-256color$
-PATH=/Users/molabhai/.cache/minishell_test/bin$
-PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+PATH=/Users/kait-mar/.cache/minishell_test/bin$
+PWD=/Users/kait-mar/.cache/minishell_test/sandbox$
 SHLVL=1$
-_=/Users/molabhai/.cache/minishell_test/bin/Env$
+_=/Users/kait-mar/.cache/minishell_test/bin/Env$
 |---------------------------------------ACTUAL----------------------------------
-PATH=/Users/molabhai/.cache/minishell_test/bin$
+PATH=/Users/kait-mar/.cache/minishell_test/bin$
 TERM=xterm-256color$
-PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+PWD=/Users/kait-mar/.cache/minishell_test/sandbox$
 SHLVL=1$
-_=/Users/molabhai/.cache/minishell_test/bin/env$
+_=/Users/kait-mar/.cache/minishell_test/bin/env$
 ================================================================================
 
 |> WITH enV
 |---------------------------------------EXPECTED--------------------------------
 TERM=xterm-256color$
-PATH=/Users/molabhai/.cache/minishell_test/bin$
-PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+PATH=/Users/kait-mar/.cache/minishell_test/bin$
+PWD=/Users/kait-mar/.cache/minishell_test/sandbox$
 SHLVL=1$
-_=/Users/molabhai/.cache/minishell_test/bin/enV$
+_=/Users/kait-mar/.cache/minishell_test/bin/enV$
 |---------------------------------------ACTUAL----------------------------------
-PATH=/Users/molabhai/.cache/minishell_test/bin$
+PATH=/Users/kait-mar/.cache/minishell_test/bin$
 TERM=xterm-256color$
-PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+PWD=/Users/kait-mar/.cache/minishell_test/sandbox$
 SHLVL=1$
-_=/Users/molabhai/.cache/minishell_test/bin/env$
+_=/Users/kait-mar/.cache/minishell_test/bin/env$
 ================================================================================
 
 |> WITH [EXPORTS PATH='/bin:/usr/bin'] Env
 |---------------------------------------EXPECTED--------------------------------
 TERM=xterm-256color$
 PATH=/bin:/usr/bin$
-PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+PWD=/Users/kait-mar/.cache/minishell_test/sandbox$
 SHLVL=1$
 _=/usr/bin/Env$
 |---------------------------------------ACTUAL----------------------------------
 PATH=/bin:/usr/bin$
 TERM=xterm-256color$
-PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+PWD=/Users/kait-mar/.cache/minishell_test/sandbox$
 SHLVL=1$
 _=/usr/bin/env$
 ================================================================================
@@ -158,13 +173,13 @@ _=/usr/bin/env$
 |---------------------------------------EXPECTED--------------------------------
 TERM=xterm-256color$
 PATH=/bin:/usr/bin$
-PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+PWD=/Users/kait-mar/.cache/minishell_test/sandbox$
 SHLVL=1$
 _=/usr/bin/enV$
 |---------------------------------------ACTUAL----------------------------------
 PATH=/bin:/usr/bin$
 TERM=xterm-256color$
-PWD=/Users/molabhai/.cache/minishell_test/sandbox$
+PWD=/Users/kait-mar/.cache/minishell_test/sandbox$
 SHLVL=1$
 _=/usr/bin/env$
 ================================================================================
@@ -317,7 +332,7 @@ minishell: export: `BONJOUR;JESUIS': not a valid identifier$
 |---------------------------------------EXPECTED--------------------------------
 minishell: Pwd: command not found$
 |---------------------------------------ACTUAL----------------------------------
-/Users/molabhai/.cache/minishell_test/sandbox$
+/Users/kait-mar/.cache/minishell_test/sandbox$
 ================================================================================
 
 |> WITH pwD
@@ -325,7 +340,7 @@ minishell: Pwd: command not found$
 |---------------------------------------EXPECTED--------------------------------
 minishell: pwD: command not found$
 |---------------------------------------ACTUAL----------------------------------
-/Users/molabhai/.cache/minishell_test/sandbox$
+/Users/kait-mar/.cache/minishell_test/sandbox$
 ================================================================================
 
 |> WITH [EXPORTS A='a'] unset 'A '; echo $A

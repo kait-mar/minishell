@@ -105,7 +105,7 @@ int		check_wich_command(char *str)
     int exept;
 
     exept = 0;
-	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[2]) == 0))
+	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[1]) == 0))
 		return (1);
 	if (check_pwd(str, &exept) == 0)
 		return (2);
@@ -194,8 +194,8 @@ int		main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[2])
-            str = ft_strdup(av[2]);
+        if (av[1])
+            str = ft_strdup(av[1]);
 		else
 		{
 			prompt(g_in_signal);
@@ -228,7 +228,7 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        if (av[2])
+        if (av[1])
             exit(status);
         on = 0;
         g_first_time = 1;
@@ -251,7 +251,7 @@ int			main()
 	char **av;
 	char **env;
 	env = malloc(2*sizeof(char *));
-	*env = "A=\\hel\\\\\\oo\\";
+	*env = "PATH=/user/bin";
 	env[1] = NULL;
 
 	status = 0;
@@ -265,19 +265,13 @@ int			main()
 	g_export = NULL;
     if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
         return -1;
-	filling_export(env);
+	//filling_export(env);
 	tmp = NULL;
 	while (TRUE)
 	{
         signal_handler(&status);
-       // if (av[1])
-		//	str = ft_strdup(av[1]);
-		//else
-	//	{
 			prompt(g_in_signal);
-			//str = reading_input();
-			str = "echo $A";
-		//}
+			str = "echo bonjour >> \"fi6 le2\"";
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
 		head = meta;
