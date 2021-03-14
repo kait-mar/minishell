@@ -34,7 +34,7 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
         while (split[i] != NULL)
         {
             split[i] = ft_strjoin(" ", split[i]);
-            meta->argument = ft_strjoin(meta->argument, split[i]);
+			temp->argument = ft_strjoin(temp->argument, split[i]);
             i += 1;
         }
         i = 1;
