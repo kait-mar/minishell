@@ -160,6 +160,11 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
                 if (execve(commands[i], splits, env) == -1)
                     i += 1;
             }
+            if (errno == 13)
+            {
+                ft_printf("minishell: %s: %s\n", commands[i - 1], strerror(errno));
+                exit(126);
+            }
            /* if (check_prermission(splits[0]) == -1)
                 status = 127;
            else if (check_prermission(splits[0]) == 0)

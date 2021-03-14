@@ -147,7 +147,7 @@ void    old_pwd(char **env)
         old_pwd = add_in("OLDPWD=", take_it);
     else
         old_pwd = add_in("OLDPWD=", "");
-    g_oldpwd_only = ft_strdup(add_in("OLDPWD=", g_old_pwd));
+    g_oldpwd_only = ft_strdup(old_pwd);
     while (env[i])
     {
         if (find_old_pwd(env[i]) == 1)
@@ -359,5 +359,6 @@ void 	cd_command(char *argument, int *status, char **env)
 	    ft_printf("%s\n", strerror(errno));
 	new_pwd(env, str);
 	g_pwd_on = 0;
+	g_check = 1;
     first_time = 1;
 }

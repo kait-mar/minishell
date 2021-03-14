@@ -180,19 +180,22 @@ int		main(int ac, char **av, char **env)
 	g_check_single_quote = 0;
     g_check_double_quote = 0;
     g_pwd_on = 0;
+    g_oldpwd_on = 0;
+    g_oldpwd_only = NULL;
+    g_check = 0;
 	on = 0;
 	head = NULL;
 	str = NULL;
 	g_export = NULL;
     if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
         return -1;
-	filling_export(env);
+    filling_export(env);
 	tmp = NULL;
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[1])
-			str = ft_strdup(av[1]);
+        if (av[2])
+            str = ft_strdup(av[2]);
 		else
 		{
 			prompt(g_in_signal);
@@ -225,7 +228,7 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        if (av[1])
+        if (av[2])
             exit(status);
         on = 0;
         g_first_time = 1;

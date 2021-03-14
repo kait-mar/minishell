@@ -166,11 +166,16 @@ char    *chang_dollar(char *s, char **env, int *on)
         string = take_after_equal(string);
         *on = 1;
     }
-    else if (ft_strcmp(ss, "OLDPWD") == 0 && g_oldpwd_on == 0)
+    if (ft_strcmp(ss, "OLDPWD") == 0 && g_oldpwd_on == 0)
     {
-        string = ft_strdup(g_oldpwd_only);
-        string = take_after_equal(string);
-        *on = 1;
+        if (g_check == 0)
+            string = ft_strdup("");
+        else
+        {
+            string = ft_strdup(g_oldpwd_only);
+            string = take_after_equal(string);
+            *on = 1;
+        }
     }
     else
     {

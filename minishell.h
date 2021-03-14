@@ -123,6 +123,7 @@ char    *g_pwd_only;
 char    *g_oldpwd_only;
 int     g_pwd_on;
 int     g_oldpwd_on;
+int     g_check;
 
 void	cd_command(char *argument, int *status, char **env);
 char	**taking_command(char *str);
