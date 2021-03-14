@@ -21,7 +21,6 @@ char	*only_after_equal(char *str)
 	i = 0;
 	j = 0;
 
-
 	while (str[i] != '=')
 		i += 1;
 	if (str[i] == '=')
