@@ -270,7 +270,7 @@ int			main()
 	{
         signal_handler(&status);
 			prompt(g_in_signal);
-			str = "echo hi >> \"labhairi   mouaad\"";
+			str = "echo hi >> \"kabhairi   mouaad\"";
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
 		head = meta;

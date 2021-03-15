@@ -71,7 +71,9 @@ char		*ft_strtrim(char const *s1, char const *set)
 	str = (char *)malloc(end - start + 2);
 	if (str == NULL)
 		return (NULL);
+	//ft_printf("before %c\n", s1[end - start + 1]);
 	ft_memcpy(str, s1 + start, end - start + 1);
+	//ft_printf("teh str is %c\n", str[end - start]);
 	str[end - start + 1] = '\0';
 	return (str);
 }

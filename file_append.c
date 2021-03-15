@@ -83,10 +83,11 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
         output_to = ft_strtrim(head->argument, " ");
         output_to = chang_dollar_sign(output_to, env);
         output_to = file_name(output_to);
+       // ft_printf("the outtput is %s\n", output_to);
         if (*output_to == '\'')
             output_to = ft_strtrim(output_to, "'");
         else if (*output_to == '"')
-            output_to = ft_strtrim(output_to, "\"");
+            output_to = ft_strtrim2(output_to, "\"");
        /* split = ft_split(output_to, ' ');
         free(output_to);
         output_to = NULL;
@@ -126,4 +127,4 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
         i -= 1;
     }
     return (meta);
-} 
+}
