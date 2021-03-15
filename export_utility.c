@@ -268,7 +268,7 @@ char	**take_only_carac(char *str)
             splits[k++] = from_to(str, i, j + 1);
             i = j;
         }
-		if (ft_isprint(str[i]))
+		if (ft_isprint(str[i]) && (str[i] != '\'' && str[i] != '"'))
 		{
 			j = i;
 			while (((ft_isprint(str[j]) == 1 ) || str[j] == '=') &&

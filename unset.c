@@ -66,7 +66,31 @@ t_env		*delete_list(t_env *env, int count)
 	return (env);
 }
 
-t_env		*delete_in_env(t_env *env, char **splits)
+int     inside_quote(char *s)
+{
+    int i;
+
+    i = 0;
+    while (s[i] != '\0')
+    {
+        if (s[i] == '\'')
+        {
+            i += 1;
+            if (s[i] == '\'')
+                return (1);
+            while (s[i] != '\'')
+            {
+                if (!ft_isalpha(s[i]) && s[i] != '\'')
+                    return (1);
+                i += 1;
+            }
+        }
+        i += 1;
+    }
+    return (0);
+}
+
+t_env		*delete_in_env(t_env *env, char **splits, int on, int *status)
 {
 	char	*s;
 	int		i;
@@ -96,7 +120,12 @@ t_env		*delete_in_env(t_env *env, char **splits)
 			count += 1;
 		}
 		if (check == 1)
-			env = delete_list(env, count);
+            env = delete_list(env, count);
+		else if (check == 0 && inside_quote(splits[i]) == 1 && on == 0)
+        {
+            ft_printf("minishell: unset: `%s': not a valid identifier\n", without_that(splits[i], '\''));
+            *status = 1;
+        }
 		check = 0;
 		count = 0;
 		tmp = env;
@@ -170,13 +199,15 @@ void	unset_command(char **env, char *str, int *status)
 	char		**splits;
 	int			i;
 
+	i = 0;
+	*status = 0;
 	take_env = filling_env(env);
 	splits = take_only_carac(str);
-	take_env = delete_in_env(take_env, splits);
+	take_env = delete_in_env(take_env, splits, i, status);
 	env = copy_all(take_env, env);
     take_env = filling_env(g_export->saver);
     splits = take_only_carac(str);
-    take_env = delete_in_env(take_env, splits);
+    i = 1;
+    take_env = delete_in_env(take_env, splits, i, status);
     g_export->saver = copy_all(take_env, g_export->saver);
-	*status = 0;
 }

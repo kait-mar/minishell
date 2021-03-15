@@ -192,14 +192,11 @@ char    *chang_dollar(char *s, char **env, int *on)
 
     }
     if (check_backslash(s) == 1)
-    {
-        *on = 1;
         string =ft_strdup(s);
-    }
     if (*on == 0)
     {
         string = ft_strdup("");
-
+        *on = 2;
     }
     return (string);
 }
@@ -337,11 +334,11 @@ char    *chang_dollar_sign(char *str, char **env)
             }
             //i = j;
         }
-        on = 0;
         if (str[i] == '\\' &&  str[i + 1] == '$')
             i += 2;
-        else
+        else if (on != 2)
             i += 1;
+        on = 0;
     }
     return (str);
 }

@@ -171,7 +171,7 @@ int		check_unset(char *str);
 char	*only_before_equal(char *str);
 int		in_match(char *s1, char *s2);
 t_env	*delete_list(t_env *env, int count);
-t_env	*delete_in_env(t_env *env, char **splits);
+t_env	*delete_in_env(t_env *env, char **splits, int i, int *status);
 char	**copy_all(t_env *take_env, char **env);
 void	execut_command(char **env, char *str, int *check, int i, int *status);
 char	**take_it_all(char *s, int c);
@@ -218,5 +218,6 @@ int		find_without(char *bult, char c);
 char	*trim_once(char *s1);
 int     check_shlvl(char *s);
 char    *remove_staring_quote(char *s);
+
 
 #endif
