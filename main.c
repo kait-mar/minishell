@@ -161,7 +161,9 @@ int   token_error(t_meta *head, int *status)
 /*echo "\\""                                                                                                                           [FAIL]
 echo bonjour > "fi le"                                                                                                               [FAIL]
 echo bonjour > 'fi le'*/
-/*
+
+
+
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -194,8 +196,8 @@ int		main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[1])
-            str = ft_strdup(av[1]);
+        if (av[2])
+            str = ft_strdup(av[2]);
 		else
 		{
 			prompt(g_in_signal);
@@ -228,15 +230,16 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        if (av[1])
+        if (av[2])
             exit(status);
         on = 0;
         g_first_time = 1;
         g_in_signal = 0;
 	}
 	return(status);
-} */
+}
 
+/*
 int			main()
 {
 	char *str;
@@ -269,8 +272,8 @@ int			main()
 	while (TRUE)
 	{
         signal_handler(&status);
-			prompt(g_in_signal);
-			str = "echo hi >> \"kabhairi   mouaad\"";
+			//prompt(g_in_signal);
+			str = "echo hi >> \"  labhairi mouaad\"";
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
 		head = meta;
@@ -296,11 +299,11 @@ int			main()
             if (head != NULL)
                 head = head->next;
         }
-        if (av[1])
+        if (av[2])
             exit(status);
         on = 0;
         g_first_time = 1;
         g_in_signal = 0;
 	}
 	return(status);
-}
+}*/

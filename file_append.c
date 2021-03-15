@@ -62,6 +62,49 @@ char    *file_name(char *str)
     return (name);
 }
 
+char    *remove_staring_quote(const char *s)
+{
+    int i;
+    char *str;
+    int    k;
+    int     j;
+
+    i = 0;
+    if (*s == '"')
+    {
+        while (s[i] == '"')
+            i++;
+    }
+    else if (*s == '\'')
+    {
+        while (s[i] == '\'')
+            i++;
+    }
+    j = ft_strlen(s) - (2 * i);
+    str = ft_calloc(j + 1, 1);
+    i = 0;
+    k = 0;
+    if (*s == '"')
+    {
+        while (s[i] == '"')
+            i++;
+    }
+    else if (*s == '\'')
+    {
+        while (s[i] == '\'')
+            i++;
+    }
+    //return (ft_substr(s, i, j));
+    while (--j >= 0)
+    {
+        str[k] = s[i];
+        k++;
+        i++;
+    }
+    str[k] = '\0';
+    return (str);
+}
+
 t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
 {
     int fd;
@@ -70,6 +113,7 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
     char *output_to;
     pid_t pid;
     t_meta *head;
+    char *new;
     int i;
 
     head = meta;
@@ -83,11 +127,13 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
         output_to = ft_strtrim(head->argument, " ");
         output_to = chang_dollar_sign(output_to, env);
         output_to = file_name(output_to);
-       // ft_printf("the outtput is %s\n", output_to);
-        if (*output_to == '\'')
+        /*if (*output_to == '\'')
             output_to = ft_strtrim(output_to, "'");
         else if (*output_to == '"')
-            output_to = ft_strtrim2(output_to, "\"");
+            output_to = ft_strtrim(output_to, "\"");*/
+        //ft_printf("Before output ==> %s\n", output_to);
+        new = remove_staring_quote((const char *)output_to);
+       // ft_printf("After output ==> %s\n", new);
        /* split = ft_split(output_to, ' ');
         free(output_to);
         output_to = NULL;
@@ -99,7 +145,7 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
             i += 1;
         }*/
         i = 1;
-        if ((fd = open(output_to, O_CREAT | O_APPEND | O_RDWR, S_IRWXU)) == -1)
+        if ((fd = open(new, O_CREAT | O_APPEND | O_RDWR, S_IRWXU)) == -1)
         {
             ft_printf("%s", strerror(errno));
             return (NULL);
