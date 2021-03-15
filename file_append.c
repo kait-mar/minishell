@@ -126,14 +126,15 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
      //   output_to = head->argument;
         output_to = ft_strtrim(head->argument, " ");
         output_to = chang_dollar_sign(output_to, env);
-        output_to = file_name(output_to);
+        new = file_name(output_to);
+        output_to = output_to + ft_strlen(new);
+        new = remove_staring_quote(new);
+        meta->argument = ft_strjoin(meta->argument, " ");
+        meta->argument = ft_strjoin(meta->argument, output_to);
         /*if (*output_to == '\'')
             output_to = ft_strtrim(output_to, "'");
         else if (*output_to == '"')
             output_to = ft_strtrim(output_to, "\"");*/
-        //ft_printf("Before output ==> %s\n", output_to);
-        new = remove_staring_quote((const char *)output_to);
-       // ft_printf("After output ==> %s\n", new);
        /* split = ft_split(output_to, ' ');
         free(output_to);
         output_to = NULL;

@@ -105,7 +105,7 @@ int		check_wich_command(char *str)
     int exept;
 
     exept = 0;
-	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[1]) == 0))
+	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[2]) == 0))
 		return (1);
 	if (check_pwd(str, &exept) == 0)
 		return (2);
@@ -157,13 +157,6 @@ int   token_error(t_meta *head, int *status)
 }
 
 
-
-/*echo "\\""                                                                                                                           [FAIL]
-echo bonjour > "fi le"                                                                                                               [FAIL]
-echo bonjour > 'fi le'*/
-
-
-
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -196,8 +189,8 @@ int		main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[2])
-            str = ft_strdup(av[2]);
+        if (av[1])
+            str = ft_strdup(av[1]);
 		else
 		{
 			prompt(g_in_signal);
@@ -230,7 +223,7 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        if (av[2])
+        if (av[1])
             exit(status);
         on = 0;
         g_first_time = 1;
@@ -238,7 +231,6 @@ int		main(int ac, char **av, char **env)
 	}
 	return(status);
 }
-
 /*
 int			main()
 {
@@ -273,7 +265,7 @@ int			main()
 	{
         signal_handler(&status);
 			//prompt(g_in_signal);
-			str = "echo hi >> \"  labhairi mouaad\"";
+			str = "echo hello > test1 bonjour";
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
 		head = meta;

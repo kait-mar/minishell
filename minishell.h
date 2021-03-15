@@ -219,5 +219,6 @@ char	*trim_once(char *s1);
 int     check_shlvl(char *s);
 char	*ft_strtrim2(char const *s, char const *set);
 char    *remove_staring_quote(const char *s);
+char    *file_name(char *str);
 
 #endif
