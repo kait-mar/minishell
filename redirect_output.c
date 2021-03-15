@@ -19,6 +19,7 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
 	int		pid;
 	char    **split;
 	t_meta	*temp;
+	char	*new;
 
 	temp = meta;
 	i = 1;
@@ -26,7 +27,7 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
 	{
 		temp = temp->next;
 		temp->argument = chang_dollar_sign(temp->argument, env);
-		temp->argument = without_that(temp->argument, '\"');
+		/*temp->argument = without_that(temp->argument, '\"');
 		split = ft_split(temp->argument, ' ');
 		free(temp->argument);
 		temp->argument = NULL;
@@ -34,11 +35,16 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
         while (split[i] != NULL)
         {
             split[i] = ft_strjoin(" ", split[i]);
-			temp->argument = ft_strjoin(temp->argument, split[i]);
+			meta->argument = ft_strjoin(meta->argument, split[i]);
             i += 1;
-        }
+        }*/
+		new = file_name(temp->argument);
+        temp->argument = temp->argument + ft_strlen(new);
+        new = remove_staring_quote(new);
+        meta->argument = ft_strjoin(meta->argument, " ");
+        meta->argument = ft_strjoin(meta->argument, temp->argument);
         i = 1;
-		if ((fd = open(temp->argument,  O_RDWR | O_CREAT | O_TRUNC, S_IRWXU)) < 0)
+		if ((fd = open(new,  O_RDWR | O_CREAT | O_TRUNC, S_IRWXU)) < 0)
 		{
 			ft_putstr(strerror(errno));
 			return (NULL);

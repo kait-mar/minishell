@@ -62,7 +62,7 @@ char    *file_name(char *str)
     return (name);
 }
 
-char    *remove_staring_quote(char *s)
+char    *remove_staring_quote(const char *s)
 {
     int i;
     char *str;
@@ -81,7 +81,7 @@ char    *remove_staring_quote(char *s)
             i++;
     }
     j = ft_strlen(s) - (2 * i);
-    str = malloc(j + 1);
+    str = ft_calloc(j + 1, 1);
     i = 0;
     k = 0;
     if (*s == '"')
@@ -94,9 +94,12 @@ char    *remove_staring_quote(char *s)
         while (s[i] == '\'')
             i++;
     }
+    //return (ft_substr(s, i, j));
     while (--j >= 0)
     {
-        str[k++] = s[i++];
+        str[k] = s[i];
+        k++;
+        i++;
     }
     str[k] = '\0';
     return (str);
@@ -123,12 +126,15 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
      //   output_to = head->argument;
         output_to = ft_strtrim(head->argument, " ");
         output_to = chang_dollar_sign(output_to, env);
-        output_to = file_name(output_to);
+        new = file_name(output_to);
+        output_to = output_to + ft_strlen(new);
+        new = remove_staring_quote(new);
+        meta->argument = ft_strjoin(meta->argument, " ");
+        meta->argument = ft_strjoin(meta->argument, output_to);
         /*if (*output_to == '\'')
             output_to = ft_strtrim(output_to, "'");
         else if (*output_to == '"')
             output_to = ft_strtrim(output_to, "\"");*/
-        new = remove_staring_quote(output_to);
        /* split = ft_split(output_to, ' ');
         free(output_to);
         output_to = NULL;
@@ -168,4 +174,4 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
         i -= 1;
     }
     return (meta);
-} 
+}
