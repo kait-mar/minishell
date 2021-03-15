@@ -161,7 +161,7 @@ char	*from_to(char *str, int i, int j)
 	char *s;
 	int k;
 
-	if (!(s = (char *) malloc(sizeof(char) * (j - i) + 1)))
+	if (!(s = (char *) ft_calloc(sizeof(char) , (j - i) + 1)))
 		return (NULL);
 	k = 0;
 	while (i < j)

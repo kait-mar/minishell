@@ -122,10 +122,13 @@ char	**splits_by_meta(char *str, int *meta)
 	j = 0;
 	k = 0;
 	len = 0;
+    //return here to fix leak 
+    // ma7mlthache.
 	splits = (char **) ft_calloc(sizeof(char *) , 1000);
 	if (str == NULL)
 	{
-		splits[k++] = ft_strdup(" ");
+        //why filling splits instead of returning NULL directly ?
+		//splits[k++] = ft_strdup(" ");
 		return (NULL);
 	}
 	while (str[i] != '\0')
@@ -182,6 +185,7 @@ char	**splits_by_meta(char *str, int *meta)
 			i += 1;
 	}
 	splits[k++] = from_to(str, j, i);
+    splits[k] = NULL;
 	return (splits);
 }
 
@@ -333,6 +337,7 @@ t_meta	*split_it_all(char *str)
 	}
 	global->next = NULL;
 	i += 1;
+ 
 	while (splits[i])
 	{
         if (check_wich_command(splits[i]) == 4)
@@ -353,8 +358,12 @@ t_meta	*split_it_all(char *str)
             s = ft_substr(splits[i], 0, until_meta(splits[i]));
 		if (!(temp = (t_meta *) malloc(sizeof(t_meta))))
 			return (NULL);
+        ft_printf("Before\n");
+        ft_printf("splits[i] == > %s\n",splits[i]);
+        ft_printf("take_first ==> %s\n", take_first_word(splits[i]));
 		temp->command = check_wich_command(take_first_word(splits[i]));
-		s = ft_substr(splits[i], 0 , until_meta(splits[i]));
+        ft_printf("After\n");
+        s = ft_substr(splits[i], 0 , until_meta(splits[i]));
         if (backslash_on(s) == 1)
             s = removing_backslash(s);
 		if (check_meta(s) == TRUE &&  backslash_on(splits[i]) == 0)

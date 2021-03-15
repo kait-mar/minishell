@@ -23,6 +23,7 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
 
 	temp = meta;
 	i = 1;
+	ft_printf("Here\n");
 	while (temp->next != NULL && temp->meta == '>')
 	{
 		temp = temp->next;
@@ -40,7 +41,8 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
         }*/
 		new = file_name(temp->argument);
         temp->argument = temp->argument + ft_strlen(new);
-        new = remove_staring_quote(new);
+        //new = remove_staring_quote(new);
+		new = final_file_name(new);
         meta->argument = ft_strjoin(meta->argument, " ");
         meta->argument = ft_strjoin(meta->argument, temp->argument);
         i = 1;
@@ -75,4 +77,28 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
 		close(fd);
 	}
 	return (temp);
+}
+
+char	*final_file_name(char *file)
+{
+	char	*new;
+	int		i;
+	int		len;
+	char	**split;
+
+	split = keep_split(file, 39, 34);
+	i = 0;
+	while (split[i] != NULL)
+	{
+		if (*(split[i]) == '\'')
+			split[i] = ft_strtrim(split[i], "'");
+		else if (*(split[i]) == '"')
+			split[i] = ft_strtrim(split[i], "\"");
+		i++;
+	}
+	i = 1;
+	new = ft_strdup(split[0]);
+	while (split[i])
+		new = ft_strjoin(new, split[i++]);
+	return (new);
 }
