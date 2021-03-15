@@ -128,9 +128,7 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
             output_to = ft_strtrim(output_to, "'");
         else if (*output_to == '"')
             output_to = ft_strtrim(output_to, "\"");*/
-        ft_printf("Before output ==> %s\n", output_to);
         new = remove_staring_quote(output_to);
-        ft_printf("After output ==> %s\n", new);
        /* split = ft_split(output_to, ' ');
         free(output_to);
         output_to = NULL;

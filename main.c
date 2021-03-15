@@ -105,7 +105,7 @@ int		check_wich_command(char *str)
     int exept;
 
     exept = 0;
-	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[1]) == 0))
+	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[2]) == 0))
 		return (1);
 	if (check_pwd(str, &exept) == 0)
 		return (2);
@@ -161,7 +161,7 @@ int   token_error(t_meta *head, int *status)
 /*echo "\\""                                                                                                                           [FAIL]
 echo bonjour > "fi le"                                                                                                               [FAIL]
 echo bonjour > 'fi le'*/
-/*
+
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -235,8 +235,9 @@ int		main(int ac, char **av, char **env)
         g_in_signal = 0;
 	}
 	return(status);
-} */
+}
 
+/*
 int			main()
 {
 	char *str;
@@ -303,4 +304,4 @@ int			main()
         g_in_signal = 0;
 	}
 	return(status);
-}
+}*/

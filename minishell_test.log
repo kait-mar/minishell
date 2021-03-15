@@ -1,0 +1,155 @@
+|> WITH [EXPORTS A='a'] unset 'A '; echo $A
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `A ': not a valid identifier$
+a$
+|---------------------------------------ACTUAL----------------------------------
+a$
+================================================================================
+
+|> WITH [EXPORTS A='a'] unset 'A='; echo $A
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `A=': not a valid identifier$
+a$
+|---------------------------------------ACTUAL----------------------------------
+a$
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `asdf ': not a valid identifier$
+minishell: unset: ` asdf asdf asd f': not a valid identifier$
+minishell: unset: ` asdf ': not a valid identifier$
+minishell: unset: `': not a valid identifier$
+minishell: unset: `asdf ': not a valid identifier$
+$
+|---------------------------------------ACTUAL----------------------------------
+$
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `asdf ': not a valid identifier$
+minishell: unset: ` asdf asdf asd f': not a valid identifier$
+minishell: unset: ` asdf ': not a valid identifier$
+minishell: unset: `': not a valid identifier$
+minishell: unset: `asdf ': not a valid identifier$
+a$
+|---------------------------------------ACTUAL----------------------------------
+a$
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf '; echo $A$B$C
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `asdf ': not a valid identifier$
+minishell: unset: ` asdf asdf asd f': not a valid identifier$
+minishell: unset: ` asdf ': not a valid identifier$
+minishell: unset: `': not a valid identifier$
+minishell: unset: `asdf ': not a valid identifier$
+c$
+|---------------------------------------ACTUAL----------------------------------
+$
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset A; echo $A$B$C
+|---------------------------------------EXPECTED--------------------------------
+bc$
+|---------------------------------------ACTUAL----------------------------------
+$
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `asdf ': not a valid identifier$
+minishell: unset: ` asdf asdf asd f': not a valid identifier$
+minishell: unset: ` asdf ': not a valid identifier$
+minishell: unset: `': not a valid identifier$
+minishell: unset: `asdf ': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `asdf ': not a valid identifier$
+minishell: unset: ` asdf asdf asd f': not a valid identifier$
+minishell: unset: ` asdf ': not a valid identifier$
+minishell: unset: `': not a valid identifier$
+minishell: unset: `asdf ': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf '
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `asdf ': not a valid identifier$
+minishell: unset: ` asdf asdf asd f': not a valid identifier$
+minishell: unset: ` asdf ': not a valid identifier$
+minishell: unset: `': not a valid identifier$
+minishell: unset: `asdf ': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH@'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH@=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset "AH'"=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH'=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH"'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH"=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH$'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH$=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH!'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH!=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH|'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH|=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH;'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH;=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH&'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH&=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
+|> WITH unset 'AH\'=nop
+|  STATUS: expected 1 actual 0
+|---------------------------------------EXPECTED--------------------------------
+minishell: unset: `AH\=nop': not a valid identifier$
+|---------------------------------------ACTUAL----------------------------------
+================================================================================
+
