@@ -32,7 +32,8 @@ int     dollar_len(char *str, int i)
     else
         j = i + 1;
     while (str[j] != '\0' && str[j] != '$' && str[j] != '\\' && str[j] != ' '
-           && str[j] != '>' &&  str[j] != '<' &&  str[j] != ';' && str[j] != '\t')
+           && str[j] != '>' &&  str[j] != '<' &&  str[j] != ';' && str[j] != '\t'
+           && str[j] != '\'' && str[j] != '"' && str[j] != '|')
     {
         count += 1;
         j += 1;

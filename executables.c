@@ -98,8 +98,10 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
 	int     fd;
 	int status;
     struct stat stats;
+    int on;
 
 	i = 0;
+	on = 0;
 	if (j == 1)
     {
         splits = take_only_carac(str);
@@ -130,9 +132,16 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
             splits = take_only_carac(str);
             while (env[i])
             {
-                if (in_match(only_before_equal(env[i]), "PATH") == 1)
+                if (in_match(only_before_equal(env[i]), "PATH") == 1) {
                     path = only_after_equal(env[i]);
+                    on = 1;
+                }
                 i += 1;
+            }
+            if (on == 0)
+            {
+                ft_printf("minishell: %s: No such file or directory\n", splits[0]);
+                exit(127);
             }
             commands = ft_split(path, ':');
             free(path);
@@ -150,6 +159,11 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
                 ft_printf("minishell: %s: is a directory\n", splits[0]);
                 exit(126);
             }
+            if (commands[i] == NULL)
+            {
+                ft_printf("minishell: %s: No such file or directory\n",splits[0]);
+                exit(127);
+            }
             while (commands[i])
             {
                 if (check_for_bin(splits[0]) == 0)
@@ -164,14 +178,6 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
                 ft_printf("minishell: %s: %s\n", commands[i - 1], strerror(errno));
                 exit(126);
             }
-           /* if (check_prermission(splits[0]) == -1)
-                status = 127;
-           else if (check_prermission(splits[0]) == 0)
-                status = 126;
-           else  if (check_prermission(splits[0]) == 1)
-                execve(splits[0], splits, env);
-           else
-                status = 127;*/
            execve(splits[0], splits, env);
            if (check_slash(splits[0]) == 0)
            {
