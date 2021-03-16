@@ -188,8 +188,8 @@ int		main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[2])
-            str = ft_strdup(av[2]);
+        if (av[1])
+            str = ft_strdup(av[1]);
 		else
 		{
 			prompt(g_in_signal);
@@ -222,7 +222,7 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        if (av[2])
+        if (av[1])
             exit(status);
         on = 0;
         g_first_time = 1;
@@ -290,7 +290,7 @@ int			main()
             if (head != NULL)
                 head = head->next;
         }
-        if (av[2])
+        if (av[1])
             exit(status);
         on = 0;
         g_first_time = 1;
