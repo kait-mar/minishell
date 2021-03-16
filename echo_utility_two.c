@@ -24,7 +24,7 @@ char	*take_first_word(char *s)
 	j = 0;
 	if (s == NULL)
         return NULL;
-	ft_printf("the s is [%s]\n", s);
+	//ft_printf("the s is [%s]\n", s);
 	while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"') && s[i])
 		i++;
 	if (!(string = malloc(i + 1)))
@@ -35,7 +35,7 @@ char	*take_first_word(char *s)
 	while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"') && s[i])
 		string[j++] = s[i++];
 	string[j] = '\0';
-	ft_printf("the str is [%s]\n", string);
+	//ft_printf("the str is [%s]\n", string);
 	return (string);
 }
 

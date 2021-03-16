@@ -23,7 +23,7 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
 
 	temp = meta;
 	i = 1;
-	ft_printf("Here\n");
+	//ft_printf("Here\n");
 	while (temp->next != NULL && temp->meta == '>')
 	{
 		temp = temp->next;

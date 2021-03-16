@@ -22,17 +22,13 @@ char 	*ft_toStrLower(char *str)
 	i = 0;
 	if (!(s = (char *) malloc(sizeof(char) * ft_strlen(str) + 1)))
 		return (NULL);
-	ft_printf("--------------Enters------------\n");
-	ft_printf("str ==> [%s]\n", str);
 	while (str[i] != '\0')
 	{
 		if (str[i] >= 'A' &&  str[i] <= 'Z')
 			s[i] = (str[i] + 32);
 		else
 			s[i] = str[i];
-		ft_printf("teh c is %c\n", str[i]);
 		i += 1;
-
 	}
 	s[i] = '\0';
 	return (s);

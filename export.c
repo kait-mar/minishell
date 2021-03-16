@@ -134,7 +134,7 @@ int		check_env(char *str)
 		str = without_that(str, '\"');
 	if (check_quote(str) == 0 && check_double_quote(str) == 0)
 	{
-		str = ft_toStrLower(str);
+		//str = ft_toStrLower(str);
 		while (i < 3)
 		{
 			if (str[i] != s[i])

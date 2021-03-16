@@ -358,11 +358,11 @@ t_meta	*split_it_all(char *str)
             s = ft_substr(splits[i], 0, until_meta(splits[i]));
 		if (!(temp = (t_meta *) malloc(sizeof(t_meta))))
 			return (NULL);
-        ft_printf("Before\n");
-        ft_printf("splits[i] == > %s\n",splits[i]);
-        ft_printf("take_first ==> %s\n", take_first_word(splits[i]));
+       // ft_printf("Before\n");
+       // ft_printf("splits[i] == > %s\n",splits[i]);
+       // ft_printf("take_first ==> %s\n", take_first_word(splits[i]));
 		temp->command = check_wich_command(take_first_word(splits[i]));
-        ft_printf("After\n");
+       // ft_printf("After\n");
         s = ft_substr(splits[i], 0 , until_meta(splits[i]));
         if (backslash_on(s) == 1)
             s = removing_backslash(s);

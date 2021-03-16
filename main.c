@@ -155,7 +155,6 @@ int   token_error(t_meta *head, int *status)
     }
     return (0);
 }
-
 /*
 int		main(int ac, char **av, char **env)
 {

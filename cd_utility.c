@@ -20,6 +20,7 @@ char	*without_that(char *str, char c)
 
 	if (str == NULL)
 		return (NULL);
+	//ft_printf("the enterd str is %s\n", str);
 	s = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (s == NULL)
 		return (NULL);
@@ -34,6 +35,7 @@ char	*without_that(char *str, char c)
 		else
 		{
 			s[j] = str[i];
+			//ft_printf("teh c is %c\n", str[i]);
 			j += 1;
 			i += 1;
 		}

@@ -189,7 +189,6 @@ char    *chang_dollar(char *s, char **env, int *on)
             }
             i += 1;
         }
-
     }
     if (check_backslash(s) == 1)
     {
