@@ -32,7 +32,9 @@ int     dollar_len(char *str, int i)
     else
         j = i + 1;
     while (str[j] != '\0' && str[j] != '$' && str[j] != '\\' && str[j] != ' '
-           && str[j] != '>' &&  str[j] != '<' &&  str[j] != ';' && str[j] != '\t')
+           && str[j] != '>' &&  str[j] != '<' &&  str[j] != ';' && str[j] != '\t'
+           && str[j] != '\'' && str[j] != '"' && str[j] != '|' && str[j] != ','\
+           && str[j] != '[' && str[j] != ']')
     {
         count += 1;
         j += 1;
@@ -321,6 +323,14 @@ char    *chang_dollar_sign(char *str, char **env)
     on = 0;
     while (str[i] != '\0')
     {
+        if (str[i] == '\'')
+        {
+            i += 1;
+            while (str[i] !='\'' && str[i] !='\0')
+                i += 1;
+            if (str[i] == '\'')
+                i += 1;
+        }
         if ((str[i] == '$' && str[i + 1] != '?') || (str[i] == '\\' && str[i + 1] == '$'))
         {
             j = dollar_len(str, i);

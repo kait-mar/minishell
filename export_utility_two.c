@@ -242,7 +242,8 @@ char    *right_path(char **path)
     i = 0;
     while (path[i])
     {
-        direct = opendir(path[i]);
+        if ((direct = opendir(path[i])) == NULL)
+            return (ft_strdup(""));
         if (env_found(direct) == 1)
             return (ft_strdup(path[i]));
         i += 1;

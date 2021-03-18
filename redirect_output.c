@@ -40,7 +40,8 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
         }*/
 		new = file_name(temp->argument);
         temp->argument = temp->argument + ft_strlen(new);
-        new = remove_staring_quote(new);
+        //new = remove_staring_quote(new);
+		
         meta->argument = ft_strjoin(meta->argument, " ");
         meta->argument = ft_strjoin(meta->argument, temp->argument);
         i = 1;

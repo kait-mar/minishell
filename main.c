@@ -184,7 +184,7 @@ int		main(int ac, char **av, char **env)
     if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
         return -1;
     filling_export(env);
-	tmp = NULL;
+    tmp = NULL;
 	while (TRUE)
 	{
         signal_handler(&status);
