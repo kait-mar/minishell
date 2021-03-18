@@ -20,11 +20,16 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
 	char    **split;
 	t_meta	*temp;
 	char	*new;
+    int     on;
+    int     count;
 
 	temp = meta;
 	i = 1;
+    on = 0;
+    count = 0;
 	while (temp->next != NULL && temp->meta == '>')
 	{
+       // ft_printf("temp->command ==> %d || temp->arg ==> %s\n", temp->command, temp->argument);
 		temp = temp->next;
 		temp->argument = chang_dollar_sign(temp->argument, env);
 		/*temp->argument = without_that(temp->argument, '\"');
@@ -40,10 +45,21 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
         }*/
 		new = file_name(temp->argument);
         temp->argument = temp->argument + ft_strlen(new);
+          if (meta->command == 0 && check_wich_command(take_first_word(temp->argument)) != 0 && on == 0)
+        {
+            meta = temp;
+            meta->command = check_wich_command(take_first_word(ft_strtrim(temp->argument, " ")));
+           // ft_printf("in temp->command ==> %d || temp->arg ==> %s\n", meta->command, meta->argument);
+            on = 1;
+        }
         //new = remove_staring_quote(new);
-		
-        meta->argument = ft_strjoin(meta->argument, " ");
-        meta->argument = ft_strjoin(meta->argument, temp->argument);
+        new = final_file_name(new);
+        if (on == 0)
+        {
+         meta->argument = ft_strjoin(meta->argument, " ");
+            meta->argument = ft_strjoin(meta->argument, temp->argument);
+        }
+       // ft_printf("out  temp->command ==> %d || temp->arg ==> %s\n", meta->command, meta->argument);
         i = 1;
 		if ((fd = open(new,  O_RDWR | O_CREAT | O_TRUNC, S_IRWXU)) < 0)
 		{
@@ -76,4 +92,28 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
 		close(fd);
 	}
 	return (temp);
+}
+
+char	*final_file_name(char *file)
+{
+	char	*new;
+	int		i;
+	int		len;
+	char	**split;
+
+	split = keep_split(file, 39, 34);
+	i = 0;
+	while (split[i] != NULL)
+	{
+		if (*(split[i]) == '\'')
+			split[i] = ft_strtrim(split[i], "'");
+		else if (*(split[i]) == '"')
+			split[i] = ft_strtrim(split[i], "\"");
+		i++;
+	}
+	i = 1;
+	new = ft_strdup(split[0]);
+	while (split[i])
+		new = ft_strjoin(new, split[i++]);
+	return (new);
 }

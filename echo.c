@@ -133,8 +133,11 @@ char	*skip_first_word(char **str)
 	i = 0;
 	j = 0;
 	while (((*str)[i] == ' ' || (*str)[i] == '\t') && (*str)[i] != '\0')
+	{
 		i++;
-	if (*str[i] != '\0')
+	}
+
+	if ((*str)[i] != '\0')
 	{
 		while ((*str)[i] != ' ' && (*str)[i] != '\t' && (*str)[i] != '\0')
 			i++;
@@ -144,8 +147,8 @@ char	*skip_first_word(char **str)
 		while ((*str)[i] != '\0')
 			s[j++] = (*str)[i++];
 		s[j] = '\0';
-		if (*str)
-			free(*str);
+		/*if (*str)
+			free(*str);*/
 		//printf("Here Skip \n");
 		return (s);
 	}
@@ -162,7 +165,6 @@ int	echo(char *argv, char **env, int *status)
 
 	i = 0;
 	spaces = 0;
-	//ft_printf("the argv is %s\n", argv);
 	argv = skip_first_word(&argv);
 	if (ft_strcmp(argv, "") == 0)
 	{
@@ -170,6 +172,7 @@ int	echo(char *argv, char **env, int *status)
         *status = 0;
 		return (0);
 	}
+	
 	argv = ft_strtrim(argv, " ");
 	argv = ft_strtrim(argv, "\t");
 	bult = keep_split(argv, 39, 34);
@@ -195,6 +198,7 @@ int	echo(char *argv, char **env, int *status)
 			*bult = skip_first_word(&(*bult));
 		}
 	}
+	
 	put_cases(bult, env, status);
 	if (i == 0)
         my_putchar('\n');

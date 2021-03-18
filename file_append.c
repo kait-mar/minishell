@@ -21,11 +21,13 @@ int     count_file(char *str)
     {
         if (str[i] == '"')
         {
+            i++;
             while (str[i] != '\0' && str[i] != '"')
                 i++;
         }
         else if (str[i] == '\'')
         {
+            i++;
             while (str[i] !=  '\0' && str[i] != '\'')
                 i++;
         }
@@ -41,8 +43,9 @@ char    *file_name(char *str)
     int    j;
 
     i = 0;
+    j = count_file(str);
+    name = ft_calloc(1, j + 1);
     j = 0;
-    name = ft_calloc(1, count_file(str));
     while (str[i] != '\0' && str[i] != ' ')
     {
         if (str[i] == '"')
@@ -115,22 +118,32 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
     t_meta *head;
     char *new;
     int i;
+    int on;
 
     head = meta;
     i = 0;
+    on = 0;
     //output_from = ft_strdup(head->argument);
     while (head->meta_append != 0)
     {
         head = head->next;
         i += 1;
-     //   output_to = head->argument;
         output_to = ft_strtrim(head->argument, " ");
         output_to = chang_dollar_sign(output_to, env);
         new = file_name(output_to);
         output_to = output_to + ft_strlen(new);
-        new = remove_staring_quote(new);
-        meta->argument = ft_strjoin(meta->argument, " ");
-        meta->argument = ft_strjoin(meta->argument, output_to);
+        if (meta->command == 0 && check_wich_command(take_first_word(head->argument)) != 0 && on == 0)
+        {
+            meta = head;
+            on = 1;
+            meta->command = check_wich_command(take_first_word(ft_strtrim(head->argument, " ")));
+        }
+        new = final_file_name(new);
+       if (on == 0)
+        {
+            meta->argument = ft_strjoin(meta->argument, " ");
+            meta->argument = ft_strjoin(meta->argument, head->argument);
+        }
         /*if (*output_to == '\'')
             output_to = ft_strtrim(output_to, "'");
         else if (*output_to == '"')

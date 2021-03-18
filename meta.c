@@ -259,7 +259,7 @@ t_meta	*split_it_all(char *str)
 	splits = splits_by_meta(str, &check);
 	if (splits[i] == NULL)
         return NULL;
-    global->command = check_wich_command(take_first_word(splits[i]));
+    global->command = check_wich_command(take_first_word(ft_strtrim(splits[i], " ")));
 	if (splits == NULL)
 		return (NULL);
 	if (check_wich_command(splits[i]) == 4)
