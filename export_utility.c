@@ -164,7 +164,7 @@ char	*from_to(char *str, int i, int j)
 	if (!(s = (char *) malloc(sizeof(char) * (j - i) + 1)))
 		return (NULL);
 	k = 0;
-	while (i < j)
+	while (i <= j && str[i] != '\0')
 	{
 		s[k] = str[i];
 		k += 1;
@@ -356,7 +356,7 @@ char    *error_reformulation(char *string)
 
     i = 0;
     j = 0;
-    if (!(s = (char *) ft_calloc(sizeof (char), ft_strlen(string))))
+    if (!(s = (char *) ft_calloc(sizeof (char), ft_strlen(string) + 1)))
         return (NULL);
     while (string[i])
     {

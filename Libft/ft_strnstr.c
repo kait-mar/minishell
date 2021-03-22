@@ -20,7 +20,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 
 	i = ft_strlen(needle);
 	j = ft_strlen(haystack);
-	if (i == 0 || (i == 0 & j == 0))
+	if (i == 0 || (i == 0 && j == 0))
 		return ((char *)haystack);
 	i = 0;
 	j = 0;

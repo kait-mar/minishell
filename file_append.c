@@ -113,7 +113,7 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
     int fd;
     //char *output_from;
     char **split;
-    char *output_to;
+ //char *output_to;
     pid_t pid;
     t_meta *head;
     char *new;
@@ -128,12 +128,14 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
     {
         head = head->next;
         i += 1;
-        output_to = ft_strtrim(head->argument, " ");
-        output_to = chang_dollar_sign(output_to, env);
-        new = file_name(output_to);
-        output_to = output_to + ft_strlen(new);
+        head->argument = ft_strtrim(head->argument, " ");
+        head->argument = chang_dollar_sign(head->argument, env);
+        new = file_name(head->argument);
+        head->argument = head->argument + ft_strlen(new);
+        //ft_printf("the command is %d, amd the head argument is %s and head command is %d\n", meta->command, head->argument, check_wich_command(take_first_word(head->argument)));
         if (meta->command == 0 && check_wich_command(take_first_word(head->argument)) != 0 && on == 0)
         {
+            //ft_printf(" in condition => meta->argument is %s\n", meta->argument);
             meta = head;
             on = 1;
             meta->command = check_wich_command(take_first_word(ft_strtrim(head->argument, " ")));
@@ -141,6 +143,7 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
         new = final_file_name(new);
        if (on == 0)
         {
+            //ft_printf("meta->argument is %s\n", meta->argument);
             meta->argument = ft_strjoin(meta->argument, " ");
             meta->argument = ft_strjoin(meta->argument, head->argument);
         }

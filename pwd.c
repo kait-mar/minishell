@@ -78,10 +78,11 @@ int		check_pwd(char *str, int *exept)
 	i = 0;
 	*exept = 0;
 	on = 0;
+	
 	if (check_first_pwd(str) == 1)
 	    if (check_after_first(str) == 1)
 	        *exept = 1;
-	str = ft_toStrLower(str);
+	//str = ft_toStrLower(str);
 	s = "pwd";
 	while (i < 3)
 	{
@@ -91,6 +92,7 @@ int		check_pwd(char *str, int *exept)
 	}
 	if (ft_isalpha(str[i]))
 		on = 1;
+	//ft_printf("here from check_pwd\n");
 	return (on);
 }
 	

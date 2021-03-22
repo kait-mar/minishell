@@ -54,6 +54,7 @@ int		check_quote(char *str)
 
 	 i = 0;
 	 on = 0;
+	 
 	 while (str[i] != '\0')
 	 {
 		 if (str[i] == '\'' && str[i - 1] != '\\')
@@ -128,13 +129,19 @@ int		check_env(char *str)
 	j = 0;
 	on = 0;
 	s = "env";
+	//segfault is in this function
+//	ft_printf("entreed\n");
 	if (check_quote(str) == 1)
+	{
 		str = without_that(str, '\'');
+//		ft_printf("str is %s\n", str);
+	}
 	else if (check_double_quote(str) == 1)
 		str = without_that(str, '\"');
+//		ft_printf("hello\n");
 	if (check_quote(str) == 0 && check_double_quote(str) == 0)
 	{
-		str = ft_toStrLower(str);
+		//str = ft_toStrLower(str);
 		while (i < 3)
 		{
 			if (str[i] != s[i])
@@ -147,6 +154,7 @@ int		check_env(char *str)
 	}
 	else
 		on = 1;
+	//ft_printf("\nfrom check_env\n");
 	return (on);
 }
 

@@ -26,6 +26,10 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include "./Libft/libft.h"
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <stdint.h>
+#include <errno.h>
 
 typedef struct s_command_cd
 {

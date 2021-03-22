@@ -16,6 +16,7 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdlib.h>
+#include <errno.h>
 # include "../Libft/libft.h"
 
 typedef struct		s_flag

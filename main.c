@@ -107,13 +107,15 @@ int		check_wich_command(char *str)
     int exept;
 
     exept = 0;
-   // ft_printf("the str to be checked |%s|\n", str);
+    //ft_printf("the str to be checked |%s|\n", str);
 	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[2]) == 0))
 		return (1);
 	if (check_pwd(str, &exept) == 0)
 		return (2);
+    
 	if (check_env(str) == 0)
 		return (3);
+    //    ft_printf("in checking\n");
 	if (ft_strncmp(str, "export", 6) == 0 && (ft_isalpha(str[6]) == 0))
 		return (4);
 	if (check_unset(str) == 0)
@@ -149,7 +151,7 @@ int   token_error(t_meta *head, int *status)
         if (ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|')
         && a_head->command == 0)
         {
-            ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
+        //    ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
             *status = 258;
             return (1);
         }
@@ -158,7 +160,7 @@ int   token_error(t_meta *head, int *status)
     return (0);
 }
 
-
+/*
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -191,8 +193,8 @@ int		main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[2])
-            str = ft_strdup(av[2]);
+        if (av[1])
+            str = ft_strdup(av[1]);
 		else
 		{
 			prompt(g_in_signal);
@@ -200,6 +202,7 @@ int		main(int ac, char **av, char **env)
 		}
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
+       // ft_printf("here5 \n");
 		head = meta;
         while (head != NULL)
         {
@@ -217,7 +220,10 @@ int		main(int ac, char **av, char **env)
             else if (head->meta_append == 1)
                 head = append_file(head, str, env, &status);
             else if (head->meta == '>')
-                head = redirect_output(head, str, env, &status);
+            {
+               // ft_printf("starting in redrec t\n");
+                 head = redirect_output(head, str, env, &status);
+            }
             else if (head->meta == '<')
                 head = redirect_intput(head, str, env, &status);
             else if (head->meta == '\0')
@@ -225,16 +231,16 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        if (av[2])
+        if (av[1])
             exit(status);
         on = 0;
         g_first_time = 1;
         g_in_signal = 0;
 	}
 	return(status);
-}
+}*/
 
-/*
+
 int			main()
 {
 	char *str;
@@ -268,13 +274,17 @@ int			main()
 	{
         signal_handler(&status);
 			//prompt(g_in_signal);
-			//str = "> test echo bonjour";
-            str = "> test1 echo hello > test2";
+str = "echo bonjour > a'b'c'd'e'f'g'h'i'j'k'l'm'n'o'p'q'r's't'u'v'w'x'oooyz";
+
+           // str = "echo bonjour >> test'yo'\"sticked\"";
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
+        
 		head = meta;
+     //   ft_printf("Before entering ==> %s\n", head->argument);
         while (head != NULL)
         {
+        //    ft_printf("Entering ==> %s\n", head->argument);
             head->argument = chang_dollar_sign(head->argument, env);
             if (head->meta == ';')
             {
@@ -285,7 +295,10 @@ int			main()
             else if (head->meta == '|')
                 head = pipe_file(head, str, env, &status);
             else if (head->meta_append == 1)
+            {
+           //     ft_printf("head->argument ==> %s\n", head->argument);
                 head = append_file(head, str, env, &status);
+            }
             else if (head->meta == '>')
                 head = redirect_output(head, str, env, &status);
 			 else if (head->meta == '<')
@@ -295,11 +308,11 @@ int			main()
             if (head != NULL)
                 head = head->next;
         }
-        if (av[2])
+        if (av[1])
             exit(status);
         on = 0;
         g_first_time = 1;
         g_in_signal = 0;
 	}
 	return(status);
-}*/
+}

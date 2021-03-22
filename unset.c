@@ -29,7 +29,7 @@ char	*only_before_equal(char *str)
 	char *s;
 
 	i = 0;
-	if (!(s = (char *) ft_calloc(sizeof(char), ft_strlen(str))))
+	if (!(s = (char *) ft_calloc(sizeof(char), ft_strlen(str) + 1)))
 		return (NULL);
 	while (str[i] != '=' &&  str[i] != '\0')
 	{

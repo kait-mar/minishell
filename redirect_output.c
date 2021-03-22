@@ -49,14 +49,15 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
         {
             meta = temp;
             meta->command = check_wich_command(take_first_word(ft_strtrim(temp->argument, " ")));
-           // ft_printf("in temp->command ==> %d || temp->arg ==> %s\n", meta->command, meta->argument);
+            //ft_printf("in temp->command ==> %d || temp->arg ==> %s\n", meta->command, meta->argument);
             on = 1;
         }
         //new = remove_staring_quote(new);
         new = final_file_name(new);
+		//ft_printf("teh final file name us %s\n", new);
         if (on == 0)
         {
-         meta->argument = ft_strjoin(meta->argument, " ");
+        	meta->argument = ft_strjoin(meta->argument, " ");
             meta->argument = ft_strjoin(meta->argument, temp->argument);
         }
        // ft_printf("out  temp->command ==> %d || temp->arg ==> %s\n", meta->command, meta->argument);

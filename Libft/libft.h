@@ -18,6 +18,7 @@
 # include <ctype.h>
 # include <string.h>
 # include <unistd.h>
+#include <errno.h>
 # include "get_next_line.h"
 # include "../Printf/ft_printf.h"
 

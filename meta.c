@@ -97,7 +97,7 @@ int     valid(char *str, int j, int len)
     int i;
 
     s = from_to(str, j, len + 1);
-    i = check_wich_command(str);
+    i = check_wich_command(take_first_word(str));
     if (i == 4)
     {
         while (j < len + 1)
@@ -122,7 +122,7 @@ char	**splits_by_meta(char *str, int *meta)
 	j = 0;
 	k = 0;
 	len = 0;
-	splits = (char **) ft_calloc(sizeof(char *) , 1000);
+	splits = (char **) ft_calloc(sizeof(char *) , 50);
 	if (str == NULL)
 	{
 		splits[k++] = ft_strdup(" ");
@@ -140,7 +140,7 @@ char	**splits_by_meta(char *str, int *meta)
 	        if (str[i] == '"')
     	        i += 1;
         }
-        if (str[i] == '\'')
+        else if (str[i] == '\'')
         {
             i += 1;
             while (str[i] != '\0' && str[i] != '\'')
@@ -148,25 +148,19 @@ char	**splits_by_meta(char *str, int *meta)
             if (str[i] == '\'')
                 i += 1;
         }
-        if ((str[i] == ';' || str[i] == '|'
+        else if ((str[i] == ';' || str[i] == '|'
 			|| str[i] == '<' || str[i] == '>') && (str[i - 1] != '\\'))
 		{
 		    if (str[i + 1] == '>' && str[i] == '>')
             {
-		        if (valid(str, j, i) == 0)
-                    splits[k++] = from_to(str, j, i + 2);
-		        else
-                {
-		          /*  while (str[i] != '\"')
-		                i += 1;*/
-                    splits[k++] = from_to(str, j, i + 2);
-                }
+                    splits[k++] = from_to(str, j, i + 1);
                i += 2;
             }
 		    else
             {
-                if (valid(str, j, i) == 0)
-                    splits[k++] = from_to(str, j, i + 2);
+                //to check it later
+                if (valid(str, j, i) == 0) // chnage this as well 
+                    splits[k++] = from_to(str, j, i + 1);
                 else
                 {
                    /* while (str[i] != '\0' && str[i] != '\"')
@@ -255,10 +249,10 @@ t_meta	*split_it_all(char *str)
 	on = 0;
 	if (!(global = (t_meta *) malloc(sizeof(t_meta))))
 		return (NULL);
-
 	splits = splits_by_meta(str, &check);
 	if (splits[i] == NULL)
         return NULL;
+   // ft_printf("In wich command ==> %s\n",take_first_word(ft_strtrim(splits[i], " ")));
     global->command = check_wich_command(take_first_word(ft_strtrim(splits[i], " ")));
 	if (splits == NULL)
 		return (NULL);
@@ -333,8 +327,10 @@ t_meta	*split_it_all(char *str)
 	}
 	global->next = NULL;
 	i += 1;
+    //ft_printf("IN THE MIDLE \n");
 	while (splits[i])
 	{
+       // ft_printf("First splits[%d] is %s\n", i, splits[i]);
         if (check_wich_command(splits[i]) == 4)
         {
             while (splits[i][j] != '\0')
@@ -347,13 +343,26 @@ t_meta	*split_it_all(char *str)
                 j += 1;
             }
         }
+        //free(splits[0]);
+        //free(global->argument);
+        //free(global);
+        //printf("splits[1] is %s\n", splits[i]);
+        //char *string = malloc(1);
+        //printf("passed\n");
         if (on == 1)
             s = ft_strdup(splits[i]);
         else
-            s = ft_substr(splits[i], 0, until_meta(splits[i]));
+            s = ft_strdup(splits[i]);
+        //    s = ft_substr(splits[i], 0, until_meta(splits[i]));
 		if (!(temp = (t_meta *) malloc(sizeof(t_meta))))
 			return (NULL);
+        //     ft_printf("here635\n");
+       // ft_printf("the em=ntererd split is %s\n", splits[i]);
+        //ft_printf("Second splits[%d] is %d\n", i, check_wich_command(splits[i]));
+          //   ft_printf("here  E2\n");
+
 		temp->command = check_wich_command(take_first_word(splits[i]));
+       // ft_printf("here\n");
 		s = ft_substr(splits[i], 0 , until_meta(splits[i]));
         if (backslash_on(s) == 1)
             s = removing_backslash(s);

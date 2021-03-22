@@ -42,10 +42,10 @@ static int		how_mutch(unsigned int c)
 static char		*conversion(char x, unsigned int c, int n)
 {
 	char	*str;
-	int		i;
+	//int		i;
 	int		j;
 
-	i = 0;
+	//i = 0;
 	j = how_mutch(c);
 	if (n < 0)
 		j = how_mutch(c) + 1;

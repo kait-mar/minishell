@@ -15,7 +15,6 @@ NAME = libftprintf.a
 
 CC = gcc
 
-FLAGS = -Wall -Wextra -Werror
 
 SRCS = ft_printf.c print_conversion.c print_convert_two.c ft_printf_utils.c \
 	   flag_utils.c flags.c flag_helper.c flag_helper_two.c flag_helper_three.c \
@@ -26,7 +25,7 @@ SRCS = ft_printf.c print_conversion.c print_convert_two.c ft_printf_utils.c \
 OBJ = $(SRCS:.c=.o)
 
 all:
-	$(CC) $(FLAGS) -c $(SRCS)
+	$(CC) -c $(SRCS)
 	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
 
