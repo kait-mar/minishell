@@ -110,73 +110,86 @@ int     valid(char *str, int j, int len)
     return (0);
 }
 
-char	**splits_by_meta(char *str, int *meta)
+int     count_meta(char *str)
 {
-	int	i;
-	int	j;
-	int	k;
-	int len;
-	char	**splits;
+    int i;
+    int count;
 
-	i = 0;
-	j = 0;
-	k = 0;
-	len = 0;
-	splits = (char **) ft_calloc(sizeof(char *) , 50);
-	if (str == NULL)
-	{
-		splits[k++] = ft_strdup(" ");
-		return (NULL);
-	}
-	while (str[i] != '\0')
-	{
-	    if (str[i] == '"')
-	    {
-            i += 1;
-            while (str[i] != '\0' && str[i] != '"')
-            {
-                i += 1;
-            }
-	        if (str[i] == '"')
-    	        i += 1;
-        }
-        else if (str[i] == '\'')
+    i = 0;
+    count = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] == '\'')
         {
             i += 1;
-            while (str[i] != '\0' && str[i] != '\'')
+            while (str[i] != '\'' && str[i] != '\0')
                 i += 1;
             if (str[i] == '\'')
                 i += 1;
         }
-        else if ((str[i] == ';' || str[i] == '|'
-			|| str[i] == '<' || str[i] == '>') && (str[i - 1] != '\\'))
-		{
-		    if (str[i + 1] == '>' && str[i] == '>')
-            {
-                    splits[k++] = from_to(str, j, i + 1);
-               i += 2;
-            }
-		    else
-            {
-                //to check it later
-                if (valid(str, j, i) == 0) // chnage this as well 
-                    splits[k++] = from_to(str, j, i + 1);
-                else
-                {
-                   /* while (str[i] != '\0' && str[i] != '\"')
-                        i += 1;*/
-                    splits[k++] = from_to(str, j, i);
-                }
-                i = i + 1;
-            }
-			j = i;
-			*meta = 1;
-		}
-		else
-			i += 1;
-	}
-	splits[k++] = from_to(str, j, i);
-	return (splits);
+        else if (str[i] == '"')
+        {
+            i += 1;
+            while (str[i] != '"' && str[i] != '\0')
+                i += 1;
+            if (str[i] == '"')
+                i += 1;
+        }
+        if (str[i] == '>' || str[i] == '<' || str[i] == '|' || str[i] == ';')
+        {
+            if (str[i] == '>' && str[i + 1] == '>')
+                i += 1;
+            count += 1;
+        }
+        i += 1;
+    }
+    return (count);
+}
+
+char	**splits_by_meta(char *str, int *meta)
+{
+    int i;
+    int j;
+    int index;
+    char **splits;
+
+    i = 0;
+    j = 0;
+    index = 0;
+    if (!(splits = (char **) malloc(sizeof (char) * count_meta(str) + 1)))
+        return (NULL);
+    while (str[i] != '\0')
+    {
+        if (str[i] == '\'')
+        {
+            i += 1;
+            while (str[i] != '\'' && str[i] != '\0')
+                i += 1;
+            i += 1;
+        }
+        else if (str[i] == '"')
+        {
+            i += 1;
+            while (str[i] != '"' && str[i] != '\0')
+                i += 1;
+            i += 1;
+        }
+        else if (str[i] == '>' || str[i] == '<' || str[i] == '|' || str[i] == ';')
+        {
+            if (str[i + 1] == '>')
+                i += 1;
+            splits[index] = ft_substr(str, j, i - j);
+            index += 1;
+            j = i;
+            i += 1;
+        }
+        else
+            i += 1;
+    }
+    splits[index] = ft_substr(str, j, i - j);
+    index += 1;
+    splits[index] = NULL;
+    return (splits);
 }
 
 int     check_append(char *s)
@@ -250,6 +263,8 @@ t_meta	*split_it_all(char *str)
 	if (!(global = (t_meta *) malloc(sizeof(t_meta))))
 		return (NULL);
 	splits = splits_by_meta(str, &check);
+	ft_printf("splits[0] ==> %s\n", splits[0]);
+    ft_printf("splits[1] ==> %s\n", splits[1]);
 	if (splits[i] == NULL)
         return NULL;
    // ft_printf("In wich command ==> %s\n",take_first_word(ft_strtrim(splits[i], " ")));

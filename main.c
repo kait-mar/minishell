@@ -202,7 +202,6 @@ int		main(int ac, char **av, char **env)
 		}
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
-       // ft_printf("here5 \n");
 		head = meta;
         while (head != NULL)
         {
@@ -273,10 +272,8 @@ int			main()
 	while (TRUE)
 	{
         signal_handler(&status);
-			//prompt(g_in_signal);
-str = "echo bonjour > a'b'c'd'e'f'g'h'i'j'k'l'm'n'o'p'q'r's't'u'v'w'x'oooyz";
+			str = "echo bonjour > a'b'c'd'e'f'g'h'i'j'k'l'm'n'o'p'q'r's't'u'v'w'x'oooyz";
 
-           // str = "echo bonjour >> test'yo'\"sticked\"";
         str = ft_strtrim(str, "\t");
         meta = split_it_all(str);
         
