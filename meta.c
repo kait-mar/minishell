@@ -176,17 +176,17 @@ char	**splits_by_meta(char *str, int *meta)
         }
         else if (str[i] == '>' || str[i] == '<' || str[i] == '|' || str[i] == ';')
         {
-            if (str[i + 1] == '>')
+            if (str[i] == '>' && str[i + 1] == '>')
                 i += 1;
-            splits[index] = ft_substr(str, j, i - j);
+            splits[index] = ft_substr(str, j, (i - j) + 1);
             index += 1;
-            j = i;
+            j = i + 1;
             i += 1;
         }
         else
             i += 1;
     }
-    splits[index] = ft_substr(str, j, i - j);
+    splits[index] = ft_substr(str, j, (i - j) + 1);
     index += 1;
     splits[index] = NULL;
     return (splits);
@@ -263,8 +263,6 @@ t_meta	*split_it_all(char *str)
 	if (!(global = (t_meta *) malloc(sizeof(t_meta))))
 		return (NULL);
 	splits = splits_by_meta(str, &check);
-	ft_printf("splits[0] ==> %s\n", splits[0]);
-    ft_printf("splits[1] ==> %s\n", splits[1]);
 	if (splits[i] == NULL)
         return NULL;
    // ft_printf("In wich command ==> %s\n",take_first_word(ft_strtrim(splits[i], " ")));
@@ -313,6 +311,7 @@ t_meta	*split_it_all(char *str)
             if (global->command != 0 && global->command != 6)
             {
                 global->argument = skip_first_word(&s);
+                ft_printf("argument ==> %s\n", global->argument);
                 global->argument = ft_strtrim(global->argument, " ");
                 global->argument = ft_strtrim(global->argument, "\t");
             }
@@ -342,10 +341,8 @@ t_meta	*split_it_all(char *str)
 	}
 	global->next = NULL;
 	i += 1;
-    //ft_printf("IN THE MIDLE \n");
 	while (splits[i])
 	{
-       // ft_printf("First splits[%d] is %s\n", i, splits[i]);
         if (check_wich_command(splits[i]) == 4)
         {
             while (splits[i][j] != '\0')
@@ -358,26 +355,13 @@ t_meta	*split_it_all(char *str)
                 j += 1;
             }
         }
-        //free(splits[0]);
-        //free(global->argument);
-        //free(global);
-        //printf("splits[1] is %s\n", splits[i]);
-        //char *string = malloc(1);
-        //printf("passed\n");
         if (on == 1)
             s = ft_strdup(splits[i]);
         else
             s = ft_strdup(splits[i]);
-        //    s = ft_substr(splits[i], 0, until_meta(splits[i]));
 		if (!(temp = (t_meta *) malloc(sizeof(t_meta))))
 			return (NULL);
-        //     ft_printf("here635\n");
-       // ft_printf("the em=ntererd split is %s\n", splits[i]);
-        //ft_printf("Second splits[%d] is %d\n", i, check_wich_command(splits[i]));
-          //   ft_printf("here  E2\n");
-
 		temp->command = check_wich_command(take_first_word(splits[i]));
-       // ft_printf("here\n");
 		s = ft_substr(splits[i], 0 , until_meta(splits[i]));
         if (backslash_on(s) == 1)
             s = removing_backslash(s);
@@ -405,6 +389,7 @@ t_meta	*split_it_all(char *str)
             {
 			    if (temp->command != 0 && temp->command != 4 && temp->command !=  6) {
                     temp->argument = skip_first_word(&s);
+                    ft_printf("temp->argument ==> %s\n", temp->argument);
                     temp->argument = ft_strtrim(temp->argument, " ");
                     temp->argument = ft_strtrim(temp->argument, "\t");
                 }
