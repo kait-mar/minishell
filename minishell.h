@@ -25,6 +25,8 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
+#include <stdint.h>
 #include "./Libft/libft.h"
 
 typedef struct s_command_cd
