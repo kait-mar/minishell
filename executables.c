@@ -105,6 +105,8 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
 	if (j == 1)
     {
         splits = take_only_carac(str);
+        if (check_wich_command(splits[0]) != 0)
+            splits[0] = ft_strdup(str);
         while (env[i]) {
             if (in_match(only_before_equal(env[i]), "PATH") == 1)
                 path = only_after_equal(env[i]);
@@ -130,6 +132,8 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
         }
         else if (pid == 0) {
             splits = take_only_carac(str);
+            if (check_wich_command(splits[0]) != 0)
+                splits[0] = ft_strdup(str);
             while (env[i])
             {
                 if (in_match(only_before_equal(env[i]), "PATH") == 1) {

@@ -223,6 +223,12 @@ char	*ft_strtrim2(char const *s, char const *set);
 char    *remove_staring_quote(const char *s);
 char    *file_name(char *str);
 char	*final_file_name(char *file);
-
+char    *escape_normal(char *str);
+int     check_escape_meta(char *str, int i);
+int     active(char *str, int i);
+char    *escape_meta(char *str);
+char    *remove_space(char *string);
+int     check_escape_space(char *string, int i);
+char    *remove_escape_dollar(char *s);
 
 #endif

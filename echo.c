@@ -36,9 +36,9 @@ int		print(char **bult, char **env, int *status)
 	i = 0;
 	if (only_star(*bult) == 1)
 		stream_directory();
-	while ((**bult != '$' || (**bult == '\\' && *(*bult + 1) == '$')) && **bult != '\0')
+	/*while (**bult != '$' || (**bult == '\\' && *(*bult + 1) == '$'))&& **bult != '\0')
 	{
-		if (**bult == '\\' && *(*bult + 1) == '\\')
+	    if (**bult == '\\' && *(*bult + 1) == '\\')
 		{
 			j = how_many_escape(*bult);
 			if (j % 2 != 0)
@@ -65,9 +65,9 @@ int		print(char **bult, char **env, int *status)
 		}
 		else if (**bult == '\\')
 		{
-			(*bult)++;
-			continue ;
-		}
+            (*bult)++;
+            continue;
+        }
         my_putchar(**bult);
 		(*bult)++;
 		i = 1;
@@ -106,7 +106,13 @@ int		print(char **bult, char **env, int *status)
 			(*bult)++;
 		}
 	}
-	//ft_printf("\nit returned %d\n", i);
+	//ft_printf("\nit returned %d\n", i);*/
+	while (**bult != '\0')
+    {
+	    my_putchar(**bult);
+        (*bult)++;
+	    i = 1;
+    }
 	return (i);
 }
 
@@ -141,14 +147,16 @@ char	*skip_first_word(char **str)
 	{
 		while ((*str)[i] != ' ' && (*str)[i] != '\t' && (*str)[i] != '\0')
 			i++;
-		while (((*str)[i] == ' ' || (*str)[i] == '\t') && (*str)[i] != '\0')
-			i++;
+		if ((*str)[i] == ' ')
+		    i++;
+		/*while (((*str)[i] == ' ' || (*str)[i] == '\t') && (*str)[i] != '\0')
+			i++;*/
 		s = malloc(ft_strlen(*str) - i + 1);
 		while ((*str)[i] != '\0')
 			s[j++] = (*str)[i++];
 		s[j] = '\0';
-		/*if (*str)
-			free(*str);*/
+		if (*str)
+			free(*str);
 		//printf("Here Skip \n");
 		return (s);
 	}
@@ -172,8 +180,7 @@ int	echo(char *argv, char **env, int *status)
         *status = 0;
 		return (0);
 	}
-	
-	argv = ft_strtrim(argv, " ");
+	//argv = ft_strtrim(argv, " ");
 	argv = ft_strtrim(argv, "\t");
 	bult = keep_split(argv, 39, 34);
 	int k = 0;
@@ -188,17 +195,16 @@ int	echo(char *argv, char **env, int *status)
 			*bult = ft_strtrim_left(*bult, " ");
 		}
 	}
-	else
+	/*else
 	{
-		str = ft_split(*bult, ' ');
+		//str = ft_split(*bult, ' ');
 		if (ft_strcmp(*str, "-n") == 0)
 		{
 			str++;
 			i = 1;
 			*bult = skip_first_word(&(*bult));
 		}
-	}
-	
+	}*/
 	put_cases(bult, env, status);
 	if (i == 0)
         my_putchar('\n');

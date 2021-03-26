@@ -12,28 +12,33 @@
 
 #include "minishell.h"
 
-
-
-
-
 int     dollar_len(char *str, int i)
 {
     int count;
     int j;
+    int k;
 
     count = 0;
-
     if (str[i] == '\\' && str[i + 1] == '$')
     {
+        if (str[i - 1] == '\\')
+        {
+            k = i - 1;
+            while (str[k] == '\\')
+            {
+                count += 1;
+                k -= 1;
+            }
+        }
         j = i;
         j += 2;
         count += 2;
     }
     else
         j = i + 1;
-    while (str[j] != '\0' && str[j] != '$' && str[j] != '\\' && str[j] != ' '
+    while (str[j] != '\0' && str[j] != '$' && str[j] != ' '
            && str[j] != '>' &&  str[j] != '<' &&  str[j] != ';' && str[j] != '\t'
-           && str[j] != '\'' && str[j] != '"' && str[j] != '|' && str[j] != ','\
+           && str[j] != '\'' && str[j] != '"' && str[j] != '|' && str[j] != ','
            && str[j] != '[' && str[j] != ']')
     {
         count += 1;
@@ -50,6 +55,12 @@ char    *take_word(char *str, int i, int len)
     j = 0;
     if (!(s = (char *) ft_calloc(sizeof (char), len + 1)))
         return (NULL);
+    if (str[i] == '\\')
+    {
+        while (str[i] == '\\')
+            i -= 1;
+        i += 1;
+    }
     while (i <= len)
     {
         s[j] = str[i];
@@ -70,6 +81,8 @@ int    dollar_parsing(char *s)
         if (s[i] == '\'')
             return (0);
         else if (s[i] == '\"' && s[i + 1] != '$')
+            return (0);
+        else if (s[i] == '$' && active(s, i) == 0)
             return (0);
         i += 1;
     }
@@ -124,7 +137,16 @@ char    *take_away_dollar(char *s)
     len = ft_strlen(s);
     if (!(string = (char *) ft_calloc(sizeof (char), len + 1)))
         return (NULL);
-    i = 1;
+    if (s[0] == '\\')
+    {
+        i = 0;
+        while (s[i] == '\\')
+            i += 1;
+        if (s[i] == '$')
+            i += 1;
+    }
+    else
+        i = 1;
     len = 0;
     while (s[i] != '\0')
     {
@@ -135,7 +157,6 @@ char    *take_away_dollar(char *s)
     string[len] = '\0';
     return (string);
 }
-
 
 int     check_backslash(char *s)
 {
@@ -181,7 +202,7 @@ char    *chang_dollar(char *s, char **env, int *on)
     }
     else
     {
-        while (env[i] != NULL && (check_backslash(s) == 0))
+        while (env[i] != NULL /*&& (check_backslash(s) == 0)*/)
         {
             if (match(env[i], ss) == 1)
             {
@@ -193,8 +214,8 @@ char    *chang_dollar(char *s, char **env, int *on)
         }
 
     }
-    if (check_backslash(s) == 1)
-        string =ft_strdup(s);
+   /* if (check_backslash(s) == 1)
+        string =ft_strdup(s);*/
     if (*on == 0)
     {
         string = ft_strdup("");
@@ -287,7 +308,7 @@ char    *realloc_input(char *str, char *s, int len, int string_len, int i)
         i += 1;
         len_before--;
     }
-    s = ignoring_meta(s);
+//    s = ignoring_meta(s);
     while (len_cmd >= 0 && s[j] != '\0')
     {
         string[i] = s[j];
@@ -336,12 +357,17 @@ char    *chang_dollar_sign(char *str, char **env)
             j = dollar_len(str, i);
             s = take_word(str, i, j + i);
             valid = dollar_parsing(s);
+            ft_printf("Before remove_escape ==> %s\n", s);
+            s = remove_escape_dollar(s);
+            ft_printf("After remove_escape ==> %s\n", s);
             if (valid == 1)
             {
                 s = chang_dollar(s, env, &on);
-               // if (on == 1)
-               str = realloc_input(str, s, j, j + i, i);
+                // if (on == 1)
             }
+            ft_printf("Str before rellaoc ==>%s\n", str);
+            str = realloc_input(str, s, j, j + i, i);
+            ft_printf("Str After rellaoc ==>%s\n", str);
             //i = j;
         }
         if (str[i] == '\\' &&  str[i + 1] == '$')

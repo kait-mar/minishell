@@ -161,7 +161,7 @@ char	*from_to(char *str, int i, int j)
 	char *s;
 	int k;
 
-	if (!(s = (char *) malloc(sizeof(char) * (j - i) + 1)))
+	if (!(s = (char *) ft_calloc(sizeof(char) , (j - i) + 1)))
 		return (NULL);
 	k = 0;
 	while (i < j)
@@ -245,39 +245,50 @@ char	**take_only_carac(char *str)
 	char **splits;
 	int	j;
 	int k;
+	int space;
 
 	i = 0;
+	space = 0;
 	if (!(splits = (char **) ft_calloc(sizeof(char *) , kait_count(str) + 1)))
 		return (NULL);
 	k = 0;
-	while (str[i] != '\0')
+    if (str[i] == ' ')
+        space += 2;
+    while (str[i] != '\0')
 	{
+	    if (str[i] == ' ' && i != 0)
+	        space += 1;
         if (check_double_quotes(str[i]))
         {
             j = i + 1;
             while (check_double_quotes(str[j]) == 0)
                 j += 1;
             splits[k++] = from_to(str, i, j + 1);
-            i = j;
+            i = j + 1;
         }
-        if (check_single_quotes(str[i]))
+        else if (check_single_quotes(str[i]))
         {
             j = i + 1;
             while (check_single_quotes(str[j]) == 0)
                 j += 1;
             splits[k++] = from_to(str, i, j + 1);
-            i = j;
+            i = j + 1;
         }
-		if (ft_isprint(str[i]) && (str[i] != '\'' && str[i] != '"'))
+		else if ((ft_isprint(str[i]) || space > 1) && (str[i] != '\'' && str[i] != '"') )
 		{
 			j = i;
+			if (space > 1)
+            {
+                j += 1;
+                space = 0;
+            }
 			while (((ft_isprint(str[j]) == 1 ) || str[j] == '=') &&
 					(check_single_double_quote(str[j]) == 0))
 				j += 1;
 			splits[k++] = from_to(str, i, j);
 			i = j;
 		}
-		if (str[i] != '\0')
+		else if (str[i] != '\0')
 			i += 1;
 	}
 	return (splits);

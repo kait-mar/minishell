@@ -21,7 +21,7 @@ SRCS=  cd.c cd_utility.c pwd.c export.c \
 	   unset.c main.c echo.c echo_utility.c keep_split.c \
 	   executables.c echo_utility_two.c meta.c file_append.c \
 	   exit.c redirect_output.c pipe_file.c redirect_input.c signals.c \
-	   semi_colon.c dollar_sign.c
+	   semi_colon.c dollar_sign.c escape_character.c minishell_utility.c
 
 OBJ = $(SRCS:.c=.o)
 
