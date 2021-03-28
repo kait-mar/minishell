@@ -214,7 +214,7 @@ int	echo(char *argv, char **env, int *status)
 				bult++;
 
 		}
-		else
+	/*	else
 		{
 			if (flag_strcmp(*bult, "-n") == 0 || ft_strcmp(*bult, "") == 0)
 			{
@@ -223,7 +223,7 @@ int	echo(char *argv, char **env, int *status)
 			}
 			else
 				break;
-		}
+		}*/
 	}
 	/*if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
 	{

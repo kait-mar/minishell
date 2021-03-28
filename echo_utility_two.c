@@ -57,10 +57,10 @@ char	*take_first_word(char *s)
 	i = 0;
 	/*while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 		i++;*/
-	while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"' || s[i] == '\\') && s[i])
-		string[j++] = s[i++];
-	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
-		i++;
+	/*while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"' || s[i] == '\\') && s[i])
+		string[j++] = s[i++];*/
+	/*while (s[i] && (s[i] == ' ' || s[i] == '\t'))
+		i++;*/
 	while (s[i])
 	{
 		if (s[i] == '\'')
@@ -84,9 +84,9 @@ char	*take_first_word(char *s)
 		else
 			break;
 	}
-
 	/*while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"') && s[i])
 		string[j++] = s[i++];*/
+//>>>>>>> origin/last-redirection
 	string[j] = '\0';
 	return (string);
 }
