@@ -155,6 +155,10 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
             stat(splits[0], &stats);
             if (check_slash(splits[0]) == 0 && S_ISDIR(stats.st_mode))
             {
+                if (splits[0][0] == '"')
+                    splits[0] = ft_strtrim(splits[0], "\"");
+                else if (splits[0][0] == '\'')
+                    splits[0] = ft_strtrim(splits[0], "'");
                 ft_printf("minishell: %s: command not found\n", splits[0]);
                 exit(127);
             }
@@ -185,7 +189,12 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
            execve(splits[0], splits, env);
            if (check_slash(splits[0]) == 0)
            {
-               ft_printf("minishell: %s: command not found\n", without_that(splits[0], '\''));
+                if (splits[0][0] == '"')
+                    splits[0] = ft_strtrim(splits[0], "\"");
+                else if (splits[0][0] == '\'')
+                    splits[0] = ft_strtrim(splits[0], "'");
+               //ft_printf("minishell: %s: command not found\n", without_that(splits[0], '\''));
+                ft_printf("minishell: %s: command not found\n", splits[0]);
                exit(127);
            }
            if (errno == 2)

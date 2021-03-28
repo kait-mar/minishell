@@ -115,6 +115,7 @@ t_export *g_export;
 int		g_process;
 int     g_first_time;
 int     g_in_signal;
+int		g_in_redirect;
 pid_t   g_pid;
 int     g_on;
 int     g_in_line;
@@ -166,7 +167,7 @@ int		echo(char *argv, char **env, int *status);
 int		ft_strcmp(const char *s1, const char *s2);
 char	**keep_split(char *s, char c, char b);
 int		print_env(char *bult, char **env, int which_quote, int *status);
-int		echo_strcmp(const char *s1, const char *s2);
+int		echo_strcmp(char *s1, char *s2);
 void	put_cases(char **bult, char **env, int *status);
 void	put_normal(char **split, char **env, int i, int *status);
 int		check_unset(char *str);
@@ -231,5 +232,7 @@ char    *remove_space(char *string);
 int     check_escape_space(char *string, int i);
 char    *remove_escape_dollar(char *s);
 int     check_escape_dollar(char *str, int i);
+int		homogene(char *s);
+int	    flag_strcmp(char *s1, char *s2);
 
 #endif

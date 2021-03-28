@@ -128,10 +128,10 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
     {
         head = head->next;
         i += 1;
-        output_to = ft_strtrim(head->argument, " ");
-        output_to = chang_dollar_sign(output_to, env);
-        new = file_name(output_to);
-        output_to = output_to + ft_strlen(new);
+       head->argument = ft_strtrim(head->argument, " ");
+        head->argument = chang_dollar_sign(head->argument, env);
+        new = file_name(head->argument);
+        head->argument = head->argument + ft_strlen(new);
         if (meta->command == 0 && check_wich_command(take_first_word(head->argument)) != 0 && on == 0)
         {
             meta = head;

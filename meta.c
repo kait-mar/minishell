@@ -317,7 +317,7 @@ t_meta	*split_it_all(char *str)
     global->command = check_wich_command(take_first_word(splits[i]));
 	if (splits == NULL)
 		return (NULL);
-	if (check_wich_command(splits[i]) == 4)
+	if (check_wich_command(take_first_word(splits[i])) == 4)
     {
 	    while (splits[i][j] != '\0')
         {

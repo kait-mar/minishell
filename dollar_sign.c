@@ -439,7 +439,7 @@ char    *chang_dollar_sign(char *str, char **env)
             i += 2;*/
        // else
             i += 1;
-        on = 0;
+            on = 0;
     }
     return (str);
 }
