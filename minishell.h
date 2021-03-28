@@ -230,5 +230,6 @@ char    *escape_meta(char *str);
 char    *remove_space(char *string);
 int     check_escape_space(char *string, int i);
 char    *remove_escape_dollar(char *s);
+int     check_escape_dollar(char *str, int i);
 
 #endif

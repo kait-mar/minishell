@@ -159,6 +159,7 @@ int   token_error(t_meta *head, int *status)
 }
 
 
+
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -191,8 +192,8 @@ int		main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[1])
-            str= ft_strdup(av[1]);
+        if (av[2])
+            str= ft_strdup(av[2]);
 		else
 		{
 			prompt(g_in_signal);
@@ -227,7 +228,7 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        if (av[1])
+        if (av[2])
             exit(status);
         on = 0;
         g_first_time = 1;
@@ -235,7 +236,6 @@ int		main(int ac, char **av, char **env)
 	}
 	return(status);
 }
-
 /*
 int			main(int ac, char **av, char **env)
 {
@@ -250,7 +250,7 @@ int			main(int ac, char **av, char **env)
 	//char **av;
 	//char **env;
 	//env = malloc(2*sizeof(char *));
-	//*env = "PATH=/user/bin";
+   // *env = "PATH=/user/bin";
 	//env[1] = NULL;
 
 	status = 0;

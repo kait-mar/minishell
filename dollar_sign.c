@@ -12,37 +12,73 @@
 
 #include "minishell.h"
 
+int     count_escap(char *s)
+{
+    int i;
+    int count;
+
+    i = 0;
+    count = 0;
+    while (s[i] == '\\')
+    {
+        count += 1;
+        i += 1;
+    }
+    return (count);
+}
+
+char    *adding_escape(char *s, int count)
+{
+    int i;
+    int j;
+    int len;
+    char *str;
+
+    i = 0;
+    j = 0;
+    len = ft_strlen(s) + count + 1;
+    if (!(str = (char *) ft_calloc(sizeof (char ), len)))
+        return (NULL);
+    while (count > 0)
+    {
+        str[i] = '\\';
+        i += 1;
+        count -= 1;
+    }
+    while (s[j] != '\0')
+    {
+        str[i] = s[j];
+        i += 1;
+        j += 1;
+    }
+    str[i] = '\0';
+    return (str);
+}
 int     dollar_len(char *str, int i)
 {
     int count;
     int j;
     int k;
 
+    j = 0;
     count = 0;
-    if (str[i] == '\\' && str[i + 1] == '$')
+    while (str[i] == '\\')
     {
-        if (str[i - 1] == '\\')
-        {
-            k = i - 1;
-            while (str[k] == '\\')
-            {
-                count += 1;
-                k -= 1;
-            }
-        }
-        j = i;
-        j += 2;
-        count += 2;
+        i += 1;
+        count += 1;
     }
-    else
-        j = i + 1;
-    while (str[j] != '\0' && str[j] != '$' && str[j] != ' '
-           && str[j] != '>' &&  str[j] != '<' &&  str[j] != ';' && str[j] != '\t'
-           && str[j] != '\'' && str[j] != '"' && str[j] != '|' && str[j] != ','
-           && str[j] != '[' && str[j] != ']')
+    if (str[i] == '$')
+    {
+        i += 1;
+        count += 1;
+    }
+    while (str[i] != '\0' && str[i] != '$' && str[i] != ' ' && str[i] != '\\'
+           && str[i] != '>' &&  str[i] != '<' &&  str[i] != ';' && str[i] != '\t'
+           && str[i] != '\'' && str[i] != '"' && str[i] != '|' && str[i] != ','
+           && str[i] != '[' && str[i] != ']')
     {
         count += 1;
-        j += 1;
+        i += 1;
     }
     return (count);
 }
@@ -51,23 +87,34 @@ char    *take_word(char *str, int i, int len)
 {
     char *s;
     int j;
+    int k;
+    int count;
 
     j = 0;
+    k = 0;
+    count = 0;
     if (!(s = (char *) ft_calloc(sizeof (char), len + 1)))
         return (NULL);
-    if (str[i] == '\\')
+   /* if (str[i] == '\\')
     {
-        while (str[i] == '\\')
-            i -= 1;
-        i += 1;
+        k = i;
+        while (str[k] == '\\')
+        {
+            count += 1;
+            k += 1;
+        }
     }
-    while (i <= len)
+    if (count > 0)
+        len -= count;*/
+    while (i < len)
     {
         s[j] = str[i];
         i += 1;
         j += 1;
     }
     s[j] = '\0';
+    if (count > 0)
+        s = adding_escape(s, count);
     return (s);
 }
 
@@ -175,13 +222,16 @@ int     check_backslash(char *s)
     return (0);
 }
 
+
 char    *chang_dollar(char *s, char **env, int *on)
 {
     int i;
+    int escape;
     char *string;
     char *ss;
 
     i = 0;
+    escape = count_escap(s);
     ss = take_away_dollar(s);
     if (ft_strcmp(ss, "PWD") == 0 && g_pwd_on == 0)
     {
@@ -220,6 +270,13 @@ char    *chang_dollar(char *s, char **env, int *on)
     {
         string = ft_strdup("");
         *on = 2;
+    }
+    if (escape > 0)
+    {
+        if (*on == 1)
+            string = adding_escape(string, escape);
+        else
+            string = adding_escape(ss, escape);
     }
     return (string);
 }
@@ -290,10 +347,12 @@ char    *realloc_input(char *str, char *s, int len, int string_len, int i)
     j = 0;
     while (o < i && str[o] != '\0')
     {
+        /*if (str[o] == '\\' && check_escape_dollar(str, o) == 1)
+            break ;*/
         len_before += 1;
         o += 1;
     }
-     o += (len + 1);
+    o += (len );
     while (str[o] != '\0')
     {
         len_after += 1;
@@ -316,8 +375,8 @@ char    *realloc_input(char *str, char *s, int len, int string_len, int i)
         j += 1;
         len_cmd--;
     }
-    string[i] = '\0';
-    len_before  = string_len + 1;
+ //   string[i] = '\0';
+    len_before  = string_len;
     while (len_after > 0)
     {
         string[i] = str[len_before];
@@ -336,6 +395,7 @@ char    *chang_dollar_sign(char *str, char **env)
     int i;
     int j;
     int on;
+    int len;
     char *s;
     char *changed;
     int valid;
@@ -352,27 +412,32 @@ char    *chang_dollar_sign(char *str, char **env)
             if (str[i] == '\'')
                 i += 1;
         }
-        if ((str[i] == '$' && str[i + 1] != '?') || (str[i] == '\\' && str[i + 1] == '$'))
+        if ((str[i] == '$' && str[i + 1] != '?') || check_escape_dollar(str, i) == 1)
         {
             j = dollar_len(str, i);
             s = take_word(str, i, j + i);
+            len = ft_strlen(s);
             valid = dollar_parsing(s);
-            ft_printf("Before remove_escape ==> %s\n", s);
             s = remove_escape_dollar(s);
-            ft_printf("After remove_escape ==> %s\n", s);
+            j = ft_strlen(s);
+           /* if  (str[i] == '\\')
+            {
+                while (str[i] == '\\')
+                    i += 1;
+            }*/
             if (valid == 1)
             {
                 s = chang_dollar(s, env, &on);
                 // if (on == 1)
             }
-            ft_printf("Str before rellaoc ==>%s\n", str);
-            str = realloc_input(str, s, j, j + i, i);
-            ft_printf("Str After rellaoc ==>%s\n", str);
+            str = realloc_input(str, s, j, len + i, i);
+            len = ft_strlen(s);
+            i = len + i;
             //i = j;
         }
-        if (str[i] == '\\' &&  str[i + 1] == '$')
-            i += 2;
-        else if (on != 2)
+       /* if (str[i] == '\\' &&  str[i + 1] == '$')
+            i += 2;*/
+       // else
             i += 1;
         on = 0;
     }
