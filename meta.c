@@ -140,7 +140,7 @@ char	**splits_by_meta(char *str, int *meta)
 	        if (str[i] == '"')
     	        i += 1;
         }
-        if (str[i] == '\'')
+        else if (str[i] == '\'')
         {
             i += 1;
             while (str[i] != '\0' && str[i] != '\'')
@@ -148,7 +148,7 @@ char	**splits_by_meta(char *str, int *meta)
             if (str[i] == '\'')
                 i += 1;
         }
-        if ((str[i] == ';' || str[i] == '|'
+        else if ((str[i] == ';' || str[i] == '|'
 			|| str[i] == '<' || str[i] == '>') && (str[i - 1] != '\\'))
 		{
 		    if (str[i + 1] == '>' && str[i] == '>')
@@ -262,7 +262,7 @@ t_meta	*split_it_all(char *str)
     global->command = check_wich_command(take_first_word(ft_strtrim(splits[i], " ")));
 	if (splits == NULL)
 		return (NULL);
-	if (check_wich_command(splits[i]) == 4)
+	if (check_wich_command(take_first_word(splits[i])) == 4)
     {
 	    while (splits[i][j] != '\0')
         {

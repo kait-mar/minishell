@@ -24,15 +24,65 @@ char	*take_first_word(char *s)
 	j = 0;
 	if (s == NULL)
         return NULL;
-	while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"') && s[i])
+	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 		i++;
+	while (s[i])
+	{
+		if (s[i] == '\'')
+		{
+			i++;
+			while (s[i] && s[i] != '\'')
+				i++;
+			if (s[i] == '\'')
+				i++;
+		}
+		else if (s[i] == '"')
+		{
+			i++;
+			while (s[i] && s[i] != '"')
+				i++;
+			if (s[i] == '"')
+				i++;
+		}
+		else if (ft_isalnum(s[i]))
+			i++;
+		else
+			break;
+	}
+	//this has been replaced by bellow
+	/*while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"') && s[i])
+		i++;*/
 	if (!(string = malloc(i + 1)))
 		return (0);
 	i = 0;
 	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 		i++;
-	while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"') && s[i])
-		string[j++] = s[i++];
+	while (s[i])
+	{
+		if (s[i] == '\'')
+		{
+			string[j++] = s[i++];
+			while (s[i] && s[i] != '\'')
+				string[j++] = s[i++];
+			if (s[i] == '\'')
+				string[j++] = s[i++];
+		}
+		else if (s[i] == '"')
+		{
+			string[j++] = s[i++];
+			while (s[i] && s[i] != '"')
+				string[j++] = s[i++];
+			if (s[i] == '"')
+				string[j++] = s[i++];
+		}
+		else if (ft_isalnum(s[i]))
+			string[j++] = s[i++];
+		else
+			break;
+	}
+
+	/*while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"') && s[i])
+		string[j++] = s[i++];*/
 	string[j] = '\0';
 	return (string);
 }

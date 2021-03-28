@@ -16,16 +16,39 @@ t_meta	*redirect_intput(t_meta *meta, char *str, char **env, int *status)
 {
 	int		fd;
 	int		pid;
+	char	*new;
 	t_meta	*temp;
+	int		on;
 
 	temp = meta;
+	on = 0;
 	while (temp->next != NULL && temp->meta == '<')
 	{
 		temp = temp->next;
         temp->argument = chang_dollar_sign(temp->argument, env);
-		if ((fd = open(temp->argument, O_RDWR, S_IRWXU)) < 0)
+
+		new = file_name(temp->argument);
+        temp->argument = temp->argument + ft_strlen(new);
+          if (meta->command == 0 && check_wich_command(take_first_word(temp->argument)) != 0 && on == 0)
+        {
+            meta = temp;
+            meta->command = check_wich_command(take_first_word(ft_strtrim(temp->argument, " ")));
+           // ft_printf("in temp->command ==> %d || temp->arg ==> %s\n", meta->command, meta->argument);
+            on = 1;
+        }
+        //new = remove_staring_quote(new);
+        new = final_file_name(new);
+        if (on == 0)
+        {
+         meta->argument = ft_strjoin(meta->argument, " ");
+            meta->argument = ft_strjoin(meta->argument, temp->argument);
+        }
+
+
+		if ((fd = open(new, O_RDWR, S_IRWXU)) < 0)
 		{
-			ft_putstr(strerror(errno));
+			g_in_redirect = 1;
+			ft_printf("minishell: %s: %s", new, strerror(errno));
 			return (NULL);
 		}
 	}
