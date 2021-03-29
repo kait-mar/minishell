@@ -399,9 +399,11 @@ char    *chang_dollar_sign(char *str, char **env)
     char *s;
     char *changed;
     int valid;
+    int remove;
 
     i = 0;
     on = 0;
+    remove = 0;
     while (str[i] != '\0')
     {
         if (str[i] == '\'')
@@ -427,7 +429,21 @@ char    *chang_dollar_sign(char *str, char **env)
             }*/
             if (valid == 1)
             {
+                if (inside_quotes(str, i) == 1)
+                    remove = 1;
+                /*if (escape_true(str, i) == 1)
+                    s = add_space(s);*/
                 s = chang_dollar(s, env, &on);
+                if (str[i - 1] == '[' && str[i + j] == ']' && remove == 1)
+                    s = rm_space_variable(s, 0);
+                else if (str[i - 1] == '[' && str[i + j] != ']' && remove == 1)
+                    s = rm_space_variable(s, 1);
+                else if (str[i - 1] != '[' && str[i + j] == ']' && remove == 1)
+                    s = rm_space_variable(s, 2);
+                else if (remove == 1)
+                    s = remove_space(s);
+                if (escape_true(str, i) == 1)
+                    s = add_space(s);
                 // if (on == 1)
             }
             str = realloc_input(str, s, j, len + i, i);
@@ -438,7 +454,8 @@ char    *chang_dollar_sign(char *str, char **env)
        /* if (str[i] == '\\' &&  str[i + 1] == '$')
             i += 2;*/
        // else
-            i += 1;
+       if (str[i] != '$' && str[i] != '\'' && str[i] != '\0')
+           i += 1;
             on = 0;
     }
     return (str);
