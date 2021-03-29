@@ -228,7 +228,6 @@ int   token_error(t_meta *head, int *status)
 }
 
 
-
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -262,8 +261,8 @@ int		main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[2])
-            str= ft_strdup(av[2]);
+        if (av[1])
+            str= ft_strdup(av[1]);
 		else
 		{
 			prompt(g_in_signal);
@@ -277,6 +276,7 @@ int		main(int ac, char **av, char **env)
         while (head != NULL)
         {
             head->argument = chang_dollar_sign(head->argument, env);
+            //fprintf(stderr, "the argv in head  is [%s]\n", head->argument);
             if (token_error(head, &status) == 1)
                 break ;
             if (head->meta == ';')
@@ -299,7 +299,7 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        if (av[2])
+        if (av[1])
             exit(status);
         on = 0;
         g_first_time = 1;
@@ -313,6 +313,7 @@ int		main(int ac, char **av, char **env)
 	}
 	return(status);
 }
+
 /*
 int			main(int ac, char **av, char **env)
 {
@@ -346,14 +347,9 @@ int			main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-<<<<<<< HEAD
-        str = calloc(sizeof (char), 100);
-        read(0, str, 100);
+        //str = "> test echo bonjour";
+        str = "> test echo bonjour";
 		str = remove_space(str);
-=======
-			//prompt(g_in_signal);
-            str = "\"     echo\" bonjour";
->>>>>>> origin/last-redirection
         str = ft_strtrim(str, "\t");
 		str = escape_normal(str);
         meta = split_it_all(str);
@@ -381,7 +377,7 @@ int			main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        //exit(status);
+        exit(status);
         on = 0;
         g_first_time = 1;
         g_in_signal = 0;

@@ -170,3 +170,28 @@ char	*trim_once(char *s)
 	str[j] = '\0';
 	return (str);
 }
+
+char	*trim_once_left(char *s)
+{
+	char	*str;
+	int		i;
+	int		j;
+
+	if (s == NULL)
+		return (NULL);
+	if (*s == ' ')
+	{
+		str = malloc(ft_strlen(s));
+		s++;
+	}
+	else
+		str = malloc(ft_strlen(s) + 1);
+	i = 0;
+	j = 0;
+	while (s[i] != '\0')
+	{
+		str[j++] = s[i++];
+	}
+	str[j] = '\0';
+	return (str);
+}
