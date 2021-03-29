@@ -228,7 +228,6 @@ int   token_error(t_meta *head, int *status)
 }
 
 
-/*
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -312,9 +311,9 @@ int		main(int ac, char **av, char **env)
             g_in_signal = 0;
 	}
 	return(status);
-}*/
+}
 
-
+/*
 int			main(int ac, char **av, char **env)
 {
 	char *str;
@@ -384,4 +383,4 @@ int			main(int ac, char **av, char **env)
         g_in_signal = 0;
 	}
 	return(status);
-}
+}*/

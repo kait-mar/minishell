@@ -214,6 +214,8 @@ int	echo(char *argv, char **env, int *status)
 				bult++;
 
 		}
+		else
+            break ;
 	/*	else
 		{
 			if (flag_strcmp(*bult, "-n") == 0 || ft_strcmp(*bult, "") == 0)
