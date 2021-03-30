@@ -273,10 +273,12 @@ int		main(int ac, char **av, char **env)
 		str = escape_normal(str);
         meta = split_it_all(str);
 		head = meta;
+        //ft_printf("the head is %s\n", meta->argument);
         while (head != NULL)
         {
             head->argument = chang_dollar_sign(head->argument, env);
-           //fprintf(stderr, "the argv in head  is [%s]\n", head->argument);
+            if (head->command == 0)
+                head->command = check_wich_command(take_first_word(head->argument));
             if (token_error(head, &status) == 1)
                 break ;
             if (head->meta == ';')
@@ -347,7 +349,7 @@ int			main()
 	while (TRUE)
 	{
         signal_handler(&status);
-        str = "echo bonjour >> test";
+        str = "echo bonjour >> test > je >> suis";
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
 		str = escape_normal(str);

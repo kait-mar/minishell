@@ -29,6 +29,8 @@ t_meta	*redirect_intput(t_meta *meta, char *str, char **env, int *status)
 
 		new = file_name(temp->argument);
         temp->argument = temp->argument + ft_strlen(new);
+		if (*(temp->argument) == ' ')
+			(temp->argument)++;
           if (meta->command == 0 && check_wich_command(take_first_word(temp->argument)) != 0 && on == 0)
         {
             meta = temp;
@@ -40,7 +42,9 @@ t_meta	*redirect_intput(t_meta *meta, char *str, char **env, int *status)
         new = final_file_name(new);
         if (on == 0)
         {
-         meta->argument = ft_strjoin(meta->argument, " ");
+			if (ft_strcmp(meta->argument, "") != 0 && ft_strcmp(temp->argument, "") != 0 &&
+				(meta->argument[ft_strlen(meta->argument) - 1] != ' ' && *(temp->argument) != ' '))
+         		meta->argument = ft_strjoin(meta->argument, " ");
             meta->argument = ft_strjoin(meta->argument, temp->argument);
         }
 
