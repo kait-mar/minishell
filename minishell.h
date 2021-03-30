@@ -234,6 +234,7 @@ char    *remove_escape_dollar(char *s);
 int     check_escape_dollar(char *str, int i);
 int		homogene(char *s);
 int	    flag_strcmp(char *s1, char *s2);
+char	*trim_once_left(char *s);
 char    *rm_space_variable(char *s, int wich);
 int     inside_quotes(char *s, int i);
 int    escape_front_true(char *s, int i);

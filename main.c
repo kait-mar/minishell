@@ -379,7 +379,7 @@ int			main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        //exit(status);
+        exit(status);
         on = 0;
         g_first_time = 1;
         g_in_signal = 0;

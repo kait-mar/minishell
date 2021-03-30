@@ -122,7 +122,9 @@ void	put_cases(char **bult, char **env, int *status)
 					write(1, " ", 1);
 				split++;
 			}*/
+			//fprintf(stderr, "the bult is %s\n", *bult);
 			print(bult, env, status);
+			//fprintf(stderr, "after printthe bult is %s\n", *bult);
 			if (spaces == 1)
 				my_putchar(' ');
 			spaces = 0;

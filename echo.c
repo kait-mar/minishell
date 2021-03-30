@@ -155,9 +155,9 @@ char	*skip_first_word(char **str)
 		while ((*str)[i] != '\0')
 			s[j++] = (*str)[i++];
 		s[j] = '\0';
+		/*this free causes a problem !!
 		if (*str)
-			free(*str);
-		//printf("Here Skip \n");
+			free(*str);*/
 		return (s);
 	}
 	return (*str);
@@ -174,7 +174,9 @@ int	echo(char *argv, char **env, int *status)
 
 	i = 0;
 	spaces = 0;
+	//fprintf(stderr, "the argv is [%s]\n", argv);
 	argv = skip_first_word(&argv);
+	//fprintf(stderr, "after\n");
 	if (ft_strcmp(argv, "") == 0)
 	{
         my_putchar('\n');
@@ -186,6 +188,7 @@ int	echo(char *argv, char **env, int *status)
 	bult = keep_split(argv, 39, 34);
 	int k = 0;
 	b = 0;
+	//fprintf(stderr, "after\n");
 	//while (bult[k] != NULL)
 	//	ft_printf("|%s|\n", bult[k++]);
 	while (*bult != NULL)
