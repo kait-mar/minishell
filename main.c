@@ -215,8 +215,8 @@ int   token_error(t_meta *head, int *status)
     a_head = head;
     while (a_head != NULL)
     {
-        if (ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|')
-        && a_head->command == 0)
+        if ((ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|')
+        && a_head->command == 0) || ((a_head->meta == '>' || a_head->meta == '<') && (a_head->next == NULL || ft_strcmp(a_head->next->argument, "") == 0)))
         {
             ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
             *status = 258;
@@ -261,8 +261,8 @@ int		main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[2])
-            str= ft_strdup(av[2]);
+        if (av[1])
+            str= ft_strdup(av[1]);
 		else
 		{
 			prompt(g_in_signal);
@@ -301,7 +301,7 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        if (av[2])
+        if (av[1])
             exit(status);
         on = 0;
         g_first_time = 1;
@@ -349,7 +349,7 @@ int			main()
 	while (TRUE)
 	{
         signal_handler(&status);
-        str = "echo bonjour >> test > je >> suis";
+        str = ">";
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
 		str = escape_normal(str);
