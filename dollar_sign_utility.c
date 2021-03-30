@@ -104,16 +104,52 @@ int     inside_quotes(char *s, int i)
     return (0);
 }
 
-int    escape_true(char *s, int i)
+int    escape_front_true(char *s, int i)
 {
+    int count;
+
+    count = 0;
+    i = i - 1;
     while (s[i] == ' ')
+    {
         i -= 1;
-    if (s[i] == '\\')
+        count += 1;
+    }
+    if (count > 1)
         return (1);
     return (0);
 }
 
-char    *add_space(char *s)
+int     escape_back_true(char *s, int i)
+{
+    int count;
+
+    count = 0;
+    while (ft_isprint(s[i]))
+        i += 1;
+    if (s[i] == ' ')
+        return (1);
+    return (0);
+}
+
+char    *add_back_space(char *s)
+{
+    int i;
+    int j;
+    char *str;
+
+    i = 0;
+    j = 0;
+    if (!(str = (char *) malloc(sizeof (char) * ft_strlen(s) + 2 )))
+        return (NULL);
+    while (s[i] != '\0')
+        str[j++] = s[i++];
+    str[j++] = ' ';
+    str[j] = '\0';
+    return (str);
+}
+
+char    *add_front_space(char *s)
 {
     char *string;
     int len;

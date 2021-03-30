@@ -236,7 +236,9 @@ int		homogene(char *s);
 int	    flag_strcmp(char *s1, char *s2);
 char    *rm_space_variable(char *s, int wich);
 int     inside_quotes(char *s, int i);
-int    escape_true(char *s, int i);
-char    *add_space(char *s);
+int    escape_front_true(char *s, int i);
+char    *add_front_space(char *s);
+int    escape_back_true(char *s, int i);
+char    *add_back_space(char *s);
 
 #endif

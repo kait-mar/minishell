@@ -133,6 +133,11 @@ char    *escape_normal(char *str)
                     j += 1;
                     i += 1;
                 }
+                if (str[i] == '\\')
+                {
+                    while (str[i] == '\\')
+                        string[j++] = str[i++];
+                }
             }
             else if (check_escape_space(str, i) == 1)
             {
@@ -156,6 +161,12 @@ char    *escape_normal(char *str)
                 j += 1;
                 i += 1;
             }
+        }
+        else if (str[i] == '$' && str[i + 1] == '\\')
+        {
+            string[j++] = str[i++];
+            while (str[i] == '\\')
+                string[j++] = str[i++];
         }
         else
         {
@@ -319,6 +330,18 @@ char    *remove_escape_dollar(char *s)
     {
         if (s[i] == '\\' && check_escape_dollar(s, i) == 1)
         {
+            while (s[i] == '\\')
+            {
+                i += 1;
+                str[j] = s[i];
+                j += 1;
+                i += 1;
+            }
+            str[j++] = s[i++];
+        }
+        else if (s[i] == '$' && s[i + 1] == '\\')
+        {
+            str[j++] = s[i++];
             while (s[i] == '\\')
             {
                 i += 1;
