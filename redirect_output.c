@@ -39,7 +39,7 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
 			append = 1;
 		else if (temp->meta == '>')
 			check_meta = '>';
-       // ft_printf("temp->command ==> %d || temp->arg ==> %s\n", temp->command, temp->argument);
+        //ft_printf("temp->command ==> %d || temp->arg ==> %s\n", temp->command, temp->argument);
 		temp = temp->next;
 		temp->argument = chang_dollar_sign(temp->argument, env);
 		/*temp->argument = without_that(temp->argument, '\"');

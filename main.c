@@ -276,7 +276,7 @@ int		main(int ac, char **av, char **env)
         while (head != NULL)
         {
             head->argument = chang_dollar_sign(head->argument, env);
-            //fprintf(stderr, "the argv in head  is [%s]\n", head->argument);
+           //fprintf(stderr, "the argv in head  is [%s]\n", head->argument);
             if (token_error(head, &status) == 1)
                 break ;
             if (head->meta == ';')
@@ -315,7 +315,7 @@ int		main(int ac, char **av, char **env)
 }
 
 /*
-int			main(int ac, char **av, char **env)
+int			main()
 {
 	char *str;
 	char    *tmp;
@@ -325,11 +325,11 @@ int			main(int ac, char **av, char **env)
 	t_semi  *semi;
 	int     on;
 
-	//char **av;
-	//char **env;
-	//env = malloc(2*sizeof(char *));
-   // *env = "PATH=/user/bin";
-	//env[1] = NULL;
+	char **av;
+	char **env;
+	env = malloc(2*sizeof(char *));
+    *env = "PATH=/user/bin";
+	env[1] = NULL;
 
 	status = 0;
 	g_on = 0;
@@ -342,13 +342,12 @@ int			main(int ac, char **av, char **env)
 	g_export = NULL;
     if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
         return -1;
-	filling_export(env);
+//	filling_export(env);
 	tmp = NULL;
 	while (TRUE)
 	{
         signal_handler(&status);
-        str = calloc(sizeof (char), 100);
-        read(0, str, 100);
+        str = "echo bonjour >> test";
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
 		str = escape_normal(str);
