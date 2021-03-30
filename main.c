@@ -215,8 +215,8 @@ int   token_error(t_meta *head, int *status)
     a_head = head;
     while (a_head != NULL)
     {
-        if (ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|')
-        && a_head->command == 0)
+        if ((ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|')
+        && a_head->command == 0) || ((a_head->meta == '>' || a_head->meta == '<') && (a_head->next == NULL || ft_strcmp(a_head->next->argument, "") == 0)))
         {
             ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
             *status = 258;
@@ -261,8 +261,8 @@ int		main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[2])
-            str= ft_strdup(av[2]);
+        if (av[1])
+            str= ft_strdup(av[1]);
 		else
 		{
 			prompt(g_in_signal);
@@ -273,6 +273,7 @@ int		main(int ac, char **av, char **env)
 		str = escape_normal(str);
         meta = split_it_all(str);
 		head = meta;
+        //ft_printf("the head is %s\n", meta->argument);
         while (head != NULL)
         {
             head->argument = chang_dollar_sign(head->argument, env);
@@ -300,7 +301,7 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        if (av[2])
+        if (av[1])
             exit(status);
         on = 0;
         g_first_time = 1;
@@ -316,7 +317,7 @@ int		main(int ac, char **av, char **env)
 }
 
 /*
-int			main(int ac, char **av, char **env)
+int			main()
 {
 	char *str;
 	char    *tmp;
@@ -326,11 +327,11 @@ int			main(int ac, char **av, char **env)
 	t_semi  *semi;
 	int     on;
 
-	//char **av;
-	//char **env;
-	//env = malloc(2*sizeof(char *));
-   // *env = "PATH=/user/bin";
-	//env[1] = NULL;
+	char **av;
+	char **env;
+	env = malloc(2*sizeof(char *));
+    *env = "PATH=/user/bin";
+	env[1] = NULL;
 
 	status = 0;
 	g_on = 0;
@@ -343,13 +344,12 @@ int			main(int ac, char **av, char **env)
 	g_export = NULL;
     if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
         return -1;
-	filling_export(env);
+//	filling_export(env);
 	tmp = NULL;
 	while (TRUE)
 	{
         signal_handler(&status);
-        str = calloc(sizeof (char), 100);
-        read(0, str, 100);
+        str = ">";
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
 		str = escape_normal(str);

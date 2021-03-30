@@ -419,7 +419,7 @@ t_meta	*split_it_all(char *str)
 		{
             if (check_append(splits[i]) == TRUE)
             {
-                s = ft_substr(splits[i], 0, until_meta(splits[i]) - 2);
+                s = ft_substr(splits[i], 0, until_meta(splits[i]));
                 temp->meta_append = 1;
             }
             else
