@@ -241,5 +241,7 @@ int    escape_front_true(char *s, int i);
 char    *add_front_space(char *s);
 int    escape_back_true(char *s, int i);
 char    *add_back_space(char *s);
+int     check_inside_back_quote(char *s, int i);
+int     check_inside_front_quote(char *s, int i);
 
 #endif

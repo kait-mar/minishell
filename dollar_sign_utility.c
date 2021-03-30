@@ -172,3 +172,33 @@ char    *add_front_space(char *s)
     string[j] = '\0';
     return (string);
 }
+
+int check_inside_front_quote(char *s, int i)
+{
+    i -= 1;
+    if (ft_isprint(s[i]))
+    {
+        while (ft_isprint(s[i]) && s[i] != '$' && s[i] != '"')
+            i -= 1;
+        if (s[i] == '$')
+            return (1);
+        else
+            return (0);
+    }
+    return (1);
+}
+
+int check_inside_back_quote(char *s, int i)
+{
+    i += 1;
+    if (ft_isprint(s[i]))
+    {
+        while (ft_isprint(s[i]) && s[i] != '$' && s[i] != '"')
+            i += 1;
+        if (s[i] == '$')
+            return (1);
+        else
+            return (0);
+    }
+    return (1);
+}

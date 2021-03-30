@@ -79,7 +79,7 @@ char    *remove_space(char *string)
         end += 1;
     while (start <= end)
     {
-        if (str[start] == '"')
+        if (string[start] == '"')
         {
             str[j++] = string[start++];
             while (string[start] != '\0' && string[start] != '"')
@@ -90,7 +90,7 @@ char    *remove_space(char *string)
             }
             str[j++] = string[start++];
         }
-        else if (str[start] == '\'')
+        else if (string[start] == '\'')
         {
             str[j++] = string[start++];
             while (string[start] != '\0' && string[start] != '\'')

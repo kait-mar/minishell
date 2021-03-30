@@ -456,11 +456,19 @@ char    *chang_dollar_sign(char *str, char **env)
                     s = add_front_space(s);
                 if (escape_back_true(str, i) == 1 && space_back == 1)
                     s = add_back_space(s);
-                else if ((str[i + j] == '$' && space_back == 1) || (str[i + j] == '"' && inside_quotes(str, i) == 1))
+                else if ((str[i + j] == '$' && space_back == 1))
                     s = add_back_space(s);
-               /* if (space_front == 1 && ft_isprint(str[i - 1]) && inside_quotes(str, i) == 1)
-                    s = add_front_space(s);
-                ft_printf("s after_change in the end ==> %s\n", s);*/
+               /* if (space_back == 1 && str[i + j] == '"')
+                {
+                    ft_printf("remove ==> %d || check_inside ==> %d\n", remove, check_inside_back_quote(str, i + j));
+                    if (remove == 1 && check_inside_back_quote(str, i + j) == 1)
+                        s = add_back_space(s);
+                }
+                if (space_front == 1 && str[i - 1] == '"')
+                {
+                    if (remove == 1 && check_inside_front_quote(str, i - 1) == 0)
+                        s = add_front_space(s);
+                }*/
                 // if (on == 1)
             }
             str = realloc_input(str, s, j, len + i, i);
