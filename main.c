@@ -261,8 +261,8 @@ int		main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[1])
-            str= ft_strdup(av[1]);
+        if (av[2])
+            str= ft_strdup(av[2]);
 		else
 		{
 			prompt(g_in_signal);
@@ -301,7 +301,7 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        if (av[1])
+        if (av[2])
             exit(status);
         on = 0;
         g_first_time = 1;
@@ -317,7 +317,7 @@ int		main(int ac, char **av, char **env)
 }
 
 /*
-int			main()
+int			main(int ac, char **av, char **env)
 {
 	char *str;
 	char    *tmp;
@@ -327,11 +327,11 @@ int			main()
 	t_semi  *semi;
 	int     on;
 
-	char **av;
-	char **env;
-	env = malloc(2*sizeof(char *));
-    *env = "PATH=/user/bin";
-	env[1] = NULL;
+	//char **av;
+	//char **env;
+	//env = malloc(2*sizeof(char *));
+    // *env = "PATH=/user/bin";
+	//env[1] = NULL;
 
 	status = 0;
 	g_on = 0;
@@ -340,7 +340,8 @@ int			main()
 	g_in_line = 0;
 	on = 0;
 	head = NULL;
-	str = NULL;
+	if (!(str = (char *) ft_calloc(sizeof(char) , 100)))
+        return (-1);
 	g_export = NULL;
     if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
         return -1;
@@ -349,16 +350,20 @@ int			main()
 	while (TRUE)
 	{
         signal_handler(&status);
-        str = ">";
+        read(0, str, 100);
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
 		str = escape_normal(str);
         meta = split_it_all(str);
-
 		head = meta;
         while (head != NULL)
         {
+            ft_printf("Before head->argument ==> [%s]\n", head->argument);
             head->argument = chang_dollar_sign(head->argument, env);
+            ft_printf("After head->argument ==> [%s]\n", head->argument);
+            if (head->command == 0)
+                head->command = check_wich_command(take_first_word(head->argument));
+            ft_printf("Before head->argument ==> %s\n", head->argument);
             if (head->meta == ';')
             {
                 tmp = semi_split(str);
@@ -379,7 +384,7 @@ int			main()
             if (head != NULL)
                 head = head->next;
         }
-        exit(status);
+       // exit(status);
         on = 0;
         g_first_time = 1;
         g_in_signal = 0;
