@@ -86,7 +86,7 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
 		}
 		else if (check_meta == '>')
 		{
-			if ((fd = open(new,  O_RDWR | O_CREAT | O_TRUNC, S_IRWXU)) < 0)
+			if ((fd = open(new, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU)) < 0)
 			{
 				ft_putstr(strerror(errno));
 				return (NULL);

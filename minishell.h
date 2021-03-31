@@ -243,5 +243,7 @@ int    escape_back_true(char *s, int i);
 char    *add_back_space(char *s);
 int     check_inside_back_quote(char *s, int i);
 int     check_inside_front_quote(char *s, int i);
+char    *return_parsed(char **bult, char **env);
+char	*take_first_word_re(char *s);
 
 #endif

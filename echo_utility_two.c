@@ -84,9 +84,6 @@ char	*take_first_word(char *s)
 		else
 			break;
 	}
-	/*while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"') && s[i])
-		string[j++] = s[i++];*/
-//>>>>>>> origin/last-redirection
 	string[j] = '\0';
 	return (string);
 }

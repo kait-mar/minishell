@@ -211,7 +211,18 @@ int     count_meta_space(char *str)
     nbr = 0;
     while (str[i] != '\0')
     {
-        if (str[i] == '\\')
+        if (str[i] == '"')
+        {
+            i += 1;
+            while (str[i] != '"' && str[i] != '\0')
+            {
+                i += 1;
+                count += 1;
+            }
+            if (str[i] == '"')
+                i += 1;
+        }
+        else if (str[i] == '\\')
         {
             if (check_escape_meta(str, i) == 1)
             {
@@ -251,7 +262,19 @@ char    *escape_meta(char *str)
         return (NULL);
     while (str[i] != '\0')
     {
-        if (str[i] == '\\')
+        if (str[i] == '"')
+        {
+            string[j++] = str[i++];
+            while (str[i] != '"' && str[i] != '\0')
+            {
+                string[j] = str[i];
+                j += 1;
+                i += 1;
+            }
+            if (str[i] == '"')
+                string[j++] = str[i++];
+        }
+        else if (str[i] == '\\')
         {
             if (check_escape_meta(str, i) == 1 || check_escape_space(str, i) == 1)
             {
