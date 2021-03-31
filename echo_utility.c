@@ -123,8 +123,8 @@ void	put_cases(char **bult, char **env, int *status)
 				split++;
 			}*/
 			//fprintf(stderr, "the bult is %s\n", *bult);
-			print(bult, env, status);
-			//fprintf(stderr, "after printthe bult is %s\n", *bult);
+			ft_putstr(*bult);
+			//print(bult, env, status);
 			if (spaces == 1)
 				my_putchar(' ');
 			spaces = 0;
