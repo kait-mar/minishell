@@ -285,6 +285,7 @@ int		main(int ac, char **av, char **env)
             //ft_printf("After Head->argument ==> %s\n", head->argument);
             if (head->command == 0)
             {
+                ft_printf("Enters\n");
                 head->command = check_wich_command(take_first_word(head->argument));
                 print = skip_first_word(&(head->argument));
                 new_argument = take_first_word_re(head->argument);
