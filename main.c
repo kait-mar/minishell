@@ -290,10 +290,18 @@ int		main(int ac, char **av, char **env)
             else if (head->meta == '|')
                 head = pipe_file(head, str, env, &status);
             else if (head->meta_append == 1)
+            {
                 head = redirect_output(head, str, env, &status);
+                if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
+                    head = head->next;
+            }
 //                head = append_file(head, str, env, &status);
             else if (head->meta == '>')
+            {
                 head = redirect_output(head, str, env, &status);
+                if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
+                    head = head->next;
+            }
             else if (head->meta == '<')
                 head = redirect_intput(head, str, env, &status);
             else if (head->meta == '\0')

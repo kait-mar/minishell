@@ -95,15 +95,28 @@ t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
     old_stdin = dup(STDIN_FILENO);
     while(head->meta == '|')
     {
-        pipe(fd);
-        pid = connecting(head, str, env, status, in, fd[1]);
-        close(fd[1]);
-        in = fd[0];
-        head = head->next;
+        if (head->next->meta == '\0' || head->next->meta == '|' || head->next->meta == ';')
+        {
+            pipe(fd);
+            pid = connecting(head, str, env, status, in, fd[1]);
+            close(fd[1]);
+            in = fd[0];
+            head = head->next;
+        }
+        else
+            break ;
     }
     waitpid(pid, status, WUNTRACED);
     close(fd[1]);
-    last_thing(head, str, env, status, in);
+    if (head->next != NULL)
+    {
+        if (head->next->meta == '\0' || head->next->meta == ';')
+            last_thing(head, str, env, status, in);
+    }
+    else
+        last_thing(head, str, env, status, in);
+    /* else if (head->next->meta == '>' || head->next->meta == '<')
+         head = head->next;*/
     close(fd[0]);
     dup2(old_stdin, 0);
     return (head);
