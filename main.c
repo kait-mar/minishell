@@ -271,7 +271,7 @@ int		main(int ac, char **av, char **env)
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
 		str = escape_normal(str);
-        meta = split_it_all(str);
+        meta = split_it_all(str, env);
 		head = meta;
         //ft_printf("the head is %s\n", meta->argument);
         while (head != NULL)
@@ -354,16 +354,13 @@ int			main(int ac, char **av, char **env)
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
 		str = escape_normal(str);
-        meta = split_it_all(str);
+        meta = split_it_all(str, env);
 		head = meta;
         while (head != NULL)
         {
-            ft_printf("Before head->argument ==> [%s]\n", head->argument);
             head->argument = chang_dollar_sign(head->argument, env);
-            ft_printf("After head->argument ==> [%s]\n", head->argument);
             if (head->command == 0)
                 head->command = check_wich_command(take_first_word(head->argument));
-            ft_printf("Before head->argument ==> %s\n", head->argument);
             if (head->meta == ';')
             {
                 tmp = semi_split(str);

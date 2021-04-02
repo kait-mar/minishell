@@ -93,6 +93,10 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
 	char **splits;
 	char *path;
 	char **commands;
+	char *print;
+	char *new_argument;
+	char **changes;
+	char *return_parsing;
 	int 	i;
 	pid_t	pid;
 	int     fd;
@@ -134,9 +138,18 @@ void	execut_command(char **env, char *str, int *check, int j, int *statut)
             splits = take_only_carac(str);
             if (check_wich_command(splits[0]) != 0)
                 splits[0] = ft_strdup(str);
+            else if (check_wich_command(splits[0]) == 0 && splits[1] != NULL)
+            {
+                print = ft_strdup(splits[1]);
+                //new_argument = take_first_word_re(splits[i]);
+                changes = keep_split(print, 39, 34);
+                return_parsing = return_parsed(changes, env);
+                splits[1] = ft_strdup(return_parsing); // ft_strjoin_re(new_argument, return_parsing);
+            }
             while (env[i])
             {
-                if (in_match(only_before_equal(env[i]), "PATH") == 1) {
+                if (in_match(only_before_equal(env[i]), "PATH") == 1)
+                {
                     path = only_after_equal(env[i]);
                     on = 1;
                 }

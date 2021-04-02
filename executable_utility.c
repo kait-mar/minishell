@@ -360,7 +360,6 @@ char    *return_parsed(char **bult, char **env)
         else if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
         {
             //printf("here2 \n");
-            ft_printf("Enters\n");
             if (**bult == 39)
             {
                 *bult = trim_once(*bult);

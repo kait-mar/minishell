@@ -65,6 +65,8 @@ int    connecting(t_meta *head, char *str, char **env, int *status, int in , int
             dup2(out, 1);
             close(out);
         }
+        if (check_bin_echo(head->argument) == 1)
+            head->command = 6;
         built_in(head, str, env, status, 1);
         exit(EXIT_SUCCESS);
     }

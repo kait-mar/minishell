@@ -181,7 +181,7 @@ char	**take_it_all(char *s, int c);
 char	*from_to(char *st, int i, int j);
 int		find_how_many(char *s, char c);
 char	*take_first_word(char *s);
-t_meta	*split_it_all(char *str);
+t_meta	*split_it_all(char *str, char **env);
 int		check_wich_command(char	*str);
 char	*skip_first_word(char **str);
 void	free_meta_struct(t_meta *meta);
@@ -243,5 +243,9 @@ int    escape_back_true(char *s, int i);
 char    *add_back_space(char *s);
 int     check_inside_back_quote(char *s, int i);
 int     check_inside_front_quote(char *s, int i);
+char    *take_first_word_re(char *s);
+char    *return_parsed(char **changes, char **env);
+char	*ft_strjoin_re(char const *s1, char const *s2);
+int     check_bin_echo(char *str);
 
 #endif

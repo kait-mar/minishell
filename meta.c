@@ -293,13 +293,17 @@ char    *removing_backslash(char *s)
     return (str);
 }
 
-t_meta	*split_it_all(char *str)
+t_meta	*split_it_all(char *str, char **env)
 {
 	t_meta	*global;
 	t_meta	*temp;
 	t_buffer *buffer;
 	char	**splits;
 	char	*s;
+	char    *print;
+	char    **changes;
+	char    *new_argument;
+	char    *return_parsing;
 	int		i;
 	int j;
 	int		check;
@@ -370,6 +374,14 @@ t_meta	*split_it_all(char *str)
                 //global->argument = ft_strtrim(global->argument, " ");
                 global->argument = ft_strtrim(global->argument, "\t");
             }
+           /* else if (global->command == 0)
+            {
+                print = skip_first_word(&s);
+                new_argument = take_first_word_re(s);
+                changes = keep_split(print, 39, 34);
+                return_parsing = return_parsed(changes, env);
+                global->argument = ft_strjoin(new_argument, return_parsing);
+            }*/
         }
 	}
 	else if (check_meta(splits[i]) == FALSE  /*|| backslash_on(splits[i]) == 1*/)
