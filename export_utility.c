@@ -287,6 +287,7 @@ char	**take_only_carac(char *str)
 				j += 1;
 			splits[k++] = from_to(str, i, j);
 			i = j;
+			space = 0;
 		}
 		else if (str[i] != '\0')
 			i += 1;

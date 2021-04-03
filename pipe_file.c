@@ -42,7 +42,6 @@ void	ft_lstadd_std(t_std **alst, t_std *new)
     }
 }
 
-
 int    connecting(t_meta *head, char *str, char **env, int *status, int in , int out)
 {
     pid_t pid;
@@ -54,7 +53,6 @@ int    connecting(t_meta *head, char *str, char **env, int *status, int in , int
     }
     if (pid == 0)
     {
-
         if (in != 0)
         {
             dup2(in, 0);
@@ -67,7 +65,10 @@ int    connecting(t_meta *head, char *str, char **env, int *status, int in , int
         }
         if (check_bin_echo(head->argument) == 1)
             head->command = 6;
-        built_in(head, str, env, status, 1);
+        built_in(head, str, env, status, 0);
+      /*  fprintf(stderr, "Errno ==> %d\n", errno);
+        fprintf(stderr, "stats ==> %d\n", *status);
+        fprintf(stderr, "head->arg ==> %s\n", head->argument);*/
         exit(EXIT_SUCCESS);
     }
     return (pid);
@@ -106,7 +107,7 @@ t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
         else
             break ;
     }
-    waitpid(pid, status, WUNTRACED);
+    waitpid(-1, status, WNOHANG);
     close(fd[1]);
     if (head->next != NULL)
     {
@@ -116,7 +117,7 @@ t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
     else
         last_thing(head, str, env, status, in);
     /* else if (head->next->meta == '>' || head->next->meta == '<')
-         head = head->next;*/
+         head = head->next; */
     close(fd[0]);
     dup2(old_stdin, 0);
     return (head);
