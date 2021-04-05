@@ -14,16 +14,21 @@
 
 void		inter_signal(int status)
 {
+    //write(1, "\b\b", 2);
     g_in_signal = 1;
 	if (g_on == 1)
 	    kill(g_pid, SIGINT);
 	if (g_on == 1)
 	{
         g_process = 0;
+        write(1, "\n", 1);
         prompt(2);
     }
 	else
-	    prompt(g_in_signal);
+    {
+        write(1, "\b\b  ", 4);
+        prompt(g_in_signal);
+    }
 }
 
 void	quit_signal(int signum)

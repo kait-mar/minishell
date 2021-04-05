@@ -213,16 +213,36 @@ int   token_error(t_meta *head, int *status)
     t_meta *a_head;
 
     a_head = head;
-    while (a_head != NULL)
+    /*while (a_head != NULL)
     {
-        if ((ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|')
-        && a_head->command == 0) || ((a_head->meta == '>' || a_head->meta == '<') && (a_head->next == NULL || ft_strcmp(a_head->next->argument, "") == 0)))
+        if (ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|') && a_head->command == 0)
+       //     || ((a_head->meta == '>' || a_head->meta == '<') && (a_head->next == NULL || ft_strcmp(a_head->next->argument, "") == 0)))
         {
             ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
             *status = 258;
             return (1);
         }
+        else if ((a_head->meta == '>' || a_head->meta == '<') && (a_head->next == NULL || ft_strcmp(a_head->next->argument, "") == 0))
+        {
+            ft_printf("minishell: syntax error near unexpected token `newline'\n");
+            *status = 258;
+            return (1);
+        }
         a_head = a_head->next;
+    }*/
+    while (a_head->next != NULL && a_head->next->meta != 0)
+        a_head = a_head->next;
+    if (ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|') && a_head->command == 0)
+    {
+        ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
+        *status = 258;
+        return (1);
+    }
+    else if ((a_head->meta == '>' || a_head->meta == '<') && (a_head->next == NULL || ft_strcmp(a_head->next->argument, "") == 0))
+    {
+        ft_printf("minishell: syntax error near unexpected token `newline'\n");
+        *status = 258;
+        return (1);
     }
     return (0);
 }
@@ -324,7 +344,7 @@ int		main(int ac, char **av, char **env)
 }
 
 /*
-int			main(int ac, char **av, char **env)
+int			main()
 {
 	char *str;
 	char    *tmp;
@@ -334,11 +354,11 @@ int			main(int ac, char **av, char **env)
 	t_semi  *semi;
 	int     on;
 
-	//char **av;
-	//char **env;
-	//env = malloc(2*sizeof(char *));
-    // *env = "PATH=/user/bin";
-	//env[1] = NULL;
+	char **av;
+	char **env;
+	env = malloc(2*sizeof(char *));
+    *env = "PATH=/user/bin";
+	env[1] = NULL;
 
 	status = 0;
 	g_on = 0;
@@ -357,7 +377,7 @@ int			main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        read(0, str, 100);
+        str = "echo yes >";
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
 		str = escape_normal(str);
@@ -368,6 +388,8 @@ int			main(int ac, char **av, char **env)
             head->argument = chang_dollar_sign(head->argument, env);
             if (head->command == 0)
                 head->command = check_wich_command(take_first_word(head->argument));
+            if (token_error(head, &status) == 1)
+                break ;
             if (head->meta == ';')
             {
                 tmp = semi_split(str);
