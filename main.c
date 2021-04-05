@@ -377,7 +377,7 @@ int			main()
 	while (TRUE)
 	{
         signal_handler(&status);
-        str = "echo yes >";
+        str = "echo \"$?\"";
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
 		str = escape_normal(str);

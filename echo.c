@@ -109,8 +109,16 @@ int		print(char **bult, char **env, int *status)
 	//ft_printf("\nit returned %d\n", i);*/
 	while (**bult != '\0')
     {
-	    my_putchar(**bult);
-        (*bult)++;
+		if (**bult == '$' && *(*bult + 1) == '?')
+		{
+			ft_printf("%d", *status);
+			*bult = *bult + 2;
+		}
+		else
+		{
+			my_putchar(**bult);
+      		(*bult)++;
+		}
 	    i = 1;
     }
 	return (i);
@@ -296,7 +304,6 @@ int	homogene(char *s)
 		return (1);
 	return (0);
 }
-
 
 int	flag_strcmp(char *s1, char *s2)
 {

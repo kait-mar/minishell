@@ -50,40 +50,48 @@ int	print_env(char *bult, char **env, int which_quote, int *status)
 			break ;
 		else
 		{
-			if (which_quote == 0)
-				str = ft_split(bult, ' ');
-			else if (which_quote == 1)
+			if (*bult == '$' && *(bult + 1) == '?')
 			{
-				if (*(str = ft_split(bult, ' ')) != NULL)
-				{
-					if (*(str = ft_split(str[0], '\'')) != NULL)
-						str = ft_split(str[0], '"');
-				}
+				ft_printf("%d", *status);
+				bult = bult + 2;
 			}
-			if (*str != NULL)
+			else
 			{
-				j = 0;
-				while (env[j])
+				if (which_quote == 0)
+					str = ft_split(bult, ' ');
+				else if (which_quote == 1)
 				{
-					tab = ft_split(env[j], '=');
-					if (ft_strcmp(tab[0], take_first_word(str[0] + 1)) == 0)
+					if (*(str = ft_split(bult, ' ')) != NULL)
 					{
-						ft_putstr(tab[1]);
-						i = 1;
-						break ;
+						if (*(str = ft_split(str[0], '\'')) != NULL)
+							str = ft_split(str[0], '"');
 					}
-					j++;
 				}
-			}
-			if (*bult == '$' && *(bult + 1) != '\0')
-			{
-				bult++;
-				while (ft_isalnum(*bult) == 1 && *bult)
-					bult++;
-				while (*bult)
+				if (*str != NULL)
 				{
-					my_putchar(*bult);
+					j = 0;
+					while (env[j])
+					{
+						tab = ft_split(env[j], '=');
+						if (ft_strcmp(tab[0], take_first_word(str[0] + 1)) == 0)
+						{
+							ft_putstr(tab[1]);
+							i = 1;
+							break ;
+						}
+						j++;
+					}
+				}
+				if (*bult == '$' && *(bult + 1) != '\0')
+				{
+					bult++;
+					while (ft_isalnum(*bult) == 1 && *bult)
 						bult++;
+					while (*bult)
+					{
+						my_putchar(*bult);
+							bult++;
+					}
 				}
 			}
 		}

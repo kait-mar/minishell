@@ -420,7 +420,11 @@ char    *chang_dollar_sign(char *str, char **env)
             if (str[i] == '\'')
                 i += 1;
         }
-        if ((str[i] == '$' && str[i + 1] != '?') || check_escape_dollar(str, i) == 1)
+        if (str[i] == '$' && str[i + 1] == '?')
+        {
+                i += 2;        
+        }
+        else if ((str[i] == '$' && str[i + 1] != '?') || check_escape_dollar(str, i) == 1)
         {
             j = dollar_len(str, i);
             s = take_word(str, i, j + i);
