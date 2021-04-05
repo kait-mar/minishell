@@ -24,15 +24,69 @@ char	*take_first_word(char *s)
 	j = 0;
 	if (s == NULL)
         return NULL;
-	while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"') && s[i])
+	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 		i++;
+	while (s[i])
+	{
+		if (s[i] == '\'')
+		{
+			i++;
+			while (s[i] && s[i] != '\'')
+				i++;
+			if (s[i] == '\'')
+				i++;
+		}
+		else if (s[i] == '"')
+		{
+			i++;
+			while (s[i] && s[i] != '"')
+				i++;
+			if (s[i] == '"')
+				i++;
+		}
+		else if (ft_isalnum(s[i]))
+			i++;
+		else
+			break;
+	}
+	//this has been replaced by bellow
+	/*while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"') && s[i])
+		i++;*/
 	if (!(string = malloc(i + 1)))
 		return (0);
 	i = 0;
-	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
-		i++;
-	while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"') && s[i])
-		string[j++] = s[i++];
+	/*while (s[i] && (s[i] == ' ' || s[i] == '\t'))
+		i++;*/
+	/*while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"' || s[i] == '\\') && s[i])
+		string[j++] = s[i++];*/
+	/*while (s[i] && (s[i] == ' ' || s[i] == '\t'))
+		i++;*/
+	while (s[i])
+	{
+		if (s[i] == '\'')
+		{
+			string[j++] = s[i++];
+			while (s[i] && s[i] != '\'')
+				string[j++] = s[i++];
+			if (s[i] == '\'')
+				string[j++] = s[i++];
+		}
+		else if (s[i] == '"')
+		{
+			string[j++] = s[i++];
+			while (s[i] && s[i] != '"')
+				string[j++] = s[i++];
+			if (s[i] == '"')
+				string[j++] = s[i++];
+		}
+		else if (ft_isalnum(s[i]))
+			string[j++] = s[i++];
+		else
+			break;
+	}
+	/*while ((ft_isalnum(s[i]) || s[i] == '\'' || s[i] == '"') && s[i])
+		string[j++] = s[i++];*/
+//>>>>>>> origin/last-redirection
 	string[j] = '\0';
 	return (string);
 }
@@ -110,6 +164,31 @@ char	*trim_once(char *s)
 	i = 1;
 	j = 0;
 	while (s[i + 1] != '\0')
+	{
+		str[j++] = s[i++];
+	}
+	str[j] = '\0';
+	return (str);
+}
+
+char	*trim_once_left(char *s)
+{
+	char	*str;
+	int		i;
+	int		j;
+
+	if (s == NULL)
+		return (NULL);
+	if (*s == ' ')
+	{
+		str = malloc(ft_strlen(s));
+		s++;
+	}
+	else
+		str = malloc(ft_strlen(s) + 1);
+	i = 0;
+	j = 0;
+	while (s[i] != '\0')
 	{
 		str[j++] = s[i++];
 	}

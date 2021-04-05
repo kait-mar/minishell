@@ -36,9 +36,9 @@ int		print(char **bult, char **env, int *status)
 	i = 0;
 	if (only_star(*bult) == 1)
 		stream_directory();
-	while ((**bult != '$' || (**bult == '\\' && *(*bult + 1) == '$')) && **bult != '\0')
+	/*while (**bult != '$' || (**bult == '\\' && *(*bult + 1) == '$'))&& **bult != '\0')
 	{
-		if (**bult == '\\' && *(*bult + 1) == '\\')
+	    if (**bult == '\\' && *(*bult + 1) == '\\')
 		{
 			j = how_many_escape(*bult);
 			if (j % 2 != 0)
@@ -65,9 +65,9 @@ int		print(char **bult, char **env, int *status)
 		}
 		else if (**bult == '\\')
 		{
-			(*bult)++;
-			continue ;
-		}
+            (*bult)++;
+            continue;
+        }
         my_putchar(**bult);
 		(*bult)++;
 		i = 1;
@@ -106,7 +106,13 @@ int		print(char **bult, char **env, int *status)
 			(*bult)++;
 		}
 	}
-	//ft_printf("\nit returned %d\n", i);
+	//ft_printf("\nit returned %d\n", i);*/
+	while (**bult != '\0')
+    {
+	    my_putchar(**bult);
+        (*bult)++;
+	    i = 1;
+    }
 	return (i);
 }
 
@@ -141,15 +147,17 @@ char	*skip_first_word(char **str)
 	{
 		while ((*str)[i] != ' ' && (*str)[i] != '\t' && (*str)[i] != '\0')
 			i++;
-		while (((*str)[i] == ' ' || (*str)[i] == '\t') && (*str)[i] != '\0')
-			i++;
+		if ((*str)[i] == ' ')
+		    i++;
+		/*while (((*str)[i] == ' ' || (*str)[i] == '\t') && (*str)[i] != '\0')
+			i++;*/
 		s = malloc(ft_strlen(*str) - i + 1);
 		while ((*str)[i] != '\0')
 			s[j++] = (*str)[i++];
 		s[j] = '\0';
-		/*if (*str)
+		/*this free causes a problem !!
+		if (*str)
 			free(*str);*/
-		//printf("Here Skip \n");
 		return (s);
 	}
 	return (*str);
@@ -159,46 +167,92 @@ int	echo(char *argv, char **env, int *status)
 {
 	char	**bult;
 	int		i;
+	int		b;
 	char	**split;
 	char	**str;
 	int		spaces;
 
 	i = 0;
 	spaces = 0;
+	//fprintf(stderr, "the argv is [%s]\n", argv);
 	argv = skip_first_word(&argv);
+	//fprintf(stderr, "after\n");
 	if (ft_strcmp(argv, "") == 0)
 	{
         my_putchar('\n');
         *status = 0;
 		return (0);
 	}
-	
-	argv = ft_strtrim(argv, " ");
+	//argv = ft_strtrim(argv, " ");
 	argv = ft_strtrim(argv, "\t");
 	bult = keep_split(argv, 39, 34);
 	int k = 0;
+	b = 0;
+	//fprintf(stderr, "after\n");
 	//while (bult[k] != NULL)
 	//	ft_printf("|%s|\n", bult[k++]);
-	if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
+	while (*bult != NULL)
 	{
-		if (ft_strcmp(*bult, "-n") == 0 || ft_strcmp(*bult, "'-n'") == 0 || ft_strcmp(*bult, "\"-n\"") == 0)
+		// *bult = ft_strtrim(*bult, " ");
+		if (find(*bult, 39) == 0 && find(*bult, 34) == 0)
+		{
+			str = ft_split(*bult, ' ');
+			while (*str)
+			{
+				if (flag_strcmp(*str, "-n") == 0)
+				{
+					str++;
+					i = 1;
+					*bult = skip_first_word(&(*bult));
+				}
+				else
+				{
+					b = 1;
+					break;
+				}
+			}
+			if (b == 1)
+				break;
+			else if (**bult == '\0')
+				bult++;
+
+		}
+		else
+            break ;
+	/*	else
+		{
+			if (flag_strcmp(*bult, "-n") == 0 || ft_strcmp(*bult, "") == 0)
+			{
+				i = 1;
+				bult++;
+			}
+			else
+				break;
+		}*/
+	}
+	/*if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
+	{
+		while (*bult && (ft_strcmp(*bult, "-n") == 0 || ft_strcmp(*bult, "'-n'") == 0 || ft_strcmp(*bult, "\"-n\"") == 0))
 		{
 			bult++;
 			i = 1;
 			*bult = ft_strtrim_left(*bult, " ");
+			// *bult = skip_first_word(&(*bult));
 		}
-	}
-	else
+	}*/
+	/*else
 	{
-		str = ft_split(*bult, ' ');
+		//str = ft_split(*bult, ' ');
 		if (ft_strcmp(*str, "-n") == 0)
+		str = ft_split(*bult, ' ');
+		while (*str && ft_strcmp(*str, "-n") == 0)
 		{
 			str++;
 			i = 1;
 			*bult = skip_first_word(&(*bult));
 		}
-	}
-	
+	}*/
+
 	put_cases(bult, env, status);
 	if (i == 0)
         my_putchar('\n');
@@ -221,15 +275,63 @@ int	ft_strcmp(const char *s1, const char *s2)
 		return (0);
 }
 
-int	echo_strcmp(const char *s1, const char *s2)
+int	homogene(char *s)
+{
+	int	i;
+	int	sq;
+	int	dq;
+
+	i = 0;
+	sq = 0;
+	dq = 0;
+	while (s[i])
+	{
+		if (s[i] == '\'')
+			sq = '\'';
+		else if (s[i] == '"')
+			dq = '"';
+		i++;
+	}
+	if (sq == 0 || dq == 0)
+		return (1);
+	return (0);
+}
+
+
+int	flag_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i= 0;
+	if (echo_strcmp(s1, "-n") == 0)
+		return (0);
+	if (*s1 == '\'')
+		s1 = ft_strtrim(s1, "'");
+	else if (*s1 == '"')
+		s1 = ft_strtrim(s1, "\"");
+	if (s1[i] == '-')
+		i++;
+	else
+		return (1);
+	while (s1[i] != '\0' && s1[i] == 'n')
+		i++;
+	if (s1[i] == '\0')
+		return (0);
+	return (1);
+}
+
+int	echo_strcmp(char *s1, char *s2)
 {
 	if (s1 == 0 || s2 == 0)
 		return (0);
+	if (homogene(s1) == 0)
+		return (1);
 	while (*s1 != '\0')
 	{
 		while ((*s1 == '\'' || *s1 == '\"') && *s1 != '\0')
 			s1++;
-		if (*s1 != '\0' && *s2 != '\0' && (*s1 == *s2 || *s1 == *s2 - 32))
+		//if (*s1 != '\0' && *s2 != '\0' && (*s1 == *s2 || *s1 == *s2 - 32))
+		if (*s1 != '\0' && *s2 != '\0' && *s1 == *s2)
 		{
 			s1++;
 			s2++;

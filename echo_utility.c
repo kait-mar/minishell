@@ -106,7 +106,7 @@ void	put_cases(char **bult, char **env, int *status)
 		if (find(*bult, 39) == 0 && find(*bult, 34) == 0)
 		{
 			//ft_printf("here\n");
-			split = ft_split(*bult, ' ');
+		/*	split = ft_split(*bult, ' ');
 			if (**bult == ' ')
 				my_putchar(' ');
 			if (*split == NULL)
@@ -121,8 +121,10 @@ void	put_cases(char **bult, char **env, int *status)
 				if (print(split, env, status) == 1 || i == 1)
 					write(1, " ", 1);
 				split++;
-			}
-			print(split, env, status);
+			}*/
+			//fprintf(stderr, "the bult is %s\n", *bult);
+			print(bult, env, status);
+			//fprintf(stderr, "after printthe bult is %s\n", *bult);
 			if (spaces == 1)
 				my_putchar(' ');
 			spaces = 0;

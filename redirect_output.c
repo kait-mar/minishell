@@ -22,14 +22,24 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
 	char	*new;
     int     on;
     int     count;
+	int		append;
+	int		check_meta;
 
 	temp = meta;
 	i = 1;
     on = 0;
     count = 0;
-	while (temp->next != NULL && temp->meta == '>')
+	while (temp->next != NULL && (temp->meta == '>' || temp->meta_append != 0))
 	{
-       // ft_printf("temp->command ==> %d || temp->arg ==> %s\n", temp->command, temp->argument);
+		//check this if put it in or outside the loop
+		on = 0;
+		append = 0;
+		check_meta = 0;
+		if (temp->meta_append != 0)
+			append = 1;
+		else if (temp->meta == '>')
+			check_meta = '>';
+        //ft_printf("temp->command ==> %d || temp->arg ==> %s\n", temp->command, temp->argument);
 		temp = temp->next;
 		temp->argument = chang_dollar_sign(temp->argument, env);
 		/*temp->argument = without_that(temp->argument, '\"');
@@ -45,10 +55,13 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
         }*/
 		new = file_name(temp->argument);
         temp->argument = temp->argument + ft_strlen(new);
+		if (*(temp->argument) == ' ')
+			(temp->argument)++;
           if (meta->command == 0 && check_wich_command(take_first_word(temp->argument)) != 0 && on == 0)
         {
+			//temp->argument = temp->argument + 1;
             meta = temp;
-            meta->command = check_wich_command(take_first_word(ft_strtrim(temp->argument, " ")));
+            meta->command = check_wich_command(take_first_word(temp->argument));
            // ft_printf("in temp->command ==> %d || temp->arg ==> %s\n", meta->command, meta->argument);
             on = 1;
         }
@@ -56,15 +69,28 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
         new = final_file_name(new);
         if (on == 0)
         {
-         meta->argument = ft_strjoin(meta->argument, " ");
+			if (ft_strcmp(meta->argument, "") != 0 && ft_strcmp(temp->argument, "") != 0 &&
+				(meta->argument[ft_strlen(meta->argument) - 1] != ' ' && *(temp->argument) != ' '))
+         		meta->argument = ft_strjoin(meta->argument, " ");
             meta->argument = ft_strjoin(meta->argument, temp->argument);
         }
        // ft_printf("out  temp->command ==> %d || temp->arg ==> %s\n", meta->command, meta->argument);
         i = 1;
-		if ((fd = open(new,  O_RDWR | O_CREAT | O_TRUNC, S_IRWXU)) < 0)
+		if (append != 0)
 		{
-			ft_putstr(strerror(errno));
-			return (NULL);
+			if ((fd = open(new, O_CREAT | O_APPEND | O_RDWR, S_IRWXU)) == -1)
+			{
+				ft_printf("%s", strerror(errno));
+				return (NULL);
+			}
+		}
+		else if (check_meta == '>')
+		{
+			if ((fd = open(new,  O_RDWR | O_CREAT | O_TRUNC, S_IRWXU)) < 0)
+			{
+				ft_putstr(strerror(errno));
+				return (NULL);
+			}
 		}
 	}
 	pid = fork();

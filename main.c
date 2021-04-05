@@ -93,6 +93,7 @@ void	prompt(int in)
 	char	s[100];
 
 	getcwd(s, 100);
+    //printf("the g_in_signal is %d and in is %d\n", g_in_signal, in);
 	if (in == 1)
     {
         ft_printf("\n%s ", s);
@@ -101,6 +102,30 @@ void	prompt(int in)
 	else if (in == 0)
         ft_printf("%s ", s);
 }
+/*
+int		check_wich_command(char *str)
+{
+    int exept;
+
+    exept = 0;
+   // ft_printf("the str to be checked |%s|\n", str);
+	if ((ft_strncmp(str, "cd", 2) == 0 || echo_strcmp(str, "cd") == 0) && (ft_isalpha(str[2]) == 0))
+		return (1);
+	if (check_pwd(str, &exept) == 0 || echo_strcmp(str, "pwd") == 0)
+		return (2);
+	if (check_env(str) == 0 || echo_strcmp(str, "env") == 0)
+		return (3);
+	//if (ft_strncmp(str, "export", 6) == 0 && (ft_isalpha(str[6]) == 0))
+    if (echo_strcmp(str, "export") == 0)
+		return (4);
+	if (check_unset(str) == 0 || echo_strcmp(str, "unset") == 0)
+		return (5);
+	if (echo_strcmp(str, "echo") == 0)
+		return (6);
+	if (check_exit(str) == 1 || echo_strcmp(str, "exit") == 0)
+	    return (7);
+	return (0);
+}*/
 
 int		check_wich_command(char *str)
 {
@@ -139,6 +164,26 @@ int    seach_for(char *s)
     return (0);
 }
 
+int    count_meta1(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i] != '\0' && str[i] == '>')
+        i++;
+    return (i);
+}
+
+int    count_meta2(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i] != '\0' && str[i] == '<')
+        i++;
+    return (i);
+}
+/*
 int   token_error(t_meta *head, int *status)
 {
     t_meta *a_head;
@@ -146,8 +191,32 @@ int   token_error(t_meta *head, int *status)
     a_head = head;
     while (a_head != NULL)
     {
-        if (ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|')
-        && a_head->command == 0)
+        if ((ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|')) ||
+            ((a_head->meta == '>' || a_head->meta == '<') && (a_head->next == NULL || ft_strcmp(a_head->next->argument, "") == 0)))
+        {
+            if (a_head->next != NULL && a_head->meta == '>' && a_head->next->meta == '>')
+                ft_printf("minishell: syntax error near unexpected token `%c%c'\n", a_head->meta, a_head->meta);
+            else if (a_head->meta == '>' || a_head->meta == '<')
+                ft_printf("minishell: syntax error near unexpected token `newline'\n");
+            else
+                ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
+            *status = 258;
+            return (1);
+        }
+        a_head = a_head->next;
+    }
+    return (0);
+}*/
+
+int   token_error(t_meta *head, int *status)
+{
+    t_meta *a_head;
+
+    a_head = head;
+    while (a_head != NULL)
+    {
+        if ((ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|')
+        && a_head->command == 0) || ((a_head->meta == '>' || a_head->meta == '<') && (a_head->next == NULL || ft_strcmp(a_head->next->argument, "") == 0)))
         {
             ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
             *status = 258;
@@ -171,6 +240,7 @@ int		main(int ac, char **av, char **env)
 	status = 0;
 	g_on = 0;
 	g_in_signal = 0;
+  //  g_in_redirect;
 	g_first_time = 0;
 	g_in_line = 0;
 	g_check_single_quote = 0;
@@ -191,18 +261,23 @@ int		main(int ac, char **av, char **env)
 	{
         signal_handler(&status);
         if (av[2])
-            str = ft_strdup(av[2]);
+            str= ft_strdup(av[2]);
 		else
 		{
 			prompt(g_in_signal);
 			str = reading_input();
 		}
+		str = remove_space(str);
         str = ft_strtrim(str, "\t");
-        meta = split_it_all(str);
+		str = escape_normal(str);
+        meta = split_it_all(str, env);
 		head = meta;
+        //ft_printf("the head is %s\n", meta->argument);
         while (head != NULL)
         {
             head->argument = chang_dollar_sign(head->argument, env);
+            if (head->command == 0)
+                head->command = check_wich_command(take_first_word(head->argument));
             if (token_error(head, &status) == 1)
                 break ;
             if (head->meta == ';')
@@ -214,9 +289,18 @@ int		main(int ac, char **av, char **env)
             else if (head->meta == '|')
                 head = pipe_file(head, str, env, &status);
             else if (head->meta_append == 1)
-                head = append_file(head, str, env, &status);
-            else if (head->meta == '>')
+            {
                 head = redirect_output(head, str, env, &status);
+                if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
+                    head = head->next;
+            }
+//                head = append_file(head, str, env, &status);
+            else if (head->meta == '>')
+            {
+                head = redirect_output(head, str, env, &status);
+                if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
+                    head = head->next;
+            }
             else if (head->meta == '<')
                 head = redirect_intput(head, str, env, &status);
             else if (head->meta == '\0')
@@ -228,13 +312,19 @@ int		main(int ac, char **av, char **env)
             exit(status);
         on = 0;
         g_first_time = 1;
-        g_in_signal = 0;
+        if (g_in_redirect == 1)
+        {
+            g_in_redirect = 0;
+            g_in_signal = 1;
+        }
+        else
+            g_in_signal = 0;
 	}
 	return(status);
 }
 
 /*
-int			main()
+int			main(int ac, char **av, char **env)
 {
 	char *str;
 	char    *tmp;
@@ -244,11 +334,11 @@ int			main()
 	t_semi  *semi;
 	int     on;
 
-	char **av;
-	char **env;
-	env = malloc(2*sizeof(char *));
-	*env = "PATH=/user/bin";
-	env[1] = NULL;
+	//char **av;
+	//char **env;
+	//env = malloc(2*sizeof(char *));
+    // *env = "PATH=/user/bin";
+	//env[1] = NULL;
 
 	status = 0;
 	g_on = 0;
@@ -257,24 +347,27 @@ int			main()
 	g_in_line = 0;
 	on = 0;
 	head = NULL;
-	str = NULL;
+	if (!(str = (char *) ft_calloc(sizeof(char) , 100)))
+        return (-1);
 	g_export = NULL;
     if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
         return -1;
-	//filling_export(env);
+//	filling_export(env);
 	tmp = NULL;
 	while (TRUE)
 	{
         signal_handler(&status);
-			//prompt(g_in_signal);
-			//str = "> test echo bonjour";
-            str = "> test1 echo hello > test2";
+        read(0, str, 100);
+		str = remove_space(str);
         str = ft_strtrim(str, "\t");
-        meta = split_it_all(str);
+		str = escape_normal(str);
+        meta = split_it_all(str, env);
 		head = meta;
         while (head != NULL)
         {
             head->argument = chang_dollar_sign(head->argument, env);
+            if (head->command == 0)
+                head->command = check_wich_command(take_first_word(head->argument));
             if (head->meta == ';')
             {
                 tmp = semi_split(str);
@@ -284,7 +377,8 @@ int			main()
             else if (head->meta == '|')
                 head = pipe_file(head, str, env, &status);
             else if (head->meta_append == 1)
-                head = append_file(head, str, env, &status);
+                head = redirect_output(head, str, env, &status);
+                //head = append_file(head, str, env, &status);
             else if (head->meta == '>')
                 head = redirect_output(head, str, env, &status);
 			 else if (head->meta == '<')
@@ -294,8 +388,7 @@ int			main()
             if (head != NULL)
                 head = head->next;
         }
-        if (av[2])
-            exit(status);
+       // exit(status);
         on = 0;
         g_first_time = 1;
         g_in_signal = 0;

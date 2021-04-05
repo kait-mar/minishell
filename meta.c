@@ -37,19 +37,23 @@ int	until_meta(char *str)
             if (str[i] == '\'')
                 i += 1;
         }
-	    if (str[i] == ';' && str[i - 1] != '\\')
+        /*if (str[i] == ';')
+            ft_printf("active ==> %d\n", active(str, i));
+	    if (str[i] == ';' && active(str, i) == 0)
 	        return (i + 1);
-        if (str[i] == '>'&& str[i - 1] != '\\')
+        else if (str[i] == '>' && active(str, i) == 0)
         {
             if (str[i + 1] == '>')
                 return (i + 2);
             else
                 return (i + 1);
         }
-        if (str[i] == '<' && str[i - 1] != '\\')
+        else if (str[i] == '<' && active(str, i) == 0)
             return (i + 1);
-        if (str[i] == '|' && str[i - 1] != '\\')
-            return (i + 1);
+        else if (str[i] == '|' && active(str, i) == 0)
+            return (i + 1);*/
+        if ((str[i] == '|' || str[i] == '>' || str[i] == '<' || str[i] == ';') && active(str, i) == 1)
+            return (i);
         i += 1;
     }
 	return (i);
@@ -73,12 +77,14 @@ void	ft_lstadd(t_meta **alst, t_meta *new)
 static	int		check_meta(char *str)
 {
 	int	i;
+	int count;
 
 	i = 0;
+	count = 0;
 	while (str[i] != '\0')
 	{
 		if ((str[i] == ';' || str[i] == '|'
-            			|| str[i] == '<' || str[i] == '>') && str[i - 1] != '\\')
+            			|| str[i] == '<' || str[i] == '>') && active(str, i) == 1)
 			return (TRUE);
 		i += 1;
 	}
@@ -110,6 +116,61 @@ int     valid(char *str, int j, int len)
     return (0);
 }
 
+int     count_meta(char *str)
+{
+    int  i;
+    int     count;
+    int     how_mutch;
+
+    i = 0;
+    how_mutch = 0;
+    count = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] == '\'')
+        {
+            i += 1;
+            while (str[i] != '\'' && str[i] != '\0')
+                i += 1;
+            if (str[i] == '\'')
+                i += 1;
+        }
+        else if (str[i] == '"')
+        {
+            i += 1;
+            while (str[i] != '"' && str[i] != '\0')
+                i += 1;
+            if (str[i] == '"')
+                i += 1;
+        }
+        else if (str[i] == '\\')
+        {
+            if (check_escape_meta(str, i) == 1)
+            {
+                while (str[i] != '|' && str[i] != '<' && str[i] != '>' && str[i] != ';')
+                {
+                    i += 1;
+                    how_mutch += 1;
+                }
+                if (str[i] == '|' || str[i] == '<' || str[i] == '>' || str[i] == ';')
+                    i += 1;
+                if ((how_mutch % 2) == 0)
+                    count += 1;
+            }
+            else
+                i += 1;
+        }
+        else if (str[i] == '|' || str[i] == '<' || str[i] == '>' || str[i] == ';')
+        {
+            count += 1;
+            i += 1;
+        }
+        else
+            i += 1;
+    }
+    return (count);
+}
+
 char	**splits_by_meta(char *str, int *meta)
 {
 	int	i;
@@ -122,25 +183,20 @@ char	**splits_by_meta(char *str, int *meta)
 	j = 0;
 	k = 0;
 	len = 0;
-	splits = (char **) ft_calloc(sizeof(char *) , 1000);
+	splits = (char **) ft_calloc(sizeof(char *), count_meta(str) + 2);
 	if (str == NULL)
-	{
-		splits[k++] = ft_strdup(" ");
 		return (NULL);
-	}
 	while (str[i] != '\0')
 	{
 	    if (str[i] == '"')
 	    {
             i += 1;
             while (str[i] != '\0' && str[i] != '"')
-            {
                 i += 1;
-            }
 	        if (str[i] == '"')
     	        i += 1;
         }
-        if (str[i] == '\'')
+        else if (str[i] == '\'')
         {
             i += 1;
             while (str[i] != '\0' && str[i] != '\'')
@@ -148,31 +204,23 @@ char	**splits_by_meta(char *str, int *meta)
             if (str[i] == '\'')
                 i += 1;
         }
-        if ((str[i] == ';' || str[i] == '|'
-			|| str[i] == '<' || str[i] == '>') && (str[i - 1] != '\\'))
+        else if ((str[i] == ';' || str[i] == '|'
+			|| str[i] == '<' || str[i] == '>') && (active(str, i) == 1))
 		{
 		    if (str[i + 1] == '>' && str[i] == '>')
             {
 		        if (valid(str, j, i) == 0)
                     splits[k++] = from_to(str, j, i + 2);
 		        else
-                {
-		          /*  while (str[i] != '\"')
-		                i += 1;*/
                     splits[k++] = from_to(str, j, i + 2);
-                }
                i += 2;
             }
 		    else
             {
-                if (valid(str, j, i) == 0)
+                /*if (valid(str, j, i) == 0)
                     splits[k++] = from_to(str, j, i + 2);
-                else
-                {
-                   /* while (str[i] != '\0' && str[i] != '\"')
-                        i += 1;*/
-                    splits[k++] = from_to(str, j, i);
-                }
+                else*/
+                splits[k++] = from_to(str, j, i + 1);
                 i = i + 1;
             }
 			j = i;
@@ -202,13 +250,25 @@ int     check_append(char *s)
 int     backslash_on(char *s)
 {
     int i;
+    int count;
 
     i = 0;
+    count = 0;
     while (s[i] != '\0')
     {
-        if (s[i] == '\\' && (s[i + 1] == ';' || s[i + 1] == '>' || s[i + 1] == '<'
-            || s[i + 1] == '|'))
-            return (1);
+        if (s[i] == '\\')
+        {
+            if (check_escape_meta(s, i) == 1)
+            {
+                while (s[i] == '\\')
+                {
+                    i += 1;
+                    count += 1;
+                }
+                if ((count % 2) == 0)
+                    return (1);
+            }
+        }
         i += 1;
     }
     return (0);
@@ -226,24 +286,24 @@ char    *removing_backslash(char *s)
     j = 0;
     while (s[i] != '\0')
     {
-        if (s[i] != '\\')
-        {
-            str[j] = s[i];
-            j += 1;
-        }
+
         i += 1;
     }
     str[j] = '\0';
     return (str);
 }
 
-t_meta	*split_it_all(char *str)
+t_meta	*split_it_all(char *str, char **env)
 {
 	t_meta	*global;
 	t_meta	*temp;
 	t_buffer *buffer;
 	char	**splits;
 	char	*s;
+	char    *print;
+	char    **changes;
+	char    *new_argument;
+	char    *return_parsing;
 	int		i;
 	int j;
 	int		check;
@@ -255,14 +315,13 @@ t_meta	*split_it_all(char *str)
 	on = 0;
 	if (!(global = (t_meta *) malloc(sizeof(t_meta))))
 		return (NULL);
-
 	splits = splits_by_meta(str, &check);
 	if (splits[i] == NULL)
         return NULL;
-    global->command = check_wich_command(take_first_word(ft_strtrim(splits[i], " ")));
+    global->command = check_wich_command(take_first_word(splits[i]));
 	if (splits == NULL)
 		return (NULL);
-	if (check_wich_command(splits[i]) == 4)
+	if (check_wich_command(take_first_word(splits[i])) == 4)
     {
 	    while (splits[i][j] != '\0')
         {
@@ -274,60 +333,72 @@ t_meta	*split_it_all(char *str)
 	        j += 1;
         }
     }
-	if (on == 1)
+/*	if (on == 1)
 	    s = ft_strdup(splits[i]);
 	else
-    	s = ft_substr(splits[i], 0, until_meta(splits[i]));
-	if (backslash_on(s) == 1)
-	    s = removing_backslash(s);
-    if (check_meta(s) == TRUE && backslash_on(splits[i]) == 0)
+    	s = ft_substr(splits[i], 0, until_meta(splits[i]));*/
+    if (check_meta(splits[i]) == TRUE /*&& backslash_on(splits[i]) == 0*/)
 	{
-        if (check_append(s) == TRUE)
+        if (check_append(splits[i]) == TRUE)
         {
-            s = ft_substr(splits[i], 0, until_meta(splits[i]) - 2);
+            s = ft_substr(splits[i], 0, until_meta(splits[i]));
             global->meta_append = 1;
         }
-        else if (check_append(s) == FALSE)
+        else
         {
             global->meta_append = 0;
-            if (on == 1)
+  /*          if (on == 1)
                 s = ft_strdup(splits[i]);
-            else
-                s = ft_substr(splits[i], 0, until_meta(splits[i]) - 1);
+            else*/
+            s = ft_substr(splits[i], 0, until_meta(splits[i]));
         }
-        if (on == 1)
+        /*if (on == 1)
             global->meta = 0;
         else
-            global->meta = splits[i][until_meta(splits[i]) - 1];
+        {*/
+        global->meta = splits[i][until_meta(splits[i])];
+        //}
 		if (s != NULL)
 		{
+		    s = remove_space(s);
+		    s = escape_meta(s);
             if (global->command != 0 && global->command != 6)
             {
                 global->argument = skip_first_word(&s);
-                global->argument = ft_strtrim(global->argument, " ");
+                //global->argument = ft_strtrim(global->argument, " ");
                 global->argument = ft_strtrim(global->argument, "\t");
             }
             else if (global->command == 0 || global->command == 6)
             {
                 global->argument = ft_strdup(s);
-                global->argument = ft_strtrim(global->argument, " ");
+                //global->argument = ft_strtrim(global->argument, " ");
                 global->argument = ft_strtrim(global->argument, "\t");
             }
+           /* else if (global->command == 0)
+            {
+                print = skip_first_word(&s);
+                new_argument = take_first_word_re(s);
+                changes = keep_split(print, 39, 34);
+                return_parsing = return_parsed(changes, env);
+                global->argument = ft_strjoin(new_argument, return_parsing);
+            }*/
         }
 	}
-	else if (check_meta(s) == FALSE || backslash_on(splits[i]) == 1)
+	else if (check_meta(splits[i]) == FALSE  /*|| backslash_on(splits[i]) == 1*/)
 	{
 		global->meta = 0;
-		if (s != NULL)
+		if (splits[i] != NULL)
         {
+            splits[i] = remove_space(splits[i]);
+            splits[i]= escape_meta(splits[i]);
 		    if (global->command != 0 && global->command !=  6)
             {
-                global->argument = skip_first_word(&s);
-                global->argument = ft_strtrim(global->argument, " ");
+                global->argument = skip_first_word(&splits[i]);
+          //      global->argument = ft_strtrim(global->argument, " ");
                 global->argument = ft_strtrim(global->argument, "\t");
             }
 		    else if (global->command == 0 || global->command == 6)
-                global->argument = ft_strdup(s);
+                global->argument = strdup(splits[i]);
         }
 		global->meta_append = 0;
 	}
@@ -335,7 +406,7 @@ t_meta	*split_it_all(char *str)
 	i += 1;
 	while (splits[i])
 	{
-        if (check_wich_command(splits[i]) == 4)
+   /*     if (check_wich_command(take_first_word(splits[i])) == 4)
         {
             while (splits[i][j] != '\0')
             {
@@ -346,67 +417,71 @@ t_meta	*split_it_all(char *str)
                 }
                 j += 1;
             }
-        }
-        if (on == 1)
+        }*/
+        /*if (on == 1)
             s = ft_strdup(splits[i]);
         else
-            s = ft_substr(splits[i], 0, until_meta(splits[i]));
+            s = ft_substr(splits[i], 0, until_meta(splits[i]));*/
 		if (!(temp = (t_meta *) malloc(sizeof(t_meta))))
 			return (NULL);
+		splits[i] = remove_space(splits[i]);
 		temp->command = check_wich_command(take_first_word(splits[i]));
-		s = ft_substr(splits[i], 0 , until_meta(splits[i]));
-        if (backslash_on(s) == 1)
-            s = removing_backslash(s);
-		if (check_meta(s) == TRUE &&  backslash_on(splits[i]) == 0)
+		//s = ft_substr(splits[i], 0 , until_meta(splits[i]));
+		if (check_meta(splits[i]) == TRUE /*&& backslash_on(splits[i]) == 0*/)
 		{
-            if (check_append(s) == TRUE)
+            if (check_append(splits[i]) == TRUE)
             {
-                s = ft_substr(splits[i], 0, until_meta(splits[i]) - 2);
+                s = ft_substr(splits[i], 0, until_meta(splits[i]));
                 temp->meta_append = 1;
             }
-            else if (check_append(s) == FALSE)
+            else
             {
                 temp->meta_append = 0;
-                if (on == 1)
+           /*     if (on == 1)
                     s = ft_strdup(splits[i]);
-                else
-                    s = ft_substr(splits[i], 0, until_meta(splits[i]) - 1);
+                else*/
+                s = ft_substr(splits[i], 0, until_meta(splits[i]));
                 on = 0;
             }
-            if (on == 1)
+           /* if (on == 1)
                 temp->meta = 0;
-            else
-                temp->meta = splits[i][until_meta(splits[i]) - 1];
+            else*/
+           temp->meta = splits[i][until_meta(splits[i])];
 			if (s != NULL)
             {
-			    if (temp->command != 0 && temp->command != 4 && temp->command !=  6) {
+                s = remove_space(s);
+                s = escape_meta(s);
+			    if (temp->command != 0 && temp->command != 4 && temp->command !=  6)
+			    {
                     temp->argument = skip_first_word(&s);
-                    temp->argument = ft_strtrim(temp->argument, " ");
+                    //temp->argument = ft_strtrim(temp->argument, " ");
                     temp->argument = ft_strtrim(temp->argument, "\t");
                 }
 			    else if (temp->command == 0 || temp->command == 4 || temp->command == 6)
                 {
                     temp->argument = ft_strdup(s);
-                    temp->argument = ft_strtrim(temp->argument, " ");
+                    //temp->argument = ft_strtrim(temp->argument, " ");
                     temp->argument = ft_strtrim(temp->argument, "\t");
                 }
             }
 		}
-		else if (check_meta(s) == FALSE ||  backslash_on(splits[i]) == 1)
+		else if (check_meta(splits[i]) == FALSE /*|| backslash_on(splits[i]) == 1*/)
 		{
 			temp->meta = 0;
-			if (s != NULL)
+			if (splits[i] != NULL)
             {
+                splits[i] = remove_space(splits[i]);
+                splits[i] = escape_meta(splits[i]);
 			    if (temp->command != 0 && temp->command != 4 && temp->command !=  6)
                 {
-                    temp->argument = skip_first_word(&s);
-                    temp->argument = ft_strtrim(temp->argument, " ");
+                    temp->argument = skip_first_word(&splits[i]);
+                    //temp->argument = ft_strtrim(temp->argument, " ");
                     temp->argument = ft_strtrim(temp->argument, "\t");
                 }
                 else if (temp->command == 0 || temp->command == 4 || temp->command == 6)
                 {
-                    temp->argument = ft_strdup(s);
-                    temp->argument = ft_strtrim(temp->argument, " ");
+                    temp->argument = ft_strdup(splits[i]);
+                    //temp->argument = ft_strtrim(temp->argument, " ");
                     temp->argument = ft_strtrim(temp->argument, "\t");
                 }
             }

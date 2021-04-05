@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CLionExternalBuildManager">
+    <target id="2a6470ef-8931-4f7f-9540-674c3815f3f1" name="minishell_tool" defaultType="TOOL">
+      <configuration id="70a66267-025e-468c-a489-36ca5f307c8d" name="minishell_tool" toolchainName="Default">
+        <build type="TOOL">
+          <tool actionId="Tool_External Tools_minishell_tool_build" />
+        </build>
+        <clean type="TOOL">
+          <tool actionId="Tool_External Tools_minishell_toll_clean" />
+        </clean>
+      </configuration>
+    </target>
+  </component>
+</project>
