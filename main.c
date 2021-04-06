@@ -230,7 +230,7 @@ int   token_error(t_meta *head, int *status)
         }
         a_head = a_head->next;
     }*/
-    while (a_head->next != NULL && a_head->next->meta != 0)
+    while (a_head->next != NULL && a_head->next->meta != 0 && (ft_strcmp(a_head->argument, "") != 0 || ((a_head->meta == '>' || a_head->meta == '<') && ft_strcmp(a_head->next->argument, "") == 0)))
         a_head = a_head->next;
     if (ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|') && a_head->command == 0)
     {
@@ -250,7 +250,7 @@ int   token_error(t_meta *head, int *status)
 int		main(int ac, char **av, char **env)
 {
 	char *str;
-	char    *tmp;
+	char	*tmp;
 	int		status;
 	t_meta	*meta;
 	t_meta	*head;
@@ -377,7 +377,7 @@ int			main()
 	while (TRUE)
 	{
         signal_handler(&status);
-        str = "echo \"$?\"";
+        str = "echo \\ \\ \\ \\ ";
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
 		str = escape_normal(str);

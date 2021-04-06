@@ -26,7 +26,7 @@ int		only_star(char *s)
 		return (0);
 }
 
-int		print(char **bult, char **env, int *status)
+int		 print(char **bult, char **env, int *status)
 {
 	int		j;
 	char	**tab;
@@ -205,6 +205,8 @@ int	echo(char *argv, char **env, int *status)
 		if (find(*bult, 39) == 0 && find(*bult, 34) == 0)
 		{
 			str = ft_split(*bult, ' ');
+			if (*str == NULL)
+				break;
 			while (*str)
 			{
 				if (flag_strcmp(*str, "-n") == 0)
