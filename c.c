@@ -8,6 +8,12 @@
 #include <fcntl.h>
 
 
+int     int_put(int c)
+{
+    write(1, &c, 1);
+    return (0);
+}
+
 int  main()
 {
 	char *termtype;
@@ -32,7 +38,7 @@ int  main()
     if (!(buffer_adress = (char *) malloc(strlen(buffer))))
         return (-1);
     tty_name = ttyname(STDIN_FILENO);
-    up_arr = tgetstr("up", &buffer_adress);
+    up_arr = tgetstr("ku", &buffer_adress);
     down_arr = tgetstr("kd", &buffer_adress);
     fd = open(tty_name, O_RDWR | O_NOCTTY);
     if (tcgetattr(fd, &tp) == -1)

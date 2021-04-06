@@ -29,7 +29,6 @@ int		only_star(char *s)
 int		print(char **bult, char **env, int *status)
 {
 	int		j;
-	char	**tab;
 	int		i;
 	int		fd;
 

@@ -9,7 +9,7 @@ int	print_env(char *bult, char **env, int which_quote, int *status)
 {
 	char	**str;
 	int		j;
-	char	**tab;
+	char	**tabs;
 	int		i;
 
 	i = 0;
@@ -72,10 +72,10 @@ int	print_env(char *bult, char **env, int which_quote, int *status)
 					j = 0;
 					while (env[j])
 					{
-						tab = ft_split(env[j], '=');
-						if (ft_strcmp(tab[0], take_first_word(str[0] + 1)) == 0)
+						tabs = ft_split(env[j], '=');
+						if (ft_strcmp(tabs[0], take_first_word(str[0] + 1)) == 0)
 						{
-							ft_putstr(tab[1]);
+							ft_putstr(tabs[1]);
 							i = 1;
 							break ;
 						}

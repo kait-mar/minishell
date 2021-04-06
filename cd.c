@@ -14,21 +14,41 @@
 #include <dirent.h>
 #include <errno.h>
 
-char     *reading_input(void)
+/*
+int		search(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] == '\n')
+        {
+            str[i] = '\0';
+            return (TRUE);
+        }
+        i++;
+    }
+    return (FALSE);
+}*/
+
+t_assen    *reading_input(t_assen *assen, char **cmd)
 {
 	char	*str;
-	int		i;
-	int     on;
-	int     k;
-	int check;
-	char    *s;
+	char    *tmp;
+	t_history history;
+	int fd;
+	char *clear;
+	struct termios tp;
+	struct termios save;
 
-	str = NULL;
-	i = 0;
-	k = 0;
-	check = 0;
-	int j=0;
-	while (i == 0)
+
+    str = NULL;
+    tmp = NULL;
+	//i = 0;
+	//k = 0;
+	//check = 0;
+	/*while (i == 0)
 	{
 	    if (k == 0 ||  (g_in_line == 0 && i == 0))
         {
@@ -49,8 +69,57 @@ char     *reading_input(void)
         else if (i == 0 && ft_strcmp(str, "") != 0 && k == 0)
             check = 1;
         k += 1;
+    }*/
+    ft_memset(&history, 0, sizeof (t_history));
+    if (!(str = (char *) ft_calloc(1, BUFFER)))
+        return (NULL);
+	history = init_hist(history);
+	//printf("histort.tty_name ==> %s\n", history.tty_name);
+    fd = open(history.tty_name, O_RDWR | O_NOCTTY);
+    if (isatty(fd))
+    {
+        if (tcgetattr(fd, &tp) == -1)
+            exit(-1);
+        save = tp;
+        tp.c_lflag &= ~(ICANON);
+        tp.c_cc[VMIN] = 0;
+        tp.c_cc[VTIME] = 0;
+        if (tcsetattr(fd, TCSANOW, &tp) == 1)
+            exit (-1);
+        while (TRUE)
+        {
+            read(fd, str, BUFFER);
+            if (memcmp(str, history.up_arrow, 3) == 0)
+            {
+                tputs(history.clear, 0, int_put);
+                if (assen->prev != NULL)
+                    assen = assen->prev;
+                printf("%s\n", assen->cmd);
+               // break ;
+            }
+            else if (memcmp(str, history.down_arrow, 3) == 0)
+            {
+                tputs(history.clear, 0, int_put);
+                if (assen->next != NULL)
+                    assen = assen->next;
+                printf("%s\n", assen->cmd);
+               // break ;
+            }
+            tmp = extend(str, tmp);
+            if (!(str = (char *) ft_calloc(1, BUFFER)))
+                return (NULL);
+            if (search(tmp))
+            {
+                append_assen(&assen, tmp);
+                break ;
+            }
+        }
+        //get_next_line(0, &str);
+        if (tcsetattr(fd, TCSANOW, &save) == 1)
+            exit (-1);
     }
-	return (str);
+    *cmd = ft_strdup(tmp);
+	return (assen);
 }
 
 char		**split_to_tokens(char *str)

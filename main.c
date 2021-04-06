@@ -247,6 +247,7 @@ int   token_error(t_meta *head, int *status)
     return (0);
 }
 
+
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -255,6 +256,7 @@ int		main(int ac, char **av, char **env)
 	t_meta	*meta;
 	t_meta	*head;
 	t_semi  *semi;
+	t_assen  *assen;
 	int     on;
 
 	status = 0;
@@ -273,6 +275,7 @@ int		main(int ac, char **av, char **env)
 	head = NULL;
 	str = NULL;
 	g_export = NULL;
+	assen  = NULL;
     if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
         return -1;
     filling_export(env);
@@ -280,12 +283,12 @@ int		main(int ac, char **av, char **env)
 	while (TRUE)
 	{
         signal_handler(&status);
-        if (av[2])
-            str= ft_strdup(av[2]);
+        if (av[1])
+            str= ft_strdup(av[1]);
 		else
 		{
 			prompt(g_in_signal);
-			str = reading_input();
+			assen = reading_input(assen, &str);
 		}
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
@@ -328,7 +331,7 @@ int		main(int ac, char **av, char **env)
             if (head != NULL)
                 head = head->next;
         }
-        if (av[2])
+        if (av[1])
             exit(status);
         on = 0;
         g_first_time = 1;
@@ -344,7 +347,7 @@ int		main(int ac, char **av, char **env)
 }
 
 /*
-int			main()
+int			main(int ac, char **av, char **env)
 {
 	char *str;
 	char    *tmp;
@@ -352,13 +355,9 @@ int			main()
 	t_meta	*meta;
 	t_meta	*head;
 	t_semi  *semi;
+	t_assen *assen;
 	int     on;
 
-	char **av;
-	char **env;
-	env = malloc(2*sizeof(char *));
-    *env = "PATH=/user/bin";
-	env[1] = NULL;
 
 	status = 0;
 	g_on = 0;
@@ -367,17 +366,18 @@ int			main()
 	g_in_line = 0;
 	on = 0;
 	head = NULL;
+	assen = NULL;
 	if (!(str = (char *) ft_calloc(sizeof(char) , 100)))
         return (-1);
 	g_export = NULL;
     if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
         return -1;
-//	filling_export(env);
+	filling_export(env);
 	tmp = NULL;
 	while (TRUE)
 	{
         signal_handler(&status);
-        str = "echo \"$?\"";
+        assen = reading_input(assen, &str);
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
 		str = escape_normal(str);
