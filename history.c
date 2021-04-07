@@ -13,6 +13,11 @@
 
 #include "minishell.h"
 
+char    *delete_char(char *string)
+{
+    string[ft_strlen(string - 1)] = '\0';
+    return (string);
+}
 
 int     find_re(char *string, int c)
 {
@@ -104,6 +109,7 @@ t_history   init_hist(t_history history)
     history.down_arrow = tgetstr("kd", &buffer_address);
     history.key_e = tgetstr("ke", &buffer_address);
     history.clear = tgetstr("ce", &buffer_address);
-    history.line_start = tgetstr("le", &buffer_address);
+    history.line_start = tgetstr("cr", &buffer_address);
+    history.delete_char = tgetstr("dc", &buffer_address);
     return (history);
 }

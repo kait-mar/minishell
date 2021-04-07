@@ -125,6 +125,7 @@ typedef struct s_history
     char *down_arrow;
     char *clear;
     char *line_start;
+    char *delete_char;
 }               t_history;
 
 typedef  struct s_assen
@@ -277,5 +278,6 @@ void    append_assen(t_assen **assen, char *cmd);
 int     int_put(int c);
 char	*extend_re(char *str, char *s);
 int     find_re(char *string, int c);
+char    *delete_char(char *string);
 
 #endif
