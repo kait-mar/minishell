@@ -32,11 +32,15 @@ int		search(char *str)
     return (FALSE);
 }*/
 
-t_assen    *reading_input(t_assen *assen, char **cmd)
+
+
+char   *reading_input(t_assen *assen)
 {
 	char	*str;
+	int     r;
 	char    *tmp;
 	t_history history;
+	t_assen *climb;
 	int fd;
 	char *clear;
 	struct termios tp;
@@ -45,37 +49,14 @@ t_assen    *reading_input(t_assen *assen, char **cmd)
 
     str = NULL;
     tmp = NULL;
-	//i = 0;
-	//k = 0;
-	//check = 0;
-	/*while (i == 0)
-	{
-	    if (k == 0 ||  (g_in_line == 0 && i == 0))
-        {
-            i = get_next_line(1, &str);
-            if (k == 0)
-                s = ft_strdup(str);
-            if (g_in_line == 1 && i == 1)
-            {
-                g_in_line = 0;
-                return (s);
-            }
-        }
-        if (ft_strcmp(str, "") == 0 && i == 0 && check == 0)
-        {
-            ft_printf("exit\n");
-            exit(EXIT_SUCCESS);
-        }
-        else if (i == 0 && ft_strcmp(str, "") != 0 && k == 0)
-            check = 1;
-        k += 1;
-    }*/
     ft_memset(&history, 0, sizeof (t_history));
-    if (!(str = (char *) ft_calloc(1, BUFFER)))
+    if (!(str = (char *) malloc( BUFFER + 1)))
         return (NULL);
 	history = init_hist(history);
-	//printf("histort.tty_name ==> %s\n", history.tty_name);
     fd = open(history.tty_name, O_RDWR | O_NOCTTY);
+    climb = assen;
+    while (climb->next !=  NULL)
+        climb = climb->next;
     if (isatty(fd))
     {
         if (tcgetattr(fd, &tp) == -1)
@@ -88,38 +69,52 @@ t_assen    *reading_input(t_assen *assen, char **cmd)
             exit (-1);
         while (TRUE)
         {
-            read(fd, str, BUFFER);
+            r = read(fd, str, BUFFER);
+            str[r] = '\0';
             if (memcmp(str, history.up_arrow, 3) == 0)
             {
-                tputs(history.clear, 0, int_put);
-                if (assen->prev != NULL)
-                    assen = assen->prev;
-                printf("%s\n", assen->cmd);
-               // break ;
+                /*tputs(history.line_start, 0, int_put);
+                tputs(history.clear, 0, int_put);*/
+                if (climb->prev != NULL)
+                {
+                    printf("%s", climb->cmd);
+                    climb = climb->prev;
+                }
             }
             else if (memcmp(str, history.down_arrow, 3) == 0)
             {
+                tputs(history.line_start, 0, int_put);
                 tputs(history.clear, 0, int_put);
-                if (assen->next != NULL)
-                    assen = assen->next;
-                printf("%s\n", assen->cmd);
-               // break ;
+                if (climb->next != NULL)
+                {
+                    climb = climb->next;
+                    printf("%s", climb->cmd);
+                }
             }
-            tmp = extend(str, tmp);
-            if (!(str = (char *) ft_calloc(1, BUFFER)))
+            tmp = extend_re(str, tmp);
+           // free(str);
+            str = (char *) malloc(sizeof(char) * BUFFER + 1);
+            if (str == NULL)
                 return (NULL);
-            if (search(tmp))
+            if (find_re(tmp, '\n'))
             {
                 append_assen(&assen, tmp);
+                if (tcsetattr(fd, TCSANOW, &save) == 1)
+                    exit (-1);
                 break ;
             }
         }
-        //get_next_line(0, &str);
-        if (tcsetattr(fd, TCSANOW, &save) == 1)
-            exit (-1);
     }
-    *cmd = ft_strdup(tmp);
-	return (assen);
+    t_assen *tt;
+
+    tt = assen;
+    while (tt != NULL)
+    {
+        printf("tt ==> %s\n", tt->cmd);
+        tt = tt->next;
+    }
+    printf("tmp ==> [%s]\n", tmp);
+	return (tmp);
 }
 
 char		**split_to_tokens(char *str)

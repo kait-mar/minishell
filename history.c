@@ -14,6 +14,50 @@
 #include "minishell.h"
 
 
+int     find_re(char *string, int c)
+{
+    int i;
+
+    i = 0;
+    while (string[i] != '\0')
+    {
+        if (string[i] == c)
+        {
+            string[i] = '\0';
+            return (TRUE);
+        }
+        i += 1;
+    }
+    return (FALSE);
+}
+
+char	*extend_re(char *str, char *s)
+{
+    char	*p_tr;
+    int		i;
+    int		j;
+
+    p_tr = NULL;
+    if (!(p_tr = (char *)ft_calloc((word_len(str, 0) +
+                                    (s ? word_len(s, 0) : 0) + 1), sizeof(char))))
+        return (NULL);
+    i = 0;
+    while (s && s[i] != '\0')
+    {
+        p_tr[i] = s[i];
+        i++;
+    }
+    j = 0;
+    while (str[j] != '\0')
+    {
+        p_tr[i] = str[j];
+        i++;
+        j++;
+    }
+    p_tr[i] = '\0';
+    return (p_tr);
+}
+
 int     int_put(int c)
 {
     write(1, &c, 1);
@@ -59,6 +103,7 @@ t_history   init_hist(t_history history)
     history.up_arrow = tgetstr("ku", &buffer_address);
     history.down_arrow = tgetstr("kd", &buffer_address);
     history.key_e = tgetstr("ke", &buffer_address);
-    history.clear = tgetstr("cl", &buffer_address);
+    history.clear = tgetstr("ce", &buffer_address);
+    history.line_start = tgetstr("le", &buffer_address);
     return (history);
 }

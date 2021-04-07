@@ -256,7 +256,7 @@ int		main(int ac, char **av, char **env)
 	t_meta	*meta;
 	t_meta	*head;
 	t_semi  *semi;
-	t_assen  *assen;
+	t_assen  assen;
 	int     on;
 
 	status = 0;
@@ -275,20 +275,20 @@ int		main(int ac, char **av, char **env)
 	head = NULL;
 	str = NULL;
 	g_export = NULL;
-	assen  = NULL;
     if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
         return -1;
     filling_export(env);
     tmp = NULL;
+    memset(&assen, 0, sizeof (t_assen));
 	while (TRUE)
 	{
         signal_handler(&status);
         if (av[1])
-            str= ft_strdup(av[1]);
+            str = ft_strdup(av[1]);
 		else
 		{
 			prompt(g_in_signal);
-			assen = reading_input(assen, &str);
+			str = reading_input(&assen);
 		}
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");

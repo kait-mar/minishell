@@ -124,6 +124,7 @@ typedef struct s_history
     char *up_arrow;
     char *down_arrow;
     char *clear;
+    char *line_start;
 }               t_history;
 
 typedef  struct s_assen
@@ -155,7 +156,7 @@ int     g_check;
 void	cd_command(char *argument, int *status, char **env);
 char	**taking_command(char *str);
 char	**split_to_tokens(char *str);
-t_assen 	*reading_input(t_assen *assen, char **str);
+char 	*reading_input(t_assen *assen);
 char	*without_that(char *str, char c);
 int		how_mutch_argument(char *str, int i);
 char	*ft_toStrLower(char *str);
@@ -274,5 +275,7 @@ int     check_bin_echo(char *str);
 t_history   init_hist(t_history history);
 void    append_assen(t_assen **assen, char *cmd);
 int     int_put(int c);
+char	*extend_re(char *str, char *s);
+int     find_re(char *string, int c);
 
 #endif
