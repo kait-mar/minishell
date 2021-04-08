@@ -285,5 +285,7 @@ int     int_put(int c);
 char	*extend_re(char *str, char *s);
 int     find_re(char *string, int c);
 char    *delete_char(char *string);
+char	**put_cases1(char **bult);
+char	**put_cases2(char **bult);
 
 #endif

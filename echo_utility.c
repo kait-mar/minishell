@@ -39,6 +39,49 @@ int	print_env(char *bult, char **env, int which_quote, int *status)
 	return (i);
 }
 
+char	**put_cases2(char **bult)
+{
+	int	j;
+
+	j = how_many_escape(*bult);
+	if (j % 2 != 0)
+	{
+		while (*(*bult + 1) == '\\')
+		(*bult)++;
+	}
+	else
+	{
+		while (**bult == '\\')
+			(*bult)++;
+	}
+	j /= 2;
+	while (--j >= 0)
+		ft_putchar('\\');
+	return (bult);
+}
+
+char	**put_cases1(char **bult)
+{
+	while (**bult != '\0')
+	{
+		if (**bult == '\\' && (*(*bult + 1) == '$' || *(*bult + 1) == '"' || *(*bult + 1) == '\'' || *(*bult + 1) == '\\'))
+			bult = put_cases2(bult);
+		if (**bult == '\\' && (*(*bult + 1) == '$' || *(*bult + 1) == '"' || *(*bult + 1) == '\''))
+			(*bult)++;
+		else if (**bult == '\\')
+		{
+			my_putchar(**bult);
+			(*bult)++;
+		}
+		while (**bult != '\0' && **bult != '\\')
+		{
+			my_putchar(**bult);
+			(*bult)++;
+		}
+	}
+	return (bult);
+}
+
 void	put_cases(char **bult, char **env, int *status)
 {
 	int		which_quote;
@@ -102,42 +145,7 @@ void	put_cases(char **bult, char **env, int *status)
 					i = 0;
 				}
 				else
-				{
-					while (**bult != '\0')
-					{
-						if (**bult == '\\' && (*(*bult + 1) == '$' || *(*bult + 1) == '"' || *(*bult + 1) == '\'' || *(*bult + 1) == '\\'))
-						{
-							j = how_many_escape(*bult);
-							if (j % 2 != 0)
-							{
-								while (*(*bult + 1) == '\\')
-								(*bult)++;
-							}
-							else
-							{
-								while (**bult == '\\')
-									(*bult)++;
-							}
-							j /= 2;
-							while (--j >= 0)
-								ft_putchar('\\');
-						}
-						if (**bult == '\\' && (*(*bult + 1) == '$' || *(*bult + 1) == '"' || *(*bult + 1) == '\''))
-						{
-							(*bult)++;
-						}
-						else if (**bult == '\\')
-						{
-							my_putchar(**bult);
-							(*bult)++;
-						}
-						while (**bult != '\0' && **bult != '\\')
-						{
-							my_putchar(**bult);
-							(*bult)++;
-						}
-					}
-				}
+					bult = put_cases1(bult);
 			}
 			else
 			{
