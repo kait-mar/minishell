@@ -13,9 +13,15 @@
 
 #include "minishell.h"
 
+
+void    moving_up(t_assen **climb, t_history history)
+{
+
+}
+
 char    *delete_char(char *string)
 {
-    string[ft_strlen(string - 1)] = '\0';
+    string[ft_strlen(string ) - 1] = '\0';
     return (string);
 }
 
@@ -111,5 +117,7 @@ t_history   init_hist(t_history history)
     history.clear = tgetstr("ce", &buffer_address);
     history.line_start = tgetstr("cr", &buffer_address);
     history.delete_char = tgetstr("dc", &buffer_address);
+    history.delete_mode = tgetstr("dm", &buffer_address);
+    history.exit_d_mode = tgetstr("ed", &buffer_address);
     return (history);
 }
