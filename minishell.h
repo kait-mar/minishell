@@ -247,5 +247,9 @@ char    *take_first_word_re(char *s);
 char    *return_parsed(char **changes, char **env);
 char	*ft_strjoin_re(char const *s1, char const *s2);
 int     check_bin_echo(char *str);
+char    *print_env1(char *bult);
+char    *print_env2(char *bult, char **env, int which_quote, int *status);
+int		print_envir(char **str, char **env, char **tab);
+char    *check_print(char *bult);
 
 #endif
