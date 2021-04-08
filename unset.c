@@ -98,7 +98,7 @@ t_env		*delete_in_env(t_env *env, char **splits, int on, int *status)
 	int		check;
 	t_env	*tmp;
 
-	i = 1;
+	i = 0;
 	count = 0;
 	check = 0;
 	tmp = env;

@@ -32,7 +32,7 @@ static  char    *semi_split(char *str)
     return (s);
 }
 
-void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
+void 	 built_in(t_meta *meta, t_assen assen, char **env, int *status, int l)
 {
 	int check;
 	int  exept;
@@ -48,7 +48,7 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 	else if (meta->command == 4)
         export_command(env, meta->argument, status, NULL);
 	else if (meta->command == 5)
-		unset_command(env, str, status);
+        unset_command(env, meta->argument, status);
 	else if (meta->command == 6)
     {
         echo(meta->argument, env, status);
@@ -58,34 +58,11 @@ void 	 built_in(t_meta *meta, char *str, char **env, int *status, int i)
 	    if (ft_strcmp(meta->argument, "") != 0)
 	    {
             g_process = 1;
-            execut_command(env, meta->argument, &check, i, status);
+            execut_command(env, meta->argument, &check, status);
         }
-	   /* if (*status != 0)
-	        ft_printf("minishell: %s: %s\n", meta->argument, strerror(errno));*/
-/*	    if (*status == 126)
-            ft_printf("minishell: %s: Permission denied\n", meta->argument);
-	    if (*status == 127)
-            ft_printf("minishell: %s: command not found\n", meta->argument);*/
-	    /*if (check == 3)
-        {
-            ft_printf("minishell: %s: Permission denied\n", meta->argument);
-            g_process = 0;
-            *status = 126;
-        }
-		else if (check == 1)
-		{
-			ft_printf("minishell: %s: command not found\n", meta->argument);
-			g_process = 0;
-			*status = 127;
-		}
-		else if (check == 4)
-        {
-		    g_process = 0;
-		    *status = 127;
-        }*/
 	}
     if (meta->command == 7)
-        exit_command(*status, meta->argument);
+        exit_command(*status, meta->argument, &assen);
 }
 
 void	prompt(int in)
@@ -93,7 +70,6 @@ void	prompt(int in)
 	char	s[100];
 
 	getcwd(s, 100);
-    //printf("the g_in_signal is %d and in is %d\n", g_in_signal, in);
 	if (in == 1)
     {
         ft_printf("\n%s ", s);
@@ -102,30 +78,7 @@ void	prompt(int in)
 	else if (in == 0)
         ft_printf("%s ", s);
 }
-/*
-int		check_wich_command(char *str)
-{
-    int exept;
 
-    exept = 0;
-   // ft_printf("the str to be checked |%s|\n", str);
-	if ((ft_strncmp(str, "cd", 2) == 0 || echo_strcmp(str, "cd") == 0) && (ft_isalpha(str[2]) == 0))
-		return (1);
-	if (check_pwd(str, &exept) == 0 || echo_strcmp(str, "pwd") == 0)
-		return (2);
-	if (check_env(str) == 0 || echo_strcmp(str, "env") == 0)
-		return (3);
-	//if (ft_strncmp(str, "export", 6) == 0 && (ft_isalpha(str[6]) == 0))
-    if (echo_strcmp(str, "export") == 0)
-		return (4);
-	if (check_unset(str) == 0 || echo_strcmp(str, "unset") == 0)
-		return (5);
-	if (echo_strcmp(str, "echo") == 0)
-		return (6);
-	if (check_exit(str) == 1 || echo_strcmp(str, "exit") == 0)
-	    return (7);
-	return (0);
-}*/
 
 int		check_wich_command(char *str)
 {
@@ -280,10 +233,11 @@ int		main(int ac, char **av, char **env)
     filling_export(env);
     tmp = NULL;
     memset(&assen, 0, sizeof (t_assen));
+    filling(&assen);
 	while (TRUE) {
         signal_handler(&status);
-        if (av[2])
-            str = ft_strdup(av[2]);
+        if (av[1])
+            str = ft_strdup(av[1]);
         else {
             prompt(g_in_signal);
             str = reading_input(&assen);
@@ -302,28 +256,28 @@ int		main(int ac, char **av, char **env)
                 break;
             if (head->meta == ';') {
                 tmp = semi_split(str);
-                built_in(head, tmp, env, &status, 0);
+                built_in(head, assen, env, &status, 0);
                 str = split_to_last_cmd(str);
             } else if (head->meta == '|')
-                head = pipe_file(head, str, env, &status);
+                head = pipe_file(head, assen, env, &status);
             else if (head->meta_append == 1) {
-                head = redirect_output(head, str, env, &status);
+                head = redirect_output(head, assen, env, &status);
                 if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
                     head = head->next;
             }
 //                head = append_file(head, str, env, &status);
             else if (head->meta == '>') {
-                head = redirect_output(head, str, env, &status);
+                head = redirect_output(head, assen, env, &status);
                 if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
                     head = head->next;
             } else if (head->meta == '<')
-                head = redirect_intput(head, str, env, &status);
+                head = redirect_intput(head, assen, env, &status);
             else if (head->meta == '\0')
-                built_in(head, str, env, &status, 0);
+                built_in(head, assen, env, &status, 0);
             if (head != NULL)
                 head = head->next;
         }
-        if (av[2])
+        if (av[1])
             exit(status);
         on = 0;
         g_first_time = 1;

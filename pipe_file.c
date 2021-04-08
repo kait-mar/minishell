@@ -42,7 +42,7 @@ void	ft_lstadd_std(t_std **alst, t_std *new)
     }
 }
 
-int    connecting(t_meta *head, char *str, char **env, int *status, int in , int out)
+int    connecting(t_meta *head, t_assen assen, char **env, int *status, int in , int out)
 {
     pid_t pid;
 
@@ -65,7 +65,7 @@ int    connecting(t_meta *head, char *str, char **env, int *status, int in , int
         }
         if (check_bin_echo(head->argument) == 1)
             head->command = 6;
-        built_in(head, str, env, status, 0);
+        built_in(head, assen, env, status, 0);
       /*  fprintf(stderr, "Errno ==> %d\n", errno);
         fprintf(stderr, "stats ==> %d\n", *status);
         fprintf(stderr, "head->arg ==> %s\n", head->argument);*/
@@ -74,18 +74,18 @@ int    connecting(t_meta *head, char *str, char **env, int *status, int in , int
     return (pid);
 }
 
-int  last_thing(t_meta *head, char *str,char **env, int *status, int in)
+int  last_thing(t_meta *head, t_assen assen,char **env, int *status, int in)
 {
     if (in != 0)
     {
         dup2(in, 0);
         close(in);
     }
-    built_in(head, str, env, status, 0);
+    built_in(head, assen, env, status, 0);
     return (0);
 }
 
-t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
+t_meta      *pipe_file(t_meta *head, t_assen assen, char **env, int *status)
 {
     int fd[2];
     pid_t pid;
@@ -99,7 +99,7 @@ t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
         if (head->next->meta == '\0' || head->next->meta == '|' || head->next->meta == ';')
         {
             pipe(fd);
-            pid = connecting(head, str, env, status, in, fd[1]);
+            pid = connecting(head, assen, env, status, in, fd[1]);
             close(fd[1]);
             in = fd[0];
             head = head->next;
@@ -112,10 +112,10 @@ t_meta      *pipe_file(t_meta *head, char *str, char **env, int *status)
     if (head->next != NULL)
     {
         if (head->next->meta == '\0' || head->next->meta == ';')
-            last_thing(head, str, env, status, in);
+            last_thing(head, assen, env, status, in);
     }
     else
-        last_thing(head, str, env, status, in);
+        last_thing(head, assen, env, status, in);
     /* else if (head->next->meta == '>' || head->next->meta == '<')
          head = head->next; */
     close(fd[0]);

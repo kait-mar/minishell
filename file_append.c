@@ -107,7 +107,7 @@ char    *remove_staring_quote(const char *s)
     str[k] = '\0';
     return (str);
 }
-
+/*
 t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
 {
     int fd;
@@ -144,7 +144,7 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
             meta->argument = ft_strjoin(meta->argument, " ");
             meta->argument = ft_strjoin(meta->argument, head->argument);
         }
-        /*if (*output_to == '\'')
+        if (*output_to == '\'')
             output_to = ft_strtrim(output_to, "'");
         else if (*output_to == '"')
             output_to = ft_strtrim(output_to, "\"");*/
@@ -157,7 +157,7 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
             split[i] = ft_strjoin(" ", split[i]);
             output_to = ft_strjoin(output_to, split[i]);
             i += 1;
-        }*/
+        }
         i = 1;
         if ((fd = open(new, O_CREAT | O_APPEND | O_RDWR, S_IRWXU)) == -1)
         {
@@ -187,4 +187,4 @@ t_meta  *append_file(t_meta *meta, char *str, char **env, int *status)
         i -= 1;
     }
     return (meta);
-}
+}*/

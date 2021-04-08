@@ -6,6 +6,7 @@
 #include <curses.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <errno.h>
 
 
 int     int_put(int c)
@@ -14,55 +15,60 @@ int     int_put(int c)
     return (0);
 }
 
+typedef struct s_append
+{
+    char *string;
+    struct s_append *next;
+}               t_append;
+
+void    push_end(t_append **head, char *string)
+{
+    t_append *last;
+    t_append *push_end;
+
+    last = *head;
+    if (!(push_end = (t_append *) malloc(sizeof (t_append))))
+        return ;
+    push_end->string = strdup(string);
+    if (*head == NULL)
+    {
+        *head = push_end;
+        push_end->next = NULL;
+        return ;
+    }
+    while (last->next != NULL)
+        last = last->next;
+    last->next = push_end;
+    push_end->next = NULL;
+}
+
 int  main()
 {
-	char *termtype;
-	int success;
-	static char	buffer[2048];
-	char *str;
-	char *up_arr;
-	char *down_arr;
-	char *tty_name;
-	char *key_s;
-	char *buffer_adress;
-	int r;
-	struct termios tp;
-	int fd;
+    t_append *push;
+    int fd;
+    pid_t pid;
+    int stat;
 
-	termtype = getenv("TERM");
-	success =  tgetent(buffer, termtype);
-	if (success != 1)
-	    printf("Eroor in tgetent\n");
-    if (!(str = (char *) calloc(1, 10)))
-        return (-1);
-    if (!(buffer_adress = (char *) malloc(strlen(buffer))))
-        return (-1);
-    tty_name = ttyname(STDIN_FILENO);
-    up_arr = tgetstr("ku", &buffer_adress);
-    down_arr = tgetstr("kd", &buffer_adress);
-    fd = open(tty_name, O_RDWR | O_NOCTTY);
-    if (tcgetattr(fd, &tp) == -1)
-        exit(-1);
-    tp.c_lflag &= ~(ECHO | ICANON) ;
-    if (tcsetattr(fd, TCSANOW, &tp) == 1)
-        exit (-1);
-    r = read(fd, str, 10);
-    tp.c_lflag |= (ECHO | ICANON);
-    if (tcsetattr(fd, TCSANOW, &tp) == 1)
-        exit (-1);
-    int i = 0;
-    while (str[i])
-        printf("str [i] == > %d\n", str[i++]);
-    int j = 0;
-    while (down_arr[j])
-        printf("down_arr [j] == > %d\n", down_arr[j++]);
-    if (memcmp(str, up_arr, 3) == 0)
-        printf("Arrow Up\n");
-    else if (memcmp(str, down_arr, 3) == 0)
-        printf("Arrow Down\n");
-    printf("isatty ==> %d\n", isatty(STDIN_FILENO));
-    printf("tty name ==> %s\n", ttyname(STDIN_FILENO));
-    printf("up_arr ==> %s\n", up_arr);
-    printf("down_arr ==> %s\n", down_arr);
+    push = NULL;
+    push_end(&push, "labhairi");
+    push_end(&push, "mouaad");
+    push_end(&push, "casa");
+    push_end(&push, "negra");
+    fd = open(".minishell_history", O_CREAT | O_APPEND | O_RDWR, S_IRWXU);
+    if ((pid = fork()) > 0)
+    {
+        if (dup2(fd, 1) == -1)
+            printf("%s\n", strerror(errno));
+        while (push != NULL)
+        {
+            printf("%s\n", push->string);
+            push = push->next;
+        }
+        exit(EXIT_SUCCESS);
+    }
+    else
+        exit(EXIT_FAILURE);
+    waitpid(pid, &stat, WUNTRACED);
+    printf("Done\n");
     return (0);
 }

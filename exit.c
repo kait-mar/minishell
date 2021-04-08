@@ -90,11 +90,34 @@ long long 		ft_atois(const char *str)
     return (res);
 }
 
-void        exit_command(long long status, char *s)
+void        exit_command(long long status, char *s, t_assen *assen)
 {
+    t_assen *move;
+    int fd;
+    pid_t pid;
+    int stat;
+
+    move = assen;
+    if (move->next != NULL)
+        move = move->next;
     s = take_only(s);
     s = without_that(s, '\"');
     s = without_that(s, '\'');
+    fd = open(".minishell_history", O_CREAT | O_APPEND | O_RDWR, S_IRWXU);
+    if ((pid = fork()) > 0)
+    {
+        if (dup2(fd, 1) == -1)
+            printf("%s\n", strerror(errno));
+        while (move != NULL)
+        {
+            printf("%s\n", move->cmd);
+            move = move->next;
+        }
+        exit(EXIT_SUCCESS);
+    }
+    else
+        exit(EXIT_FAILURE);
+    waitpid(pid, &stat, WUNTRACED);
     if (s[0] == '\0')
         exit(status);
     else

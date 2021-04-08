@@ -14,10 +14,21 @@
 #include "minishell.h"
 
 
-void    moving_up(t_assen **climb, t_history history)
+void    filling(t_assen *assen)
 {
+    int fd;
+    int r;
+    char *str;
 
+    if ((fd = open(".minishell_history", O_RDWR)) != 1)
+    {
+        while ((r = get_next_line(fd, &str)) > 0)
+        {
+            append_assen(&assen, str);
+        }
+    }
 }
+
 
 char    *delete_char(char *string)
 {

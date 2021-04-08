@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
+t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 {
 	int		fd;
 	int     i;
@@ -100,7 +100,7 @@ t_meta	*redirect_output(t_meta *meta, char *str, char **env, int *status)
 	{
 		if ((dup2(fd, STDOUT_FILENO) != -1))
 		{
-			built_in(meta, str, env, status, 0);
+			built_in(meta, assen, env, status, 0);
 			close(fd);
 			exit(EXIT_SUCCESS);
 		}
