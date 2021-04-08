@@ -286,5 +286,5 @@ char	*extend_re(char *str, char *s);
 int     find_re(char *string, int c);
 char    *delete_char(char *string);
 void    filling(t_assen *assen);
-
+char	**put_cases1(char **bult);
 #endif
