@@ -106,14 +106,14 @@ void        exit_command(long long status, char *s, t_assen *assen)
     fd = open(".minishell_history", O_CREAT | O_APPEND | O_RDWR, S_IRWXU);
     if ((pid = fork()) > 0)
     {
-        if (dup2(fd, 1) == -1)
-            printf("%s\n", strerror(errno));
-        while (move != NULL)
-        {
-            printf("%s\n", move->cmd);
-            move = move->next;
-        }
-        exit(EXIT_SUCCESS);
+            if (dup2(fd, 1) == -1)
+                printf("%s\n", strerror(errno));
+            while (move != NULL)
+            {
+                printf("%s\n", move->cmd);
+                move = move->next;
+            }
+            close(fd);
     }
     else
         exit(EXIT_FAILURE);
