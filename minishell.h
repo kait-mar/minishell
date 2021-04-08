@@ -14,6 +14,7 @@
  #define MINISHELL_H
  #define TRUE 1
  #define FALSE 0
+#define BUFFER 3
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,7 +28,10 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <stdint.h>
+#include <term.h>
 #include "./Libft/libft.h"
+
+
 
 typedef struct s_command_cd
 {
@@ -109,6 +113,30 @@ typedef struct s_buffer
     int check;
 }               t_buffer;
 
+/* Termcap */
+
+typedef struct s_history
+{
+    char *term_type;
+    char *tty_name;
+    char *key_s;
+    char *key_e;
+    char *up_arrow;
+    char *down_arrow;
+    char *clear;
+    char *line_start;
+    char *delete_char;
+    char *delete_mode;
+    char *exit_d_mode;
+}               t_history;
+
+typedef  struct s_assen
+{
+    char *cmd;
+    struct s_assen *next;
+    struct s_assen *prev;
+}               t_assen;
+
 /*      Global Variables */
 
 t_export *g_export;
@@ -131,7 +159,7 @@ int     g_check;
 void	cd_command(char *argument, int *status, char **env);
 char	**taking_command(char *str);
 char	**split_to_tokens(char *str);
-char	*reading_input(void);
+char 	*reading_input(t_assen *assen);
 char	*without_that(char *str, char c);
 int		how_mutch_argument(char *str, int i);
 char	*ft_toStrLower(char *str);
@@ -249,7 +277,13 @@ char	*ft_strjoin_re(char const *s1, char const *s2);
 int     check_bin_echo(char *str);
 char    *print_env1(char *bult);
 char    *print_env2(char *bult, char **env, int which_quote, int *status);
-int		print_envir(char **str, char **env, char **tab);
+int		print_envir(char **str, char **env, char **tabs);
 char    *check_print(char *bult);
+t_history   init_hist(t_history history);
+void    append_assen(t_assen **assen, char *cmd);
+int     int_put(int c);
+char	*extend_re(char *str, char *s);
+int     find_re(char *string, int c);
+char    *delete_char(char *string);
 
 #endif

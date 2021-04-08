@@ -53,11 +53,11 @@ static int	coun(char *s, char c, char b)
 	return (count);
 }
 
-static char		**ft_tofree(char *tab[], int j)
+static char		**ft_tofree(char *tabs[], int j)
 {
 	while (--j > 0)
-		free(tab[j]);
-	free(tab);
+		free(tabs[j]);
+	free(tabs);
 	return (NULL);
 }
 
@@ -68,14 +68,14 @@ char	**keep_split(char *s, char c, char b)
 	int			k;
 	int			l;
 	int			esp;
-	char		**tab;
+	char		**tabs;
 
 	if (!s)
 		return (NULL);
 	i = 0;
 	j = 0;
     int count = coun(s, c, b);
-	if (!(tab = (char **)malloc(sizeof(*tab) * (count + 1))))
+	if (!(tabs = (char **)malloc(sizeof(*tabs) * (count + 1))))
 		return (NULL);
 	while (s[i] != '\0' && j < count)
 	{
@@ -85,14 +85,14 @@ char	**keep_split(char *s, char c, char b)
 			esp = how_many_escape(s);
 			if (esp % 2 == 0)
 			{
-				if (!(tab[j] = malloc(k + 1)))
-					return (ft_tofree(tab, j));
+				if (!(tabs[j] = malloc(k + 1)))
+					return (ft_tofree(tabs, j));
 				while (s[i] != '\0' && s[i] == '\\')
 				{
-					tab[j][k++] = s[i++];
+					tabs[j][k++] = s[i++];
 				}
 				s[i-1] = '\0';
-				tab[j++][k] = '\0';
+				tabs[j++][k] = '\0';
 				continue ;
 			}
 		}
@@ -103,15 +103,15 @@ char	**keep_split(char *s, char c, char b)
 		}
 		if (k != 0)
 		{
-			if (!(tab[j] = malloc(k + 1)))
-				return (ft_tofree(tab, j));
+			if (!(tabs[j] = malloc(k + 1)))
+				return (ft_tofree(tabs, j));
 			i -= k;
 			k = 0;
 		while (((s[i] != c && s[i] != b) || ((s[i] == c || s[i] == b) && i - 1 >= 0 && s[i-1] == '\\')) && s[i] != '\0' )
 			{
-				tab[j][k++] = s[i++];
+				tabs[j][k++] = s[i++];
 			}
-			tab[j][k] = '\0';
+			tabs[j][k] = '\0';
 		}
         else if (s[i] == c && (i == 0 || (i-1 >= 0 && s[i-1] != '\\')))
 		{
@@ -127,14 +127,14 @@ char	**keep_split(char *s, char c, char b)
 				i++;
 				k++;
 			}
-			if (!(tab[j] = malloc(k + 1)))
-				return (ft_tofree(tab, j));
+			if (!(tabs[j] = malloc(k + 1)))
+				return (ft_tofree(tabs, j));
 			i -= k;
 			l = k;
 			k = 0;
 			while (k < l)
-				tab[j][k++] = s[i++];
-			tab[j][k] = '\0';
+				tabs[j][k++] = s[i++];
+			tabs[j][k] = '\0';
 		}
 		else if (s[i] == b && (i == 0 || (i-1 >= 0 && s[i-1] != '\\')))
 		{
@@ -150,17 +150,17 @@ char	**keep_split(char *s, char c, char b)
 				i++;
 				k++;
 			}
-			if (!(tab[j] = malloc(k + 1)))
-				return (ft_tofree(tab, j));
+			if (!(tabs[j] = malloc(k + 1)))
+				return (ft_tofree(tabs, j));
 			i -= k;
 			l = k;
 			k = 0;
 			while (k < l)
-				tab[j][k++] = s[i++];
-			tab[j][k] = '\0';
+				tabs[j][k++] = s[i++];
+			tabs[j][k] = '\0';
 		}
 		j++;
 	}
-	tab[j] = NULL;
-	return (tab);
+	tabs[j] = NULL;
+	return (tabs);
 }

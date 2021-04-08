@@ -56,7 +56,7 @@ char    *print_env2(char *bult, char **env, int which_quote, int *status)
 {
     char    **str;
     int     i;
-    char    **tab;
+    char    **tabs;
     int     j;
 
     i = 0;
@@ -71,13 +71,13 @@ char    *print_env2(char *bult, char **env, int which_quote, int *status)
         }
     }
     if (*str != NULL)
-        i = print_envir(str, env, tab);
+        i = print_envir(str, env, tabs);
     if (*bult == '$' && *(bult + 1) != '\0')
         bult = check_print(bult);
     return (bult);
 }
 
-int    print_envir(char **str, char **env, char **tab)
+int    print_envir(char **str, char **env, char **tabs)
 {
     int j;
     int i;
@@ -86,10 +86,10 @@ int    print_envir(char **str, char **env, char **tab)
     i = 0;
     while (env[j])
     {
-        tab = ft_split(env[j], '=');
-        if (ft_strcmp(tab[0], take_first_word(str[0] + 1)) == 0)
+        tabs = ft_split(env[j], '=');
+        if (ft_strcmp(tabs[0], take_first_word(str[0] + 1)) == 0)
         {
-            ft_putstr(tab[1]);
+            ft_putstr(tabs[1]);
             i = 1;
             break ;
         }

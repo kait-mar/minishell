@@ -247,6 +247,7 @@ int   token_error(t_meta *head, int *status)
     return (0);
 }
 
+
 int		main(int ac, char **av, char **env)
 {
 	char *str;
@@ -255,6 +256,7 @@ int		main(int ac, char **av, char **env)
 	t_meta	*meta;
 	t_meta	*head;
 	t_semi  *semi;
+	t_assen  assen;
 	int     on;
 
 	status = 0;
@@ -277,51 +279,44 @@ int		main(int ac, char **av, char **env)
         return -1;
     filling_export(env);
     tmp = NULL;
-	while (TRUE)
-	{
+    memset(&assen, 0, sizeof (t_assen));
+	while (TRUE) {
         signal_handler(&status);
         if (av[2])
-            str= ft_strdup(av[2]);
-		else
-		{
-			prompt(g_in_signal);
-			str = reading_input();
-		}
-		str = remove_space(str);
+            str = ft_strdup(av[2]);
+        else {
+            prompt(g_in_signal);
+            str = reading_input(&assen);
+        }
+        str = remove_space(str);
         str = ft_strtrim(str, "\t");
-		str = escape_normal(str);
+        str = escape_normal(str);
         meta = split_it_all(str, env);
-		head = meta;
+        head = meta;
         //ft_printf("the head is %s\n", meta->argument);
-        while (head != NULL)
-        {
+        while (head != NULL) {
             head->argument = chang_dollar_sign(head->argument, env);
             if (head->command == 0)
                 head->command = check_wich_command(take_first_word(head->argument));
             if (token_error(head, &status) == 1)
-                break ;
-            if (head->meta == ';')
-            {
+                break;
+            if (head->meta == ';') {
                 tmp = semi_split(str);
                 built_in(head, tmp, env, &status, 0);
                 str = split_to_last_cmd(str);
-            }
-            else if (head->meta == '|')
+            } else if (head->meta == '|')
                 head = pipe_file(head, str, env, &status);
-            else if (head->meta_append == 1)
-            {
+            else if (head->meta_append == 1) {
                 head = redirect_output(head, str, env, &status);
                 if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
                     head = head->next;
             }
 //                head = append_file(head, str, env, &status);
-            else if (head->meta == '>')
-            {
+            else if (head->meta == '>') {
                 head = redirect_output(head, str, env, &status);
                 if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
                     head = head->next;
-            }
-            else if (head->meta == '<')
+            } else if (head->meta == '<')
                 head = redirect_intput(head, str, env, &status);
             else if (head->meta == '\0')
                 built_in(head, str, env, &status, 0);
@@ -332,19 +327,19 @@ int		main(int ac, char **av, char **env)
             exit(status);
         on = 0;
         g_first_time = 1;
-        if (g_in_redirect == 1)
-        {
+        if (g_in_redirect == 1) {
             g_in_redirect = 0;
             g_in_signal = 1;
-        }
-        else
+        } else
             g_in_signal = 0;
-	}
+        free(str);
+        str = NULL;
+    }
 	return(status);
 }
 
 /*
-int			main()
+int			main(int ac, char **av, char **env)
 {
 	char *str;
 	char    *tmp;
@@ -352,13 +347,9 @@ int			main()
 	t_meta	*meta;
 	t_meta	*head;
 	t_semi  *semi;
+	t_assen *assen;
 	int     on;
 
-	char **av;
-	char **env;
-	env = malloc(2*sizeof(char *));
-    *env = "PATH=/user/bin";
-	env[1] = NULL;
 
 	status = 0;
 	g_on = 0;
@@ -367,17 +358,22 @@ int			main()
 	g_in_line = 0;
 	on = 0;
 	head = NULL;
+	assen = NULL;
 	if (!(str = (char *) ft_calloc(sizeof(char) , 100)))
         return (-1);
 	g_export = NULL;
     if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
         return -1;
-//	filling_export(env);
+	filling_export(env);
 	tmp = NULL;
 	while (TRUE)
 	{
         signal_handler(&status);
+<<<<<<< HEAD
         str = "echo \\ \\ \\ \\ ";
+=======
+        assen = reading_input(assen, &str);
+>>>>>>> bash_history
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
 		str = escape_normal(str);

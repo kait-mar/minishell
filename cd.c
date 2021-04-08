@@ -14,43 +14,124 @@
 #include <dirent.h>
 #include <errno.h>
 
-char     *reading_input(void)
+/*
+int		search(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] == '\n')
+        {
+            str[i] = '\0';
+            return (TRUE);
+        }
+        i++;
+    }
+    return (FALSE);
+}*/
+
+char   *reading_input(t_assen *assen)
 {
 	char	*str;
-	int		i;
-	int     on;
-	int     k;
-	int check;
-	char    *s;
+	int     r;
+	char    *tmp;
+	char    *temp;
+	t_history history;
+	t_assen *climb;
+	int fd;
+	char *clear;
+	struct termios tp;
+	struct termios save;
 
-	str = NULL;
-	i = 0;
-	k = 0;
-	check = 0;
-	int j=0;
-	while (i == 0)
-	{
-	    if (k == 0 ||  (g_in_line == 0 && i == 0))
+    str = NULL;
+    tmp = NULL;
+    temp = NULL;
+    ft_memset(&history, 0, sizeof (t_history));
+    if (!(str = (char *) malloc( BUFFER + 1)))
+        return (NULL);
+	history = init_hist(history);
+    fd = open(history.tty_name, O_RDWR | O_NOCTTY);
+    climb = assen;
+    while (climb->next !=  NULL)
+        climb = climb->next;
+    if (isatty(fd))
+    {
+        if (tcgetattr(fd, &tp) == -1)
+            exit(-1);
+        save = tp;
+        tp.c_lflag &= ~(ICANON | ECHO);
+        tp.c_cc[VMIN] = 0;
+        tp.c_cc[VTIME] = 0;
+        if (tcsetattr(fd, TCSANOW, &tp) == 1)
+            exit (-1);
+        while (TRUE)
         {
-            i = get_next_line(1, &str);
-            if (k == 0)
-                s = ft_strdup(str);
-            if (g_in_line == 1 && i == 1)
+            r = read(fd, str, BUFFER);
+            str[r] = '\0';
+          if (str[0] == 127)
+           {
+               tputs(history.line_start, 0, int_put);
+               tputs(history.clear, 0, int_put);
+               prompt(g_in_signal);
+               tmp = delete_char(tmp);
+               if (climb->next == NULL)
+                   temp = delete_char(temp);
+               ft_putstr(tmp);
+           }
+          else
+              ft_putstr(str);
+            if (memcmp(str, history.up_arrow, 3) == 0)
             {
-                g_in_line = 0;
-                return (s);
+                tputs(history.line_start, 0, int_put);
+                tputs(history.clear, 0, int_put);
+                prompt(g_in_signal);
+                if (climb->prev != NULL)
+                {
+                    ft_putstr(climb->cmd);
+                    tmp = ft_strdup(climb->cmd);
+                    if (climb->prev->prev != NULL)
+                        climb = climb->prev;
+                }
+            }
+            if (memcmp(str, history.down_arrow, 3) == 0)
+            {
+                tputs(history.line_start, 0, int_put);
+                tputs(history.clear, 0, int_put);
+                prompt(g_in_signal);
+                if (climb->next != NULL)
+                {
+                    climb = climb->next;
+                    ft_putstr(climb->cmd);
+                    tmp = ft_strdup(climb->cmd);
+                }
+                else if (climb->next == NULL)
+                {
+                    ft_putstr(temp);
+                    tmp = ft_strdup(temp);
+                }
+            }
+            if (memcmp(str, history.down_arrow, 3) != 0 && memcmp(str, history.up_arrow, 3) != 0 && str[0] != 127)
+            {
+                tmp = extend_re(str, tmp);
+                temp = extend_re(str, temp);
+                str = (char *) malloc(sizeof(char) * BUFFER + 1);
+                if (str == NULL)
+                    return (NULL);
+            }
+            if (find_re(tmp, '\n'))
+            {
+                if (ft_strcmp(tmp, "") != 0)
+                    append_assen(&assen, tmp);
+                break ;
             }
         }
-        if (ft_strcmp(str, "") == 0 && i == 0 && check == 0)
-        {
-            ft_printf("exit\n");
-            exit(EXIT_SUCCESS);
-        }
-        else if (i == 0 && ft_strcmp(str, "") != 0 && k == 0)
-            check = 1;
-        k += 1;
     }
-	return (str);
+    if (tcsetattr(fd, TCSANOW, &save) == 1)
+        exit (-1);
+    free(str);
+    return (tmp);
 }
 
 char		**split_to_tokens(char *str)

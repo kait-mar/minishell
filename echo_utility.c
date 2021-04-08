@@ -4,40 +4,38 @@ int	print_env(char *bult, char **env, int which_quote, int *status)
 {
 	char	**str;
 	int		j;
-	char	**tab;
+	char	**tabs;
 	int		i;
 
 	i = 0;
-	while (*bult)
-	{
-		if (*bult == '\\' && *(bult + 1) == '\\')
-			bult = print_env1(bult);
-		if (*bult == '\\' && (*(bult + 1) == '$' || *(bult + 1) == '"' || *(bult + 1) == '\''))
-		{
-			bult++;
-			my_putchar(*(bult++));
-		}
-		while (*bult != '$' && *bult != '\0' && (*bult != '\\' || *(bult + 1) != '\\') && (*bult != '\\' || *(bult + 1) != '$') && (*bult != '\\' || *(bult + 1) != '\'') && (*bult != '\\' || *(bult + 1) != '"'))
-		{
-			my_putchar(*(bult++));
-		}
-		if (*bult == '\\' && (*(bult + 1) == '\\' || *(bult + 1) == '$'))
-			continue ;
-		if ((*bult == '$' && ((which_quote == 0 && (*(bult + 1) == '\0' || *(bult + 1) == ' ')) || (which_quote == 1 && (*(bult  + 1) == 39 || *(bult  + 1) == 34 || *(bult + 1) == '\0' || *(bult + 1) == ' ')))))
-			my_putchar(*(bult++));
-		if (*bult == '\0')
-			break ;
-		else
-		{
-			if (*bult == '$' && *(bult + 1) == '?')
-			{
-				ft_printf("%d", *status);
-				bult = bult + 2;
-			}
-			else
-				bult = print_env2(bult, env, which_quote, status);
-		}
-	}
+	while (*bult) {
+        if (*bult == '\\' && *(bult + 1) == '\\')
+            bult = print_env1(bult);
+        if (*bult == '\\' && (*(bult + 1) == '$' || *(bult + 1) == '"' || *(bult + 1) == '\'')) {
+            bult++;
+            my_putchar(*(bult++));
+        }
+        while (*bult != '$' && *bult != '\0' && (*bult != '\\' || *(bult + 1) != '\\') &&
+               (*bult != '\\' || *(bult + 1) != '$') && (*bult != '\\' || *(bult + 1) != '\'') &&
+               (*bult != '\\' || *(bult + 1) != '"')) {
+            my_putchar(*(bult++));
+        }
+        if (*bult == '\\' && (*(bult + 1) == '\\' || *(bult + 1) == '$'))
+            continue;
+        if ((*bult == '$' && ((which_quote == 0 && (*(bult + 1) == '\0' || *(bult + 1) == ' '))
+        || (which_quote == 1 && (*(bult + 1) == 39 || *(bult + 1) == 34 || *(bult + 1) == '\0'
+        || *(bult + 1) == ' ')))))
+            my_putchar(*(bult++));
+        if (*bult == '\0')
+            break;
+        else {
+            if (*bult == '$' && *(bult + 1) == '?') {
+                ft_printf("%d", *status);
+                bult = bult + 2;
+            } else
+                bult = print_env2(bult, env, which_quote, status);
+        }
+    }
 	return (i);
 }
 
