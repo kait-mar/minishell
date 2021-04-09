@@ -18,12 +18,12 @@ FLAGS= -Wall -Wextra -Werror
 
 SRCS=  cd.c cd_utility.c pwd.c export.c \
 	   export_utility.c export_utility_two.c \
-	   unset.c main.c echo.c echo_utility.c keep_split.c \
-	   executables.c echo_utility_two.c meta.c file_append.c \
+	   unset.c main.c echo/echo.c echo/echo_utility.c keep_split.c \
+	   executables.c echo/echo_utility_two.c meta.c file_append.c \
 	   exit.c redirect_output.c pipe_file.c redirect_input.c signals.c \
 	   semi_colon.c dollar_sign.c escape_character.c minishell_utility.c \
-	   dollar_sign_utility.c executable_utility.c echo_utility3.c echo_utility4.c \
-	   echo_utility5.c history.c
+	   dollar_sign_utility.c executable_utility.c echo/echo_utility3.c echo/echo_utility4.c \
+	   echo/echo_utility5.c history.c echo/echo_utility6.c
 
 OBJ = $(SRCS:.c=.o)
 

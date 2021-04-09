@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
-
 
 void    filling(t_assen *assen)
 {
@@ -28,7 +26,6 @@ void    filling(t_assen *assen)
         }
     }
 }
-
 
 char    *delete_char(char *string)
 {

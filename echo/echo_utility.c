@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 int	print_env(char *bult, char **env, int which_quote, int *status)
 {

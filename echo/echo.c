@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 #include <stdio.h>
 
 int	echo(char *argv, char **env, int *status)

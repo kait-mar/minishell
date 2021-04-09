@@ -30,7 +30,7 @@
 #include <stdint.h>
 #include <term.h>
 #include "./Libft/libft.h"
-
+#include "./echo/echo.h"
 
 
 typedef struct s_command_cd
