@@ -235,19 +235,19 @@ char    *chang_dollar(char *s, char **env, int *on)
     i = 0;
     escape = count_escap(s);
     ss = take_away_dollar(s);
-    if (ft_strcmp(ss, "PWD") == 0 && g_pwd_on == 0)
+    if (ft_strcmp(ss, "PWD") == 0 && g_global.pwd_on == 0)
     {
         string = ft_strdup(g_pwd_only);
         string = take_after_equal(string);
         *on = 1;
     }
-    if (ft_strcmp(ss, "OLDPWD") == 0 && g_oldpwd_on == 0)
+    if (ft_strcmp(ss, "OLDPWD") == 0 && g_global.oldpwd_on == 0)
     {
-        if (g_check == 0)
+        if (g_global.check == 0)
             string = ft_strdup("");
         else
         {
-            string = ft_strdup(g_oldpwd_only);
+            string = ft_strdup(g_global.oldpwd_only);
             string = take_after_equal(string);
             *on = 1;
         }

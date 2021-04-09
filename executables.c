@@ -205,10 +205,10 @@ void	execut_command(char **env, char *str, int *check,  int *statut)
     else
     {
         g_pid = pid;
-        g_on = 1;
+        g_global.on = 1;
         waitpid(pid, &status, WUNTRACED);
         *statut = WEXITSTATUS(status);
-        g_on = 0;
+        g_global.on = 0;
     }
     // }
 }

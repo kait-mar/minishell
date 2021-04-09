@@ -15,7 +15,7 @@
 void		inter_signal(int status)
 {
     //write(1, "\b\b", 2);
-    g_in_signal = 1;
+    g_global.in_signal = 1;
 	if (g_on == 1)
 	    kill(g_pid, SIGINT);
 	if (g_on == 1)
@@ -27,7 +27,7 @@ void		inter_signal(int status)
 	else
     {
         write(1, "\b\b  ", 4);
-        prompt(g_in_signal);
+        prompt(g_global.in_signal);
     }
 }
 

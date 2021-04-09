@@ -110,9 +110,9 @@ t_env		*delete_in_env(t_env *env, char **splits, int on, int *status)
 			if (in_match(s, splits[i]) == 1)
 			{
 			    if (ft_strcmp(splits[i], "PWD") == 0)
-			        g_pwd_on = 1;
+			        g_global.pwd_on = 1;
 			    else if (ft_strcmp(splits[i], "OLDPWD") == 0)
-			        g_oldpwd_on = 1;
+			        g_global.oldpwd_on = 1;
 				check = 1;
 				break ;
 			}

@@ -32,108 +32,6 @@ int		search(char *str)
     return (FALSE);
 }*/
 
-char   *reading_input(t_assen *assen)
-{
-	char	*str;
-	int     r;
-	char    *tmp;
-	char    *temp;
-	t_history history;
-	t_assen *climb;
-	int fd;
-	char *clear;
-	struct termios tp;
-	struct termios save;
-
-    str = NULL;
-    tmp = NULL;
-    temp = NULL;
-    ft_memset(&history, 0, sizeof (t_history));
-    if (!(str = (char *) malloc( BUFFER + 1)))
-        return (NULL);
-	history = init_hist(history);
-    fd = open(history.tty_name, O_RDWR | O_NOCTTY);
-    climb = assen;
-    while (climb->next !=  NULL)
-        climb = climb->next;
-    if (isatty(fd))
-    {
-        if (tcgetattr(fd, &tp) == -1)
-            exit(-1);
-        save = tp;
-        tp.c_lflag &= ~(ICANON | ECHO);
-        tp.c_cc[VMIN] = 0;
-        tp.c_cc[VTIME] = 0;
-        if (tcsetattr(fd, TCSANOW, &tp) == 1)
-            exit (-1);
-        while (TRUE)
-        {
-            r = read(fd, str, BUFFER);
-            str[r] = '\0';
-          if (str[0] == 127)
-           {
-               tputs(history.line_start, 0, int_put);
-               tputs(history.clear, 0, int_put);
-               prompt(g_in_signal);
-               tmp = delete_char(tmp);
-               if (climb->next == NULL)
-                   temp = delete_char(temp);
-               ft_putstr(tmp);
-           }
-          else
-              ft_putstr(str);
-            if (memcmp(str, history.up_arrow, 3) == 0)
-            {
-                tputs(history.line_start, 0, int_put);
-                tputs(history.clear, 0, int_put);
-                prompt(g_in_signal);
-                if (climb->prev != NULL)
-                {
-                    ft_putstr(climb->cmd);
-                    tmp = ft_strdup(climb->cmd);
-                    if (climb->prev->prev != NULL)
-                        climb = climb->prev;
-                }
-            }
-            if (memcmp(str, history.down_arrow, 3) == 0)
-            {
-                tputs(history.line_start, 0, int_put);
-                tputs(history.clear, 0, int_put);
-                prompt(g_in_signal);
-                if (climb->next != NULL)
-                {
-                    climb = climb->next;
-                    ft_putstr(climb->cmd);
-                    tmp = ft_strdup(climb->cmd);
-                }
-                else if (climb->next == NULL)
-                {
-                    ft_putstr(temp);
-                    tmp = ft_strdup(temp);
-                }
-            }
-            if (memcmp(str, history.down_arrow, 3) != 0 && memcmp(str, history.up_arrow, 3) != 0 && str[0] != 127)
-            {
-                tmp = extend_re(str, tmp);
-                temp = extend_re(str, temp);
-                str = (char *) malloc(sizeof(char) * BUFFER + 1);
-                if (str == NULL)
-                    return (NULL);
-            }
-            if (find_re(tmp, '\n'))
-            {
-                if (ft_strcmp(tmp, "") != 0)
-                    append_assen(&assen, tmp);
-                break ;
-            }
-        }
-    }
-    if (tcsetattr(fd, TCSANOW, &save) == 1)
-        exit (-1);
-    free(str);
-    return (tmp);
-}
-
 char		**split_to_tokens(char *str)
 {
 	char	**splits;
@@ -218,7 +116,7 @@ void    old_pwd(char **env)
         }
         j += 1;
     }
-    if (i == 0 && g_pwd_on == 0)
+    if (i == 0 && g_global.pwd_on == 0)
     {
         if (getcwd(g_old_pwd, 100) == NULL)
             ft_printf("%s\n", strerror(errno));
@@ -228,7 +126,7 @@ void    old_pwd(char **env)
         old_pwd = add_in("OLDPWD=", take_it);
     else
         old_pwd = add_in("OLDPWD=", "");
-    g_oldpwd_only = ft_strdup(old_pwd);
+    g_global.oldpwd_only = ft_strdup(old_pwd);
     while (env[i])
     {
         if (find_old_pwd(env[i]) == 1)
@@ -267,7 +165,7 @@ void    new_pwd(char **env, char *str)
         }
         i += 1;
     }
-    if (env[i] == NULL && k == 0 && g_pwd_on == 0)
+    if (env[i] == NULL && k == 0 && g_global.pwd_on == 0)
     {
         env[i] = ft_strdup(old_pwd);
         env[i + 1] = NULL;
@@ -440,6 +338,6 @@ void 	cd_command(char *argument, int *status, char **env)
 	    ft_printf("%s\n", strerror(errno));
 	new_pwd(env, str);
 	g_pwd_on = 0;
-	g_check = 1;
+	g_global.check = 1;
     first_time = 1;
 }

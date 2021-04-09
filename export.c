@@ -60,7 +60,7 @@ int		check_quote(char *str)
 			 on = 1;
 		 i += 1;
 	 }
-	 g_check_single_quote = on;
+	 g_global.check_single_quote = on;
 	 return (on);
 }
 
@@ -77,7 +77,7 @@ int		check_double_quote(char *str)
 			 on = 1;
 		 i += 1;
 	 }
-	 g_check_double_quote = on;
+	 g_global.check_double_quote = on;
 	 return (on);
 }
 
