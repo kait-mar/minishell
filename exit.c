@@ -90,16 +90,24 @@ long long 		ft_atois(const char *str)
     return (res);
 }
 
-void        exit_command(long long status, char *s, t_assen *assen)
+void        exit_command(int *status, char *s, t_assen *assen)
 {
     t_assen *move;
     int fd;
     pid_t pid;
     int stat;
+    char **split;
 
     move = assen;
     if (move->next != NULL)
         move = move->next;
+    split = ft_split(s, ' ');
+    if (split[1] != NULL)
+    {
+        printf("minishell: exit: too many arguments\n");
+        *status = 1;
+        return ;
+    }
     s = take_only(s);
     s = without_that(s, '\"');
     s = without_that(s, '\'');
@@ -115,23 +123,21 @@ void        exit_command(long long status, char *s, t_assen *assen)
             }
             close(fd);
     }
-    else
-        exit(EXIT_FAILURE);
     waitpid(pid, &stat, WUNTRACED);
     if (s[0] == '\0')
-        exit(status);
+        exit(*status);
     else
     {
         if (check_is_num(s) == 1)
         {
             ft_printf("minishell: exit: %s: %s\n", s, "numeric argument required");
-            status = 255;
+            *status = 255;
         }
         else
         {
-            status = ft_atois(s);
+            *status = ft_atois(s);
            // ft_printf("exit\n");
         }
-        exit(status % 256);
+        exit(*status % 256);
     }
 }

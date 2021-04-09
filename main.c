@@ -46,7 +46,9 @@ void 	 built_in(t_meta *meta, t_assen assen, char **env, int *status, int l)
 	else if (meta->command  == 3)
 		env_command(env, meta, status);
 	else if (meta->command == 4)
+    {
         export_command(env, meta->argument, status, NULL);
+    }
 	else if (meta->command == 5)
         unset_command(env, meta->argument, status);
 	else if (meta->command == 6)
@@ -62,7 +64,9 @@ void 	 built_in(t_meta *meta, t_assen assen, char **env, int *status, int l)
         }
 	}
     if (meta->command == 7)
-        exit_command(*status, meta->argument, &assen);
+    {
+        exit_command(status, meta->argument, &assen);
+    }
 }
 
 void	prompt(int in)

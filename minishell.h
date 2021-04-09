@@ -218,7 +218,7 @@ void	stream_directory();
 void    built_in(t_meta *meta, t_assen assen, char **env, int *status, int l);
 //t_meta   *append_file(t_meta *meta, char *str, char **env, int *status);
 int     check_append(char *s);
-void    exit_command(long long status, char *s, t_assen *assen);
+void    exit_command(int *status, char *s, t_assen *assen);
 int     check_exit(char *str);
 t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status);
 t_meta	*redirect_intput(t_meta *meta, t_assen assen, char **env, int *status);
