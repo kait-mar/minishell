@@ -89,7 +89,6 @@ int		check_wich_command(char *str)
     int exept;
 
     exept = 0;
-   // ft_printf("the str to be checked |%s|\n", str);
 	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[2]) == 0))
 		return (1);
 	if (check_pwd(str, &exept) == 0)
@@ -140,53 +139,12 @@ int    count_meta2(char *str)
         i++;
     return (i);
 }
-/*
-int   token_error(t_meta *head, int *status)
-{
-    t_meta *a_head;
-
-    a_head = head;
-    while (a_head != NULL)
-    {
-        if ((ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|')) ||
-            ((a_head->meta == '>' || a_head->meta == '<') && (a_head->next == NULL || ft_strcmp(a_head->next->argument, "") == 0)))
-        {
-            if (a_head->next != NULL && a_head->meta == '>' && a_head->next->meta == '>')
-                ft_printf("minishell: syntax error near unexpected token `%c%c'\n", a_head->meta, a_head->meta);
-            else if (a_head->meta == '>' || a_head->meta == '<')
-                ft_printf("minishell: syntax error near unexpected token `newline'\n");
-            else
-                ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
-            *status = 258;
-            return (1);
-        }
-        a_head = a_head->next;
-    }
-    return (0);
-}*/
 
 int   token_error(t_meta *head, int *status)
 {
     t_meta *a_head;
 
     a_head = head;
-    /*while (a_head != NULL)
-    {
-        if (ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|') && a_head->command == 0)
-       //     || ((a_head->meta == '>' || a_head->meta == '<') && (a_head->next == NULL || ft_strcmp(a_head->next->argument, "") == 0)))
-        {
-            ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
-            *status = 258;
-            return (1);
-        }
-        else if ((a_head->meta == '>' || a_head->meta == '<') && (a_head->next == NULL || ft_strcmp(a_head->next->argument, "") == 0))
-        {
-            ft_printf("minishell: syntax error near unexpected token `newline'\n");
-            *status = 258;
-            return (1);
-        }
-        a_head = a_head->next;
-    }*/
     while (a_head->next != NULL && a_head->next->meta != 0 && (ft_strcmp(a_head->argument, "") != 0 || ((a_head->meta == '>' || a_head->meta == '<') && ft_strcmp(a_head->next->argument, "") == 0)))
         a_head = a_head->next;
     if (ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|') && a_head->command == 0)
@@ -219,9 +177,7 @@ int		main(int ac, char **av, char **env)
 	status = 0;
 	g_on = 0;
 	g_in_signal = 0;
-  //  g_in_redirect;
 	g_first_time = 0;
-	g_in_line = 0;
 	g_check_single_quote = 0;
     g_check_double_quote = 0;
     g_pwd_on = 0;
@@ -251,7 +207,6 @@ int		main(int ac, char **av, char **env)
         str = escape_normal(str);
         meta = split_it_all(str, env);
         head = meta;
-        //ft_printf("the head is %s\n", meta->argument);
         while (head != NULL) {
             head->argument = chang_dollar_sign(head->argument, env);
             if (head->command == 0)
@@ -295,79 +250,3 @@ int		main(int ac, char **av, char **env)
     }
 	return(status);
 }
-
-/*
-int			main(int ac, char **av, char **env)
-{
-	char *str;
-	char    *tmp;
-	int		status;
-	t_meta	*meta;
-	t_meta	*head;
-	t_semi  *semi;
-	t_assen *assen;
-	int     on;
-
-
-	status = 0;
-	g_on = 0;
-	g_in_signal = 0;
-	g_first_time = 0;
-	g_in_line = 0;
-	on = 0;
-	head = NULL;
-	assen = NULL;
-	if (!(str = (char *) ft_calloc(sizeof(char) , 100)))
-        return (-1);
-	g_export = NULL;
-    if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
-        return -1;
-	filling_export(env);
-	tmp = NULL;
-	while (TRUE)
-	{
-        signal_handler(&status);
-<<<<<<< HEAD
-        str = "echo \\ \\ \\ \\ ";
-=======
-        assen = reading_input(assen, &str);
->>>>>>> bash_history
-		str = remove_space(str);
-        str = ft_strtrim(str, "\t");
-		str = escape_normal(str);
-        meta = split_it_all(str, env);
-		head = meta;
-        while (head != NULL)
-        {
-            head->argument = chang_dollar_sign(head->argument, env);
-            if (head->command == 0)
-                head->command = check_wich_command(take_first_word(head->argument));
-            if (token_error(head, &status) == 1)
-                break ;
-            if (head->meta == ';')
-            {
-                tmp = semi_split(str);
-                built_in(head, tmp, env, &status, 0);
-                str = split_to_last_cmd(str);
-            }
-            else if (head->meta == '|')
-                head = pipe_file(head, str, env, &status);
-            else if (head->meta_append == 1)
-                head = redirect_output(head, str, env, &status);
-                //head = append_file(head, str, env, &status);
-            else if (head->meta == '>')
-                head = redirect_output(head, str, env, &status);
-			 else if (head->meta == '<')
-                head = redirect_intput(head, str, env, &status);
-            else if (head->meta == '\0')
-                built_in(head, str, env, &status, 0);
-            if (head != NULL)
-                head = head->next;
-        }
-       // exit(status);
-        on = 0;
-        g_first_time = 1;
-        g_in_signal = 0;
-	}
-	return(status);
-}*/

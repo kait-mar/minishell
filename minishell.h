@@ -137,6 +137,20 @@ typedef  struct s_assen
     struct s_assen *prev;
 }               t_assen;
 
+struct g_global
+{
+    int g_on;
+    int g_in_signal;
+    int g_first_time;
+    int g_check_single_quote;
+    int g_check_double_quote;
+    int g_pwd_on;
+    int g_oldpwd_on;
+    int g_oldpwd_only;
+    int g_check;
+};
+
+
 /*      Global Variables */
 
 t_export *g_export;
@@ -216,7 +230,6 @@ void	free_meta_struct(t_meta *meta);
 int		only_star(char *str);
 void	stream_directory();
 void    built_in(t_meta *meta, t_assen assen, char **env, int *status, int l);
-//t_meta   *append_file(t_meta *meta, char *str, char **env, int *status);
 int     check_append(char *s);
 void    exit_command(int *status, char *s, t_assen *assen);
 int     check_exit(char *str);
