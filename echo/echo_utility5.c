@@ -1,10 +1,5 @@
 #include "../minishell.h"
 
-void			my_putchar(char c)
-{
-    write(1, &c, 1);
-}
-
 void	put_normal(char **split, char **env, int i, int *status)
 {
 	while (*(split + 1) != NULL)

@@ -25,6 +25,7 @@ SRCS=  cd.c cd_utility.c pwd.c export.c \
 	   dollar_sign_utility.c executable_utility.c echo/echo_utility3.c echo/echo_utility4.c \
 	   echo/echo_utility5.c history.c echo/echo_utility6.c command_navigation.c main_helper.c \
 	   meta_helper.c meta_support.c meta_support_two.c main_norm_helper.c history_support.c \
+	   echo/echo_support.c echo/echo_utility_helper.c
 
 OBJ = $(SRCS:.c=.o)
 
