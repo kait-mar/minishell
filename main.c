@@ -75,20 +75,20 @@ void	prompt(int in)
 
 	getcwd(s, 100);
 	if (in == 1)
-    {
-        ft_printf("\n%s ", s);
-        return ;
-    }
+	{
+		ft_printf("\n%s ", s);
+		return ;
+	}
 	else if (in == 0)
-        ft_printf("%s ", s);
+		ft_printf("%s ", s);
 }
 
 
 int		check_wich_command(char *str)
 {
-    int exept;
+    int	exept;
 
-    exept = 0;
+	exept = 0;
 	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[2]) == 0))
 		return (1);
 	if (check_pwd(str, &exept) == 0)
@@ -102,64 +102,64 @@ int		check_wich_command(char *str)
 	if (echo_strcmp(str, "echo") == 0)
 		return (6);
 	if (check_exit(str) == 1)
-	    return (7);
+		return (7);
 	return (0);
 }
 
-int    seach_for(char *s)
+int		seach_for(char *s)
 {
-    int i;
+	int	i;
 
-    i = 0 ;
-    while (s[i] != '\0')
-    {
-        if (s[i] == '\\')
-            return (1);
-        i += 1;
-    }
-    return (0);
+	i = 0 ;
+	while (s[i] != '\0')
+	{
+		if (s[i] == '\\')
+			return (1);
+		i += 1;
+	}
+	return (0);
 }
 
-int    count_meta1(char *str)
+int		count_meta1(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i] != '\0' && str[i] == '>')
-        i++;
-    return (i);
+	i = 0;
+	while (str[i] != '\0' && str[i] == '>')
+		i++;
+	return (i);
 }
 
-int    count_meta2(char *str)
+int		count_meta2(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i] != '\0' && str[i] == '<')
-        i++;
-    return (i);
+	i = 0;
+	while (str[i] != '\0' && str[i] == '<')
+		i++;
+	return (i);
 }
 
-int   token_error(t_meta *head, int *status)
+int		token_error(t_meta *head, int *status)
 {
-    t_meta *a_head;
+	t_meta	*a_head;
 
-    a_head = head;
-    while (a_head->next != NULL && a_head->next->meta != 0 && (ft_strcmp(a_head->argument, "") != 0 || ((a_head->meta == '>' || a_head->meta == '<') && ft_strcmp(a_head->next->argument, "") == 0)))
-        a_head = a_head->next;
-    if (ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|') && a_head->command == 0)
-    {
-        ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
-        *status = 258;
-        return (1);
-    }
-    else if ((a_head->meta == '>' || a_head->meta == '<') && (a_head->next == NULL || ft_strcmp(a_head->next->argument, "") == 0))
-    {
-        ft_printf("minishell: syntax error near unexpected token `newline'\n");
-        *status = 258;
-        return (1);
-    }
-    return (0);
+	a_head = head;
+	while (a_head->next != NULL && a_head->next->meta != 0 && (ft_strcmp(a_head->argument, "") != 0 || ((a_head->meta == '>' || a_head->meta == '<') && ft_strcmp(a_head->next->argument, "") == 0)))
+		a_head = a_head->next;
+	if (ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|') && a_head->command == 0)
+	{
+		ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
+		*status = 258;
+		return (1);
+	}
+	else if ((a_head->meta == '>' || a_head->meta == '<') && (a_head->next == NULL || ft_strcmp(a_head->next->argument, "") == 0))
+	{
+		ft_printf("minishell: syntax error near unexpected token `newline'\n");
+		*status = 258;
+		return (1);
+	}
+	return (0);
 }
 
 
