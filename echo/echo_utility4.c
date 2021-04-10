@@ -63,7 +63,6 @@ char	*skip_first_word(char **str)
 	{
 		i++;
 	}
-
 	if ((*str)[i] != '\0')
 	{
 		while ((*str)[i] != ' ' && (*str)[i] != '\t' && (*str)[i] != '\0')
