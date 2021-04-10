@@ -309,7 +309,7 @@ void   env_init(char **env)
     {
         if (match("PWD", env[i]) == 1)
         {
-            g_pwd_only = ft_strdup(env[i]);
+            g_global.pwd_only = ft_strdup(env[i]);
             pwd = 1;
         }
         else if (match("SHLVL", env[i]) == 1)
@@ -326,7 +326,7 @@ void   env_init(char **env)
         getcwd(s, 100);
         string = append("PWD=", s);
         env[i] = ft_strdup(string);
-        g_pwd_only = ft_strdup(env[i]);
+        g_global.pwd_only = ft_strdup(env[i]);
         free(string);
         string = NULL;
         i += 1;
@@ -373,7 +373,7 @@ void    filling_export(char **env)
         g_export->saver[i] = ft_strdup(env[i]);
         i += 1;
     }
-    export_init();
+	export_init();
     env_init(env);
 }
 

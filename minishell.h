@@ -15,6 +15,8 @@
  #define TRUE 1
  #define FALSE 0
 #define BUFFER 3
+#define ERROR_TOKEN "minishell: syntax error near unexpected token"
+#define ERRO_TOKEN_NL "minishell: syntax error near unexpected token `newline'"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -137,7 +139,7 @@ typedef  struct s_assen
     struct s_assen *prev;
 }               t_assen;
 
-struct g_global
+struct s_global
 {
     int on;
     int in_signal;
@@ -145,10 +147,12 @@ struct g_global
     int check_single_quote;
     int check_double_quote;
     int pwd_on;
-    char	*pwd_only;
+    char    *pwd_only;
+    char    *old_pwd;
     int oldpwd_on;
     char *oldpwd_only;
     int check;
+    int *status;
 }       g_global;
 
 
@@ -219,7 +223,7 @@ int		in_match(char *s1, char *s2);
 t_env	*delete_list(t_env *env, int count);
 t_env	*delete_in_env(t_env *env, char **splits, int i, int *status);
 char	**copy_all(t_env *take_env, char **env);
-void	execut_command(char **env, char *str, int *check, int *status);
+void	execut_command(char **env, char *str, int *status);
 char	**take_it_all(char *s, int c);
 char	*from_to(char *st, int i, int j);
 int		find_how_many(char *s, char c);
@@ -230,7 +234,7 @@ char	*skip_first_word(char **str);
 void	free_meta_struct(t_meta *meta);
 int		only_star(char *str);
 void	stream_directory();
-void    built_in(t_meta *meta, t_assen assen, char **env, int *status, int l);
+void    built_in(t_meta *meta, t_assen assen, char **env, int *status);
 int     check_append(char *s);
 void    exit_command(int *status, char *s, t_assen *assen);
 int     check_exit(char *str);
@@ -301,4 +305,19 @@ int     find_re(char *string, int c);
 char    *delete_char(char *string);
 void    filling(t_assen *assen);
 char	**put_cases1(char **bult);
+t_assen   minishell_init(char **env);
+int   token_error(t_meta *head, int *status);
+void minishell_execution(t_meta *head, t_assen assen, char **env);
+void    minishell(char **av, char **env, t_assen assen);
+int     check_append(char *s);
+t_meta      *meta_in(char **splits, t_meta *global, int *i);
+t_meta	*meta_out(char **splits, t_meta *global, int *i);
+t_meta	*meta_in_between(char **splits, t_meta *temp, int *i);
+t_meta 	*meta_out_between(char **splits, t_meta *temp, int *i);
+t_meta 	*split_it_all_loop(char **splits, t_meta *global, int i);
+int 	skip_quote(char *str, int *i);
+char 	*filling_split(char *str, int *i, int *j);
+int     valid(char *str, int j, int len);
+int		return_count_meta(char *str, int *i, int count, int *how_mutch);
+
 #endif

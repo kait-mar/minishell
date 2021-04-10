@@ -88,7 +88,7 @@ int     check_slash(char *s)
     }
     return (0);
 }
-void	execut_command(char **env, char *str, int *check,  int *statut)
+void	execut_command(char **env, char *str,  int *statut)
 {
 	char **splits;
 	char *path;
@@ -119,10 +119,9 @@ void	execut_command(char **env, char *str, int *check,  int *statut)
         else if (check_wich_command(splits[0]) == 0 && splits[1] != NULL)
         {
             print = ft_strdup(splits[1]);
-            //new_argument = take_first_word_re(splits[i]);
             changes = keep_split(print, 39, 34);
             return_parsing = return_parsed(changes, env);
-            splits[1] = ft_strdup(return_parsing); // ft_strjoin_re(new_argument, return_parsing);
+            splits[1] = ft_strdup(return_parsing);
         }
         while (env[i])
         {
@@ -142,7 +141,6 @@ void	execut_command(char **env, char *str, int *check,  int *statut)
         free(path);
         path = ft_strjoin("/", splits[0]);
         i = 0;
-        *check = 2;
         stat(splits[0], &stats);
         if (check_slash(splits[0]) == 0 && S_ISDIR(stats.st_mode))
         {
@@ -184,7 +182,6 @@ void	execut_command(char **env, char *str, int *check,  int *statut)
                 splits[0] = ft_strtrim(splits[0], "\"");
             else if (splits[0][0] == '\'')
                 splits[0] = ft_strtrim(splits[0], "'");
-            //ft_printf("minishell: %s: command not found\n", without_that(splits[0], '\''));
             ft_printf("minishell: %s: command not found\n", splits[0]);
             exit(127);
         }
@@ -210,5 +207,4 @@ void	execut_command(char **env, char *str, int *check,  int *statut)
         *statut = WEXITSTATUS(status);
         g_global.on = 0;
     }
-    // }
 }

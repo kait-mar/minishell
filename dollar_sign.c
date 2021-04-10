@@ -237,7 +237,7 @@ char    *chang_dollar(char *s, char **env, int *on)
     ss = take_away_dollar(s);
     if (ft_strcmp(ss, "PWD") == 0 && g_global.pwd_on == 0)
     {
-        string = ft_strdup(g_pwd_only);
+        string = ft_strdup(g_global.pwd_only);
         string = take_after_equal(string);
         *on = 1;
     }

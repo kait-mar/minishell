@@ -65,7 +65,7 @@ int    connecting(t_meta *head, t_assen assen, char **env, int *status, int in ,
         }
         if (check_bin_echo(head->argument) == 1)
             head->command = 6;
-        built_in(head, assen, env, status, 0);
+        built_in(head, assen, env, status);
       /*  fprintf(stderr, "Errno ==> %d\n", errno);
         fprintf(stderr, "stats ==> %d\n", *status);
         fprintf(stderr, "head->arg ==> %s\n", head->argument);*/
@@ -81,7 +81,7 @@ int  last_thing(t_meta *head, t_assen assen,char **env, int *status, int in)
         dup2(in, 0);
         close(in);
     }
-    built_in(head, assen, env, status, 0);
+    built_in(head, assen, env, status);
     return (0);
 }
 

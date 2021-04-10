@@ -12,61 +12,54 @@
 
 #include "minishell.h"
 
-static  char    *semi_split(char *str)
+static char	*semi_split(char *str)
 {
-    int     i;
-    char    *s;
+	int		i;
+	char	*s;
 
-    i = 0;
-    while (str[i] != ';')
-        i += 1;
-    if (!(s = (char *) malloc((sizeof(char) * (i +1) ))))
-        return (NULL);
-    i = 0;
-    while (str[i] != ';')
-    {
-        s[i] = str[i];
-        i += 1;
-    }
-    s[i] = '\0';
-    return (s);
+	i = 0;
+	while (str[i] != ';')
+		i += 1;
+	s = (char *) malloc(sizeof (char ) * i + 1);
+	if (s == NULL)
+		return (NULL);
+	i = 0;
+	while (str[i] != ';')
+	{
+		s[i] = str[i];
+		i += 1;
+	}
+	s[i] = '\0';
+	return (s);
 }
 
-void 	 built_in(t_meta *meta, t_assen assen, char **env, int *status, int l)
+void	built_in(t_meta *meta, t_assen assen, char **env, int *status)
 {
-	int check;
-	int  exept;
+	int	exept;
 
-	check = 0;
 	exept = 0;
-    if (meta->command == 1)
-        cd_command(meta->argument, status, env);
+	if (meta->command == 1)
+		cd_command(meta->argument, status, env);
 	else if (meta->command == 2)
-        pwd_command(status, exept);
-	else if (meta->command  == 3)
+		pwd_command(status, exept);
+	else if (meta->command == 3)
 		env_command(env, meta, status);
 	else if (meta->command == 4)
-    {
-        export_command(env, meta->argument, status, NULL);
-    }
+		export_command(env, meta->argument, status, NULL);
 	else if (meta->command == 5)
-        unset_command(env, meta->argument, status);
+		unset_command(env, meta->argument, status);
 	else if (meta->command == 6)
-    {
-        echo(meta->argument, env, status);
-    }
+		echo(meta->argument, env, status);
 	else if (meta->command == 0)
 	{
-	    if (ft_strcmp(meta->argument, "") != 0)
-	    {
-            g_process = 1;
-            execut_command(env, meta->argument, &check, status);
-        }
+		if (ft_strcmp(meta->argument, "") != 0)
+		{
+			g_process = 1;
+			execut_command(env, meta->argument, status);
+		}
 	}
-    if (meta->command == 7)
-    {
-        exit_command(status, meta->argument, &assen);
-    }
+	if (meta->command == 7)
+		exit_command(status, meta->argument, &assen);
 }
 
 void	prompt(int in)
@@ -75,20 +68,19 @@ void	prompt(int in)
 
 	getcwd(s, 100);
 	if (in == 1)
-    {
-        ft_printf("\n%s ", s);
-        return ;
-    }
+	{
+		ft_printf("\n%s ", s);
+		return ;
+	}
 	else if (in == 0)
-        ft_printf("%s ", s);
+		ft_printf("%s ", s);
 }
 
-
-int		check_wich_command(char *str)
+int	check_wich_command(char *str)
 {
-    int exept;
+	int	exept;
 
-    exept = 0;
+	exept = 0;
 	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[2]) == 0))
 		return (1);
 	if (check_pwd(str, &exept) == 0)
@@ -102,151 +94,15 @@ int		check_wich_command(char *str)
 	if (echo_strcmp(str, "echo") == 0)
 		return (6);
 	if (check_exit(str) == 1)
-	    return (7);
+		return (7);
 	return (0);
 }
 
-int    seach_for(char *s)
+int	main(int ac, char **av, char **env)
 {
-    int i;
+	t_assen	assen;
 
-    i = 0 ;
-    while (s[i] != '\0')
-    {
-        if (s[i] == '\\')
-            return (1);
-        i += 1;
-    }
-    return (0);
-}
-
-int    count_meta1(char *str)
-{
-    int i;
-
-    i = 0;
-    while (str[i] != '\0' && str[i] == '>')
-        i++;
-    return (i);
-}
-
-int    count_meta2(char *str)
-{
-    int i;
-
-    i = 0;
-    while (str[i] != '\0' && str[i] == '<')
-        i++;
-    return (i);
-}
-
-int   token_error(t_meta *head, int *status)
-{
-    t_meta *a_head;
-
-    a_head = head;
-    while (a_head->next != NULL && a_head->next->meta != 0 && (ft_strcmp(a_head->argument, "") != 0 || ((a_head->meta == '>' || a_head->meta == '<') && ft_strcmp(a_head->next->argument, "") == 0)))
-        a_head = a_head->next;
-    if (ft_strcmp(a_head->argument, "") == 0 && (a_head->meta == ';' || a_head->meta == '|') && a_head->command == 0)
-    {
-        ft_printf("minishell: syntax error near unexpected token `%c'\n", a_head->meta);
-        *status = 258;
-        return (1);
-    }
-    else if ((a_head->meta == '>' || a_head->meta == '<') && (a_head->next == NULL || ft_strcmp(a_head->next->argument, "") == 0))
-    {
-        ft_printf("minishell: syntax error near unexpected token `newline'\n");
-        *status = 258;
-        return (1);
-    }
-    return (0);
-}
-
-
-int		main(int ac, char **av, char **env)
-{
-	char *str;
-	char	*tmp;
-	int		status;
-	t_meta	*meta;
-	t_meta	*head;
-	t_semi  *semi;
-	t_assen  assen;
-	int     on;
-
-	status = 0;
-    g_global.on = 0;
-	g_global.in_signal = 0;
-	g_global.first_time = 0;
-	g_global.check_single_quote = 0;
-    g_global.check_double_quote = 0;
-    g_global.pwd_on = 0;
-    g_global.oldpwd_on = 0;
-    g_global.oldpwd_only = NULL;
-    g_global.check = 0;
-	on = 0;
-	head = NULL;
-	str = NULL;
-	g_export = NULL;
-    if (!(g_old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
-        return -1;
-    filling_export(env);
-    tmp = NULL;
-    memset(&assen, 0, sizeof (t_assen));
-    filling(&assen);
-	while (TRUE) {
-        signal_handler(&status);
-        if (av[2])
-            str = ft_strdup(av[2]);
-        else {
-            prompt(g_global.in_signal);
-            str = reading_input(&assen);
-        }
-        str = remove_space(str);
-        str = ft_strtrim(str, "\t");
-        str = escape_normal(str);
-        meta = split_it_all(str, env);
-        head = meta;
-        while (head != NULL) {
-            head->argument = chang_dollar_sign(head->argument, env);
-            if (head->command == 0)
-                head->command = check_wich_command(take_first_word(head->argument));
-            if (token_error(head, &status) == 1)
-                break;
-            if (head->meta == ';') {
-                tmp = semi_split(str);
-                built_in(head, assen, env, &status, 0);
-                str = split_to_last_cmd(str);
-            } else if (head->meta == '|')
-                head = pipe_file(head, assen, env, &status);
-            else if (head->meta_append == 1) {
-                head = redirect_output(head, assen, env, &status);
-                if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
-                    head = head->next;
-            }
-//                head = append_file(head, str, env, &status);
-            else if (head->meta == '>') {
-                head = redirect_output(head, assen, env, &status);
-                if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
-                    head = head->next;
-            } else if (head->meta == '<')
-                head = redirect_intput(head, assen, env, &status);
-            else if (head->meta == '\0')
-                built_in(head, assen, env, &status, 0);
-            if (head != NULL)
-                head = head->next;
-        }
-        if (av[2])
-            exit(status);
-        on = 0;
-        g_global.first_time = 1;
-        if (g_in_redirect == 1) {
-            g_in_redirect = 0;
-            g_global.in_signal = 1;
-        } else
-            g_global.in_signal = 0;
-        free(str);
-        str = NULL;
-    }
-	return(status);
+	assen = minishell_init(env);
+	minishell(av, env, assen);
+	return (*(g_global.status));
 }

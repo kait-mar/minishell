@@ -118,9 +118,9 @@ void    old_pwd(char **env)
     }
     if (i == 0 && g_global.pwd_on == 0)
     {
-        if (getcwd(g_old_pwd, 100) == NULL)
+        if (getcwd(g_global.old_pwd, 100) == NULL)
             ft_printf("%s\n", strerror(errno));
-        old_pwd = add_in("OLDPWD=", g_old_pwd);
+        old_pwd = add_in("OLDPWD=", g_global.old_pwd);
     }
     else if (i == 1)
         old_pwd = add_in("OLDPWD=", take_it);
@@ -154,7 +154,7 @@ void    new_pwd(char **env, char *str)
     i = 0;
     k = 0;
     old_pwd = add_in("PWD=", str);
-    g_pwd_only = ft_strdup(old_pwd);
+    g_global.pwd_only = ft_strdup(old_pwd);
     while (env[i])
     {
         if (find_pwd(env[i]) == 1)
