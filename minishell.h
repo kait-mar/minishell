@@ -130,6 +130,7 @@ typedef struct s_history
     char *delete_char;
     char *delete_mode;
     char *exit_d_mode;
+    int 	fd;
 }               t_history;
 
 typedef  struct s_assen
