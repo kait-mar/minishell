@@ -31,7 +31,6 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
     count = 0;
 	while (temp->next != NULL && (temp->meta == '>' || temp->meta_append != 0))
 	{
-		//check this if put it in or outside the loop
 		on = 0;
 		append = 0;
 		check_meta = 0;
@@ -39,33 +38,18 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 			append = 1;
 		else if (temp->meta == '>')
 			check_meta = '>';
-        //ft_printf("temp->command ==> %d || temp->arg ==> %s\n", temp->command, temp->argument);
 		temp = temp->next;
 		temp->argument = chang_dollar_sign(temp->argument, env);
-		/*temp->argument = without_that(temp->argument, '\"');
-		split = ft_split(temp->argument, ' ');
-		free(temp->argument);
-		temp->argument = NULL;
-		temp->argument = ft_strdup(split[0]);
-        while (split[i] != NULL)
-        {
-            split[i] = ft_strjoin(" ", split[i]);
-			meta->argument = ft_strjoin(meta->argument, split[i]);
-            i += 1;
-        }*/
 		new = file_name(temp->argument);
         temp->argument = temp->argument + ft_strlen(new);
 		if (*(temp->argument) == ' ')
 			(temp->argument)++;
           if (meta->command == 0 && check_wich_command(take_first_word(temp->argument)) != 0 && on == 0)
         {
-			//temp->argument = temp->argument + 1;
             meta = temp;
             meta->command = check_wich_command(take_first_word(temp->argument));
-           // ft_printf("in temp->command ==> %d || temp->arg ==> %s\n", meta->command, meta->argument);
             on = 1;
         }
-        //new = remove_staring_quote(new);
         new = final_file_name(new);
         if (on == 0)
         {
@@ -74,7 +58,6 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
          		meta->argument = ft_strjoin(meta->argument, " ");
             meta->argument = ft_strjoin(meta->argument, temp->argument);
         }
-       // ft_printf("out  temp->command ==> %d || temp->arg ==> %s\n", meta->command, meta->argument);
         i = 1;
 		if (append != 0)
 		{
