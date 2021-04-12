@@ -16,7 +16,7 @@
  #define FALSE 0
 #define BUFFER 3
 #define ERROR_TOKEN "minishell: syntax error near unexpected token"
-#define ERRO_TOKEN_NL "minishell: syntax error near unexpected token `newline'"
+#define ERROR_TOKEN_NL "minishell: syntax error near unexpected token `newline'"
 
 #include <stdio.h>
 #include <stdlib.h>

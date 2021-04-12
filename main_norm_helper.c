@@ -67,7 +67,7 @@ int	token_error(t_meta *head, int *status)
 	else if ((a_head->meta == '>' || a_head->meta == '<')
 		&& (a_head->next == NULL || ft_strcmp(a_head->next->argument, "") == 0))
 	{
-		ft_printf("%s\n", ERROR_TOKEN);
+		ft_printf("%s\n", ERROR_TOKEN_NL);
 		*status = 258;
 		return (1);
 	}
