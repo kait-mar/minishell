@@ -33,6 +33,7 @@
 #include <term.h>
 #include "./Libft/libft.h"
 #include "./echo/echo.h"
+#include "./bash_history/bash_history.h"
 
 
 typedef struct s_command_cd
@@ -115,31 +116,6 @@ typedef struct s_buffer
     int check;
 }               t_buffer;
 
-/* Termcap */
-
-typedef struct s_history
-{
-    char *term_type;
-    char *tty_name;
-    char *key_s;
-    char *key_e;
-    char *up_arrow;
-    char *down_arrow;
-    char *clear;
-    char *line_start;
-    char *delete_char;
-    char *delete_mode;
-    char *exit_d_mode;
-    int 	fd;
-}               t_history;
-
-typedef  struct s_assen
-{
-    char *cmd;
-    struct s_assen *next;
-    struct s_assen *prev;
-}               t_assen;
-
 struct s_global
 {
     int on;
@@ -179,7 +155,6 @@ int     g_check;
 void	cd_command(char *argument, int *status, char **env);
 char	**taking_command(char *str);
 char	**split_to_tokens(char *str);
-char 	*reading_input(t_assen *assen);
 char	*without_that(char *str, char c);
 int		how_mutch_argument(char *str, int i);
 char	*ft_toStrLower(char *str);
@@ -298,13 +273,6 @@ char    *print_env1(char *bult);
 char    *print_env2(char *bult, char **env, int which_quote, int *status);
 int		print_envir(char **str, char **env, char **tabs);
 char    *check_print(char *bult);
-t_history   init_hist(t_history history);
-void    append_assen(t_assen **assen, char *cmd);
-int     int_put(int c);
-char	*extend_re(char *str, char *s);
-int     find_re(char *string, int c);
-char    *delete_char(char *string);
-void    filling(t_assen *assen);
 char	**put_cases1(char **bult);
 t_assen   minishell_init(char **env);
 int   token_error(t_meta *head, int *status);

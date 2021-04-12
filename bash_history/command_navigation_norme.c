@@ -1,0 +1,76 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   command_navigation_norme.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/12 16:40:25 by molabhai          #+#    #+#             */
+/*   Updated: 2021/04/12 16:40:26 by molabhai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
+
+struct termios	tty_init(int fd)
+{
+	struct termios	save;
+	struct termios	tp;
+
+	if (tcgetattr(fd, &tp) == -1)
+		exit(-1);
+	save = tp;
+	tp.c_lflag &= ~(ICANON | ECHO);
+	tp.c_cc[VMIN] = 0;
+	tp.c_cc[VTIME] = 0;
+	if (tcsetattr(fd, TCSANOW, &tp) == 1)
+		exit (-1);
+	return (save);
+}
+
+t_assen 	*read_l(char **temp, char **tmp, t_history history, t_assen *climb)
+{
+	int		r;
+	char	*str;
+
+	str = (char *) malloc(BUFFER + 1);
+	if (str == NULL)
+		return (NULL);
+	r = read(history.fd, str, BUFFER);
+	str[r] = '\0';
+	if (str[0] == 127)
+		back_space(tmp, history, temp, climb);
+	else
+		ft_putstr(str);
+	if (history.up_arrow != NULL && memcmp(str, history.up_arrow, 3) == 0)
+		climb = arrow_up(tmp, history, climb);
+	if (history.down_arrow != NULL
+		&& memcmp(str, history.down_arrow, 3) == 0)
+		climb = arrow_down(history, climb, tmp, temp);
+	if ((history.down_arrow != NULL
+		 && memcmp(str, history.down_arrow, 3) != 0)
+		&& (history.up_arrow != NULL
+			&& memcmp(str, history.up_arrow, 3) != 0) && str[0] != 127)
+		string_extention(tmp, temp, &str);
+	return (climb);
+}
+
+char	*tty_loop(t_history history, t_assen *assen, t_assen *climb)
+{
+	char	*temp;
+	char	*tmp;
+
+	tmp = NULL;
+	temp = NULL;
+	while (TRUE)
+	{
+		climb = read_l(&temp, &tmp, history, climb);
+		if (find_re(tmp, '\n'))
+		{
+			if (ft_strcmp(tmp, "") != 0)
+				append_assen(&assen, tmp);
+			break ;
+		}
+	}
+	return (tmp);
+}
