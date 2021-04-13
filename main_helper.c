@@ -25,7 +25,7 @@ t_assen    minishell_init(char **env)
     if (!(g_global.old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
         return (assen);
     filling_export(env);
-    filling(&assen);
+	filling(&assen);
     return (assen);
 }
 
@@ -71,12 +71,12 @@ void    minishell(char **av, char **env, t_assen assen)
     while (TRUE)
     {
         signal_handler(g_global.status);
-        if (av[2])
-            str = ft_strdup(av[2]);
+        if (av[1])
+            str = ft_strdup(av[1]);
         else
         {
-            prompt(g_global.in_signal);
-            str = reading_input(&assen);
+            prompt();
+			str = reading_input(&assen);
         }
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
@@ -84,7 +84,7 @@ void    minishell(char **av, char **env, t_assen assen)
         meta = split_it_all(str, env);
         head = meta;
         minishell_execution(head, assen, env);
-        if (av[2])
+        if (av[1])
             exit(*(g_global.status));
         g_global.first_time = 1;
         if (g_in_redirect == 1)
@@ -94,7 +94,7 @@ void    minishell(char **av, char **env, t_assen assen)
         }
         else
             g_global.in_signal = 0;
-        free(str);
-        str = NULL;
+     /*   free(str);
+        str = NULL;*/
     }
 }

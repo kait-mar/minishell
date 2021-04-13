@@ -28,6 +28,12 @@ struct termios	tty_init(int fd)
 	return (save);
 }
 
+char	*ctrl_d(void)
+{
+	ft_putchar('\n');
+	return (ft_strdup("exit \n"));
+}
+
 t_assen 	*read_l(char **temp, char **tmp, t_history history, t_assen *climb)
 {
 	int		r;
@@ -40,7 +46,9 @@ t_assen 	*read_l(char **temp, char **tmp, t_history history, t_assen *climb)
 	str[r] = '\0';
 	if (str[0] == 127)
 		back_space(tmp, history, temp, climb);
-	else
+	else if (str[0] == 4 && ft_strcmp(*tmp, "") == 0)
+		*tmp = ctrl_d();
+	else if (str[0] != 4 && str[0] != 127)
 		ft_putstr(str);
 	if (history.up_arrow != NULL && memcmp(str, history.up_arrow, 3) == 0)
 		climb = arrow_up(tmp, history, climb);
@@ -48,7 +56,7 @@ t_assen 	*read_l(char **temp, char **tmp, t_history history, t_assen *climb)
 		&& memcmp(str, history.down_arrow, 3) == 0)
 		climb = arrow_down(history, climb, tmp, temp);
 	if ((history.down_arrow != NULL
-		 && memcmp(str, history.down_arrow, 3) != 0)
+			&& memcmp(str, history.down_arrow, 3) != 0)
 		&& (history.up_arrow != NULL
 			&& memcmp(str, history.up_arrow, 3) != 0) && str[0] != 127)
 		string_extention(tmp, temp, &str);
@@ -60,8 +68,8 @@ char	*tty_loop(t_history history, t_assen *assen, t_assen *climb)
 	char	*temp;
 	char	*tmp;
 
-	tmp = NULL;
 	temp = NULL;
+	tmp = NULL;
 	while (TRUE)
 	{
 		climb = read_l(&temp, &tmp, history, climb);
