@@ -14,9 +14,13 @@
 
 void 	back_space(char **tmp, t_history history, char **temp, t_assen *climb)
 {
+	if (*tmp == NULL)
+		*tmp = ft_strdup("");
+	if (*temp == NULL)
+		*temp = ft_strdup("");
 	tputs(history.line_start, 0, int_put);
 	tputs(history.clear, 0, int_put);
-	prompt(g_global.in_signal);
+	prompt();
 	*tmp = delete_char(*tmp);
 	if (climb->next == NULL)
 		*temp = delete_char(*temp);
@@ -27,7 +31,7 @@ t_assen	*arrow_up(char **tmp, t_history history, t_assen *climb)
 {
 	tputs(history.line_start, 0, int_put);
 	tputs(history.clear, 0, int_put);
-	prompt(g_global.in_signal);
+	prompt();
 	if (climb->prev != NULL)
 	{
 		ft_putstr(climb->cmd);
@@ -42,7 +46,7 @@ t_assen	*arrow_down(t_history history, t_assen *climb, char **tmp, char **temp)
 {
 	tputs(history.line_start, 0, int_put);
 	tputs(history.clear, 0, int_put);
-	prompt(g_global.in_signal);
+	prompt();
 	if (climb->next != NULL)
 	{
 		climb = climb->next;

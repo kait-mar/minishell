@@ -221,7 +221,7 @@ void     my_putchar(char c);
 void	signal_handler(int *status);
 void	quit_signal(int signum);
 void		inter_signal(int status);
-void	prompt(int i);
+void	prompt(void);
 void    filling_export(char **env);
 void    export_realloc(void);
 char    *split_to_last_cmd(char *str);

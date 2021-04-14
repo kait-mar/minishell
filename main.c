@@ -62,18 +62,18 @@ void	built_in(t_meta *meta, t_assen assen, char **env)
 		exit_command(g_global.status, meta->argument, &assen);
 }
 
-void	prompt(int in)
+void	prompt(void)
 {
 	char	s[100];
 
 	getcwd(s, 100);
-	if (in == 1)
+	if (g_global.in_signal == 1)
 	{
 		ft_printf("\n%s ", s);
-		return ;
 	}
-	else if (in == 0)
+	else if (g_global.in_signal == 0)
 		ft_printf("%s ", s);
+	g_global.in_signal = 0;
 }
 
 int	check_wich_command(char *str)
@@ -102,6 +102,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_assen	assen;
 
+	memset(&assen, 0, sizeof (assen));
 	assen = minishell_init(env);
 	minishell(av, env, assen);
 	return (*(g_global.status));

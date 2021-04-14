@@ -125,8 +125,10 @@ void        exit_command(int *status, char *s, t_assen *assen)
     }
     waitpid(pid, &stat, WUNTRACED);
     if (s[0] == '\0')
-        exit(*status);
-    else
+	{
+		exit(*status);
+	}
+	else
     {
         if (check_is_num(s) == 1)
         {
@@ -134,10 +136,7 @@ void        exit_command(int *status, char *s, t_assen *assen)
             *status = 255;
         }
         else
-        {
             *status = ft_atois(s);
-           // ft_printf("exit\n");
-        }
         exit(*status % 256);
     }
 }
