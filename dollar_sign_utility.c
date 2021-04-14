@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 int     count_space_variable(char *s)
 {
     int i;
