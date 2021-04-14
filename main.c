@@ -38,6 +38,7 @@ void	built_in(t_meta *meta, t_assen assen, char **env)
 	int	exept;
 
 	exept = 0;
+	//fprintf(stderr, "the argv is [%s] and meta is %d\n", meta->argument, meta->command);
 	if (meta->command == 1)
 		cd_command(meta->argument, g_global.status, env);
 	else if (meta->command == 2)

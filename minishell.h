@@ -116,6 +116,13 @@ typedef struct s_buffer
     int check;
 }               t_buffer;
 
+typedef struct s_support
+{
+    int on;
+    int append;
+    int check_meta;
+}               t_support;
+
 struct s_global
 {
     int on;
@@ -291,5 +298,8 @@ int		return_count_meta(char *str, int *i, int count, int *how_mutch);
 void    redirected_command(int fd, t_meta *meta, t_assen assen, char **env);
 void	redirected_output_command(int fd, t_meta *meta, t_assen assen, char **env);
 int		redirect_command_head(int check_meta, int append, char *new);
+t_meta	*name_and_condition(char **new, int *on, t_meta *meta, t_meta *temp);
+int		redirect_input_head(char *new);
+t_meta	*input_conditions(t_meta *meta, char **new, t_meta *temp, int *on);
 
 #endif

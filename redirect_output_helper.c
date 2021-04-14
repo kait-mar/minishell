@@ -96,8 +96,38 @@ int		redirect_command_head(int check_meta, int append, char *new)
 	return (fd);
 }
 
-char	*name_and_condition(char *new, int on, t_meta *meta, t_meta *temp)
+t_meta	*name_and_condition(char **new, int *on, t_meta *meta, t_meta *temp)
 {
-	int i;
-	return (NULL);
+	*new = file_name(temp->argument);
+	temp->argument = temp->argument + ft_strlen(*new);
+	if (*(temp->argument) == ' ')
+		(temp->argument)++;
+	if (meta->command == 0 && check_wich_command(take_first_word(temp->argument)) != 0 && *on == 0)
+	{
+		meta = temp;
+		meta->command = check_wich_command(take_first_word(temp->argument));
+		*on = 1;
+	}
+	*new = final_file_name(*new);
+	if (*on == 0)
+	{
+		if (ft_strcmp(meta->argument, "") != 0 && ft_strcmp(temp->argument, "") != 0 &&
+			(meta->argument[ft_strlen(meta->argument) - 1] != ' ' && *(temp->argument) != ' '))
+			meta->argument = ft_strjoin(meta->argument, " ");
+		meta->argument = ft_strjoin(meta->argument, temp->argument);
+	}
+	return (meta);
+}
+
+int		redirect_input_head(char *new)
+{
+	int	fd;
+
+	if ((fd = open(new, O_RDWR, S_IRWXU)) < 0)
+	{
+		g_in_redirect = 1;
+		ft_printf("minishell: %s: %s", new, strerror(errno));
+		return (-1);
+	}
+	return (fd);
 }
