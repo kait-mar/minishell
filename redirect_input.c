@@ -15,7 +15,6 @@
 t_meta	*redirect_intput(t_meta *meta, t_assen assen, char **env, int *status)
 {
 	int		fd;
-	int		pid;
 	char	*new;
 	t_meta	*temp;
 	int		on;
@@ -35,10 +34,8 @@ t_meta	*redirect_intput(t_meta *meta, t_assen assen, char **env, int *status)
         {
             meta = temp;
             meta->command = check_wich_command(take_first_word(ft_strtrim(temp->argument, " ")));
-           // ft_printf("in temp->command ==> %d || temp->arg ==> %s\n", meta->command, meta->argument);
             on = 1;
         }
-        //new = remove_staring_quote(new);
         new = final_file_name(new);
         if (on == 0)
         {
@@ -56,29 +53,6 @@ t_meta	*redirect_intput(t_meta *meta, t_assen assen, char **env, int *status)
 			return (NULL);
 		}
 	}
-	pid = fork();
-	if (pid < 0)
-		ft_putstr(strerror(errno));
-	else if (pid == 0)
-	{
-		if ((dup2(fd, STDIN_FILENO) != -1))
-		{
-            built_in(meta, assen, env, status);
-			close(fd);
-			exit(EXIT_SUCCESS);
-		}
-		else
-		{
-			ft_putstr(strerror(errno));
-			close(fd);
-			exit(EXIT_FAILURE);
-		}
-	}
-	else
-	{
-		if ((waitpid(pid, status, WUNTRACED) == -1))
-			ft_putstr(strerror(errno));
-		close(fd);
-	}
+	redirected_command(fd, meta, assen, env);
 	return (temp);
 }

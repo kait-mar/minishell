@@ -59,47 +59,10 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
             meta->argument = ft_strjoin(meta->argument, temp->argument);
         }
         i = 1;
-		if (append != 0)
-		{
-			if ((fd = open(new, O_CREAT | O_APPEND | O_RDWR, S_IRWXU)) == -1)
-			{
-				ft_printf("%s", strerror(errno));
-				return (NULL);
-			}
-		}
-		else if (check_meta == '>')
-		{
-			if ((fd = open(new,  O_RDWR | O_CREAT | O_TRUNC, S_IRWXU)) < 0)
-			{
-				ft_putstr(strerror(errno));
-				return (NULL);
-			}
-		}
+		if ((fd = redirect_command_head(check_meta, append, new)) == -1)
+			return (NULL);
 	}
-	pid = fork();
-	if (pid < 0)
-		ft_putstr(strerror(errno));
-	else if (pid == 0)
-	{
-		if ((dup2(fd, STDOUT_FILENO) != -1))
-		{
-			built_in(meta, assen, env, status);
-			close(fd);
-			exit(EXIT_SUCCESS);
-		}
-		else
-		{
-			ft_putstr(strerror(errno));
-			close(fd);
-			exit(EXIT_FAILURE);
-		}
-	}
-	else
-	{
-		if ((waitpid(pid, status, WUNTRACED) == -1))
-			ft_putstr(strerror(errno));
-		close(fd);
-	}
+	redirected_output_command(fd, meta, assen, env);
 	return (temp);
 }
 

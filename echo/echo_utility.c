@@ -1,5 +1,6 @@
 #include "../minishell.h"
 
+
 int	print_env(char *bult, char **env, int which_quote, int *status)
 {
 	int		i;
@@ -7,24 +8,24 @@ int	print_env(char *bult, char **env, int which_quote, int *status)
 	i = 0;
 	while (*bult)
 	{
-        if (*bult == '\\' && *(bult + 1) == '\\')
-            bult = print_env1(bult);
-        if (*bult == '\\' && (*(bult + 1) == '$' || *(bult + 1) == '"' || *(bult + 1) == '\''))
+		if (*bult == '\\' && *(bult + 1) == '\\')
+			bult = print_env1(bult);
+		if (*bult == '\\' && (*(bult + 1) == '$' || *(bult + 1) == '"' || *(bult + 1) == '\''))
 		{
-            bult++;
-            my_putchar(*(bult++));
-        }
-        while (print_env_condition(bult) == 1)
-            my_putchar(*(bult++));
-        if (*bult == '\\' && (*(bult + 1) == '\\' || *(bult + 1) == '$'))
-            continue;
-        if (which_quote_condition(bult, which_quote) == 1)
-            my_putchar(*(bult++));
-        if (*bult == '\0')
-            break;
-        else
+			bult++;
+			my_putchar(*(bult++));
+		}
+		while (print_env_condition(bult) == 1)
+			my_putchar(*(bult++));
+		if (*bult == '\\' && (*(bult + 1) == '\\' || *(bult + 1) == '$'))
+			continue;
+		if (which_quote_condition(bult, which_quote) == 1)
+			my_putchar(*(bult++));
+		if (*bult == '\0')
+			break ;
+		else
 			bult = last_print_env_case(bult, env, which_quote, status);
-    }
+	}
 	return (i);
 }
 
@@ -36,7 +37,7 @@ char	**put_cases2(char **bult)
 	if (j % 2 != 0)
 	{
 		while (*(*bult + 1) == '\\')
-		(*bult)++;
+			(*bult)++;
 	}
 	else
 	{

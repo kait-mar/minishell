@@ -39,7 +39,7 @@ void minishell_execution(t_meta *head, t_assen assen, char **env)
         if (token_error(head, g_global.status) == 1)
             break;
         if (head->meta == ';') {
-            built_in(head, assen, env, g_global.status);
+            built_in(head, assen, env);
         } else if (head->meta == '|')
             head = pipe_file(head, assen, env, g_global.status);
         else if (head->meta_append == 1) {
@@ -53,7 +53,7 @@ void minishell_execution(t_meta *head, t_assen assen, char **env)
         } else if (head->meta == '<')
             head = redirect_intput(head, assen, env, g_global.status);
         else if (head->meta == '\0')
-            built_in(head, assen, env, g_global.status);
+            built_in(head, assen, env);
         if (head != NULL)
             head = head->next;
     }
