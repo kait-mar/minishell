@@ -17,6 +17,7 @@
 #define BUFFER 3
 #define ERROR_TOKEN "minishell: syntax error near unexpected token"
 #define ERROR_TOKEN_NL "minishell: syntax error near unexpected token `newline'"
+#define SHLVL_ERROR "minishell: warning: shell level "
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -130,12 +131,12 @@ struct s_global
     char *oldpwd_only;
     int check;
     int *status;
+	t_export *export;
 }       g_global;
 
 
 /*      Global Variables */
 
-t_export *g_export;
 int		g_process;
 int     g_first_time;
 int     g_in_signal;
@@ -231,7 +232,7 @@ char	**take_only_carac_for_export(char *str);
 char    *take_only(char *s);
 int     check_double_inside_single(char *s);
 int     check_single_inside_double(char *s);
-char    *add_backslash(char *s);
+char    *add_backs(char *s);
 int     in_it(char *s);
 int     last_check(char *str, int i);
 char    *error_reformulation(char *string);
@@ -288,5 +289,16 @@ int 	skip_quote(char *str, int *i);
 char 	*filling_split(char *str, int *i, int *j);
 int     valid(char *str, int j, int len);
 int		return_count_meta(char *str, int *i, int count, int *how_mutch);
+void	filling_global(t_export *tmp);
+t_export	*filling_tmp(void);
+int	return_env_on(char *str);
+t_export *check_export_init(char **splits, t_export *export);
+char	*split_reformulation(char *splits);
+t_export	*put_in_export(char *splits, int *on, t_export *export);
+t_export	*export_loop(char *splits, t_export *export, int on, int j);
+int	no_space(char *s);
+t_export	*export_global(t_export *export);
+void 	filling_export_env(char **env, char *export_argument);
+void	printing_filling_env(t_export *export, int *status, char **env);
 
 #endif

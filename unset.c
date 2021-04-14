@@ -205,9 +205,9 @@ void	unset_command(char **env, char *str, int *status)
 	splits = take_only_carac(str);
 	take_env = delete_in_env(take_env, splits, i, status);
 	env = copy_all(take_env, env);
-    take_env = filling_env(g_export->saver);
+    take_env = filling_env(g_global.export->saver);
     splits = take_only_carac(str);
     i = 1;
     take_env = delete_in_env(take_env, splits, i, status);
-    g_export->saver = copy_all(take_env, g_export->saver);
+    g_global.export->saver = copy_all(take_env, g_global.export->saver);
 }
