@@ -110,6 +110,13 @@ typedef struct s_buffer
     int check;
 }               t_buffer;
 
+typedef struct s_support
+{
+    int on;
+    int append;
+    int check_meta;
+}               t_support;
+
 struct s_global
 {
     int on;
@@ -204,7 +211,7 @@ char	*skip_first_word(char **str);
 void	free_meta_struct(t_meta *meta);
 int		only_star(char *str);
 void	stream_directory();
-void    built_in(t_meta *meta, t_assen assen, char **env, int *status);
+void    built_in(t_meta *meta, t_assen assen, char **env);
 int     check_append(char *s);
 void    exit_command(int *status, char *s, t_assen *assen);
 int     check_exit(char *str);
@@ -282,5 +289,11 @@ int 	skip_quote(char *str, int *i);
 char 	*filling_split(char *str, int *i, int *j);
 int     valid(char *str, int j, int len);
 int		return_count_meta(char *str, int *i, int count, int *how_mutch);
+void    redirected_command(int fd, t_meta *meta, t_assen assen, char **env);
+void	redirected_output_command(int fd, t_meta *meta, t_assen assen, char **env);
+int		redirect_command_head(int check_meta, int append, char *new);
+t_meta	*name_and_condition(char **new, int *on, t_meta *meta, t_meta *temp);
+int		redirect_input_head(char *new);
+t_meta	*input_conditions(t_meta *meta, char **new, t_meta *temp, int *on);
 
 #endif

@@ -33,33 +33,34 @@ static char	*semi_split(char *str)
 	return (s);
 }
 
-void	built_in(t_meta *meta, t_assen assen, char **env, int *status)
+void	built_in(t_meta *meta, t_assen assen, char **env)
 {
 	int	exept;
 
 	exept = 0;
+	//fprintf(stderr, "the argv is [%s] and meta is %d\n", meta->argument, meta->command);
 	if (meta->command == 1)
-		cd_command(meta->argument, status, env);
+		cd_command(meta->argument, g_global.status, env);
 	else if (meta->command == 2)
-		pwd_command(status, exept);
+		pwd_command(g_global.status, exept);
 	else if (meta->command == 3)
-		env_command(env, meta, status);
+		env_command(env, meta, g_global.status);
 	else if (meta->command == 4)
-		export_command(env, meta->argument, status, NULL);
+		export_command(env, meta->argument, g_global.status, NULL);
 	else if (meta->command == 5)
-		unset_command(env, meta->argument, status);
+		unset_command(env, meta->argument, g_global.status);
 	else if (meta->command == 6)
-		echo(meta->argument, env, status);
+		echo(meta->argument, env, g_global.status);
 	else if (meta->command == 0)
 	{
 		if (ft_strcmp(meta->argument, "") != 0)
 		{
 			g_process = 1;
-			execut_command(env, meta->argument, status);
+			execut_command(env, meta->argument, g_global.status);
 		}
 	}
 	if (meta->command == 7)
-		exit_command(status, meta->argument, &assen);
+		exit_command(g_global.status, meta->argument, &assen);
 }
 
 void	prompt(void)

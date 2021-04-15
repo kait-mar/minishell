@@ -27,7 +27,8 @@ SRCS=  cd.c cd_utility.c pwd.c export/export.c \
 	   main_helper.c meta_helper.c meta_support.c meta_support_two.c main_norm_helper.c bash_history/history_support.c \
 	   echo/echo_support.c echo/echo_utility_helper.c bash_history/command_navigation_norme.c export/export_support.c \
 	   export/export_support_two.c export/export_utility_three.c export/export_utility_support.c export/export_utility_support_two.c \
-	   export/export_utility_support_three.c export/export_utility_support_four.c export/export_utility_support_five.c
+	   export/export_utility_support_three.c export/export_utility_support_four.c export/export_utility_support_five.c \
+	   redirect_output_helper.c
 
 OBJ = $(SRCS:.c=.o)
 
