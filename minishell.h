@@ -313,5 +313,21 @@ int	no_space(char *s);
 t_export	*export_global(t_export *export);
 void 	filling_export_env(char **env, char *export_argument);
 void	printing_filling_env(t_export *export, int *status, char **env);
+char     *rm_space_helper(int *i, char *s, int *j, int wich);
+int		return_loop(int i, char *s);
+int     only_space(char *s, int i);
+int     count_space_variable(char *s);
+void    old_pwd(char **env);
+void    new_pwd(char **env, char *str);
+int     find_pwd(char *s);
+int     find_old_pwd(char *s);
+void    remove_old_pwd(char **env);
+char    *add_in(char *first, char *second);
+int     check_only_single_double(char *s);
+char	*old_pwd_helper(char **env, int i);
+char	*old_pwd_support();
+int 	cd_command_helper(int *status, char **env, char **s, int first_time);
+void	cd_command_helper2(char **env, int *first_time);
+
 
 #endif

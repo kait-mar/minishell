@@ -30,13 +30,9 @@ char	*without_that(char *str, char c)
 		if (str[i] == c && str[i - 1] != '\\')
 			i += 1;
 		else if (str[i] == '\\' && str[i + 1] == '\"')
-		    i += 1;
-		else
-		{
-			s[j] = str[i];
-			j += 1;
 			i += 1;
-		}
+		else
+			s[j++] = str[i++];
 	}
 	s[j] = '\0';
 	return (s);
