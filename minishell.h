@@ -35,6 +35,7 @@
 #include "./Libft/libft.h"
 #include "./echo/echo.h"
 #include "./bash_history/bash_history.h"
+#include "./export/export.h"
 
 
 typedef struct s_command_cd
@@ -45,14 +46,6 @@ typedef struct s_command_cd
 	int error;
 }				t_command_cd;
 
-typedef struct s_export
-{
-	char 	*command;
-	char    **saver;
-	char	**argument;
-	char	**env;
-	int 	flag;
-}				t_export;
 
 typedef struct s_unset
 {
@@ -109,7 +102,6 @@ typedef struct  s_std
     struct  s_std *next;
 }               t_std;
 
-/* Buffer */
 
 typedef struct s_buffer
 {
