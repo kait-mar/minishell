@@ -294,17 +294,6 @@ int		redirect_command_head(int check_meta, int append, char *new);
 t_meta	*name_and_condition(char **new, int *on, t_meta *meta, t_meta *temp);
 int		redirect_input_head(char *new);
 t_meta	*input_conditions(t_meta *meta, char **new, t_meta *temp, int *on);
-void	filling_global(t_export *tmp);
-t_export	*filling_tmp(void);
-int	return_env_on(char *str);
-t_export *check_export_init(char **splits, t_export *export);
-char	*split_reformulation(char *splits);
-t_export	*put_in_export(char *splits, int *on, t_export *export);
-t_export	*export_loop(char *splits, t_export *export, int on, int j);
-int	no_space(char *s);
-t_export	*export_global(t_export *export);
-void 	filling_export_env(char **env, char *export_argument);
-void	printing_filling_env(t_export *export, int *status, char **env);
 char     *rm_space_helper(int *i, char *s, int *j, int wich);
 int		return_loop(int i, char *s);
 int     only_space(char *s, int i);
@@ -324,6 +313,7 @@ int    escape_front_true(char *s, int i);
 char    *chang_dollar_sign(char *str, char **env);
 int     inside_quotes(char *s, int i);
 char    *rm_space_variable(char *s, int wich);
+
 
 
 #endif
