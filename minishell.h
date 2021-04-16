@@ -296,4 +296,5 @@ t_meta	*name_and_condition(char **new, int *on, t_meta *meta, t_meta *temp);
 int		redirect_input_head(char *new);
 t_meta	*input_conditions(t_meta *meta, char **new, t_meta *temp, int *on);
 
+
 #endif
