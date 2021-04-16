@@ -102,7 +102,6 @@ typedef struct  s_std
     struct  s_std *next;
 }               t_std;
 
-/* Buffer */
 
 typedef struct s_buffer
 {
@@ -295,6 +294,26 @@ int		redirect_command_head(int check_meta, int append, char *new);
 t_meta	*name_and_condition(char **new, int *on, t_meta *meta, t_meta *temp);
 int		redirect_input_head(char *new);
 t_meta	*input_conditions(t_meta *meta, char **new, t_meta *temp, int *on);
+char     *rm_space_helper(int *i, char *s, int *j, int wich);
+int		return_loop(int i, char *s);
+int     only_space(char *s, int i);
+int     count_space_variable(char *s);
+void    old_pwd(char **env);
+void    new_pwd(char **env, char *str);
+int     find_pwd(char *s);
+int     find_old_pwd(char *s);
+void    remove_old_pwd(char **env);
+char    *add_in(char *first, char *second);
+int     check_only_single_double(char *s);
+char	*old_pwd_helper(char **env, int i);
+char	*old_pwd_support();
+int 	cd_command_helper(int *status, char **env, char **s, int first_time);
+void	cd_command_helper2(char **env, int *first_time);
+int    escape_front_true(char *s, int i);
+char    *chang_dollar_sign(char *str, char **env);
+int     inside_quotes(char *s, int i);
+char    *rm_space_variable(char *s, int wich);
+
 
 
 #endif
