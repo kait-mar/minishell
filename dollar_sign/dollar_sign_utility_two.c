@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char     *rm_space_helper(int *i, char *s, int *j, int wich)
 {

@@ -21,15 +21,15 @@ SRCS=  cd.c cd_utility.c pwd.c export/export.c \
 	   unset.c main.c echo/echo.c echo/echo_utility.c keep_split.c \
 	   executables.c echo/echo_utility_two.c meta.c file_append.c \
 	   exit.c redirect_output.c pipe_file.c redirect_input.c signals.c \
-	   semi_colon.c dollar_sign.c escape_character.c minishell_utility.c \
-	   dollar_sign_utility.c executable_utility.c echo/echo_utility3.c echo/echo_utility4.c \
+	   semi_colon.c dollar_sign/dollar_sign.c escape_character.c minishell_utility.c \
+	   dollar_sign/dollar_sign_utility.c executable_utility.c echo/echo_utility3.c echo/echo_utility4.c \
 	   echo/echo_utility5.c bash_history/history.c echo/echo_utility6.c bash_history/command_navigation.c \
 	   main_helper.c meta_helper.c meta_support.c meta_support_two.c main_norm_helper.c bash_history/history_support.c \
-	   dollar_sign3.c cd_utility3.c cd_utility4.c \
+	   dollar_sign/dollar_sign3.c cd_utility3.c cd_utility4.c \
 	   echo/echo_support.c echo/echo_utility_helper.c bash_history/command_navigation_norme.c export/export_support.c \
 	   export/export_support_two.c export/export_utility_three.c export/export_utility_support.c export/export_utility_support_two.c \
 	   export/export_utility_support_three.c export/export_utility_support_four.c export/export_utility_support_five.c \
-	   redirect_output_helper.c dollar_sign_utility_two.c
+	   redirect_output_helper.c dollar_sign/dollar_sign_utility_two.c
 
 OBJ = $(SRCS:.c=.o)
 
