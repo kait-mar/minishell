@@ -320,6 +320,10 @@ char	*old_pwd_helper(char **env, int i);
 char	*old_pwd_support();
 int 	cd_command_helper(int *status, char **env, char **s, int first_time);
 void	cd_command_helper2(char **env, int *first_time);
+int    escape_front_true(char *s, int i);
+char    *chang_dollar_sign(char *str, char **env);
+int     inside_quotes(char *s, int i);
+char    *rm_space_variable(char *s, int wich);
 
 
 #endif
