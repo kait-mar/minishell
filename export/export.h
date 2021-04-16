@@ -13,6 +13,7 @@
 #ifndef EXPORT_H
 # define EXPORT_H
 
+
 typedef struct s_export
 {
 	char	*command;
@@ -58,8 +59,8 @@ void		pwd_env(char *s, char **env, int *i);
 void		shlvl_env(char **env, int *i);
 char		*findin_env(char **env);
 void		start_env(char **env, int *i);
-int			fill_env_init(char **env, int *pwd, int *shlvl, int *start);
 void		export_init(void);
 void		env_init(char **env);
-
+int			fill_env_init(char **env, int *pwd, int *shlvl, int *start);
+void		filling_export(char **env);
 #endif
