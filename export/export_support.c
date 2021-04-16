@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "export.h"
+#include "../minishell.h"
 
 void	filling_global(t_export *tmp)
 {

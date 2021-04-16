@@ -12,40 +12,11 @@
 
 #include "../minishell.h"
 
-int 	fill_env_init(char **env, int *pwd, int *shlvl, int *start)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-	{
-		if (match("PWD", env[i]) == 1)
-		{
-			g_global.pwd_only = ft_strdup(env[i]);
-			*pwd = 1;
-		}
-		else if (match("SHLVL", env[i]) == 1)
-		{
-			env[i] = append("SHLVL=", ft_itoa(check_shlvl(env[i])));
-			*shlvl = 1;
-		}
-		else if ((match("_", env[i]) == 1))
-			*start = 1;
-		i += 1;
-	}
-	return (i);
-}
-
 void	filling_export(char **env)
 {
 	int		i;
-	int		pwd;
-	int		shlvl;
-	char	*string;
 
 	i = 0;
-	pwd = 0;
-	shlvl = 0;
 	g_global.export = (t_export *) malloc(sizeof (t_export));
 	if (!(g_global.export))
 		return ;
@@ -128,4 +99,28 @@ char	*add_backs(char *s)
 	}
 	str[j] = '\0';
 	return (str);
+}
+
+int 	fill_env_init(char **env, int *pwd, int *shlvl, int *start)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (match("PWD", env[i]) == 1)
+		{
+			g_global.pwd_only = ft_strdup(env[i]);
+			*pwd = 1;
+		}
+		else if (match("SHLVL", env[i]) == 1)
+		{
+			env[i] = append("SHLVL=", ft_itoa(check_shlvl(env[i])));
+			*shlvl = 1;
+		}
+		else if ((match("_", env[i]) == 1))
+			*start = 1;
+		i += 1;
+	}
+	return (i);
 }

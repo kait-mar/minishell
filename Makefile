@@ -30,8 +30,8 @@ SRCS=  cd/cd.c cd/cd_utility.c pwd.c export/export.c \
 	   export/export_support_two.c export/export_utility_three.c export/export_utility_support.c export/export_utility_support_two.c \
 	   export/export_utility_support_three.c export/export_utility_support_four.c export/export_utility_support_five.c \
 	 	dollar_sign/dollar_sign_utility_two.c \
-	   redirect_output_helper.c export/export_utility_two_support.c  export/export_utility_two_support2.c export/export_utility_support3.c \
-	   export/export_utility_support4.c export/export_utility_support5.c
+	   redirect_output_helper.c export/export_utility_two_support.c  export/export_utility_two_support2.c \
+	   export/export_utility_support3.c export/export_utility_support4.c export/export_utility_support5.c
 
 OBJ = $(SRCS:.c=.o)
 
