@@ -37,6 +37,8 @@
 #include "./bash_history/bash_history.h"
 #include "./export/export.h"
 #include "./escape_character/escape_character.h"
+#include "./executable/executable.h"
+
 
 typedef struct s_command_cd
 {
