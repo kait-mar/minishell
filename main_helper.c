@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-
-
 t_assen    minishell_init(char **env)
 {
     t_assen assen;
