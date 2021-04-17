@@ -36,6 +36,7 @@
 #include "./echo/echo.h"
 #include "./bash_history/bash_history.h"
 #include "./export/export.h"
+#include "./executable/executable.h"
 
 
 typedef struct s_command_cd
@@ -312,7 +313,5 @@ int    escape_front_true(char *s, int i);
 char    *chang_dollar_sign(char *str, char **env);
 int     inside_quotes(char *s, int i);
 char    *rm_space_variable(char *s, int wich);
-
-
 
 #endif
