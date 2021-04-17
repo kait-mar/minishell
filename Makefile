@@ -19,10 +19,10 @@ FLAGS= -Wall -Wextra -Werror
 SRCS=  cd/cd.c cd/cd_utility.c pwd.c export/export.c \
 	   export/export_utility.c export/export_utility_two.c \
 	   unset.c main.c echo/echo.c echo/echo_utility.c keep_split.c \
-	   executables.c echo/echo_utility_two.c meta.c file_append.c \
+	   executable/executables.c echo/echo_utility_two.c meta.c file_append.c \
 	   exit.c redirect_output.c pipe_file.c redirect_input.c signals.c \
 	   semi_colon.c dollar_sign/dollar_sign.c escape_character.c minishell_utility.c \
-	   dollar_sign/dollar_sign_utility.c executable_utility.c echo/echo_utility3.c echo/echo_utility4.c \
+	   dollar_sign/dollar_sign_utility.c executable/executable_utility.c echo/echo_utility3.c echo/echo_utility4.c \
 	   echo/echo_utility5.c bash_history/history.c echo/echo_utility6.c bash_history/command_navigation.c \
 	   main_helper.c meta_helper.c meta_support.c meta_support_two.c main_norm_helper.c bash_history/history_support.c \
 	   dollar_sign/dollar_sign3.c cd/cd_utility3.c cd/cd_utility4.c \
@@ -32,7 +32,8 @@ SRCS=  cd/cd.c cd/cd_utility.c pwd.c export/export.c \
 	 	dollar_sign/dollar_sign_utility_two.c \
 	   redirect_output_helper.c export/export_utility_two_support.c  export/export_utility_two_support2.c \
 	   export/export_utility_support3.c export/export_utility_support4.c export/export_utility_support5.c \
-	   executables_support.c executable_support2.c executable_support3.c
+	   executable/executables_support.c executable/executable_support2.c executable/executable_support3.c \
+	   executable/executable_support4.c executable/executable_support5.c executable/executable_support6.c
 
 OBJ = $(SRCS:.c=.o)
 

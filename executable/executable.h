@@ -24,5 +24,20 @@ void	exec_exec(char **splits, char **commands, char **env);
 char	*return_parse(char **splits, char **env);
 char	*filling_path(char **env, int *on);
 void	execution(char **splits, char *str, char **env);
+char	*first_return(char *bult, char **string);
+char	*second_return(char *bult, char **string);
+char	*third_return(char *bult, char **string);
+char	*forth_return(char *bult, char **string);
+void	final_func(char *bult, char **string);
+int		wich_quote_func(char **env, char **string, char *bult, int wich_quote);
+char	*print_env_loop(char *bult, char **string, int wich_quote);
+char	*parsed_func1(char **bult, char *str);
+int		print_env_two(char *bult, char **env, int which_quote, char **string);
+void	parsed_func2(char **bult, char **str, char **env);
+void	parsed_func3(char **bult, int *which_quote);
+char	*parsed_func4(char **bult, char *str);
+char	*parsed_func5(char **bult, char *str);
+char	*parsed_func6(char **bult, char *str);
+void	parsing(char **bult, int which_quote, char **str, char **env);
 
 #endif

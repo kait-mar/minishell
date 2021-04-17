@@ -34,3 +34,64 @@ void	execution(char **splits, char *str, char **env)
 	free(path);
 	exec_exec(splits, commands, env);
 }
+
+char	*first_return(char *bult, char **string)
+{
+	char	*t;
+	int		j;
+
+	t = malloc(2);
+	j = how_many_escape(bult);
+	if (j % 2 != 0)
+	{
+		while (*(bult + 1) == '\\')
+			(bult)++;
+	}
+	else
+	{
+		while (*bult == '\\')
+			(bult)++;
+	}
+	j /= 2;
+	while (--j >= 0)
+	{
+		*t = '\\';
+		t[1] = '\0';
+		*string = ft_strjoin(*string, t);
+	}
+	return (bult);
+}
+
+char	*second_return(char *bult, char **string)
+{
+	char	*t;
+
+	t = malloc(2);
+	bult++;
+	*t = *(bult++);
+	t[1] = '\0';
+	*string = ft_strjoin(*string, t);
+	return (bult);
+}
+
+char	*third_return(char *bult, char **string)
+{
+	char	*t;
+
+	t = malloc(2);
+	*t = *(bult++);
+	t[1] = '\0';
+	*string = ft_strjoin(*string, t);
+	return (bult);
+}
+
+char	*forth_return(char *bult, char **string)
+{
+	char	*t;
+
+	t = malloc(2);
+	*t = *(bult++);
+	t[1] = '\0';
+	*string = ft_strjoin(*string, t);
+	return (bult);
+}
