@@ -10,36 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-
-int		check_unset(char *str)
-{
-	int i;
-
-	i = 0;
-	if (ft_strncmp(str, "unset", 5) == 0)
-		return (0);
-	return (1);
-}
-
-char	*only_before_equal(char *str)
-{
-	int i;
-	char *s;
-
-	i = 0;
-	if (!(s = (char *) ft_calloc(sizeof(char), ft_strlen(str))))
-		return (NULL);
-	while (str[i] != '=' &&  str[i] != '\0')
-	{
-		s[i] = str[i];
-		i += 1;
-	}
-	s[i] = '\0';
-	return (s);
-}
-
+#include "../minishell.h"
 
 int		in_match(char *s1, char *s2)
 {
@@ -92,43 +63,13 @@ int     inside_quote(char *s)
 
 t_env		*delete_in_env(t_env *env, char **splits, int on, int *status)
 {
-	char	*s;
 	int		i;
-	int 	count;
-	int		check;
-	t_env	*tmp;
+	int		j;
 
 	i = 0;
-	count = 0;
-	check = 0;
-	tmp = env;
 	while (splits[i] != NULL)
 	{
-		while (tmp != NULL)
-		{
-			s = only_before_equal(tmp->in_env);
-			if (in_match(s, splits[i]) == 1)
-			{
-			    if (ft_strcmp(splits[i], "PWD") == 0)
-			        g_global.pwd_on = 1;
-			    else if (ft_strcmp(splits[i], "OLDPWD") == 0)
-			        g_global.oldpwd_on = 1;
-				check = 1;
-				break ;
-			}
-			tmp = tmp->next;
-			count += 1;
-		}
-		if (check == 1)
-            env = delete_list(env, count);
-		else if (check == 0 && inside_quote(splits[i]) == 1 && on == 0)
-        {
-            ft_printf("minishell: unset: `%s': not a valid identifier\n", without_that(splits[i], '\''));
-            *status = 1;
-        }
-		check = 0;
-		count = 0;
-		tmp = env;
+		env = delete_in_env_core(env, splits[i], on);
 		i += 1;
 	}
 	return (env);
@@ -167,47 +108,4 @@ t_env	*filling_env(char **env)
 		i += 1;
 	}
 	return (take_env);
-}
-
-char	**copy_all(t_env *take_env, char **env)
-{
-	int	i;
-
-	i = 0;
-	while (take_env != NULL)
-	{
-		env[i] = ft_strdup(take_env->in_env);
-		i += 1;
-		take_env = take_env->next;
-	}
-	if (env[i] == NULL)
-		return (env);
-	else
-	{
-		while (env[i] != NULL)
-		{
-			env[i] = NULL;
-			i += 1;
-		}
-	}
-	return (env);
-}
-
-void	unset_command(char **env, char *str, int *status)
-{
-	t_env		*take_env;
-	char		**splits;
-	int			i;
-
-	i = 0;
-	*status = 0;
-	take_env = filling_env(env);
-	splits = take_only_carac(str);
-	take_env = delete_in_env(take_env, splits, i, status);
-	env = copy_all(take_env, env);
-    take_env = filling_env(g_global.export->saver);
-    splits = take_only_carac(str);
-    i = 1;
-    take_env = delete_in_env(take_env, splits, i, status);
-    g_global.export->saver = copy_all(take_env, g_global.export->saver);
 }
