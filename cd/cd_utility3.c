@@ -42,91 +42,28 @@ void 	cd_command(char *argument, int *status, char **env)
 
 char    *take_only(char *s)
 {
-    int i;
-    char *string;
+	int i;
+	char *string;
 
-    i = 0;
-    if (s[i] == '\'')
-    {
-        i += 1;
-        if (s[i] == '\'')
-        {
-            if (!(string = (char *) ft_calloc(sizeof (char ), i + 2)))
-                return (NULL);
-            i = 0;
-            while (i < 2)
-            {
-                string[i] = s[i];
-                i += 1;
-            }
-            string[i] = '\0';
-        }
-        else
-        {
-            while (s[i] != '\'' && s[i] != '\0')
-                i += 1;
-            if (!(string = (char *) ft_calloc(sizeof (char ), i + 2)))
-                return (NULL);
-            i = 0;
-            string[i] = s[i];
-            i += 1;
-            while (s[i] != '\'' && s[i] != '\0')
-            {
-                string[i] = s[i];
-                i += 1;
-            }
-            string[i] = s[i];
-            string[i] = '\0';
-        }
-    }
-    else if (s[i] == '\"')
-    {
-        i += 1;
-        if (s[i] == '\"')
-        {
-            if (!(string = (char *) ft_calloc(sizeof (char ), i + 2)))
-                return (NULL);
-            i = 0;
-            while (i < 2)
-            {
-                string[i] = s[i];
-                i += 1;
-            }
-            string[i] = '\0';
-        }
-        else
-        {
-            while (s[i] != '\"' && s[i] != '\0')
-                i += 1;
-            if (!(string = (char *) ft_calloc(sizeof (char ), i + 2)))
-                return (NULL);
-            i = 0;
-            string[i] = s[i];
-            i += 1;
-            while (s[i] != '\"' && s[i] != '\0')
-            {
-                string[i] = s[i];
-                i += 1;
-            }
-            string[i] = s[i];
-            string[i] = '\0';
-        }
-    }
-    else
-    {
-        while (s[i] != ' ' && s[i] != '\t' && s[i] != '\0')
-            i += 1;
-        if (!(string = (char *) ft_calloc(sizeof (char ), i + 1)))
-            return (NULL);
-        i = 0;
-        while (s[i] != ' ' && s[i] != '\t' && s[i] != '\0')
-        {
-            string[i] = s[i];
-            i += 1;
-        }
-        string[i] = '\0';
-    }
-    return (string);
+	i = 0;
+	if (s[i] == '\'')
+	{
+		i += 1;
+		if (s[i] == '\'')
+			string = take_only_helper(s, i);
+		else
+			string = take_only_helper2(s, i, '\'');
+	}
+	else if (s[i] == '\"')
+	{
+		i += 1;
+		string = take_only_core(s, i);
+		if (string == NULL)
+			return (NULL);
+	}
+	else
+		string = take_only_helper3(s);
+	return (string);
 }
 
 int	cd_command_helper(int *status, char **env, char **s, int first_time)
