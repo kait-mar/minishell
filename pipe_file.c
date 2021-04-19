@@ -10,115 +10,114 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
-
-int         pipe_counter(t_meta *head)
+int	pipe_counter(t_meta *head)
 {
-    int     i;
+	int	i;
 
-    i = 0;
-    while (head != NULL && head->meta == '|')
-    {
-        i += 1;
-        head = head->next;
-    }
-    return (i);
+	i = 0;
+	while (head != NULL && head->meta == '|')
+	{
+		i += 1;
+		head = head->next;
+	}
+	return (i);
 }
 
 void	ft_lstadd_std(t_std **alst, t_std *new)
 {
-    t_std *lst;
+	t_std	*lst;
 
-    if (*alst == NULL)
-        *alst = new;
-    else
-    {
-        lst = *alst;
-        while (lst->next)
-            lst = lst->next;
-        lst->next = new;
-    }
+	if (*alst == NULL)
+		*alst = new;
+	else
+	{
+		lst = *alst;
+		while (lst->next)
+			lst = lst->next;
+		lst->next = new;
+	}
 }
 
-int    connecting(t_meta *head, t_assen assen, char **env, int *status, int in , int out)
+int	connecting(t_meta *head, t_assen assen, char **env)
 {
-    pid_t pid;
+	pid_t	pid;
 
-    if ((pid = fork()) < 0)
-    {
-        ft_printf("Error in fork %s\n", strerror(errno));
-        exit(EXIT_FAILURE);
-    }
-    if (pid == 0)
-    {
-        if (in != 0)
-        {
-            dup2(in, 0);
-            close(in);
-        }
-        if (out != 1)
-        {
-            dup2(out, 1);
-            close(out);
-        }
-        if (check_bin_echo(head->argument) == 1)
-            head->command = 6;
-        built_in(head, assen, env);
-      /*  fprintf(stderr, "Errno ==> %d\n", errno);
-        fprintf(stderr, "stats ==> %d\n", *status);
-        fprintf(stderr, "head->arg ==> %s\n", head->argument);*/
-        exit(EXIT_SUCCESS);
-    }
-    return (pid);
+	pid = fork();
+	if (pid == 0)
+	{
+		close(g_global.fd[0]);
+		if (g_global.in != 0)
+		{
+			dup2(g_global.in, 0);
+			close(g_global.in);
+		}
+		if (g_global.fd[1] != 1)
+		{
+			dup2(g_global.fd[1], 1);
+			close(g_global.fd[1]);
+		}
+		if (check_bin_echo(head->argument) == 1)
+			head->command = 6;
+		built_in(head, assen, env);
+		exit(EXIT_SUCCESS);
+	}
+	return (pid);
 }
 
-int  last_thing(t_meta *head, t_assen assen,char **env, int *status, int in)
+int	last_thing(t_meta *head, t_assen assen,char **env)
 {
-    if (in != 0)
-    {
-        dup2(in, 0);
-        close(in);
-    }
-    built_in(head, assen, env);
-    return (0);
+	if (g_global.in != 0)
+	{
+		dup2(g_global.in, 0);
+		close(g_global.in);
+	}
+	built_in(head, assen, env);
+	return (0);
 }
 
-t_meta      *pipe_file(t_meta *head, t_assen assen, char **env, int *status)
+t_meta	*pipe_file(t_meta *head, t_assen assen, char **env, int *status)
 {
-    int fd[2];
-    pid_t pid;
-    t_meta *temp;
-    int in;
-    int old_stdin;
+	int		count;
+	pid_t	pid;
+	t_meta	*temp;
+	int		old_stdin;
 
-    old_stdin = dup(STDIN_FILENO);
-    while(head->meta == '|')
-    {
-        if (head->next->meta == '\0' || head->next->meta == '|' || head->next->meta == ';')
-        {
-            pipe(fd);
-            pid = connecting(head, assen, env, status, in, fd[1]);
-            close(fd[1]);
-            in = fd[0];
-            head = head->next;
-        }
-        else
-            break ;
-    }
-    waitpid(-1, status, WNOHANG);
-    close(fd[1]);
-    if (head->next != NULL)
-    {
-        if (head->next->meta == '\0' || head->next->meta == ';')
-            last_thing(head, assen, env, status, in);
-    }
-    else
-        last_thing(head, assen, env, status, in);
-    /* else if (head->next->meta == '>' || head->next->meta == '<')
-         head = head->next; */
-    close(fd[0]);
-    dup2(old_stdin, 0);
-    return (head);
+	count = 0;
+	old_stdin = dup(STDIN_FILENO);
+	g_global.in = 1;
+	while(head->meta == '|')
+	{
+		if (head->next->meta == '\0' || head->next->meta == '|' || head->next->meta == ';')
+		{
+			pipe(g_global.fd);
+			count += 1;
+			connecting(head, assen, env);
+			close(g_global.fd[1]);
+			g_global.in = g_global.fd[0];
+			head = head->next;
+		}
+		else
+			break;
+	}
+	pid = fork();
+	if (pid == 0 )
+	{
+		close(g_global.fd[1]);
+		if (head->next != NULL) {
+			if (head->next->meta == '\0' || head->next->meta == ';')
+				last_thing(head, assen, env);
+		}
+		last_thing(head, assen, env);
+		exit(EXIT_SUCCESS);
+	}
+	close(g_global.fd[0]);
+	close(g_global.fd[1]);
+	close(g_global.in);
+	while (count-- >= 0)
+		wait(NULL);
+	dup2(old_stdin, 0);
+	close(old_stdin);
+	return (head);
 }
