@@ -39,6 +39,7 @@
 #include "./export/export.h"
 #include "./escape_character/escape_character.h"
 #include "./executable/executable.h"
+#include "./unset/unset.h"
 
 
 typedef struct s_command_cd
@@ -56,11 +57,7 @@ typedef struct s_unset
 	struct s_unset	*next;
 }				t_unset;
 
-typedef struct s_env
-{
-	char	*in_env;
-	struct s_env	*next;
-}				t_env;
+
 
 typedef	struct s_spaces
 {

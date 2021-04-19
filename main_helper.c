@@ -69,8 +69,8 @@ void    minishell(char **av, char **env, t_assen assen)
     while (TRUE)
     {
         signal_handler(g_global.status);
-        if (av[1])
-            str = ft_strdup(av[1]);
+        if (av[2])
+            str = ft_strdup(av[2]);
         else
         {
             prompt();
@@ -82,7 +82,7 @@ void    minishell(char **av, char **env, t_assen assen)
         meta = split_it_all(str, env);
         head = meta;
         minishell_execution(head, assen, env);
-        if (av[1])
+        if (av[2])
             exit(*(g_global.status));
         g_global.first_time = 1;
         if (g_in_redirect == 1)

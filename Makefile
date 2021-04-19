@@ -18,7 +18,7 @@ FLAGS= -Wall -Wextra -Werror
 
 SRCS=  cd/cd.c cd/cd_utility.c pwd.c export/export.c \
 	   export/export_utility.c export/export_utility_two.c \
-	   unset.c main.c echo/echo.c echo/echo_utility.c keep_split.c \
+	   unset/unset.c unset/unset_helper.c unset/unset_helper2.c main.c echo/echo.c echo/echo_utility.c keep_split.c \
 	   executable/executables.c echo/echo_utility_two.c meta.c file_append.c \
 	   exit.c redirect_output.c pipe_file.c redirect_input.c signals.c \
 	   semi_colon.c dollar_sign/dollar_sign.c escape_character/escape_character.c escape_character/escape_character_helper.c \
