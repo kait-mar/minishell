@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_support.c                                     :+:      :+:    :+:   */
+/*   pwd_support.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/18 13:54:54 by molabhai          #+#    #+#             */
-/*   Updated: 2021/04/18 13:54:55 by molabhai         ###   ########.fr       */
+/*   Created: 2021/04/19 17:11:31 by molabhai          #+#    #+#             */
+/*   Updated: 2021/04/19 17:11:35 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	filling_history(int fd, t_assen *move)
+void	pwd_command(int *status, int exept)
 {
-	if (dup2(fd, 1) == -1)
-		printf("%s\n", strerror(errno));
-	while (move != NULL)
-	{
-		printf("%s\n", move->cmd);
-		move = move->next;
-	}
-	close(fd);
-}
+	char	*str;
 
-void	last_things(char *s, int *status)
-{
-	if (check_is_num(s) == 1)
+	str = (char *) ft_calloc(sizeof(char), 100);
+	if (!(str))
+		return ;
+	if (exept == 1)
 	{
-		ft_printf("%s%s: %s\n", EXIT_ERROR, s, "numeric argument required");
-		*status = 255;
+		*status = 1;
+		ft_printf("usage: pwd [-L | -P]\n");
+		return ;
 	}
-	else
-		*status = ft_atois(s);
-	exit(*status % 256);
+	if (getcwd(str, 100) == NULL)
+	{
+		ft_printf("%s\n", strerror(errno));
+		*status = 11;
+	}
+	ft_printf("%s\n", str);
+	free(str);
+	str = NULL;
+	*status = 0;
 }

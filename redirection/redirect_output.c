@@ -10,17 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 {
-	int		fd;
+	int			fd;
 	t_support	support;
-	t_meta	*temp;
-	char	*new;
+	t_meta		*temp;
+	char		*new;
 
 	temp = meta;
-    support.on = 0;
+	support.on = 0;
 	while (temp->next != NULL && (temp->meta == '>' || temp->meta_append != 0))
 	{
 		support.on = 0;
@@ -32,8 +32,9 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 			support.check_meta = '>';
 		temp = temp->next;
 		temp->argument = chang_dollar_sign(temp->argument, env);
-        meta = name_and_condition(&new, &(support.on), meta, temp);
-		if ((fd = redirect_command_head(support.check_meta, support.append, new)) == -1)
+		meta = name_and_condition(&new, &(support.on), meta, temp);
+		fd = redirect_command_head(support.check_meta, support.append, new);
+		if (fd == -1)
 			return (NULL);
 	}
 	redirected_output_command(fd, meta, assen, env);

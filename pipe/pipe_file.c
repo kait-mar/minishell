@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	pipe_counter(t_meta *head)
 {
@@ -66,7 +66,7 @@ int	connecting(t_meta *head, t_assen assen, char **env)
 	return (pid);
 }
 
-int	last_thing(t_meta *head, t_assen assen,char **env)
+int	last_thing(t_meta *head, t_assen assen, char **env)
 {
 	if (g_global.in != 0)
 	{
@@ -87,34 +87,15 @@ t_meta	*pipe_file(t_meta *head, t_assen assen, char **env, int *status)
 	count = 0;
 	old_stdin = dup(STDIN_FILENO);
 	g_global.in = 1;
-	while(head->meta == '|')
+	while (head->meta == '|')
 	{
-		if (head->next->meta == '\0' || head->next->meta == '|' || head->next->meta == ';')
-		{
-			pipe(g_global.fd);
-			count += 1;
-			connecting(head, assen, env);
-			close(g_global.fd[1]);
-			g_global.in = g_global.fd[0];
-			head = head->next;
-		}
+		if (head->next->meta == '\0' || head->next->meta == '|'
+			|| head->next->meta == ';')
+			head = pipe_loop(head, assen, env, &count);
 		else
-			break;
+			break ;
 	}
-	pid = fork();
-	if (pid == 0 )
-	{
-		close(g_global.fd[1]);
-		if (head->next != NULL) {
-			if (head->next->meta == '\0' || head->next->meta == ';')
-				last_thing(head, assen, env);
-		}
-		last_thing(head, assen, env);
-		exit(EXIT_SUCCESS);
-	}
-	close(g_global.fd[0]);
-	close(g_global.fd[1]);
-	close(g_global.in);
+	head = pipe_last(head, assen, env);
 	while (count-- >= 0)
 		wait(NULL);
 	dup2(old_stdin, 0);

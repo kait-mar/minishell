@@ -40,6 +40,7 @@
 #include "./escape_character/escape_character.h"
 #include "./executable/executable.h"
 #include "./unset/unset.h"
+#include "./redirection/redirection.h"
 
 
 typedef struct s_command_cd
@@ -68,15 +69,6 @@ typedef	struct s_spaces
 /*	Metacharacter "Semicolon" */
 
 
-typedef struct s_meta
-{
-	char	*argument;
-	int		command;
-	char	meta;
-	int     meta_append;
-	int     backslash;
-	struct	s_meta	*next;
-}				t_meta;
 
 typedef struct  s_semi
 {
@@ -322,6 +314,9 @@ void	filling_history(int fd, t_assen *move);
 int		check_is_num(char *s);
 long long	ft_atois(const char *str);
 void	last_things(char *s, int *status);
-
+int		connecting(t_meta *head, t_assen assen, char **env);
+t_meta	*pipe_loop(t_meta *head, t_assen assen, char **env, int *count);
+int		last_thing(t_meta *head, t_assen assen,char **env);
+t_meta	*pipe_last(t_meta *head, t_assen assen, char **env);
 
 #endif
