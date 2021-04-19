@@ -12,13 +12,6 @@
 
 #include "../minishell.h"
 
-int		in_match(char *s1, char *s2)
-{
-	if (ft_strncmp(s1, s2, ft_strlen(s1)) == 0)
-		return (1);
-	return (0);
-}
-
 t_env		*delete_list(t_env *env, int count)
 {
 	t_env	*tmp;

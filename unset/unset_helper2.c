@@ -12,6 +12,13 @@
 
 #include "../minishell.h"
 
+int		in_match(char *s1, char *s2)
+{
+	if (ft_strncmp(s1, s2, ft_strlen(s1)) == 0)
+		return (1);
+	return (0);
+}
+
 char	**copy_all(t_env *take_env, char **env)
 {
 	int	i;

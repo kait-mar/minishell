@@ -315,5 +315,8 @@ char    *take_only_helper(char *s, int i);
 char	*take_only_helper2(char *s, int i, char ref);
 char	*take_only_helper3(char *s);
 char	*take_only_core(char *s, int i);
+void    exit_command_support(char *s, int *status);
+int     check_is_num(char *s);
+long long 		ft_atois(const char *str);
 
 #endif
