@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_meta	*redirect_intput(t_meta *meta, t_assen assen, char **env, int *status)
 {
@@ -24,9 +24,10 @@ t_meta	*redirect_intput(t_meta *meta, t_assen assen, char **env, int *status)
 	while (temp->next != NULL && temp->meta == '<')
 	{
 		temp = temp->next;
-        temp->argument = chang_dollar_sign(temp->argument, env);
+		temp->argument = chang_dollar_sign(temp->argument, env);
 		meta = input_conditions(meta, &new, temp, &on);
-		if ((fd = redirect_input_head(new)) == -1)
+		fd = redirect_input_head(new);
+		if ((fd) == -1)
 			return (NULL);
 	}
 	redirected_command(fd, meta, assen, env);
@@ -39,17 +40,22 @@ t_meta	*input_conditions(t_meta *meta, char **new, t_meta *temp, int *on)
 	temp->argument = temp->argument + ft_strlen(*new);
 	if (*(temp->argument) == ' ')
 		(temp->argument)++;
-		if (meta->command == 0 && check_wich_command(take_first_word(temp->argument)) != 0 && *on == 0)
+	if (meta->command == 0
+		&& check_wich_command(take_first_word(temp->argument)) != 0
+		&& *on == 0)
 	{
 		meta = temp;
-		meta->command = check_wich_command(take_first_word(ft_strtrim(temp->argument, " ")));
+		meta->command = check_wich_command(
+				take_first_word(ft_strtrim(temp->argument, " ")));
 		*on = 1;
 	}
 	*new = final_file_name(*new);
 	if (*on == 0)
 	{
-		if (ft_strcmp(meta->argument, "") != 0 && ft_strcmp(temp->argument, "") != 0 &&
-			(meta->argument[ft_strlen(meta->argument) - 1] != ' ' && *(temp->argument) != ' '))
+		if (ft_strcmp(meta->argument, "") != 0
+			&& ft_strcmp(temp->argument, "") != 0
+			&& (meta->argument[ft_strlen(meta->argument) - 1] != ' '
+				&& *(temp->argument) != ' '))
 			meta->argument = ft_strjoin(meta->argument, " ");
 		meta->argument = ft_strjoin(meta->argument, temp->argument);
 	}

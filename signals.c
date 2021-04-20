@@ -12,34 +12,33 @@
 
 #include "minishell.h"
 
-void		inter_signal(int status)
+void	inter_signal(int status)
 {
-    //write(1, "\b\b", 2);
-    g_global.in_signal = 1;
+	g_global.in_signal = 1;
 	if (g_global.on == 1)
 	{
 		kill(1, SIGINT);
 	}
 	if (g_global.on == 1)
 	{
-        g_process = 0;
-        write(1, "\n", 1);
-    }
+		g_process = 0;
+		write(1, "\n", 1);
+	}
 	else
-    {
-        write(1, " \b\b  ", 4);
-        prompt();
-    }
+	{
+		write(1, " \b\b  ", 4);
+		prompt();
+	}
 }
 
 void	quit_signal(int signum)
 {
-    if (g_global.on == 1)
-    {
-        kill(1, SIGQUIT);
-        ft_printf("Quit: 3\n");
-    }
-    else
+	if (g_global.on == 1)
+	{
+		kill(1, SIGQUIT);
+		ft_printf("Quit: 3\n");
+	}
+	else
 		write(1, " \b\b  ", 4);
 }
 
