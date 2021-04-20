@@ -18,7 +18,8 @@ FLAGS= -Wall -Wextra -Werror
 
 SRCS=  cd/cd.c cd/cd_utility.c pwd.c export/export.c \
 	   export/export_utility.c export/export_utility_two.c \
-	   unset/unset.c unset/unset_helper.c unset/unset_helper2.c main.c echo/echo.c echo/echo_utility.c keep_split.c \
+	   unset/unset.c unset/unset_helper.c unset/unset_helper2.c main.c echo/echo.c echo/echo_utility.c \
+	   minishell_utils/keep_split.c minishell_utils/keep_split_helper.c  minishell_utils/keep_split_helper2.c \
 	   executable/executables.c echo/echo_utility_two.c meta.c file_append.c \
 	   exit/exit.c exit/exit_helper.c redirect_output.c pipe_file.c redirect_input.c signals.c \
 	   semi_colon.c dollar_sign/dollar_sign.c escape_character/escape_character.c escape_character/escape_character_helper.c \
@@ -36,7 +37,8 @@ SRCS=  cd/cd.c cd/cd_utility.c pwd.c export/export.c \
 	   redirect_output_helper.c export/export_utility_two_support.c  export/export_utility_two_support2.c \
 	   export/export_utility_support3.c export/export_utility_support4.c export/export_utility_support5.c \
 	   executable/executables_support.c executable/executable_support2.c executable/executable_support3.c \
-	   executable/executable_support4.c executable/executable_support5.c executable/executable_support6.c
+	   executable/executable_support4.c executable/executable_support5.c executable/executable_support6.c \
+	   exit_support.c
 
 OBJ = $(SRCS:.c=.o)
 

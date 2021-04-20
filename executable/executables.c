@@ -103,7 +103,6 @@ void	execut_command(char **env, char *str, int *statut)
 		execution(splits, str, env);
 	else
 	{
-		g_pid = pid;
 		g_global.on = 1;
 		waitpid(pid, &status, WUNTRACED);
 		*statut = WEXITSTATUS(status);

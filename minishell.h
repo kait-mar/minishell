@@ -18,6 +18,7 @@
 #define ERROR_TOKEN "minishell: syntax error near unexpected token"
 #define ERROR_TOKEN_NL "minishell: syntax error near unexpected token `newline'"
 #define SHLVL_ERROR "minishell: warning: shell level "
+#define EXIT_ERROR "minishell: exit: "
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,7 +40,7 @@
 #include "./escape_character/escape_character.h"
 #include "./executable/executable.h"
 #include "./unset/unset.h"
-
+#include "./minishell_utils/minishell_utils.h"
 
 typedef struct s_command_cd
 {
@@ -129,6 +130,8 @@ struct s_global
     char *oldpwd_only;
     int check;
     int *status;
+    int in;
+    int fd[2];
 	t_export *export;
 }       g_global;
 
@@ -315,8 +318,11 @@ char    *take_only_helper(char *s, int i);
 char	*take_only_helper2(char *s, int i, char ref);
 char	*take_only_helper3(char *s);
 char	*take_only_core(char *s, int i);
+void	filling_history(int fd, t_assen *move);
+int		check_is_num(char *s);
+long long	ft_atois(const char *str);
+void	last_things(char *s, int *status);
 void    exit_command_support(char *s, int *status);
-int     check_is_num(char *s);
-long long 		ft_atois(const char *str);
+
 
 #endif

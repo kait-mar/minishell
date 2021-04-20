@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
+/*
 void        exit_command(int *status, char *s, t_assen *assen)
 {
     t_assen *move;
@@ -47,7 +47,7 @@ void        exit_command(int *status, char *s, t_assen *assen)
     }
     waitpid(pid, &stat, WUNTRACED);
     exit_command_support(s, status);
-}
+}*/
 
 void    exit_command_support(char *s, int *status)
 {
