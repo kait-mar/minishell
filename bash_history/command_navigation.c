@@ -63,11 +63,18 @@ t_assen	*arrow_down(t_history history, t_assen *climb, char **tmp, char **temp)
 
 void 	string_extention(char **tmp, char **temp, char **str)
 {
+	char	*temp_free;
+	char 	*tmp_free;
+
+	temp_free = *tmp;
 	*tmp = extend_re(*str, *tmp);
+	free(temp_free);
+	tmp_free = *temp;
 	*temp = extend_re(*str, *temp);
-	*str = (char *) malloc(sizeof(char) * BUFFER + 1);
+	free(tmp_free);
+	/**str = (char *) malloc(sizeof(char) * BUFFER + 1);
 	if (*str == NULL)
-		return ;
+		return ;*/
 }
 
 char	*reading_input(t_assen *assen)

@@ -80,5 +80,7 @@ char	*tty_loop(t_history history, t_assen *assen, t_assen *climb)
 			break ;
 		}
 	}
+	free(temp);
+	temp = NULL;
 	return (tmp);
 }
