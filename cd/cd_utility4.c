@@ -81,9 +81,18 @@ char	*old_pwd_helper(char **env, int i)
 
 char	*old_pwd_support()
 {
-	if (getcwd(g_global.old_pwd, 100) == NULL)
+	char	*old_pwd;
+	char 	*s;
+
+	old_pwd = (char *) ft_calloc(1, 100);
+	if (old_pwd == NULL)
+		return (NULL);
+	if (getcwd(old_pwd, 100) == NULL)
 		ft_printf("%s\n", strerror(errno));
-	return (add_in("OLDPWD=", g_global.old_pwd));
+	s = add_in("OLDPWD=", old_pwd);
+	free(old_pwd);
+	old_pwd = NULL;
+	return (s);
 }
 
 void    old_pwd(char **env)

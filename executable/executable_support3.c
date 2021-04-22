@@ -31,7 +31,6 @@ void	execution(char **splits, char *str, char **env)
 		exit(127);
 	}
 	commands = ft_split(path, ':');
-	free(path);
 	exec_exec(splits, commands, env);
 }
 

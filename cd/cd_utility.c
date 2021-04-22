@@ -95,9 +95,13 @@ void	free_export(t_export *export)
 	while (export->argument[i])
 	{
 		free(export->argument[i]);
+		export->argument[i] = NULL;
 		i +=  1;
 	}
 	free(export->argument);
+	export->argument = NULL;
 	free(export->command);
+	export->command = NULL;
 	free(export);
+	export = NULL;
 }

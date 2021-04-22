@@ -38,7 +38,8 @@ SRCS=  cd/cd.c cd/cd_utility.c pwd/pwd.c export/export.c \
 	   export/export_utility_support3.c export/export_utility_support4.c export/export_utility_support5.c \
 	   executable/executables_support.c executable/executable_support2.c executable/executable_support3.c \
 	   executable/executable_support4.c executable/executable_support5.c executable/executable_support6.c \
-	   exit/exit_support.c pipe/pipe_file_support.c redirection/redirect_output_helper2.c pwd/pwd_support.c
+	   exit/exit_support.c pipe/pipe_file_support.c redirection/redirect_output_helper2.c pwd/pwd_support.c \
+	   export/export_free.c
 
 OBJ = $(SRCS:.c=.o)
 

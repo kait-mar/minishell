@@ -65,6 +65,7 @@ void	export_command(char **env, char *str, int *status, t_export *export)
 	splits = take_only_carac_for_export(str);
 	export = check_export(splits, env, export);
 	printing_filling_env(export, status, env);
+	//free_export_command(free_splits);
 }
 
 void	env_command(char **env, t_meta *meta, int *status)

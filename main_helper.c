@@ -20,8 +20,6 @@ t_assen    minishell_init(char **env)
     memset(&assen, 0, sizeof (t_assen));
     g_global.status = malloc(sizeof (int ));
     *(g_global.status) = 0;
-    if (!(g_global.old_pwd = (char *) ft_calloc(sizeof (char ), 100)))
-        return (assen);
     filling_export(env);
 	filling(&assen);
     return (assen);
@@ -62,20 +60,23 @@ void    minishell(char **av, char **env, t_assen assen)
     t_meta	*meta;
     t_meta	*head;
     char    *str;
+    char	*str_free;
+    char	*string;
 
     head = NULL;
     str = NULL;
     meta = NULL;
+    string = malloc(BUFFER + 1);
     while (TRUE)
     {
         signal_handler(g_global.status);
-        if (av[1])
-            str = ft_strdup(av[1]);
-        else
-        {
-            prompt();
-			str = reading_input(&assen);
-        }
+		if (av[1])
+			str = ft_strdup(av[1]);
+		else
+		{
+			prompt();
+			str = reading_input(&assen, string);
+		}
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
         str = escape_normal(str);

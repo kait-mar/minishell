@@ -34,53 +34,54 @@ char	*ctrl_d(void)
 	return (ft_strdup("exit \n"));
 }
 
-t_assen 	*read_l(char **temp, char **tmp, t_history history, t_assen *climb)
+t_assen 	*read_l(char **temp, char **tmp, t_history history, t_assen *climb, char *str)
 {
 	int		r;
-	char	*str;
+	char	*str_free;
 
-	str = (char *) malloc(BUFFER + 1);
-	if (str == NULL)
-		return (NULL);
 	r = read(history.fd, str, BUFFER);
 	str[r] = '\0';
-	if (str[0] == 127)
-		back_space(tmp, history, temp, climb);
-	else if (str[0] == 4 && ft_strcmp(*tmp, "") == 0)
-		*tmp = ctrl_d();
-	else if (str[0] != 4 && str[0] != 127)
-		ft_putstr(str);
-	if (history.up_arrow != NULL && memcmp(str, history.up_arrow, 3) == 0)
-		climb = arrow_up(tmp, history, climb);
-	if (history.down_arrow != NULL
-		&& memcmp(str, history.down_arrow, 3) == 0)
-		climb = arrow_down(history, climb, tmp, temp);
-	if ((history.down_arrow != NULL
-			&& memcmp(str, history.down_arrow, 3) != 0)
-		&& (history.up_arrow != NULL
-			&& memcmp(str, history.up_arrow, 3) != 0) && str[0] != 127)
-		string_extention(tmp, temp, &str);
+	if (r > 0)
+	{
+		if (str[0] == 127)
+			back_space(tmp, history, temp, climb);
+		else if (str[0] == 4 && ft_strcmp(*tmp, "") == 0)
+			*tmp = ctrl_d();
+		else if (str[0] != 4 && str[0] != 127)
+			ft_putstr(str);
+		if (history.up_arrow != NULL && ft_memcmp(str, history.up_arrow, 3) == 0)
+			climb = arrow_up(tmp, history, climb);
+		if (history.down_arrow != NULL
+			&& ft_memcmp(str, history.down_arrow, 3) == 0)
+			climb = arrow_down(history, climb, tmp, temp);
+		if ((history.down_arrow != NULL
+			 && ft_memcmp(str, history.down_arrow, 3) != 0)
+			&& (history.up_arrow != NULL
+				&& ft_memcmp(str, history.up_arrow, 3) != 0) && str[0] != 127)
+			string_extention(tmp, temp, str);
+	}
+//	free(str);
+//	str = NULL;
 	return (climb);
 }
 
-char	*tty_loop(t_history history, t_assen *assen, t_assen *climb)
+char	*tty_loop(t_history history, t_assen *assen, t_assen *climb, char *str)
 {
 	char	*temp;
 	char	*tmp;
+	char	*str_free;
 
 	temp = NULL;
 	tmp = NULL;
 	while (TRUE)
 	{
-		climb = read_l(&temp, &tmp, history, climb);
-		if (find_re(tmp, '\n'))
+		climb = read_l(&temp, &tmp, history, climb, str);
+		if (tmp && find_re(tmp, '\n'))
 		{
 			if (ft_strcmp(tmp, "") != 0)
 				append_assen(&assen, tmp);
 			break ;
 		}
 	}
-	free(temp);
-	temp = NULL;
 	return (tmp);
 }

@@ -63,4 +63,6 @@ void		export_init(void);
 void		env_init(char **env);
 int			fill_env_init(char **env, int *pwd, int *shlvl, int *start);
 void		filling_export(char **env);
+void		free_export_command(char **splits);
+
 #endif

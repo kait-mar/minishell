@@ -31,8 +31,12 @@ static int	coun(char *s, char c, char b)
 char		**ft_tofree(char *tabs[], int j)
 {
 	while (--j > 0)
+	{
 		free(tabs[j]);
+		tabs[j] = NULL;
+	}
 	free(tabs);
+	tabs = NULL;
 	return (NULL);
 }
 

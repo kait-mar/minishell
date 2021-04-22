@@ -119,6 +119,7 @@ struct s_global
     int pwd_on;
     char    *pwd_only;
     char    *old_pwd;
+    char	*buffer;
     int oldpwd_on;
     char *oldpwd_only;
     int check;

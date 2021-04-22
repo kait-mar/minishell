@@ -61,23 +61,25 @@ t_assen	*arrow_down(t_history history, t_assen *climb, char **tmp, char **temp)
 	return (climb);
 }
 
-void 	string_extention(char **tmp, char **temp, char **str)
+void 	string_extention(char **tmp, char **temp, char *str)
 {
 	char	*temp_free;
 	char 	*tmp_free;
 
 	temp_free = *tmp;
-	*tmp = extend_re(*str, *tmp);
+	*tmp = extend_re(str, *tmp);
 	free(temp_free);
+	temp_free = NULL;
 	tmp_free = *temp;
-	*temp = extend_re(*str, *temp);
+	*temp = extend_re(str, *temp);
 	free(tmp_free);
+	tmp_free = NULL;
 	/**str = (char *) malloc(sizeof(char) * BUFFER + 1);
 	if (*str == NULL)
 		return ;*/
 }
 
-char	*reading_input(t_assen *assen)
+char	*reading_input(t_assen *assen, char *string)
 {
 	char			*str;
 	char			*tmp;
@@ -94,9 +96,10 @@ char	*reading_input(t_assen *assen)
 	if (isatty(history.fd))
 	{
 		save = tty_init(history.fd);
-		tmp = tty_loop(history, assen, climb);
-	}
+		tmp = tty_loop(history, assen, climb, string);
+	 }
 	if (tcsetattr(history.fd, TCSANOW, &save) == 1)
 		exit (-1);
+
 	return (tmp);
 }

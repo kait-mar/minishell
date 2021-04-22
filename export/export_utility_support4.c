@@ -106,4 +106,6 @@ void	env_init(char **env)
 		shlvl_env(env, &i);
 	if (start == 0)
 		start_env(env, &i);
+	free(s);
+	s = NULL;
 }

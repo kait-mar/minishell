@@ -104,6 +104,7 @@ char	*add_backs(char *s)
 int 	fill_env_init(char **env, int *pwd, int *shlvl, int *start)
 {
 	int	i;
+	char	*s;
 
 	i = 0;
 	while (env[i])
@@ -115,7 +116,10 @@ int 	fill_env_init(char **env, int *pwd, int *shlvl, int *start)
 		}
 		else if (match("SHLVL", env[i]) == 1)
 		{
-			env[i] = append("SHLVL=", ft_itoa(check_shlvl(env[i])));
+			s = ft_itoa(check_shlvl(env[i]));
+			env[i] = append("SHLVL=", s);
+			free(s);
+			s = NULL;
 			*shlvl = 1;
 		}
 		else if ((match("_", env[i]) == 1))

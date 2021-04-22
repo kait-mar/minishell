@@ -47,7 +47,9 @@ int	until_meta(char *str)
 void	free_meta_struct(t_meta *meta)
 {
 	free(meta->argument);
+	meta->argument = NULL;
 	free(meta);
+	meta = NULL;
 }
 
 int     valid(char *str, int j, int len)
@@ -202,5 +204,6 @@ t_meta	*split_it_all(char *str, char **env)
 	if (splits == NULL)
 		return (NULL);
 	global = split_it_all_loop(splits, global, i);
+	//free(str);
 	return (global);
 }

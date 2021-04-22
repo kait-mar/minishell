@@ -93,7 +93,9 @@ void	free_splits(char **splits)
 	while (splits[i] != NULL)
 	{
 		free(splits[i]);
+		splits[i] = NULL;
 		i += 1;
 	}
 	free(splits);
+	splits = NULL;
 }

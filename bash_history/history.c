@@ -36,6 +36,8 @@ int	find_re(char *string, int c)
 	int	i;
 
 	i = 0;
+	if (string == NULL)
+		return (FALSE);
 	while (string[i] != '\0')
 	{
 		if (string[i] == c)

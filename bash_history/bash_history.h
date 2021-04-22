@@ -38,15 +38,15 @@ typedef struct s_assen
 
 struct termios	tty_init(int fd);
 t_assen			*read_l(char **temp, char **tmp,
-					t_history history, t_assen *climb);
-char			*tty_loop(t_history history, t_assen *assen, t_assen *climb);
+					t_history history, t_assen *climb, char *str);
+char			*tty_loop(t_history history, t_assen *assen, t_assen *climb, char *string);
 t_assen			*arrow_down(t_history history,
 					t_assen *climb, char **tmp, char **temp);
 t_assen			*arrow_up(char **tmp, t_history history, t_assen *climb);
 void			back_space(char **tmp, t_history history,
 					char **temp, t_assen *climb);
-void			string_extention(char **tmp, char **temp, char **str);
-char			*reading_input(t_assen *assen);
+void			string_extention(char **tmp, char **temp, char *str);
+char			*reading_input(t_assen *assen, char *string);
 void			filling(t_assen *assen);
 char			*delete_char(char *string);
 int				find_re(char *string, int c);
