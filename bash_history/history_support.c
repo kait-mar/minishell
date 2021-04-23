@@ -46,7 +46,8 @@ t_history	init_hist(t_history history)
 	history.term_type = getenv("TERM");
 	if (tgetent(buffer, history.term_type) != 1)
 		printf("No such term_type\n");
-	buffer_address = (char *) malloc(ft_strlen(buffer));
+    history.tty_name = ttyname(STDIN_FILENO);
+	buffer_address = malloc(ft_strlen(buffer));
 	history.key_s = tgetstr("ks", &buffer_address);
 	tputs(history.key_s, 2, int_put);
 	history.up_arrow = tgetstr("ku", &buffer_address);

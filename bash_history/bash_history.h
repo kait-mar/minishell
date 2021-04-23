@@ -46,7 +46,7 @@ t_assen			*arrow_up(char **tmp, t_history history, t_assen *climb);
 void			back_space(char **tmp, t_history history,
 					char **temp, t_assen *climb);
 void			string_extention(char **tmp, char **temp, char *str);
-char			*reading_input(t_assen *assen, char *string);
+char			*reading_input(t_assen *assen, char *string, t_history history);
 void			filling(t_assen *assen);
 char			*delete_char(char *string);
 int				find_re(char *string, int c);

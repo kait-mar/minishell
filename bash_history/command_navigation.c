@@ -79,16 +79,13 @@ void 	string_extention(char **tmp, char **temp, char *str)
 		return ;*/
 }
 
-char	*reading_input(t_assen *assen, char *string)
+char	*reading_input(t_assen *assen, char *string, t_history history)
 {
 	char			*str;
 	char			*tmp;
-	t_history		history;
 	t_assen			*climb;
 	struct termios	save;
 
-	memset(&history, 0, sizeof (t_history));
-	history = init_hist(history);
 	history.fd = open(history.tty_name, O_RDWR | O_NOCTTY);
 	climb = assen;
 	while (climb->next != NULL)
@@ -100,6 +97,5 @@ char	*reading_input(t_assen *assen, char *string)
 	 }
 	if (tcsetattr(history.fd, TCSANOW, &save) == 1)
 		exit (-1);
-
 	return (tmp);
 }

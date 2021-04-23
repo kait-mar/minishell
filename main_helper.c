@@ -62,11 +62,14 @@ void    minishell(char **av, char **env, t_assen assen)
     char    *str;
     char	*str_free;
     char	*string;
+    t_history   history;
 
     head = NULL;
     str = NULL;
     meta = NULL;
     string = malloc(BUFFER + 1);
+    memset(&history, 0, sizeof (t_history));
+    history = init_hist(history);
     while (TRUE)
     {
         signal_handler(g_global.status);
@@ -75,7 +78,7 @@ void    minishell(char **av, char **env, t_assen assen)
 		else
 		{
 			prompt();
-			str = reading_input(&assen, string);
+			str = reading_input(&assen, string, history);
 		}
 		str = remove_space(str);
         str = ft_strtrim(str, "\t");
