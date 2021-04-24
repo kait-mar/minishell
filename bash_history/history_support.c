@@ -27,6 +27,8 @@ void	append_assen(t_assen **assen, char *cmd)
 		*assen = new_assen;
 		new_assen->prev = NULL;
 		new_assen->next = NULL;
+		free(cmd);
+		cmd = NULL;
 		return ;
 	}
 	while (tmp->next != NULL)
@@ -34,6 +36,8 @@ void	append_assen(t_assen **assen, char *cmd)
 	tmp->next = new_assen;
 	new_assen->next = NULL;
 	new_assen->prev = tmp;
+	free(cmd);
+	cmd = NULL;
 	return ;
 }
 

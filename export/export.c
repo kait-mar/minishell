@@ -36,6 +36,8 @@ int	check_shlvl(char *s)
 	i = 0;
 	number = only_after_equal(s);
 	nmb = ft_atoi(number);
+	free(number);
+	number = NULL;
 	if (nmb >= 709 && nmb < INT32_MAX)
 	{
 		ft_printf("%s (%d) too high, resetting to 1\n", SHLVL_ERROR, nmb + 1);

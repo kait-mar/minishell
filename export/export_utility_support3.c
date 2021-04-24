@@ -105,26 +105,39 @@ int 	fill_env_init(char **env, int *pwd, int *shlvl, int *start)
 {
 	int	i;
 	char	*s;
-
+	char	**ss;
+	char	*shlvl_;
+	
 	i = 0;
+	ss = ft_calloc(sizeof (char *),
+				   arguments_in(env, i) + 3);
 	while (env[i])
 	{
-		if (match("PWD", env[i]) == 1)
+		ss[i] = ft_strdup(env[i]);
+		i += 1;
+	}
+	i = 0;
+	while (ss[i])
+	{
+		if (match("PWD", ss[i]) == 1)
 		{
-			g_global.pwd_only = ft_strdup(env[i]);
+			g_global.pwd_only = ft_strdup(ss[i]);
 			*pwd = 1;
 		}
-		else if (match("SHLVL", env[i]) == 1)
+		else if (match("SHLVL", ss[i]) == 1)
 		{
-			s = ft_itoa(check_shlvl(env[i]));
+			s = ft_itoa(check_shlvl(ss[i]));
 			env[i] = append("SHLVL=", s);
 			free(s);
 			s = NULL;
 			*shlvl = 1;
 		}
-		else if ((match("_", env[i]) == 1))
+		else if ((match("_", ss[i]) == 1))
 			*start = 1;
+		free(ss[i]);
 		i += 1;
 	}
+	free(ss);
+	ss = NULL;
 	return (i);
 }

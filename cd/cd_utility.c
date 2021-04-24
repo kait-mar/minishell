@@ -38,22 +38,6 @@ char	*without_that(char *str, char c)
 	return (s);
 }
 
-int		how_mutch_argument(char *str, int i)
-{
-	int on;
-
-	on = 0;
-	while (str[i] != '\0')
-	{
-		if (ft_isalpha(str[i]) || (str[i] == '.'))
-			on = 1;
-		i += 1;
-	}
-	if (on == 1)
-		return (1);
-	return (0);
-}
-
 int		how_mutch_arguments(char **str, int i)
 {
 	int on;
@@ -85,23 +69,4 @@ int		arguments_in(char **splits, int i)
 		i += 1;
 	}	
 	return (j);
-}
-
-void	free_export(t_export *export)
-{
-	int i;
-
-	i = 0;
-	while (export->argument[i])
-	{
-		free(export->argument[i]);
-		export->argument[i] = NULL;
-		i +=  1;
-	}
-	free(export->argument);
-	export->argument = NULL;
-	free(export->command);
-	export->command = NULL;
-	free(export);
-	export = NULL;
 }

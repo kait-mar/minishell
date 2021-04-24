@@ -72,7 +72,7 @@ int	check_exp_lex(char *str)
 	return (0);
 }
 
-static char	*take_before_equal(char *str)
+char	*take_before_equal(char *str)
 {
 	int		i;
 	char	*s;
@@ -94,11 +94,22 @@ int	match(char *str, char *export)
 {
 	char	*env;
 	char	*new_argument;
+	int 	len;
 
+	len = ft_strlen(str);
 	if (check_exp_lex(str) == 1)
 		env = take_before_equal(str);
 	else
-		env = ft_strdup(str);
+	{
+		env = malloc(len + 1);
+		len = 0;
+		while (str[len]  != '\0')
+		{
+			env[len] = str[len];
+			len += 1;
+		}
+		env[len] = '\0';
+	}
 	if (check_exp_lex(export) == 1)
 		new_argument = take_before_equal(export);
 	else
@@ -113,5 +124,6 @@ int	match(char *str, char *export)
 		match_free(env, new_argument);
 		return (1);
 	}
+	match_free(env, new_argument);
 	return (0);
 }
