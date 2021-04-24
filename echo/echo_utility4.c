@@ -30,21 +30,25 @@ int		 print(char **bult, char **env, int *status)
 	int		j;
 	int		i;
 	int		fd;
+	int		k;
 
 	i = 0;
-	if (only_star(*bult) == 1)
+	k = 0;
+	if (only_star(bult[g_global.j_echo]) == 1)
 		stream_directory();
-	while (**bult != '\0')
+	while (bult[g_global.j_echo][k] != '\0')
     {
-		if (**bult == '$' && *(*bult + 1) == '?')
+		if (bult[g_global.j_echo][k] == '$' && bult[g_global.j_echo][k + 1] == '?')
 		{
 			ft_printf("%d", *status);
-			*bult = *bult + 2;
+			k += 2;
+			//bult[g_global.j_echo] = bult[g_global.j_echo] + 2;
 		}
 		else
 		{
-			my_putchar(**bult);
-      		(*bult)++;
+			my_putchar(bult[g_global.j_echo][k]);
+      		//(*bult)++;
+			  k++;
 		}
 	    i = 1;
     }

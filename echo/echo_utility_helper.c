@@ -21,7 +21,7 @@ int     check_echo_flag(char **bult, int *i)
     int     b;
 
     b = 0;
-    str = ft_split(*bult, ' ');
+    str = ft_split(bult[g_global.j_echo], ' ');
     if (*str == NULL)
         return (0);
     while (*str)
@@ -30,7 +30,7 @@ int     check_echo_flag(char **bult, int *i)
         {
             str++;
             *i = 1;
-            *bult = skip_first_word(&(*bult));
+            bult[g_global.j_echo] = skip_first_word(&(bult[g_global.j_echo]));
         }
         else
         {
@@ -40,8 +40,9 @@ int     check_echo_flag(char **bult, int *i)
     }
     if (b == 1)
         return (0);
-    else if (**bult == '\0')
-        bult++;
+    // a free here
+    else if (bult[g_global.j_echo][0] == '\0')
+        g_global.j_echo++;
     return (1);
 }
 

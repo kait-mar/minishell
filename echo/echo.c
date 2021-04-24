@@ -12,6 +12,7 @@ int	echo(char *argv, char **env, int *status)
 	int		i;
 
 	i = 0;
+	g_global.j_echo = 0;
 	argv = skip_first_word(&argv);
 	if (ft_strcmp(argv, "") == 0)
 	{
@@ -21,9 +22,14 @@ int	echo(char *argv, char **env, int *status)
 	}
 	argv = ft_strtrim(argv, "\t");
 	bult = keep_split(argv, 39, 34);
-	while (*bult != NULL)
+	/*int k = 0;
+	while (bult[k])
 	{
-		if (find(*bult, 39) == 0 && find(*bult, 34) == 0)
+		ft_printf("[bult[]] is %s\n", bult[k++]);
+	}*/
+	while (bult[g_global.j_echo] != NULL)
+	{
+		if (find(bult[g_global.j_echo], 39) == 0 && find(bult[g_global.j_echo], 34) == 0)
 		{
 			if (check_echo_flag(bult, &i) == 0)
 				break ;
