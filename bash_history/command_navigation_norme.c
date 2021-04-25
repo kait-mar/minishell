@@ -71,8 +71,8 @@ char	*tty_loop(t_history history, t_assen *assen, t_assen *climb, char *str)
 
 	temp = NULL;
 	tmp = NULL;
-	memset(&history, 0, sizeof (t_history));
-	history = init_hist(history);
+//	memset(&history, 0, sizeof (t_history));
+//	history = init_hist(history);
 	while (TRUE)
 	{
 		climb = read_l(&temp, &tmp, history, climb, str);

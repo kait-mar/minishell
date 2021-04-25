@@ -67,10 +67,6 @@ t_export	*export_global(t_export *export)
 	int	i;
 
 	i = 0;
-	export->env = (char **) ft_calloc(sizeof(char *),
-			arguments_in(g_global.export->saver, i) + 1);
-	if (!(export->env))
-		return (NULL);
 	while (g_global.export->saver[i])
 	{
 		if (in_it(g_global.export->saver[i]) == 1)

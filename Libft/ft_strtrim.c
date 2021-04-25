@@ -73,6 +73,5 @@ char		*ft_strtrim(char *s1, char const *set)
 		return (NULL);
 	ft_memcpy(str, s1 + start, end - start + 1);
 	str[end - start + 1] = '\0';
-	free(s1);
 	return (str);
 }

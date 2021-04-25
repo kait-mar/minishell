@@ -17,11 +17,16 @@ void	free_export_command(char **splits)
 	int i;
 
 	i = 0;
-	while (splits[i])
+	if (splits == NULL)
+		return;
+	if (splits[i] != NULL)
 	{
-		free(splits[i]);
-		splits[i] = NULL;
-		i += 1;
+		while (splits[i])
+		{
+			free(splits[i]);
+			splits[i] = NULL;
+			i += 1;
+		}
 	}
 	free(splits);
 	splits = NULL;

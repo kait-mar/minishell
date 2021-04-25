@@ -73,6 +73,7 @@ int	check_pwd(char *str, int *exept)
 	int		i;
 	char	*s;
 	int		on;
+	char	*str_free;
 
 	i = 0;
 	*exept = 0;
@@ -80,7 +81,9 @@ int	check_pwd(char *str, int *exept)
 	if (check_first_pwd(str) == 1)
 		if (check_after_first(str) == 1)
 			*exept = 1;
+	str_free = str;
 	str = ft_toStrLower(str);
+	free(str_free);
 	s = "pwd";
 	while (i < 3)
 	{

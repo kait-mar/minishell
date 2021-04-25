@@ -87,6 +87,10 @@ t_export	*check_export_init(char **splits, t_export *export)
 				arguments_in(splits, i) + 1);
 		if (!(export->argument))
 			return (NULL);
+		export->env = (char **) ft_calloc(sizeof(char *),
+										  arguments_in(g_global.export->saver, i) + 1);
+		if (!(export->env))
+			return (NULL);
 	}
 	return (export);
 }
