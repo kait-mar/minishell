@@ -19,18 +19,20 @@ int     check_echo_flag(char **bult, int *i)
 {
     char    **str;
     int     b;
+    int     k;
 
     b = 0;
-    str = ft_split(*bult, ' ');
-    if (*str == NULL)
+    k = 0;
+    str = ft_split(bult[g_global.j_echo], ' ');
+    if (str[k] == NULL)
         return (0);
-    while (*str)
+    while (str[k])
     {
-        if (flag_strcmp(*str, "-n") == 0)
+        if (flag_strcmp(str[k], "-n") == 0)
         {
-            str++;
+            k++;
             *i = 1;
-            *bult = skip_first_word(&(*bult));
+            bult[g_global.j_echo] = skip_first_word(&(bult[g_global.j_echo]));
         }
         else
         {
@@ -38,10 +40,11 @@ int     check_echo_flag(char **bult, int *i)
             break;
         }
     }
+    to_free(str);
     if (b == 1)
         return (0);
-    else if (**bult == '\0')
-        bult++;
+    else if (bult[g_global.j_echo][0] == '\0')
+        g_global.j_echo++;
     return (1);
 }
 
