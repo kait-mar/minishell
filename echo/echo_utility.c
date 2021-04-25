@@ -32,17 +32,19 @@ int	print_env(char *bult, char **env, int which_quote, int *status)
 char	**put_cases2(char **bult)
 {
 	int	j;
+	int	k;
 
-	j = how_many_escape(*bult);
+	k = 0;
+	j = how_many_escape(bult[g_global.j_echo]);
 	if (j % 2 != 0)
 	{
-		while (*(*bult + 1) == '\\')
-			(*bult)++;
+		while (bult[g_global.j_echo][k] == '\\')
+			k++;
 	}
 	else
 	{
-		while (**bult == '\\')
-			(*bult)++;
+		while (bult[g_global.j_echo][k] == '\\')
+			k++;
 	}
 	j /= 2;
 	while (--j >= 0)
@@ -52,23 +54,26 @@ char	**put_cases2(char **bult)
 
 char	**put_cases1(char **bult)
 {
-	while (**bult != '\0')
+	int	k;
+
+	k = 0;
+	while (bult[g_global.j_echo][k] != '\0')
 	{
-		if (**bult == '\\' && (*(*bult + 1) == '$' || *(*bult + 1) == '"'
-			|| *(*bult + 1) == '\'' || *(*bult + 1) == '\\'))
+		if (bult[g_global.j_echo][k] == '\\' && (bult[g_global.j_echo][k + 1] == '$' || bult[g_global.j_echo][k + 1] == '"'
+			|| bult[g_global.j_echo][k + 1] == '\'' || bult[g_global.j_echo][k + 1] == '\\'))
 			bult = put_cases2(bult);
-		if (**bult == '\\' && (*(*bult + 1) == '$'
-			|| *(*bult + 1) == '"' || *(*bult + 1) == '\''))
-			(*bult)++;
-		else if (**bult == '\\')
+		if (bult[g_global.j_echo][k] == '\\' && (bult[g_global.j_echo][k + 1] == '$'
+			|| bult[g_global.j_echo][k + 1] == '"' || bult[g_global.j_echo][k + 1] == '\''))
+			k++;
+		else if (bult[g_global.j_echo][k] == '\\')
 		{
-			my_putchar(**bult);
-			(*bult)++;
+			my_putchar(bult[g_global.j_echo][k]);
+			k++;
 		}
-		while (**bult != '\0' && **bult != '\\')
+		while (bult[g_global.j_echo][k] != '\0' && bult[g_global.j_echo][k] != '\\')
 		{
-			my_putchar(**bult);
-			(*bult)++;
+			my_putchar(bult[g_global.j_echo][k]);
+			k++;
 		}
 	}
 	return (bult);
@@ -80,23 +85,23 @@ void	put_cases(char **bult, char **env, int *status)
 	int		i;
 
 	i = 0;
-	while (*bult)
+	while (bult[g_global.j_echo])
 	{
-		if (find(*bult, 39) == 0 && find(*bult, 34) == 0)
+		if (find(bult[g_global.j_echo], 39) == 0 && find(bult[g_global.j_echo], 34) == 0)
 			print(bult, env, status);
-		else if (find_how_many(*bult, 39) == 2 &&
-				find_how_many(*bult, 34) == 2 && find(*bult, '$') == 0)
+		else if (find_how_many(bult[g_global.j_echo], 39) == 2 &&
+				find_how_many(bult[g_global.j_echo], 34) == 2 && find(bult[g_global.j_echo], '$') == 0)
 		{
-			if (**bult == '\'')
-				*bult = ft_strtrim(*bult, "'");
+			if (bult[g_global.j_echo][0] == '\'')
+				bult[g_global.j_echo] = ft_strtrim(bult[g_global.j_echo], "'");
 			else
-				*bult = ft_strtrim(*bult, "\"");
-			ft_putstr(*bult);
+				bult[g_global.j_echo] = ft_strtrim(bult[g_global.j_echo], "\"");
+			ft_putstr(bult[g_global.j_echo]);
 		}
-		else if (find_how_many(*bult, 39) == 2 && find_how_many(*bult, 34) == 2)
-			*bult = in_between_cases(*bult, env, status);
-		else if (find(*bult, 39) == 1 || find(*bult, 34) == 1)
+		else if (find_how_many(bult[g_global.j_echo], 39) == 2 && find_how_many(bult[g_global.j_echo], 34) == 2)
+			bult[g_global.j_echo] = in_between_cases(bult[g_global.j_echo], env, status);
+		else if (find(bult[g_global.j_echo], 39) == 1 || find(bult[g_global.j_echo], 34) == 1)
 			last_put_cases(bult, env, status, &i);
-		bult++;
+		g_global.j_echo++;
 	}
 }

@@ -5,16 +5,16 @@ void    last_put_cases(char **bult, char **env, int *status, int *i)
     int which_quote;
 
     which_quote = 0;
-    if (**bult == 39 || **bult == 34)
-        *bult = which_trim(*bult, &which_quote);
-    if ((find_without(*bult, '$') == 0 && find_without(*bult, '"') == 0
-        && find_without(*bult, '\'') == 0) || which_quote == 39)
+    if (bult[g_global.j_echo][0] == 39 || bult[g_global.j_echo][0] == 34)
+        bult[g_global.j_echo] = which_trim(bult[g_global.j_echo], &which_quote);
+    if ((find_without(bult[g_global.j_echo], '$') == 0 && find_without(bult[g_global.j_echo], '"') == 0
+        && find_without(bult[g_global.j_echo], '\'') == 0) || which_quote == 39)
     {
-        if (find_without(*bult, '\\') == 0 || which_quote == 39)
+        if (find_without(bult[g_global.j_echo], '\\') == 0 || which_quote == 39)
         {
             if (*i == 1)
                 write(1, " ", 1);
-            ft_putstr(*bult);
+            ft_putstr(bult[g_global.j_echo]);
             *i = 0;
         }
         else
@@ -22,7 +22,7 @@ void    last_put_cases(char **bult, char **env, int *status, int *i)
     }
     else
     {
-        if (print_env(*bult, env, 0, status) == 1)
+        if (print_env(bult[g_global.j_echo], env, 0, status) == 1)
             write(1, " ", 1);
     }
 }
@@ -39,10 +39,10 @@ char    *which_trim(char *bult, int *which_quote)
     }
     else
     {
-        
         s = trim_once(bult);
         *which_quote = 34;
     }
+    free(bult);
     return (s);
 }
 

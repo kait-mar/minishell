@@ -11,5 +11,6 @@ int		which_quote_condition(char *bult, int which_quote);
 char    *last_print_env_case(char *bult, char **env, int which_quote, int *status);
 int     check_echo_flag(char **bult, int *i);
 void    echo_complet(char **bult, char **env, int *status, int i);
+void	to_free(char **bult);
 
 #endif

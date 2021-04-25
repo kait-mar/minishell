@@ -111,6 +111,7 @@ typedef struct s_support
 
 struct s_global
 {
+    int j_echo;
     int on;
     int in_signal;
     int first_time;
