@@ -50,6 +50,8 @@ char	*adding_quote(char *s)
 		return (NULL);
 	s2 = return_adding_quote(s, j);
 	str = return_loc(s, s2, str);
+	free(s2);
+	s2 = NULL;
 	return (str);
 }
 
@@ -58,6 +60,7 @@ char	*front_append(char *string, char *to_append)
 	char	*s;
 	int		i;
 	int		j;
+	char	*free_s;
 
 	s = (char *) malloc(sizeof(char)
 			* (ft_strlen(string) + ft_strlen(to_append) + 1));
@@ -77,7 +80,10 @@ char	*front_append(char *string, char *to_append)
 		j += 1;
 	}
 	s[i] = '\0';
+	free_s = s;
 	s = adding_quote(s);
+	free(free_s);
+	free_s = NULL;
 	return (s);
 }
 

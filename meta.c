@@ -121,6 +121,8 @@ char	**splits_by_meta(char *str, int *meta)
 			i += 1;
 	}
 	splits[k++] = from_to(str, j, i);
+	free(str);
+	str = NULL;
 	return (splits);
 }
 
@@ -201,9 +203,7 @@ t_meta	*split_it_all(char *str, char **env)
 	if (splits[i] == NULL)
         return NULL;
     global->command = check_wich_command(take_first_word(splits[i]));
-	if (splits == NULL)
-		return (NULL);
 	global = split_it_all_loop(splits, global, i);
-	//free(str);
+	free_export_command(splits);
 	return (global);
 }

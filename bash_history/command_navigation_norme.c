@@ -37,7 +37,6 @@ char	*ctrl_d(void)
 t_assen 	*read_l(char **temp, char **tmp, t_history history, t_assen *climb, char *str)
 {
 	int		r;
-	char	*str_free;
 
 	r = read(history.fd, str, BUFFER);
 	str[r] = '\0';
@@ -69,10 +68,11 @@ char	*tty_loop(t_history history, t_assen *assen, t_assen *climb, char *str)
 {
 	char	*temp;
 	char	*tmp;
-	char	*str_free;
 
 	temp = NULL;
 	tmp = NULL;
+	memset(&history, 0, sizeof (t_history));
+	history = init_hist(history);
 	while (TRUE)
 	{
 		climb = read_l(&temp, &tmp, history, climb, str);

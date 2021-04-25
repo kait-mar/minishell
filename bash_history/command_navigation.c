@@ -66,14 +66,19 @@ void 	string_extention(char **tmp, char **temp, char *str)
 	char	*temp_free;
 	char 	*tmp_free;
 
-	temp_free = *tmp;
+	tmp_free = *tmp;
 	*tmp = extend_re(str, *tmp);
-	free(temp_free);
-	temp_free = NULL;
-	tmp_free = *temp;
-	*temp = extend_re(str, *temp);
 	free(tmp_free);
 	tmp_free = NULL;
+	temp_free = *temp;
+	*temp = extend_re(str, *temp);
+	free(temp_free);
+	temp_free = NULL;
+	if (find_re(str, '\n'))
+	{
+		free(*temp);
+		*temp = NULL;
+	}
 	/**str = (char *) malloc(sizeof(char) * BUFFER + 1);
 	if (*str == NULL)
 		return ;*/
