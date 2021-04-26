@@ -34,15 +34,17 @@ void minishell_execution(t_meta *head, t_assen assen, char **env)
             head->command = check_wich_command(take_first_word(head->argument));
         if (token_error(head, g_global.status) == 1)
             break;
-        if (head->meta == ';') {
+        if (head->meta == ';')
             built_in(head, assen, env);
-        } else if (head->meta == '|')
+       	else if (head->meta == '|')
             head = pipe_file(head, assen, env, g_global.status);
-        else if (head->meta_append == 1) {
+        else if (head->meta_append == 1)
+        {
             head = redirect_output(head, assen, env, g_global.status);
             if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
                 head = head->next;
-        } else if (head->meta == '>') {
+        }
+        else if (head->meta == '>') {
             head = redirect_output(head, assen, env, g_global.status);
             if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
                 head = head->next;
@@ -76,20 +78,24 @@ void    minishell(char **av, char **env, t_assen assen)
 	while (TRUE)
     {
         signal_handler(g_global.status);
-		if (av[1])
-			str = ft_strdup(av[1]);
+		if (av[2])
+			str = ft_strdup(av[2]);
 		else
 		{
 			prompt();
 			str = reading_input(&assen, string, history);
 		}
 		str = remove_space(str);
+		str_free = str;
         str = ft_strtrim(str, "\t");
+        free(str_free);
+		str_free = str;
         str = escape_normal(str);
+		free(str_free);
         meta = split_it_all(str, env);
         head = meta;
         minishell_execution(head, assen, env);
-        if (av[1])
+        if (av[2])
             exit(*(g_global.status));
         g_global.first_time = 1;
         if (g_in_redirect == 1)

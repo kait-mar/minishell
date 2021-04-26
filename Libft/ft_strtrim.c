@@ -52,7 +52,7 @@ static char	*return_vr(int end, int start)
 		return (NULL);
 }
 
-char		*ft_strtrim(char *s1, char const *set)
+char		*ft_strtrim(char  *s1, char const *set)
 {
 	int		start;
 	int		end;
@@ -68,7 +68,7 @@ char		*ft_strtrim(char *s1, char const *set)
 		end--;
 	if (end < start)
 		return (return_vr(end, start));
-	str = (char *)malloc(end - start + 2);
+	str = malloc(end - start + 2);
 	if (str == NULL)
 		return (NULL);
 	ft_memcpy(str, s1 + start, end - start + 1);

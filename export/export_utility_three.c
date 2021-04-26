@@ -68,6 +68,8 @@ void	export_command(char **env, char *str, int *status, t_export *export)
 	free_export_command(splits);
 	if (export->env)
 		free_export_command(export->env);
+	if (export->argument)
+		free_export_command(export->argument);
 	free(export);
 	export = NULL;
 }

@@ -102,5 +102,5 @@ char	*reading_input(t_assen *assen, char *string, t_history history)
 	 }
 	if (tcsetattr(history.fd, TCSANOW, &save) == 1)
 		exit (-1);
-	return (tmp);
+	return (ft_strdup(tmp));
 }

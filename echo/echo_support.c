@@ -50,15 +50,16 @@ char	*in_between_cases(char *bult, char **env, int *status)
 {
 	char	*s;
 
-	s = NULL;
+	// I changed bult to s
+	s = ft_strdup(bult);
 	if (*bult == '\'')
 	{
-			s = ft_strtrim(bult, "'");
+			s = ft_strtrim(s, "'");
 			ft_putstr(bult);
 	}
 	else
 	{
-		s = ft_strtrim(bult, "\"");
+		s = ft_strtrim(s, "\"");
 		print_env(bult, env, 1, status);
 	}
 	return (s);

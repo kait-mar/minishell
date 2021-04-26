@@ -61,7 +61,6 @@ int	return_env_on(char *str)
 	s = "env";
 	i = 0;
 	on = 0;
-	str = ft_toStrLower(str);
 	while (i < 3)
 	{
 		if (str[i] != s[i])

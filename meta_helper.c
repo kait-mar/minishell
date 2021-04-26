@@ -52,6 +52,8 @@ t_meta	*meta_in(char **splits, t_meta *global, int *i)
 
 t_meta	*meta_out(char **splits, t_meta *global, int *i)
 {
+	char	*split_free;
+
 	global->meta = 0;
 	if (splits[*i] != NULL)
 	{
@@ -59,7 +61,9 @@ t_meta	*meta_out(char **splits, t_meta *global, int *i)
 		splits[*i] = escape_meta(splits[*i]);
 		if (global->command != 0 && global->command != 6)
 		{
-			global->argument = skip_first_word(&splits[*i]);
+			split_free = ft_strdup(splits[*i]);
+			global->argument = skip_first_word(&split_free);
+			free(split_free);
 			global->argument = ft_strtrim(global->argument, "\t");
 		}
 		else if (global->command == 0 || global->command == 6)

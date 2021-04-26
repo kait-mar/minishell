@@ -12,27 +12,6 @@
 
 #include "../minishell.h"
 
-char	*ft_toStrLower(char *str)
-{
-	char	*s;
-	int		i;
-
-	i = 0;
-	s = (char *) malloc(sizeof(char) * ft_strlen(str) + 1);
-	if (!(s))
-		return (NULL);
-	while (str[i] != '\0')
-	{
-		if (str[i] >= 'A' && str[i] <= 'Z')
-			s[i] = (str[i] + 32);
-		else
-			s[i] = str[i];
-		i += 1;
-	}
-	s[i] = '\0';
-	return (s);
-}
-
 static int	ft_isupper(int c)
 {
 	if (c >= 65 && c <= 90)
@@ -81,9 +60,6 @@ int	check_pwd(char *str, int *exept)
 	if (check_first_pwd(str) == 1)
 		if (check_after_first(str) == 1)
 			*exept = 1;
-	str_free = str;
-	str = ft_toStrLower(str);
-	free(str_free);
 	s = "pwd";
 	while (i < 3)
 	{
