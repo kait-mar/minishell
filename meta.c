@@ -193,6 +193,7 @@ t_meta	*split_it_all(char *str, char **env)
 	int		i;
 	int j;
 	int		check;
+	char	*s;
 
 	i = 0;
 	j = 0;
@@ -202,7 +203,9 @@ t_meta	*split_it_all(char *str, char **env)
 	splits = splits_by_meta(str, &check);
 	if (splits[i] == NULL)
         return NULL;
-    global->command = check_wich_command(take_first_word(splits[i]));
+	s = take_first_word(splits[i]);
+    global->command = check_wich_command(s);
+    free(s);
 	global = split_it_all_loop(splits, global, i);
 	free_export_command(splits);
 	return (global);
