@@ -47,8 +47,11 @@ t_export	*filling_tmp(void)
 	while (g_global.export->saver[i])
 	{
 		tmp->saver[i] = ft_strdup(g_global.export->saver[i]);
+		free(g_global.export->saver[i]);
 		i += 1;
 	}
+	free(g_global.export->saver);
+	free(g_global.export);
 	return (tmp);
 }
 

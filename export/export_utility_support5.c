@@ -12,42 +12,6 @@
 
 #include "../minishell.h"
 
-
-int	match_re(char *str, char *export)
-{
-	char	*env;
-	char	*new_argument;
-
-	if (check_exp_lex(str) == 1)
-		env = take_before_equal(str);
-	else
-		env = ft_strdup(str);
-	if (check_exp_lex(export) == 1)
-		new_argument = take_before_equal(export);
-	else
-		new_argument = ft_strdup(export);
-	if (ft_strlen(env) != ft_strlen(new_argument))
-	{
-		match_free(env, new_argument);
-		free(str);
-		free(export);
-		str = NULL;
-		export = NULL;
-		return (0);
-	}
-	if (ft_strncmp(env, new_argument, ft_strlen(env)) == 0)
-	{
-		match_free(env, new_argument);
-		free(str);
-		free(export);
-		str = NULL;
-		export = NULL;
-		return (1);
-	}
-	return (0);
-}
-
-
 void	export_init(void)
 {
 	int		i;

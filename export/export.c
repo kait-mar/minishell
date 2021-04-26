@@ -96,6 +96,8 @@ void	export_realloc(void)
 		tmp->saver[i] = NULL;
 		i += 1;
 	}
+	free(tmp->saver);
 	free(tmp);
+	tmp->saver = NULL;
 	tmp = NULL;
 }

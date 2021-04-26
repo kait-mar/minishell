@@ -35,6 +35,7 @@ char	*error_reformulation(char *string)
 		}
 	}
 	s[j] = '\0';
+	free(string);
 	return (s);
 }
 

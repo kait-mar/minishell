@@ -15,6 +15,7 @@
 t_export	*put_in_export(char *splits, int *on, t_export *export)
 {
 	int	k;
+	char *splits_free;
 
 	if (in_it(splits) == 1)
 		splits = add_backs(splits);
