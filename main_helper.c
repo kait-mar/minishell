@@ -70,7 +70,7 @@ void    minishell(char **av, char **env, t_assen assen)
     str = NULL;
     meta = NULL;
     string = malloc(BUFFER + 1);
-    if (av[1] == NULL)
+    if (av[2] == NULL)
 	{
 		memset(&history, 0, sizeof (t_history));
 		history = init_hist(history);

@@ -127,6 +127,7 @@ struct s_global
     int *status;
     int in;
     int fd[2];
+    char	*buffer_address;
 	t_export *export;
 }       g_global;
 

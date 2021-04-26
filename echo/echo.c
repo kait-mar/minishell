@@ -35,6 +35,7 @@ int	echo(char *argv, char **env, int *status)
 	}
 	argv = ft_strtrim(argv, "\t");
 	bult = keep_split(argv, 39, 34);
+	free(argv);
 	while (bult[g_global.j_echo] != NULL)
 	{
 		if (find(bult[g_global.j_echo], 39) == 0 && find(bult[g_global.j_echo], 34) == 0)

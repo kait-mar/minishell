@@ -14,9 +14,9 @@
 
 int	check_exit(char *str)
 {
-	char	*s;
+//	char	*s;
 
-	s = take_first_word(str);
+//	s = take_first_word(str);
 	if ((ft_strncmp(str, "exit", 4) == 0) && (ft_isalpha(str[4]) == 0))
 		return (1);
 	return (0);
