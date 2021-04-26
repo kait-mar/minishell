@@ -58,13 +58,15 @@ t_meta	*meta_out(char **splits, t_meta *global, int *i)
 	if (splits[*i] != NULL)
 	{
 		splits[*i] = remove_space(splits[*i]);
+		split_free = splits[*i];
 		splits[*i] = escape_meta(splits[*i]);
+		free(split_free);
 		if (global->command != 0 && global->command != 6)
 		{
-			split_free = ft_strdup(splits[*i]);
-			global->argument = skip_first_word(&split_free);
-			free(split_free);
+			global->argument = skip_first_word(&splits[*i]);
+			split_free = global->argument;
 			global->argument = ft_strtrim(global->argument, "\t");
+			free(split_free);
 		}
 		else if (global->command == 0 || global->command == 6)
 			global->argument = strdup(splits[*i]);
