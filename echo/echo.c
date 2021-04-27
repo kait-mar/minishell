@@ -13,6 +13,7 @@ void	to_free(char **bult)
 	i = 0;
 	while (bult[i])
 	{
+		//printf("the freed word is %s\n", bult[i]);
 		free(bult[i]);
 		i++;
 	}
@@ -23,17 +24,21 @@ int	echo(char *argv, char **env, int *status)
 {
 	char	**bult;
 	int		i;
+	char	*s;
 
 	i = 0;
 	g_global.j_echo = 0;
-	argv = skip_first_word(&argv);
+	argv = skip_first_word(argv);
 	if (ft_strcmp(argv, "") == 0)
 	{
         my_putchar('\n');
         *status = 0;
+		free(argv);
 		return (0);
 	}
+	s = argv;
 	argv = ft_strtrim(argv, "\t");
+	free(s);
 	bult = keep_split(argv, 39, 34);
 	free(argv);
 	while (bult[g_global.j_echo] != NULL)

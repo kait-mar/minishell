@@ -55,7 +55,7 @@ int		 print(char **bult, char **env, int *status)
 	return (i);
 }
 
-char	*skip_first_word(char **str)
+char	*skip_first_word(char *str)
 {
 	char	*s;
 	int		i;
@@ -63,24 +63,26 @@ char	*skip_first_word(char **str)
 
 	i = 0;
 	j = 0;
-	while (((*str)[i] == ' ' || (*str)[i] == '\t') && (*str)[i] != '\0')
+	while ((str[i] == ' ' || str[i] == '\t') && str[i] != '\0')
 	{
 		i++;
 	}
-	if ((*str)[i] != '\0')
+	if (str[i] != '\0')
 	{
-		while ((*str)[i] != ' ' && (*str)[i] != '\t' && (*str)[i] != '\0')
+		while (str[i] != ' ' && str[i] != '\t' && str[i] != '\0')
 			i++;
-		if ((*str)[i] == ' ')
+		if (str[i] == ' ')
 		    i++;
-		s = malloc(ft_strlen(*str) - i + 1);
-		while ((*str)[i] != '\0')
-			s[j++] = (*str)[i++];
+		s = malloc(ft_strlen(str) - i + 1);
+		while (str[i] != '\0')
+			s[j++] = str[i++];
 		s[j] = '\0';
-		//this free causes a problem !!
-		//if (*str)
-		//	free(*str);
+		/*if (*str)
+		{
+			free(*str);
+			*str = NULL;
+		}*/
 		return (s);
 	}
-	return (*str);
+	return (str);
 }

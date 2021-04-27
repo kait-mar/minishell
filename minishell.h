@@ -204,7 +204,7 @@ int		find_how_many(char *s, char c);
 char	*take_first_word(char *s);
 t_meta	*split_it_all(char *str, char **env);
 int		check_wich_command(char	*str);
-char	*skip_first_word(char **str);
+char	*skip_first_word(char *str);
 void	free_meta_struct(t_meta *meta);
 int		only_star(char *str);
 void	stream_directory();

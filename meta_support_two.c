@@ -42,7 +42,7 @@ t_meta 	*meta_out_between(char **splits, t_meta *temp, int *i)
 		splits[*i] = escape_meta(splits[*i]);
 		if (temp->command != 0 && temp->command != 4 && temp->command != 6)
 		{
-			temp->argument = skip_first_word(&splits[*i]);
+			temp->argument = skip_first_word(splits[*i]);
 			temp->argument = ft_strtrim(temp->argument, "\t");
 		}
 		else if (temp->command == 0 || temp->command == 4 || temp->command == 6)

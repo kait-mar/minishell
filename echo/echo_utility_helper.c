@@ -32,7 +32,7 @@ int     check_echo_flag(char **bult, int *i)
         {
             k++;
             *i = 1;
-            bult[g_global.j_echo] = skip_first_word(&(bult[g_global.j_echo]));
+            bult[g_global.j_echo] = skip_first_word((bult[g_global.j_echo]));
         }
         else
         {
