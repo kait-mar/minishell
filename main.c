@@ -12,26 +12,6 @@
 
 #include "minishell.h"
 
-static char	*semi_split(char *str)
-{
-	int		i;
-	char	*s;
-
-	i = 0;
-	while (str[i] != ';')
-		i += 1;
-	s = (char *) malloc(sizeof (char ) * i + 1);
-	if (s == NULL)
-		return (NULL);
-	i = 0;
-	while (str[i] != ';')
-	{
-		s[i] = str[i];
-		i += 1;
-	}
-	s[i] = '\0';
-	return (s);
-}
 
 void	built_in(t_meta *meta, t_assen assen, char **env)
 {

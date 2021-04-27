@@ -27,11 +27,17 @@ t_assen    minishell_init(char **env)
 
 void minishell_execution(t_meta *head, t_assen assen, char **env)
 {
+	char	*s;
+
 	while (head != NULL)
     {
         head->argument = chang_dollar_sign(head->argument, env);
         if (head->command == 0)
-            head->command = check_wich_command(take_first_word(head->argument));
+		{
+        	s = take_first_word(head->argument);
+			head->command = check_wich_command(s);
+			free(s);
+		}
         if (token_error(head, g_global.status) == 1)
             break;
         if (head->meta == ';')

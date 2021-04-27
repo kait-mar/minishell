@@ -12,34 +12,6 @@
 
 #include "../minishell.h"
 
-int	pipe_counter(t_meta *head)
-{
-	int	i;
-
-	i = 0;
-	while (head != NULL && head->meta == '|')
-	{
-		i += 1;
-		head = head->next;
-	}
-	return (i);
-}
-
-void	ft_lstadd_std(t_std **alst, t_std *new)
-{
-	t_std	*lst;
-
-	if (*alst == NULL)
-		*alst = new;
-	else
-	{
-		lst = *alst;
-		while (lst->next)
-			lst = lst->next;
-		lst->next = new;
-	}
-}
-
 int	connecting(t_meta *head, t_assen assen, char **env)
 {
 	pid_t	pid;
@@ -80,8 +52,6 @@ int	last_thing(t_meta *head, t_assen assen, char **env)
 t_meta	*pipe_file(t_meta *head, t_assen assen, char **env, int *status)
 {
 	int		count;
-	pid_t	pid;
-	t_meta	*temp;
 	int		old_stdin;
 
 	count = 0;
