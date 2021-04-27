@@ -59,8 +59,6 @@ t_assen 	*read_l(char **temp, char **tmp, t_history history, t_assen *climb, cha
 				&& ft_memcmp(str, history.up_arrow, 3) != 0) && str[0] != 127)
 			string_extention(tmp, temp, str);
 	}
-//	free(str);
-//	str = NULL;
 	return (climb);
 }
 

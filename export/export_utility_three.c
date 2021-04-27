@@ -14,11 +14,8 @@
 
 int	check_env(char *str)
 {
-	int		i;
 	int		on;
 
-	i = 0;
-	on = 0;
 	if (check_quote(str) == 1)
 		str = without_that(str, '\'');
 	else if (check_double_quote(str) == 1)
@@ -47,7 +44,7 @@ t_export	*check_export(char **splits, char **env, t_export *export)
 	{
 		while (splits[i] != NULL)
 		{
-			export = export_loop(splits[i], export, on, j);
+			export = export_loop(splits[i], export, on, &j);
 			i += 1;
 		}
 	}
@@ -58,10 +55,8 @@ t_export	*check_export(char **splits, char **env, t_export *export)
 
 void	export_command(char **env, char *str, int *status, t_export *export)
 {
-	int		j;
 	char	**splits;
 
-	j = 0;
 	splits = take_only_carac_for_export(str);
 	export = check_export(splits, env, export);
 	printing_filling_env(export, status, env);

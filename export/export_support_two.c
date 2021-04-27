@@ -15,7 +15,7 @@
 t_export	*put_in_export(char *splits, int *on, t_export *export)
 {
 	int	k;
-	char *splits_free;
+	char	*global_free;
 
 	if (in_it(splits) == 1)
 		splits = add_backs(splits);
@@ -27,7 +27,9 @@ t_export	*put_in_export(char *splits, int *on, t_export *export)
 		if (match(g_global.export->saver[k], splits) == 1)
 		{
 			*on = 1;
+			global_free = g_global.export->saver[k];
 			g_global.export->saver[k] = ft_strdup(splits);
+			free(global_free);
 		}
 		k += 1;
 	}
@@ -36,19 +38,20 @@ t_export	*put_in_export(char *splits, int *on, t_export *export)
 	g_global.export->saver[k + 1] = NULL;
 	if (export->flag == 0)
 		export->flag = 3;
-	on = 0;
+	if (splits)
+		free(splits);
 	return (export);
 }
 
-t_export	*export_loop(char *splits, t_export *export, int on, int j)
+t_export	*export_loop(char *splits, t_export *export, int on, int *j)
 {
 	splits = split_reformulation(splits);
 	if (check_exp_lex(splits) == 1)
 	{
 		splits = error_reformulation(splits);
-		export->argument[j] = ft_strdup(splits);
-		j += 1;
+		export->argument[*j] = ft_strdup(splits);
 		export->flag = 1;
+		*j += 1;
 	}
 	if (((ft_isalpha(splits[0]) || splits[0] == '_')
 			&& last_check(splits, 1) == 0
@@ -83,6 +86,7 @@ void 	filling_export_env(char **env, char *export_argument)
 {
 	int	i;
 	int	stop;
+	char	*env_free;
 
 	i = 0;
 	stop = 0;
@@ -90,7 +94,9 @@ void 	filling_export_env(char **env, char *export_argument)
 	{
 		if (match(env[i], export_argument) == 1)
 		{
+			env_free = env[i];
 			env[i] = ft_strdup(export_argument);
+			free(env_free);
 			stop = 1;
 		}
 		i += 1;

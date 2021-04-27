@@ -42,7 +42,7 @@ int			return_env_on(char *str);
 t_export	*check_export_init(char **splits, t_export *export);
 char		*split_reformulation(char *splits);
 t_export	*put_in_export(char *splits, int *on, t_export *export);
-t_export	*export_loop(char *splits, t_export *export, int on, int j);
+t_export	*export_loop(char *splits, t_export *export, int on, int *j);
 int			no_space(char *s);
 t_export	*export_global(t_export *export);
 void		filling_export_env(char **env, char *export_argument);

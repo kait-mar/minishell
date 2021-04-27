@@ -70,7 +70,7 @@ void    minishell(char **av, char **env, t_assen assen)
     str = NULL;
     meta = NULL;
     string = malloc(BUFFER + 1);
-    if (av[2] == NULL)
+    if (av[1] == NULL)
 	{
 		memset(&history, 0, sizeof (t_history));
 		history = init_hist(history);
@@ -92,10 +92,10 @@ void    minishell(char **av, char **env, t_assen assen)
 		str_free = str;
         str = escape_normal(str);
 		free(str_free);
+		free_head(head);
         meta = split_it_all(str, env);
         head = meta;
         minishell_execution(head, assen, env);
-		free_head(head);
         if (av[1])
             exit(*(g_global.status));
         g_global.first_time = 1;

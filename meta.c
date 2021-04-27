@@ -140,63 +140,15 @@ int     check_append(char *s)
     return (FALSE);
 }
 
-int     backslash_on(char *s)
-{
-    int i;
-    int count;
-
-    i = 0;
-    count = 0;
-    while (s[i] != '\0')
-    {
-        if (s[i] == '\\')
-        {
-            if (check_escape_meta(s, i) == 1)
-            {
-                while (s[i] == '\\')
-                {
-                    i += 1;
-                    count += 1;
-                }
-                if ((count % 2) == 0)
-                    return (1);
-            }
-        }
-        i += 1;
-    }
-    return (0);
-}
-
-char    *removing_backslash(char *s)
-{
-    int i;
-    int j;
-    char *str;
-
-    if (!(str = (char *) ft_calloc(sizeof (char ), ft_strlen(s) + 1)))
-        return (NULL);
-    i = 0;
-    j = 0;
-    while (s[i] != '\0')
-    {
-
-        i += 1;
-    }
-    str[j] = '\0';
-    return (str);
-}
-
 t_meta	*split_it_all(char *str, char **env)
 {
 	t_meta	*global;
 	char	**splits;
 	int		i;
-	int j;
 	int		check;
 	char	*s;
 
 	i = 0;
-	j = 0;
 	check = 0;
 	if (!(global = (t_meta *) malloc(sizeof(t_meta))))
 		return (NULL);

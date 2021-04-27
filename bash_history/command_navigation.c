@@ -79,14 +79,10 @@ void 	string_extention(char **tmp, char **temp, char *str)
 		free(*temp);
 		*temp = NULL;
 	}
-	/**str = (char *) malloc(sizeof(char) * BUFFER + 1);
-	if (*str == NULL)
-		return ;*/
 }
 
 char	*reading_input(t_assen *assen, char *string, t_history history)
 {
-	char			*str;
 	char			*tmp;
 	t_assen			*climb;
 	struct termios	save;
