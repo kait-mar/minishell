@@ -68,7 +68,7 @@ char	*tty_loop(t_history history, t_assen *assen, t_assen *climb, char *str)
 	char	*tmp;
 
 	temp = NULL;
-	tmp = ft_strdup("");
+	tmp = NULL;
 //	memset(&history, 0, sizeof (t_history));
 //	history = init_hist(history);
 	while (TRUE)
