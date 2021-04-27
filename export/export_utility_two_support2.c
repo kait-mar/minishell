@@ -56,6 +56,8 @@ void	pwd_env(char *s, char **env, int *i)
 	env[*i] = ft_strdup(string);
 	free(string);
 	string = NULL;
+	if (g_global.pwd_only)
+		free(g_global.pwd_only);
 	g_global.pwd_only = ft_strdup(env[*i]);
 	*i += 1;
 	env[*i] = NULL;
