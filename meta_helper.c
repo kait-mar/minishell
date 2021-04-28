@@ -69,7 +69,7 @@ t_meta	*meta_out(char **splits, t_meta *global, int *i)
 			free(split_free);
 		}
 		else if (global->command == 0 || global->command == 6)
-			global->argument = strdup(splits[*i]);
+			global->argument = ft_strdup(splits[*i]);
 	}
 	global->meta_append = 0;
 	*i += 1;

@@ -38,6 +38,7 @@ char    *add_back_space(char *s)
         str[j++] = s[i++];
     str[j++] = ' ';
     str[j] = '\0';
+    free(s);
     return (str);
 }
 
@@ -62,6 +63,7 @@ char    *add_front_space(char *s)
     while (s[i] != '\0')
         string[j++] = s[i++];
     string[j] = '\0';
+    free(s);
     return (string);
 }
 
