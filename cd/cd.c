@@ -12,14 +12,6 @@
 
 #include "../minishell.h"
 
-char		**split_to_tokens(char *str)
-{
-	char	**splits;
-	int		check;
-
-	splits = ft_split(str, ' ');
-	return (splits);
-}
 
 char    *add_in(char *first, char *second)
 {

@@ -107,6 +107,7 @@ int 	fill_env_init(char **env, int *pwd, int *shlvl, int *start)
 	char	*s;
 	char	**ss;
 	char	*shlvl_;
+	char	*free_pwd;
 	
 	i = 0;
 	ss = ft_calloc(sizeof (char *),
@@ -121,6 +122,8 @@ int 	fill_env_init(char **env, int *pwd, int *shlvl, int *start)
 	{
 		if (match("PWD", ss[i]) == 1)
 		{
+			if (g_global.pwd_only)
+				free(g_global.pwd_only);
 			g_global.pwd_only = ft_strdup(ss[i]);
 			*pwd = 1;
 		}

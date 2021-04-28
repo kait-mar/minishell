@@ -15,19 +15,18 @@
 void 	cd_command(char *argument, int *status, char **env)
 {
 	char *s;
-	int i;
-	int k;
 	static int first_time = 0;
+	char *free_s;
 
-    i = 0;
-    k = 0;
 	if (argument == NULL)
 		return ;
 	argument = take_only(argument);
 	if (check_only_single_double(argument) == 0)
     {
         s = without_that(argument, '\"');
+		free_s = s;
         s = without_that(argument, '\'');
+        free(free_s);
         if (ft_strncmp(s, "", 1) == 0)
             s = ft_strdup("/Users/molabhai");
     }
@@ -98,4 +97,6 @@ void	cd_command_helper2(char **env, int *first_time)
 	g_pwd_on = 0;
 	g_global.check = 1;
     *first_time = 1;
+    free(str);
+    str = NULL;
 }
