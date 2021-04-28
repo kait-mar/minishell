@@ -28,6 +28,7 @@ void	new_pwd(char **env, char *str)
 {
 	int i;
 	int k;
+	static int	res = 0;
 	char *old_pwd;
 
 	i = 0;
@@ -40,9 +41,12 @@ void	new_pwd(char **env, char *str)
 	{
 		if (find_pwd(env[i]) == 1)
 		{
+			if (res >= 1)
+				free(env[i]);
 			env[i] = ft_strdup(old_pwd);
-			break ;
+			res += 1;
 			k = 1;
+			break ;
 		}
 		i += 1;
 	}
@@ -50,7 +54,6 @@ void	new_pwd(char **env, char *str)
 	{
 		env[i] = ft_strdup(old_pwd);
 		env[i + 1] = NULL;
-		i += 1;
 	}
 	if (old_pwd)
 		free(old_pwd);
@@ -82,6 +85,8 @@ char	*old_pwd_helper(char **env, int i)
         old_pwd = add_in("OLDPWD=", take_it);
     else
         old_pwd = add_in("OLDPWD=", "");
+    if (g_global.oldpwd_only)
+    	free(g_global.oldpwd_only);
     g_global.oldpwd_only = ft_strdup(old_pwd);
     free(take_it);
     take_it = NULL;
@@ -109,6 +114,8 @@ void    old_pwd(char **env)
     char *old_pwd;
     int i;
     int k;
+    static int res = 0;
+    char	*free_env;
 
     i = 0;
     k = 0;
@@ -117,18 +124,20 @@ void    old_pwd(char **env)
     {
         if (find_old_pwd(env[i]) == 1)
         {
+        	if (res >= 1)
+        		free(env[i]);
             env[i] = ft_strdup(old_pwd);
-            break ;
-            k = 1;
+			k = 1;
+			res += 1;
+			break ;
         }
         i += 1;
     }
     if (env[i] == NULL && k == 0)
     {
-        env[i] = ft_strdup(old_pwd);
-        env[i + 1] = NULL;
-        i += 1;
-    }
+		env[i] = ft_strdup(old_pwd);
+		env[i + 1] = NULL;
+	}
     free(old_pwd);
     old_pwd = NULL;
 }
