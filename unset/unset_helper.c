@@ -76,14 +76,18 @@ t_env   *delete_in_env_core(t_env *env, char *split, int on)
     tmp = env;
     check = 0;
     count = 0;
+    s = malloc(1); //just to free it in while loop
+
     while (tmp != NULL)
 	{
+        free(s);
         s = only_before_equal(tmp->in_env);
         j = delete_in_env_helper(s, split, &check);
         if (j == 1)
             break ;
         tmp = increment_helper(&count, tmp);
     }
+    free(s);
     if (check == 1)
         env = delete_list(env, count);
     else if (check == 0 && inside_quote(split) == 1 && on == 0)
@@ -93,3 +97,4 @@ t_env   *delete_in_env_core(t_env *env, char *split, int on)
     }
     return (env);
 }
+

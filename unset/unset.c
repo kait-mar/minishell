@@ -23,10 +23,14 @@ t_env		*delete_list(t_env *env, int count)
 		count--;
 	}
 	if (tmp->next->next != NULL) {
+		free(tmp->next);
         tmp->next = tmp->next->next;
     }
 	else
-	    tmp->next = NULL;
+	{
+		free(tmp->next);
+		tmp->next = NULL;
+	}
 	return (env);
 }
 
@@ -75,7 +79,7 @@ t_env		*adding_last(t_env *head, int i, char *env)
 
 	if (!(tmp = (t_env *) malloc(sizeof(t_env))))
 		return (NULL);
-	tmp->in_env = ft_strdup(env);
+	tmp->in_env = env;
 	tmp->next = NULL;
 	if (i == 0)
 		head = tmp;

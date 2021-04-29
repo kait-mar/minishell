@@ -9,4 +9,6 @@ typedef struct s_env
 int     inside_quote(char *s);
 int     delete_in_env_helper(char *s, char *split, int *check);
 t_env   *delete_in_env_core(t_env *env, char *split, int on);
+void	free_struct(t_env *lst);
+
 #endif

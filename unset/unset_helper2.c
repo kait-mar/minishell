@@ -22,20 +22,29 @@ int		in_match(char *s1, char *s2)
 char	**copy_all(t_env *take_env, char **env)
 {
 	int	i;
+	t_env	*tmp;
 
 	i = 0;
-	while (take_env != NULL)
+	tmp = take_env;
+	while (tmp != NULL)
 	{
-		env[i] = ft_strdup(take_env->in_env);
+		env[i] = tmp->in_env;
 		i += 1;
-		take_env = take_env->next;
+		tmp = tmp->next;
 	}
+	/*while (take_env != NULL)
+	{
+		env[i] = tmp->in_env;
+		i += 1;
+		tmp = tmp->next;
+	}*/
 	if (env[i] == NULL)
 		return (env);
 	else
 	{
 		while (env[i] != NULL)
 		{
+			free(env[i]);
 			env[i] = NULL;
 			i += 1;
 		}
@@ -55,9 +64,27 @@ void	unset_command(char **env, char *str, int *status)
 	splits = take_only_carac(str);
 	take_env = delete_in_env(take_env, splits, i, status);
 	env = copy_all(take_env, env);
+	free_struct(take_env);
     take_env = filling_env(g_global.export->saver);
+	to_free(splits);
     splits = take_only_carac(str);
     i = 1;
     take_env = delete_in_env(take_env, splits, i, status);
     g_global.export->saver = copy_all(take_env, g_global.export->saver);
+	to_free(splits);
+	free_struct(take_env);
+	//free(str);
+}
+
+void	free_struct(t_env *lst)
+{
+	t_env	*tmp;
+
+	tmp = lst;
+	while (lst != NULL)
+	{
+		tmp = lst;
+		lst = lst->next;
+		free(tmp);
+	}
 }

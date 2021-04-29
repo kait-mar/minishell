@@ -18,8 +18,10 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 	t_support	support;
 	t_meta		*temp;
 	char		*new;
+	t_meta		*tp;
 
 	temp = meta;
+	tp = temp;
 	support.on = 0;
 	while (temp->next != NULL && (temp->meta == '>' || temp->meta_append != 0))
 	{
@@ -38,6 +40,13 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 			return (NULL);
 	}
 	redirected_output_command(fd, meta, assen, env);
+	/*while (tp != temp)
+	{
+		meta = tp;
+		tp = tp->next;
+		free(meta->argument);
+		free(meta);
+	}*/
 	return (temp);
 }
 

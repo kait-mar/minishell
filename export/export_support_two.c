@@ -102,7 +102,7 @@ void 	filling_export_env(char **env, char *export_argument)
 		i += 1;
 	}
 	if (env[i] == NULL && stop == 0)
-	{
+	{	
 		env[i] = ft_strdup(export_argument);
 		env[i + 1] = NULL;
 	}

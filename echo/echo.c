@@ -13,7 +13,7 @@ void	to_free(char **bult)
 	i = 0;
 	while (bult[i])
 	{
-		//printf("the freed word is %s\n", bult[i]);
+		//printf("the freed word in split is %s\n", bult[i]);
 		free(bult[i]);
 		i++;
 	}

@@ -16,12 +16,16 @@ void	filling(t_assen *assen)
 {
 	int		fd;
 	char	*str;
-
+	
 	fd = open(".minishell_history", O_RDWR);
 	if (fd != 1)
 	{
 		while (get_next_line(fd, &str) > 0)
+		{
 			append_assen(&assen, str);
+			
+		}
+		//free(str);
 	}
 }
 

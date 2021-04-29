@@ -17,6 +17,8 @@ void	filling_global(t_export *tmp)
 	int	i;
 
 	i = 0;
+	//free(g_global.export);
+	//free(g_global.export->saver);
 	g_global.export = (t_export *) malloc(sizeof (t_export));
 	if (!(g_global.export))
 		return ;
