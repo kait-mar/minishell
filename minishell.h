@@ -202,7 +202,7 @@ char	**take_it_all(char *s, int c);
 char	*from_to(char *st, int i, int j);
 int		find_how_many(char *s, char c);
 char	*take_first_word(char *s);
-t_meta	*split_it_all(char *str, char **env);
+t_meta	*split_it_all(char *str, char **env, t_meta *global);
 int		check_wich_command(char	*str);
 char	*skip_first_word(char *str);
 void	free_meta_struct(t_meta *meta);
@@ -323,5 +323,6 @@ t_meta	*pipe_loop(t_meta *head, t_assen assen, char **env, int *count);
 int		last_thing(t_meta *head, t_assen assen,char **env);
 t_meta	*pipe_last(t_meta *head, t_assen assen, char **env);
 void	free_head(t_meta *head);
+void	free_temp(t_meta *head);
 
 #endif

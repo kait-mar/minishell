@@ -14,18 +14,25 @@
 
 t_meta	*meta_for_in(char *s, t_meta *global)
 {
+	char	*arg_free;
+
 	s = remove_space(s);
 	s = escape_meta(s);
 	if (global->command != 0 && global->command != 6)
 	{
 		global->argument = skip_first_word(s);
+		arg_free = global->argument;
 		global->argument = ft_strtrim(global->argument, "\t");
+		free(arg_free);
 	}
 	else if (global->command == 0 || global->command == 6)
 	{
 		global->argument = ft_strdup(s);
+		arg_free = global->argument;
 		global->argument = ft_strtrim(global->argument, "\t");
+		free(arg_free);
 	}
+	free(s);
 	return (global);
 }
 
@@ -58,9 +65,7 @@ t_meta	*meta_out(char **splits, t_meta *global, int *i)
 	if (splits[*i] != NULL)
 	{
 		splits[*i] = remove_space(splits[*i]);
-		split_free = splits[*i];
 		splits[*i] = escape_meta(splits[*i]);
-		free(split_free);
 		if (global->command != 0 && global->command != 6)
 		{
 			global->argument = skip_first_word(splits[*i]);
@@ -78,18 +83,25 @@ t_meta	*meta_out(char **splits, t_meta *global, int *i)
 
 t_meta	*meta_for_in_between(char *s, t_meta *temp)
 {
+	char	*temp_free;
+
 	s = remove_space(s);
 	s = escape_meta(s);
 	if (temp->command != 0 && temp->command != 4 && temp->command != 6)
 	{
 		temp->argument = skip_first_word(s);
+		temp_free = temp->argument;
 		temp->argument = ft_strtrim(temp->argument, "\t");
+		free(temp_free);
 	}
 	else if (temp->command == 0 || temp->command == 4 || temp->command == 6)
 	{
 		temp->argument = ft_strdup(s);
+		temp_free = temp->argument;
 		temp->argument = ft_strtrim(temp->argument, "\t");
+		free(temp_free);
 	}
+	free(s);
 	return (temp);
 }
 
@@ -97,6 +109,7 @@ t_meta	*meta_in_between(char **splits, t_meta *temp, int *i)
 {
 	char	*s;
 
+	s = NULL;
 	if (check_append(splits[*i]) == TRUE)
 	{
 		s = ft_substr(splits[*i], 0, until_meta(splits[*i]));

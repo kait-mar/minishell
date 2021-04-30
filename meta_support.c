@@ -34,19 +34,29 @@ void	ft_lstadd(t_meta **alst, t_meta *new)
 	t_meta	*lst;
 
 	if (*alst == NULL)
+	{
 		*alst = new;
+	}
 	else
 	{
 		lst = *alst;
 		while (lst->next)
 			lst = lst->next;
+//		if (lst->next == NULL)
+//			lst->next = malloc(sizeof(t_meta));
+//		lst->next->argument = ft_strdup(new->argument);
+//		lst->next->meta = new->meta;
+//		lst->next->command = new->command;
+//		lst->next->meta_append = new->meta_append;
 		lst->next = new;
+		lst->next->next = NULL;
 	}
 }
 
 t_meta	*split_it_all_loop(char **splits, t_meta *global, int i)
 {
 	t_meta	*temp;
+	char	*s;
 
 	if (check_meta(splits[i]) == TRUE)
 		global = meta_in(splits, global, &i);
@@ -56,16 +66,20 @@ t_meta	*split_it_all_loop(char **splits, t_meta *global, int i)
 	while (splits[i])
 	{
 		temp = (t_meta *) malloc(sizeof(t_meta));
+		temp->argument = NULL;
 		if (temp == NULL)
 			return (NULL);
 		splits[i] = remove_space(splits[i]);
-		temp->command = check_wich_command(take_first_word(splits[i]));
+		s = take_first_word(splits[i]);
+		temp->command = check_wich_command(s);
+		free(s);
 		if (check_meta(splits[i]) == TRUE)
 			temp = meta_in_between(splits, temp, &i);
 		else if (check_meta(splits[i]) == FALSE)
 			meta_out_between(splits, temp, &i);
 		temp->next = NULL;
 		ft_lstadd(&global, temp);
+		//free_temp(temp);
 		i += 1;
 	}
 	return (global);

@@ -14,16 +14,32 @@
 
 void	free_head(t_meta *head)
 {
+	t_meta *point;
+
+	while (head != NULL)
+	{
+		point = head;
+		if (head->argument)
+			free(head->argument);
+		head = head->next;
+		free(point);
+		point = NULL;
+	}
+}
+
+void	free_temp(t_meta *head)
+{
 	if (head)
 	{
-		while (head->next != NULL)
-		{
-			if (head->argument)
-				free(head->argument);
-			head = head->next;
-		}
+//		while (head->next != NULL)
+//		{
+//			if (head->argument)
+//				free(head->argument);
+//			head = head->next;
+//		}
 		if (head->argument)
 			free(head->argument);
 		free(head);
+		head = NULL;
 	}
 }

@@ -12,40 +12,6 @@
 
 #include "minishell.h"
 
-int	seach_for(char *s)
-{
-	int	i;
-
-	i = 0 ;
-	while (s[i] != '\0')
-	{
-		if (s[i] == '\\')
-			return (1);
-		i += 1;
-	}
-	return (0);
-}
-
-int	count_meta1(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0' && str[i] == '>')
-		i++;
-	return (i);
-}
-
-int	count_meta2(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0' && str[i] == '<')
-		i++;
-	return (i);
-}
-
 int	token_error(t_meta *head, int *status)
 {
 	t_meta	*a_head;

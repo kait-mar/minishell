@@ -33,6 +33,7 @@ char    *escape_meta(char *str)
             string[j++] = str[i++];
     }
     string[j] = '\0';
+    free(str);
     return (string);
 }
 
