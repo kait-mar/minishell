@@ -35,6 +35,8 @@ int	return_count_meta(char *str, int *i, int count, int *how_mutch)
 
 t_meta 	*meta_out_between(char **splits, t_meta *temp, int *i)
 {
+	char	*temp_free;
+
 	temp->meta = 0;
 	if (splits[*i] != NULL)
 	{
@@ -43,12 +45,16 @@ t_meta 	*meta_out_between(char **splits, t_meta *temp, int *i)
 		if (temp->command != 0 && temp->command != 4 && temp->command != 6)
 		{
 			temp->argument = skip_first_word(splits[*i]);
+			temp_free = temp->argument;
 			temp->argument = ft_strtrim(temp->argument, "\t");
+			free(temp_free);
 		}
 		else if (temp->command == 0 || temp->command == 4 || temp->command == 6)
 		{
 			temp->argument = ft_strdup(splits[*i]);
+			temp_free = temp->argument;
 			temp->argument = ft_strtrim(temp->argument, "\t");
+			free(temp_free);
 		}
 	}
 	temp->meta_append = 0;

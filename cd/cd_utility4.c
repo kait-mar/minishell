@@ -115,7 +115,6 @@ void    old_pwd(char **env)
     int i;
     int k;
     static int res = 0;
-    char	*free_env;
 
     i = 0;
     k = 0;

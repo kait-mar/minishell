@@ -62,9 +62,11 @@ void    remove_old_pwd(char **env)
 	{
 		if (match(env[i], string) == 1)
 		{
+			free(env[i]);
 			env[i] = NULL;
 			break ;
 		}
 		i += 1;
 	}
+	free(string);
 }

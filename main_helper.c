@@ -67,6 +67,7 @@ void    minishell(char **av, char **env, t_assen assen)
 {
     t_meta	*meta;
     t_meta	*head;
+    t_meta	*global;
     char    *str;
     char	*str_free;
     char	*string;
@@ -76,6 +77,8 @@ void    minishell(char **av, char **env, t_assen assen)
     str = NULL;
     meta = NULL;
     string = malloc(BUFFER + 1);
+//	global = (t_meta *) malloc(sizeof (t_meta));
+	global =NULL;
     if (av[1] == NULL)
 	{
 		memset(&history, 0, sizeof (t_history));
@@ -84,8 +87,8 @@ void    minishell(char **av, char **env, t_assen assen)
 	while (TRUE)
     {
         signal_handler(g_global.status);
-		if (av[1])
-			str = ft_strdup(av[1]);
+		if (av[2])
+			str = ft_strdup(av[2]);
 		else
 		{
 			prompt();
@@ -98,11 +101,12 @@ void    minishell(char **av, char **env, t_assen assen)
 		str_free = str;
         str = escape_normal(str);
 		free(str_free);
-		free_head(head);
-        meta = split_it_all(str, env);
+		free_head(meta);
+		meta = NULL;
+        meta = split_it_all(str, env, global);
         head = meta;
-        minishell_execution(head, assen, env);
-        if (av[1])
+		minishell_execution(head, assen, env);
+		if (av[2])
             exit(*(g_global.status));
         g_global.first_time = 1;
         if (g_in_redirect == 1)
@@ -112,7 +116,5 @@ void    minishell(char **av, char **env, t_assen assen)
         }
         else
             g_global.in_signal = 0;
-     /*   free(str);
-        str = NULL;*/
     }
 }

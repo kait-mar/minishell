@@ -140,9 +140,8 @@ int     check_append(char *s)
     return (FALSE);
 }
 
-t_meta	*split_it_all(char *str, char **env)
+t_meta	*split_it_all(char *str, char **env, t_meta *global)
 {
-	t_meta	*global;
 	char	**splits;
 	int		i;
 	int		check;

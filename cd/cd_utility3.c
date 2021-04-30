@@ -29,8 +29,11 @@ void 	cd_command(char *argument, int *status, char **env)
         s = without_that(ss, '\'');
         free(free_s);
         if (ft_strncmp(s, "", 1) == 0)
-            s = ft_strdup("/Users/molabhai");
-    }
+		{
+        	free(s);
+			s = ft_strdup("/Users/molabhai");
+		}
+	}
 	old_pwd(env);
 	if (check_only_single_double(ss) == 0)
     {

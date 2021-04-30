@@ -333,6 +333,7 @@ char    *chang_dollar_sign(char *str, char **env)
     remove = 0;
     space_front = 0;
     space_back = 0;
+    s = NULL;
     while (str[i] != '\0')
     {
         if (str[i] == '\'')
@@ -381,7 +382,8 @@ char    *chang_dollar_sign(char *str, char **env)
             }
 			str = realloc_input(str, s, j, len + i, i);
             len = ft_strlen(s);
-            free(s);
+            if (s)
+            	free(s);
             i = len + i;
             remove = 0;
         }
@@ -389,5 +391,5 @@ char    *chang_dollar_sign(char *str, char **env)
            i += 1;
        on = 0;
     }
-    return (str);
+	return (str);
 }
