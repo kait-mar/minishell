@@ -28,6 +28,7 @@ int	echo(char *argv, char **env, int *status)
 
 	i = 0;
 	g_global.j_echo = 0;
+	//fprintf(stderr, "the argb is %s\n", argv);
 	argv = skip_first_word(argv);
 	if (ft_strcmp(argv, "") == 0)
 	{

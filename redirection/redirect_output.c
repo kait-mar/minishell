@@ -36,6 +36,7 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 		temp->argument = chang_dollar_sign(temp->argument, env);
 		meta = name_and_condition(&new, &(support.on), meta, temp);
 		fd = redirect_command_head(support.check_meta, support.append, new);
+		free(new);
 		if (fd == -1)
 			return (NULL);
 	}
@@ -43,16 +44,19 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 	/*while (tp != temp)
 	{
 		meta = tp;
+		//ft_printf("the tp arg is %s\n", tp->argument);
 		tp = tp->next;
 		free(meta->argument);
 		free(meta);
-	}*/
+	}*/ 
+	// ft_printf("the went temp is %s\n",temp->argument);
 	return (temp);
 }
 
 char	*final_file_name(char *file)
 {
 	char	*new;
+	char	*temp;
 	int		i;
 	int		len;
 	char	**split;
@@ -62,14 +66,28 @@ char	*final_file_name(char *file)
 	while (split[i] != NULL)
 	{
 		if (*(split[i]) == '\'')
+		{
+			temp = split[i];
 			split[i] = ft_strtrim(split[i], "'");
+			free(temp);
+		}
 		else if (*(split[i]) == '"')
+		{
+			temp = split[i];
 			split[i] = ft_strtrim(split[i], "\"");
+			free(temp);
+		}
 		i++;
 	}
 	i = 1;
 	new = ft_strdup(split[0]);
 	while (split[i])
+	{
+		temp = new;
 		new = ft_strjoin(new, split[i++]);
+		free(temp);
+	}
+	free(file);
+	to_free(split);
 	return (new);
 }

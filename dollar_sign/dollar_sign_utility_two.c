@@ -47,7 +47,8 @@ char    *rm_space_variable(char *s, int wich)
     int j;
     char *str;
 
-    if (rm_space_helper(&i, s, &j, wich) == NULL)
+    str = rm_space_helper(&i, s, &j, wich);
+    if (str == NULL)
 		return (NULL);
     while (s[i] != '\0' && ft_isprint(s[i]))
     {
@@ -66,6 +67,7 @@ char    *rm_space_variable(char *s, int wich)
         }
     }
     str[j] = '\0';
+    free(s);
     return (str);
 }
 

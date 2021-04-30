@@ -60,10 +60,13 @@ void	unset_command(char **env, char *str, int *status)
 
 	i = 0;
 	*status = 0;
+	printf("Start\n");
 	take_env = filling_env(env);
 	splits = take_only_carac(str);
 	take_env = delete_in_env(take_env, splits, i, status);
+	printf("Before\n");
 	env = copy_all(take_env, env);
+	printf("After\n");
 	free_struct(take_env);
     take_env = filling_env(g_global.export->saver);
 	to_free(splits);
@@ -73,6 +76,7 @@ void	unset_command(char **env, char *str, int *status)
     g_global.export->saver = copy_all(take_env, g_global.export->saver);
 	to_free(splits);
 	free_struct(take_env);
+	printf("End\n");
 	//free(str);
 }
 

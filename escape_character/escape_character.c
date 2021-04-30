@@ -84,5 +84,6 @@ char    *remove_escape_dollar(char *s)
             str[j++] = s[i++];
     }
     str[j] = '\0';
+    free(s);
     return (str);
 }

@@ -35,6 +35,8 @@ t_assen	*arrow_up(char **tmp, t_history history, t_assen *climb)
 	if (climb->prev != NULL)
 	{
 		ft_putstr(climb->cmd);
+		if (*tmp)
+			free(*tmp);
 		*tmp = ft_strdup(climb->cmd);
 		if (climb->prev->prev != NULL)
 			climb = climb->prev;
@@ -51,11 +53,15 @@ t_assen	*arrow_down(t_history history, t_assen *climb, char **tmp, char **temp)
 	{
 		climb = climb->next;
 		ft_putstr(climb->cmd);
+		if (*tmp)
+			free(*tmp);
 		*tmp = ft_strdup(climb->cmd);
 	}
 	else if (climb->next == NULL)
 	{
 		ft_putstr(*temp);
+		if (*tmp)
+			free(*tmp);
 		*tmp = ft_strdup(*temp);
 	}
 	return (climb);

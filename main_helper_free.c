@@ -18,7 +18,8 @@ void	free_head(t_meta *head)
 	{
 		while (head->next != NULL)
 		{
-			free(head->argument);
+			if (head->argument)
+				free(head->argument);
 			head = head->next;
 		}
 		if (head->argument)

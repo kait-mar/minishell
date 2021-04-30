@@ -98,7 +98,7 @@ void    minishell(char **av, char **env, t_assen assen)
 		str_free = str;
         str = escape_normal(str);
 		free(str_free);
-		//free_head(head);
+	    //free_head(head);
         meta = split_it_all(str, env);
         head = meta;
         minishell_execution(head, assen, env);

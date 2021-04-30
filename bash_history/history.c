@@ -16,7 +16,8 @@ void	filling(t_assen *assen)
 {
 	int		fd;
 	char	*str;
-	
+
+	str = NULL;
 	fd = open(".minishell_history", O_RDWR);
 	if (fd != 1)
 	{
@@ -27,6 +28,8 @@ void	filling(t_assen *assen)
 		}
 		//free(str);
 	}
+	if (str)
+		free(str);
 }
 
 char	*delete_char(char *string)

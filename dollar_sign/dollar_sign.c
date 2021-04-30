@@ -72,7 +72,7 @@ int     dollar_len(char *str, int i)
         i += 1;
         count += 1;
     }
-    while (str[i] != '\0' && str[i] != '$' && str[i] != ' ' /*&& str[i] != '\\'*/
+    while (str[i] != '\0' && str[i] != '$' && str[i] != ' '
            && str[i] != '>' &&  str[i] != '<' &&  str[i] != ';' && str[i] != '\t'
            && str[i] != '\'' && str[i] != '"' && str[i] != '|' && str[i] != ','
            && str[i] != '[' && str[i] != ']')
@@ -87,25 +87,12 @@ char    *take_word(char *str, int i, int len)
 {
     char *s;
     int j;
-    int k;
     int count;
 
     j = 0;
-    k = 0;
     count = 0;
     if (!(s = (char *) ft_calloc(sizeof (char), len + 1)))
         return (NULL);
-   /* if (str[i] == '\\')
-    {
-        k = i;
-        while (str[k] == '\\')
-        {
-            count += 1;
-            k += 1;
-        }
-    }
-    if (count > 0)
-        len -= count;*/
     while (i < len)
     {
         s[j] = str[i];
@@ -137,7 +124,6 @@ int    dollar_parsing(char *s)
     }
     return (1);
 }
-
 
 char    *take_after_equal(char *s)
 {
@@ -174,6 +160,7 @@ char    *take_after_equal(char *s)
         k += 1;
     }
     string[i] = '\0';
+    free(s);
     return (string);
 }
 
@@ -207,41 +194,25 @@ char    *take_away_dollar(char *s)
     return (string);
 }
 
-int     check_backslash(char *s)
-{
-    int i;
-
-    i = 0;
-    while (s[i] != '\0')
-    {
-        if (s[i] == '$')
-        {
-            if (s[i - 1] == '\\')
-                return (1);
-        }
-        i += 1;
-    }
-    return (0);
-}
-
-
 char    *chang_dollar(char *s, char **env, int *on)
 {
     int i;
     int escape;
     char *string;
     char *ss;
+    char *string_free;
 
     i = 0;
     escape = count_escap(s);
     ss = take_away_dollar(s);
+    string = NULL;
     if (ft_strcmp(ss, "PWD") == 0 && g_global.pwd_on == 0)
     {
         string = ft_strdup(g_global.pwd_only);
         string = take_after_equal(string);
         *on = 1;
     }
-    if (ft_strcmp(ss, "OLDPWD") == 0 && g_global.oldpwd_on == 0)
+	else if (ft_strcmp(ss, "OLDPWD") == 0 && g_global.oldpwd_on == 0)
     {
         if (g_global.check == 0)
             string = ft_strdup("");
@@ -254,7 +225,7 @@ char    *chang_dollar(char *s, char **env, int *on)
     }
     else
     {
-        while (env[i] != NULL /*&& (check_backslash(s) == 0)*/)
+        while (env[i] != NULL)
         {
             if (match(env[i], ss) == 1)
             {
@@ -266,70 +237,26 @@ char    *chang_dollar(char *s, char **env, int *on)
         }
 
     }
-   /* if (check_backslash(s) == 1)
-        string =ft_strdup(s);*/
     if (*on == 0)
     {
+    	if (string)
+    		free(string);
         string = ft_strdup("");
         *on = 2;
     }
     if (escape > 0)
     {
         if (*on == 1)
-            string = adding_escape(string, escape);
+		{
+        	string_free = string;
+			string = adding_escape(string, escape);
+			free(string_free);
+		}
         else
             string = adding_escape(ss, escape);
     }
-    return (string);
-}
-
-int  counting_meta(char *s)
-{
-    int i;
-    int count;
-
-    i = 0;
-    count = 0;
-    while (s[i] != '\0')
-    {
-        if (s[i] == ';' || s[i] == '|'
-            || s[i] == '<' || s[i] == '>')
-        {
-            if (s[i] == '>' &&  s[i + 1] == '>')
-                i += 1;
-            count += 1;
-        }
-        i += 1;
-    }
-    return (count);
-}
-
-char    *ignoring_meta(char *s)
-{
-    int i;
-    int len;
-    int j;
-    char *string;
-
-    i = 0;
-    len = counting_meta(s);
-    len += ft_strlen(s);
-    j = 0;
-    if (!(string = (char *) ft_calloc(sizeof (char ), len + 2)))
-        return (NULL);
-    while (s[i] != '\0')
-    {
-        string[j] = s[i];
-        if (s[i + 1] == ';' || s[i + 1] == '|'
-            || s[i + 1] == '<' || s[i + 1] == '>')
-        {
-            j += 1;
-            string[j] = '\\';
-        }
-        i += 1;
-        j += 1;
-    }
-    string[j] = '\0';
+    free(ss);
+    free(s);
     return (string);
 }
 
@@ -349,8 +276,6 @@ char    *realloc_input(char *str, char *s, int len, int string_len, int i)
     j = 0;
     while (o < i && str[o] != '\0')
     {
-        /*if (str[o] == '\\' && check_escape_dollar(str, o) == 1)
-            break ;*/
         len_before += 1;
         o += 1;
     }
@@ -369,7 +294,6 @@ char    *realloc_input(char *str, char *s, int len, int string_len, int i)
         i += 1;
         len_before--;
     }
-//    s = ignoring_meta(s);
     while (len_cmd >= 0 && s[j] != '\0')
     {
         string[i] = s[j];
@@ -377,7 +301,6 @@ char    *realloc_input(char *str, char *s, int len, int string_len, int i)
         j += 1;
         len_cmd--;
     }
- //   string[i] = '\0';
     len_before  = string_len;
     while (len_after > 0)
     {
@@ -387,6 +310,7 @@ char    *realloc_input(char *str, char *s, int len, int string_len, int i)
         len_before += 1;
     }
     string[i] = '\0';
+    free(str);
     return (string);
 }
 
@@ -399,7 +323,6 @@ char    *chang_dollar_sign(char *str, char **env)
     int on;
     int len;
     char *s;
-    char *changed;
     int valid;
     int remove;
     int space_front;
@@ -409,6 +332,7 @@ char    *chang_dollar_sign(char *str, char **env)
     on = 0;
     remove = 0;
     space_front = 0;
+    s = NULL;
     space_back = 0;
     while (str[i] != '\0')
     {
@@ -432,23 +356,16 @@ char    *chang_dollar_sign(char *str, char **env)
             valid = dollar_parsing(s);
             s = remove_escape_dollar(s);
             j = ft_strlen(s);
-           /* if  (str[i] == '\\')
-            {
-                while (str[i] == '\\')
-                    i += 1;
-            }*/
             if (valid == 1)
             {
                 if (inside_quotes(str, i) == 1)
                     remove = 1;
-                /*if (escape_true(str, i) == 1)
-                    s = add_space(s);*/
                 s = chang_dollar(s, env, &on);
-                if (s[0] == ' ')
+				if (s[0] == ' ')
                     space_front = 1;
                 if (s[ft_strlen(s) - 1] == ' ')
                     space_back = 1;
-                if (str[i - 1] == '[' && str[i + j] == ']' && remove == 1)
+				if (str[i - 1] == '[' && str[i + j] == ']' && remove == 1)
                     s = rm_space_variable(s, 0);
                 else if (str[i - 1] == '[' && str[i + j] != ']' && remove == 1)
                     s = rm_space_variable(s, 1);
@@ -456,37 +373,23 @@ char    *chang_dollar_sign(char *str, char **env)
                     s = rm_space_variable(s, 2);
                 else if (remove == 1)
                     s = remove_space(s);
-                if (escape_front_true(str, i) == 1 && space_front == 1 && inside_quotes(str, i) == 1)
+				if (escape_front_true(str, i) == 1 && space_front == 1 && inside_quotes(str, i) == 1)
                     s = add_front_space(s);
                 if (escape_back_true(str, i) == 1 && space_back == 1)
                     s = add_back_space(s);
                 else if ((str[i + j] == '$' && space_back == 1))
                     s = add_back_space(s);
-               /* if (space_back == 1 && str[i + j] == '"')
-                {
-                    ft_printf("remove ==> %d || check_inside ==> %d\n", remove, check_inside_back_quote(str, i + j));
-                    if (remove == 1 && check_inside_back_quote(str, i + j) == 1)
-                        s = add_back_space(s);
-                }
-                if (space_front == 1 && str[i - 1] == '"')
-                {
-                    if (remove == 1 && check_inside_front_quote(str, i - 1) == 0)
-                        s = add_front_space(s);
-                }*/
-                // if (on == 1)
             }
-            str = realloc_input(str, s, j, len + i, i);
+			str = realloc_input(str, s, j, len + i, i);
             len = ft_strlen(s);
+            if (s)
+                free(s);
             i = len + i;
             remove = 0;
-            //i = j;
         }
-       /* if (str[i] == '\\' &&  str[i + 1] == '$')
-            i += 2;*/
-       // else
        if (str[i] != '$' && str[i] != '\'' && str[i] != '\0' && check_escape_dollar(str, i) == 0)
            i += 1;
-            on = 0;
+       on = 0;
     }
     return (str);
 }
