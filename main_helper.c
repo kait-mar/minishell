@@ -87,14 +87,16 @@ void    minishell(char **av, char **env, t_assen assen)
 	while (TRUE)
     {
         signal_handler(g_global.status);
-		if (av[2])
-			str = ft_strdup(av[2]);
+		if (av[1])
+			str = ft_strdup(av[1]);
 		else
 		{
 			prompt();
 			str = reading_input(&assen, string, history);
 		}
+		str_free = str;
 		str = remove_space(str);
+		free(str_free);
 		str_free = str;
         str = ft_strtrim(str, "\t");
         free(str_free);
@@ -106,7 +108,7 @@ void    minishell(char **av, char **env, t_assen assen)
         meta = split_it_all(str, env, global);
         head = meta;
 		minishell_execution(head, assen, env);
-		if (av[2])
+		if (av[1])
             exit(*(g_global.status));
         g_global.first_time = 1;
         if (g_in_redirect == 1)

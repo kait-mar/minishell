@@ -90,6 +90,7 @@ void 	string_extention(char **tmp, char **temp, char *str)
 char	*reading_input(t_assen *assen, char *string, t_history history)
 {
 	char			*tmp;
+	char 			*l;
 	t_assen			*climb;
 	struct termios	save;
 
@@ -104,5 +105,11 @@ char	*reading_input(t_assen *assen, char *string, t_history history)
 	 }
 	if (tcsetattr(history.fd, TCSANOW, &save) == 1)
 		exit (-1);
+	if (ft_strcmp(tmp, "") == 0)
+	{
+		l = ft_strdup(tmp);
+		free(tmp);
+		return (l);
+	}
 	return (ft_strdup(tmp));
 }

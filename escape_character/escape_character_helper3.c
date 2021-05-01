@@ -25,8 +25,8 @@ char    *escape_normal(char *str)
         return (NULL);
     while (str[i] != '\0')
     {
-        escape_normal_head(str, &string, &i, &j);
-    }
+		escape_normal_head(str, &string, &i, &j);
+	}
     string[j] = '\0';
     return (string);
 }

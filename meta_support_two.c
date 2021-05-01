@@ -40,7 +40,9 @@ t_meta 	*meta_out_between(char **splits, t_meta *temp, int *i)
 	temp->meta = 0;
 	if (splits[*i] != NULL)
 	{
+		temp_free = splits[*i];
 		splits[*i] = remove_space(splits[*i]);
+		free(temp_free);
 		splits[*i] = escape_meta(splits[*i]);
 		if (temp->command != 0 && temp->command != 4 && temp->command != 6)
 		{
