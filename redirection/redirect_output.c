@@ -33,6 +33,7 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 		else if (temp->meta == '>')
 			support.check_meta = '>';
 		temp = temp->next;
+		//r emove chang_dolar_sign
 		temp->argument = chang_dollar_sign(temp->argument, env);
 		meta = name_and_condition(&new, &(support.on), meta, temp);
 		fd = redirect_command_head(support.check_meta, support.append, new);
@@ -41,15 +42,6 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 			return (NULL);
 	}
 	redirected_output_command(fd, meta, assen, env);
-	/*while (tp != temp)
-	{
-		meta = tp;
-		//ft_printf("the tp arg is %s\n", tp->argument);
-		tp = tp->next;
-		free(meta->argument);
-		free(meta);
-	}*/ 
-	// ft_printf("the went temp is %s\n",temp->argument);
 	return (temp);
 }
 

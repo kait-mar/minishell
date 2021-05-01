@@ -28,9 +28,12 @@ t_assen    minishell_init(char **env)
 void minishell_execution(t_meta *head, t_assen assen, char **env)
 {
 	char	*s;
+    int     i;
 
+    i = 0;
 	while (head != NULL)
     {
+
         head->argument = chang_dollar_sign(head->argument, env);
         if (head->command == 0)
 		{
@@ -38,12 +41,16 @@ void minishell_execution(t_meta *head, t_assen assen, char **env)
 			head->command = check_wich_command(s);
 			free(s);
 		}
-        if (token_error(head, g_global.status) == 1)
+        if (i == 0 && token_error(head, g_global.status) == 1)
             break;
         if (head->meta == ';')
             built_in(head, assen, env);
        	else if (head->meta == '|')
+        {
+            printf("entered in pipe \n");
             head = pipe_file(head, assen, env, g_global.status);
+            i = 0;
+        }
         else if (head->meta_append == 1)
         {
             head = redirect_output(head, assen, env, g_global.status);
@@ -55,10 +62,16 @@ void minishell_execution(t_meta *head, t_assen assen, char **env)
             if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
                 head = head->next;
         } else if (head->meta == '<')
+        {
             head = redirect_intput(head, assen, env, g_global.status);
+            if (head->meta == '|')
+                i = 1;
+            //if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
+            //    head = head->next;
+        }
         else if (head->meta == '\0')
             built_in(head, assen, env);
-        if (head != NULL)
+        if (head != NULL && (head->meta != '|' && i == 1))
             head = head->next;
     }
 }
@@ -87,14 +100,16 @@ void    minishell(char **av, char **env, t_assen assen)
 	while (TRUE)
     {
         signal_handler(g_global.status);
-		if (av[2])
-			str = ft_strdup(av[2]);
+		if (av[1])
+			str = ft_strdup(av[1]);
 		else
 		{
 			prompt();
 			str = reading_input(&assen, string, history);
 		}
+		str_free = str;
 		str = remove_space(str);
+		free(str_free);
 		str_free = str;
         str = ft_strtrim(str, "\t");
         free(str_free);
@@ -106,7 +121,7 @@ void    minishell(char **av, char **env, t_assen assen)
         meta = split_it_all(str, env, global);
         head = meta;
 		minishell_execution(head, assen, env);
-		if (av[2])
+		if (av[1])
             exit(*(g_global.status));
         g_global.first_time = 1;
         if (g_in_redirect == 1)

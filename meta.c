@@ -149,6 +149,7 @@ t_meta	*split_it_all(char *str, char **env, t_meta *global)
 
 	i = 0;
 	check = 0;
+	splits = NULL;
 	if (!(global = (t_meta *) malloc(sizeof(t_meta))))
 		return (NULL);
 	splits = splits_by_meta(str, &check);

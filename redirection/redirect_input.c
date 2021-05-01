@@ -12,6 +12,7 @@
 
 #include "../minishell.h"
 
+//echo hello > $kait and kait is not in env !!!!!!!!!!!
 t_meta	*redirect_intput(t_meta *meta, t_assen assen, char **env, int *status)
 {
 	int		fd;
@@ -36,19 +37,31 @@ t_meta	*redirect_intput(t_meta *meta, t_assen assen, char **env, int *status)
 
 t_meta	*input_conditions(t_meta *meta, char **new, t_meta *temp, int *on)
 {
+	char	*str;
+
 	*new = file_name(temp->argument);
-	temp->argument = temp->argument + ft_strlen(*new);
-	if (*(temp->argument) == ' ')
-		(temp->argument)++;
-	if (meta->command == 0
-		&& check_wich_command(take_first_word(temp->argument)) != 0
-		&& *on == 0)
+	str = temp->argument;
+	temp->argument = ft_strdup(temp->argument + ft_strlen(*new));
+	free(str);
+	if ((temp->argument)[0] == ' ')
 	{
+		str = temp->argument;
+		temp->argument = ft_strdup(temp->argument + 1);
+		free(str);
+	}
+	str = take_first_word(temp->argument);
+	if (meta->command == 0 && check_wich_command(str) != 0 && *on == 0)
+	{
+		free(str);
 		meta = temp;
-		meta->command = check_wich_command(
-				take_first_word(ft_strtrim(temp->argument, " ")));
+		str = take_first_word(temp->argument);
+		//meta->command = check_wich_command(take_first_word(ft_strtrim(temp->argument, " ")));
+		meta->command = check_wich_command(str);
+		free(str);
 		*on = 1;
 	}
+	else
+		free(str);
 	*new = final_file_name(*new);
 	if (*on == 0)
 	{
@@ -56,8 +69,14 @@ t_meta	*input_conditions(t_meta *meta, char **new, t_meta *temp, int *on)
 			&& ft_strcmp(temp->argument, "") != 0
 			&& (meta->argument[ft_strlen(meta->argument) - 1] != ' '
 				&& *(temp->argument) != ' '))
+		{
+			str = meta->argument;
 			meta->argument = ft_strjoin(meta->argument, " ");
+			free(str);
+		}
+		str = meta->argument;
 		meta->argument = ft_strjoin(meta->argument, temp->argument);
+		free(str);
 	}
 	return (meta);
 }

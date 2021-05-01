@@ -21,12 +21,9 @@ void	redirected_command(int fd, t_meta *meta, t_assen assen, char **env)
 		ft_putstr(strerror(errno));
 	else if (pid == 0)
 		redirected_fork(meta, assen, env, fd);
-	else
-	{
-		if ((waitpid(pid, g_global.status, WUNTRACED) == -1))
-			ft_putstr(strerror(errno));
-		close(fd);
-	}
+	if ((waitpid(pid, g_global.status, WUNTRACED) == -1))
+		ft_putstr(strerror(errno));
+	close(fd);
 }
 
 void	redirected_output_command(
@@ -89,8 +86,7 @@ t_meta	*name_and_condition(char **new, int *on, t_meta *meta, t_meta *temp)
 		free(str);
 	}
 	str = take_first_word(temp->argument);
-	if (meta->command == 0
-		&& check_wich_command(str) != 0 && *on == 0)
+	if (meta->command == 0 && check_wich_command(str) != 0 && *on == 0)
 	{
 		free(str);
 		//if (meta != temp)

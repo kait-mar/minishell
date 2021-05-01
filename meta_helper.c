@@ -16,7 +16,9 @@ t_meta	*meta_for_in(char *s, t_meta *global)
 {
 	char	*arg_free;
 
+	arg_free = s;
 	s = remove_space(s);
+	free(arg_free);
 	s = escape_meta(s);
 	if (global->command != 0 && global->command != 6)
 	{
@@ -64,7 +66,9 @@ t_meta	*meta_out(char **splits, t_meta *global, int *i)
 	global->meta = 0;
 	if (splits[*i] != NULL)
 	{
+		split_free = splits[*i];
 		splits[*i] = remove_space(splits[*i]);
+		free(split_free);
 		splits[*i] = escape_meta(splits[*i]);
 		if (global->command != 0 && global->command != 6)
 		{
@@ -85,7 +89,9 @@ t_meta	*meta_for_in_between(char *s, t_meta *temp)
 {
 	char	*temp_free;
 
+	temp_free = s;
 	s = remove_space(s);
+	free(temp_free);
 	s = escape_meta(s);
 	if (temp->command != 0 && temp->command != 4 && temp->command != 6)
 	{

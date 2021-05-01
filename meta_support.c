@@ -57,6 +57,7 @@ t_meta	*split_it_all_loop(char **splits, t_meta *global, int i)
 {
 	t_meta	*temp;
 	char	*s;
+	char	*split_free;
 
 	if (check_meta(splits[i]) == TRUE)
 		global = meta_in(splits, global, &i);
@@ -69,7 +70,9 @@ t_meta	*split_it_all_loop(char **splits, t_meta *global, int i)
 		temp->argument = NULL;
 		if (temp == NULL)
 			return (NULL);
+		split_free = splits[i];
 		splits[i] = remove_space(splits[i]);
+		free(split_free);
 		s = take_first_word(splits[i]);
 		temp->command = check_wich_command(s);
 		free(s);
