@@ -42,6 +42,7 @@
 #include "./unset/unset.h"
 #include "./minishell_utils/minishell_utils.h"
 #include "./redirection/redirection.h"
+#include "./dollar_sign/dollar_sign.h"
 
 
 typedef struct s_command_cd

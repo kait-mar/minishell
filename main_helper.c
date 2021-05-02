@@ -28,12 +28,9 @@ t_assen    minishell_init(char **env)
 void minishell_execution(t_meta *head, t_assen assen, char **env)
 {
 	char	*s;
-    int     i;
 
-    i = 0;
 	while (head != NULL)
     {
-
         head->argument = chang_dollar_sign(head->argument, env);
         if (head->command == 0)
 		{
@@ -41,15 +38,13 @@ void minishell_execution(t_meta *head, t_assen assen, char **env)
 			head->command = check_wich_command(s);
 			free(s);
 		}
-        if (i == 0 && token_error(head, g_global.status) == 1)
+        if (token_error(head, g_global.status) == 1)
             break;
         if (head->meta == ';')
             built_in(head, assen, env);
        	else if (head->meta == '|')
         {
-            printf("entered in pipe \n");
             head = pipe_file(head, assen, env, g_global.status);
-            i = 0;
         }
         else if (head->meta_append == 1)
         {
@@ -64,14 +59,12 @@ void minishell_execution(t_meta *head, t_assen assen, char **env)
         } else if (head->meta == '<')
         {
             head = redirect_intput(head, assen, env, g_global.status);
-            if (head->meta == '|')
-                i = 1;
             //if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
             //    head = head->next;
         }
         else if (head->meta == '\0')
             built_in(head, assen, env);
-        if (head != NULL && (head->meta != '|' && i == 1))
+        if (head != NULL && head->meta != '|')
             head = head->next;
     }
 }

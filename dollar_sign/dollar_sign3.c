@@ -47,3 +47,45 @@ int     only_space(char *s, int i)
         return (0);
     return (1);
 }
+
+char    *take_after_equal(char *s)
+{
+    int i;
+    int j;
+    int k;
+    char *string;
+
+    i = 0;
+    j = 0;
+    take_after_equal_support(s, &i, &k, &j);
+    string = (char *) ft_calloc(sizeof (char), j + 1);
+    if (!string)
+        return (NULL);
+    i = 0;
+    while (s[k] != '\0')
+        string[i++] = s[k++];
+    string[i] = '\0';
+    free(s);
+    return (string);
+}
+
+void    take_after_equal_support(char *s, int *i, int *k, int *j)
+{
+    int one_time;
+    int on;
+
+    one_time = 0;
+    on = 0;
+    while (s[*i] != '\0')
+    {
+        if (s[*i] == '=' && one_time == 0)
+        {
+            on = 1;
+            *k = *i + 1;
+            one_time = 1;
+        }
+        if (on == 1)
+            *j += 1;
+        *i += 1;
+    }
+}
