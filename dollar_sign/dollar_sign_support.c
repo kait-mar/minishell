@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int     count_escap(char *s)
+int	count_escap(char *s)
 {
 	int	i;
 	int	count;
@@ -15,7 +15,7 @@ int     count_escap(char *s)
 	return (count);
 }
 
-char    *adding_escape(char *s, int count)
+char	*adding_escape(char *s, int count)
 {
 	int		i;
 	int		j;
@@ -25,7 +25,8 @@ char    *adding_escape(char *s, int count)
 	i = 0;
 	j = 0;
 	len = ft_strlen(s) + count + 1;
-	if (!(str = (char *) ft_calloc(sizeof (char ), len)))
+	str = (char *) ft_calloc(sizeof (char ), len);
+	if (!str)
 		return (NULL);
 	while (count > 0)
 	{
@@ -43,7 +44,7 @@ char    *adding_escape(char *s, int count)
 	return (str);
 }
 
-int     dollar_len(char *str, int i)
+int	dollar_len(char *str, int i)
 {
 	int	count;
 	int	j;
@@ -62,9 +63,9 @@ int     dollar_len(char *str, int i)
 		count += 1;
 	}
 	while (str[i] != '\0' && str[i] != '$' && str[i] != ' '
-			&& str[i] != '>' &&  str[i] != '<' &&  str[i] != ';' && str[i] != '\t'
-			&& str[i] != '\'' && str[i] != '"' && str[i] != '|' && str[i] != ','
-			&& str[i] != '[' && str[i] != ']')
+		&& str[i] != '>' && str[i] != '<' && str[i] != ';' && str[i] != '\t'
+		&& str[i] != '\'' && str[i] != '"' && str[i] != '|' && str[i] != ','
+		&& str[i] != '[' && str[i] != ']')
 	{
 		count += 1;
 		i += 1;
@@ -72,7 +73,7 @@ int     dollar_len(char *str, int i)
 	return (count);
 }
 
-char    *take_word(char *str, int i, int len)
+char	*take_word(char *str, int i, int len)
 {
 	char	*s;
 	int		j;
@@ -80,7 +81,8 @@ char    *take_word(char *str, int i, int len)
 
 	j = 0;
 	count = 0;
-	if (!(s = (char *) ft_calloc(sizeof (char), len + 1)))
+	s = (char *) ft_calloc(sizeof (char), len + 1);
+	if (!s)
 		return (NULL);
 	while (i < len)
 	{
@@ -94,7 +96,7 @@ char    *take_word(char *str, int i, int len)
 	return (s);
 }
 
-int    dollar_parsing(char *s)
+int	dollar_parsing(char *s)
 {
 	int	i;
 
@@ -107,7 +109,8 @@ int    dollar_parsing(char *s)
 			return (0);
 		else if (s[i] == '$' && active(s, i) == 0)
 			return (0);
-		else if (s[i] == '$' && (s[i + 1] == ' ' || s[i + 1] == '\0' || s[i + 1] == '\\'))
+		else if (s[i] == '$' && (s[i + 1] == ' '
+				|| s[i + 1] == '\0' || s[i + 1] == '\\'))
 			return (0);
 		i += 1;
 	}

@@ -94,7 +94,7 @@ int	match(char *str, char *export)
 {
 	char	*env;
 	char	*new_argument;
-	int 	len;
+	int		len;
 
 	len = ft_strlen(str);
 	if (check_exp_lex(str) == 1)
@@ -103,7 +103,7 @@ int	match(char *str, char *export)
 	{
 		env = malloc(len + 1);
 		len = 0;
-		while (str[len]  != '\0')
+		while (str[len] != '\0')
 		{
 			env[len] = str[len];
 			len += 1;

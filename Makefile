@@ -40,7 +40,8 @@ SRCS=  cd/cd.c cd/cd_utility.c pwd/pwd.c export/export.c \
 	   executable/executable_support4.c executable/executable_support5.c executable/executable_support6.c \
 	   exit/exit_support.c pipe/pipe_file_support.c redirection/redirect_output_helper2.c pwd/pwd_support.c \
 	   export/export_free.c main_helper_free.c \
-	   dollar_sign/dollar_sign_support.c dollar_sign/dollar_sign_support2.c dollar_sign/realloc_input.c
+	   dollar_sign/dollar_sign_support.c dollar_sign/dollar_sign_support2.c dollar_sign/realloc_input.c \
+	   dollar_sign/dollar_sign_support3.c
 
 
 OBJ = $(SRCS:.c=.o)

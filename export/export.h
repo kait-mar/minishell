@@ -13,7 +13,6 @@
 #ifndef EXPORT_H
 # define EXPORT_H
 
-
 typedef struct s_export
 {
 	char	*command;

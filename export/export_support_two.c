@@ -14,7 +14,7 @@
 
 t_export	*put_in_export(char *splits, int *on, t_export *export)
 {
-	int	k;
+	int		k;
 	char	*global_free;
 
 	if (in_it(splits) == 1)
@@ -84,8 +84,8 @@ t_export	*export_global(t_export *export)
 
 void 	filling_export_env(char **env, char *export_argument)
 {
-	int	i;
-	int	stop;
+	int		i;
+	int		stop;
 	char	*env_free;
 
 	i = 0;

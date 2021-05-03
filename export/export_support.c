@@ -17,8 +17,6 @@ void	filling_global(t_export *tmp)
 	int	i;
 
 	i = 0;
-	//free(g_global.export);
-	//free(g_global.export->saver);
 	g_global.export = (t_export *) malloc(sizeof (t_export));
 	if (!(g_global.export))
 		return ;
@@ -92,7 +90,7 @@ t_export	*check_export_init(char **splits, t_export *export)
 		if (!(export->argument))
 			return (NULL);
 		export->env = (char **) ft_calloc(sizeof(char *),
-										  arguments_in(g_global.export->saver, i) + 1);
+				arguments_in(g_global.export->saver, i) + 1);
 		if (!(export->env))
 			return (NULL);
 	}

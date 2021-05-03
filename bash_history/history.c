@@ -24,9 +24,7 @@ void	filling(t_assen *assen)
 		while (get_next_line(fd, &str) > 0)
 		{
 			append_assen(&assen, str);
-			
 		}
-		//free(str);
 	}
 	if (str)
 		free(str);

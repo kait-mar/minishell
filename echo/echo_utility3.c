@@ -41,7 +41,7 @@ int	flag_strcmp(char *s1, char *s2)
 {
 	int	i;
 
-	i= 0;
+	i = 0;
 	if (echo_strcmp(s1, "-n") == 0)
 		return (0);
 	if (*s1 == '\'')
@@ -83,7 +83,7 @@ int	echo_strcmp(char *s1, char *s2)
 		return (0);
 }
 
-int		find(char *str, char c)
+int	find(char *str, char c)
 {
 	int	i;
 

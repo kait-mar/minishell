@@ -14,9 +14,6 @@
 
 int	check_exit(char *str)
 {
-//	char	*s;
-
-//	s = take_first_word(str);
 	if ((ft_strncmp(str, "exit", 4) == 0) && (ft_isalpha(str[4]) == 0))
 		return (1);
 	return (0);
@@ -67,28 +64,6 @@ int	go_nexts(char str)
 	if ((str >= 9 && str <= 13) || str == ' ')
 		return (1);
 	return (0);
-}
-
-long long	ft_atois(const char *str)
-{
-	long		i;
-	int			res;
-	int			neg;
-
-	i = 0;
-	res = 0;
-	neg = 0;
-	while (go_nexts(str[i]) != '\0')
-		i++;
-	if (str[i] == '-')
-	{
-		neg = 1;
-		i++;
-	}
-	else if (str[i] == '+')
-		i++;
-	res = results((char *)str, neg, i, res);
-	return (res);
 }
 
 void	exit_command(int *status, char *s, t_assen *assen)

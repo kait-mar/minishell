@@ -325,5 +325,7 @@ int		last_thing(t_meta *head, t_assen assen,char **env);
 t_meta	*pipe_last(t_meta *head, t_assen assen, char **env);
 void	free_head(t_meta *head);
 void	free_temp(t_meta *head);
+int	go_nexts(char str);
+long long	results(char *str, int neg, int i, int res);
 
 #endif

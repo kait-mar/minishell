@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-t_split		keep_split_support(char **s, t_split lst)
+t_split	keep_split_support(char **s, t_split lst)
 {
 	int	esp;
 
@@ -30,7 +30,7 @@ t_split		keep_split_support(char **s, t_split lst)
 	return (lst);
 }
 
-t_split		keep_split_support2(char *s, t_split lst, char c, char b)
+t_split	keep_split_support2(char *s, t_split lst, char c, char b)
 {
 	lst.tabs[lst.j] = malloc(lst.k + 1);
 	if (lst.tabs[lst.j] == NULL)
@@ -49,7 +49,7 @@ t_split		keep_split_support2(char *s, t_split lst, char c, char b)
 	return (lst);
 }
 
-t_split		keep_split_support3(char *s, t_split lst, char c)
+t_split	keep_split_support3(char *s, t_split lst, char c)
 {
 	(lst.i)++;
 	(lst.k)++;
@@ -79,7 +79,7 @@ t_split		keep_split_support3(char *s, t_split lst, char c)
 	return (lst);
 }
 
-t_split		keep_split_core(char *s, t_split lst, char c, char b)
+t_split	keep_split_core(char *s, t_split lst, char c, char b)
 {
 	if (lst.k != 0)
 	{
@@ -96,7 +96,7 @@ t_split		keep_split_core(char *s, t_split lst, char c, char b)
 	return (lst);
 }
 
-t_split		increment_counters2(char *s, t_split lst, char c, char b)
+t_split	increment_counters2(char *s, t_split lst, char c, char b)
 {
 	while (((s[lst.i] != c && s[lst.i] != b)
 		|| ((s[lst.i] == c || s[lst.i] == b)

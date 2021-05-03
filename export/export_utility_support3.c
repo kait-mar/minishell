@@ -103,16 +103,16 @@ char	*add_backs(char *s)
 
 int 	fill_env_init(char **env, int *pwd, int *shlvl, int *start)
 {
-	int	i;
+	int		i;
 	char	*s;
 	char	**ss;
 	char	*shlvl_;
 	char	*free_pwd;
 	char	*free_s;
-	
+
 	i = 0;
 	ss = ft_calloc(sizeof (char *),
-				   arguments_in(env, i) + 3);
+			arguments_in(env, i) + 3);
 	while (env[i])
 	{
 		ss[i] = ft_strdup(env[i]);

@@ -35,3 +35,25 @@ void	last_things(char *s, int *status)
 		*status = ft_atois(s);
 	exit(*status % 256);
 }
+
+long long	ft_atois(const char *str)
+{
+	long		i;
+	int			res;
+	int			neg;
+
+	i = 0;
+	res = 0;
+	neg = 0;
+	while (go_nexts(str[i]) != '\0')
+		i++;
+	if (str[i] == '-')
+	{
+		neg = 1;
+		i++;
+	}
+	else if (str[i] == '+')
+		i++;
+	res = results((char *)str, neg, i, res);
+	return (res);
+}
