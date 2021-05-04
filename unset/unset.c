@@ -12,20 +12,21 @@
 
 #include "../minishell.h"
 
-t_env		*delete_list(t_env *env, int count)
+t_env	*delete_list(t_env *env, int count)
 {
 	t_env	*tmp;
 
-    tmp = env;
+	tmp = env;
 	while (count > 1)
 	{
 		tmp = tmp->next;
 		count--;
 	}
-	if (tmp->next->next != NULL) {
+	if (tmp->next->next != NULL)
+	{
 		free(tmp->next);
-        tmp->next = tmp->next->next;
-    }
+		tmp->next = tmp->next->next;
+	}
 	else
 	{
 		free(tmp->next);
@@ -34,34 +35,34 @@ t_env		*delete_list(t_env *env, int count)
 	return (env);
 }
 
-int     inside_quote(char *s)
+int	inside_quote(char *s)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (s[i] != '\0')
-    {
-        if (s[i] == '\'')
-        {
-            i += 1;
-            if (s[i] == '\'')
-                return (1);
-            while (s[i] != '\'')
-            {
-                if (!ft_isalpha(s[i]) && s[i] != '\'')
-                    return (1);
-                i += 1;
-            }
-        }
-        i += 1;
-    }
-    return (0);
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == '\'')
+		{
+			i += 1;
+			if (s[i] == '\'')
+				return (1);
+			while (s[i] != '\'')
+			{
+				if (!ft_isalpha(s[i]) && s[i] != '\'')
+					return (1);
+				i += 1;
+			}
+		}
+		i += 1;
+	}
+	return (0);
 }
 
-t_env		*delete_in_env(t_env *env, char **splits, int on, int *status)
+t_env	*delete_in_env(t_env *env, char **splits, int on, int *status)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (splits[i] != NULL)
@@ -72,12 +73,13 @@ t_env		*delete_in_env(t_env *env, char **splits, int on, int *status)
 	return (env);
 }
 
-t_env		*adding_last(t_env *head, int i, char *env)
+t_env	*adding_last(t_env *head, int i, char *env)
 {
 	t_env	*s;
 	t_env	*tmp;
 
-	if (!(tmp = (t_env *) malloc(sizeof(t_env))))
+	tmp = (t_env *) malloc(sizeof(t_env));
+	if (!tmp)
 		return (NULL);
 	tmp->in_env = env;
 	tmp->next = NULL;
@@ -87,7 +89,7 @@ t_env		*adding_last(t_env *head, int i, char *env)
 	{
 		s = head;
 		while (s->next != NULL)
-			s = s->next;	
+			s = s->next;
 		s->next = tmp;
 	}
 	return (head);

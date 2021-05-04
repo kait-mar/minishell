@@ -240,7 +240,6 @@ int		find_dollar_esacpe(char *bult, char c);
 int		find_without(char *bult, char c);
 char	*trim_once(char *s1);
 int     check_shlvl(char *s);
-char	*ft_strtrim2(char const *s, char const *set);
 char    *remove_staring_quote(const char *s);
 char    *file_name(char *str);
 char	*final_file_name(char *file);

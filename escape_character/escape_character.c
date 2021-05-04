@@ -20,7 +20,7 @@ char	*escape_meta(char *str)
 
 	i = 0;
 	j = 0;
-	string = (char *) ft_calloc(sizeof (char) , (count_meta_space(str) + 1));
+	string = (char *) ft_calloc(sizeof(char), (count_meta_space(str) + 1));
 	if (string == NULL)
 		return (NULL);
 	while (str[i] != '\0')
@@ -66,7 +66,7 @@ char	*remove_escape_dollar(char *s)
 	i = 0;
 	j = 0;
 	str = malloc((sizeof (char) * count_dollar_escape(s)));
-	if(str == NULL)
+	if (str == NULL)
 		return (NULL);
 	while (s[i] != '\0')
 	{

@@ -40,7 +40,12 @@ char	*string_frees(char *string, int escape, char *ss, int on)
 			free(string_free);
 		}
 		else
+		{
+			//i have added this free
+			string_free = string;
 			string = adding_escape(ss, escape);
+			free(string_free);
+		}
 	}
 	return (string);
 }

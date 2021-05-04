@@ -20,7 +20,7 @@ SRCS=  cd/cd.c cd/cd_utility.c pwd/pwd.c export/export.c \
 	   export/export_utility.c export/export_utility_two.c \
 	   unset/unset.c unset/unset_helper.c unset/unset_helper2.c main.c echo/echo.c echo/echo_utility.c \
 	   minishell_utils/keep_split.c minishell_utils/keep_split_helper.c  minishell_utils/keep_split_helper2.c \
-	   executable/executables.c echo/echo_utility_two.c meta.c file_append.c \
+	   executable/executables.c echo/echo_utility_two.c meta.c redirection/file_append.c \
 	   exit/exit.c redirection/redirect_output.c pipe/pipe_file.c redirection/redirect_input.c signals.c \
 	   dollar_sign/dollar_sign.c escape_character/escape_character.c escape_character/escape_character_helper.c \
 	   minishell_utility.c escape_character/escape_character_helper2.c  escape_character/escape_character_helper3.c \

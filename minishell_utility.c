@@ -1,63 +1,63 @@
 #include "minishell.h"
 
-int     check_escape_space(char *string, int i)
+int	check_escape_space(char *string, int i)
 {
-    while (string[i] != '\0')
-    {
-        if (string[i] == '\\')
-        {
-            while (string[i] == '\\')
-                i++;
-            if (string[i] == ' ')
-                return (1);
-        }
-        i += 1;
-    }
-    return (0);
+	while (string[i] != '\0')
+	{
+		if (string[i] == '\\')
+		{
+			while (string[i] == '\\')
+				i++;
+			if (string[i] == ' ')
+				return (1);
+		}
+		i += 1;
+	}
+	return (0);
 }
 
-int     count_new(char *str)
+int	count_new(char *str)
 {
-    int i;
-    int j;
-    int start;
-    int end;
-    int count;
-    int on;
+	int	i;
+	int	j;
+	int	start;
+	int	end;
+	int	count;
+	int	on;
 
-    i = 0;
-    count = 0;
-    end = 0;
-    start = 0;
-    on = 0;
-    while (str[i] == ' ')
-        i += 1;
-    start = i;
-    count = start;
-    while (str[i] != '\0')
-    {
-        if (str[i] != ' ')
-            on = 1;
-        if (str[i + 1] == '\0' && str[i] == ' ' && on == 1)
-        {
-            j = i;
-            while (str[j] == ' ')
-            {
-                j -= 1;
-                end += 1;
-            }
-            if (str[j] == '\\')
-                end -= 1;
-        }
-        i += 1;
-        count  += 1;
-    }
-    count -= (start + end);
-    return (count);
+	i = 0;
+	count = 0;
+	end = 0;
+	start = 0;
+	on = 0;
+	while (str[i] == ' ')
+		i += 1;
+	start = i;
+	count = start;
+	while (str[i] != '\0')
+	{
+		if (str[i] != ' ')
+			on = 1;
+		if (str[i + 1] == '\0' && str[i] == ' ' && on == 1)
+		{
+			j = i;
+			while (str[j] == ' ')
+			{
+				j -= 1;
+				end += 1;
+			}
+			if (str[j] == '\\')
+				end -= 1;
+		}
+		i += 1;
+		count  += 1;
+	}
+	count -= (start + end);
+	return (count);
 }
 
 
-char    *remove_space(char *string)
+char	*remove_space(char *string)
 {
     int i;
     int j;
@@ -117,6 +117,6 @@ char    *remove_space(char *string)
         }
     }
     str[j] = '\0';
- //   free(string);
+    //free(string);
     return (str);
 }

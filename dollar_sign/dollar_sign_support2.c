@@ -2,6 +2,7 @@
 
 t_sign	change_valid(t_sign lst, char *str, char **env)
 {
+	char	*frees;
 	if (inside_quotes(str, lst.i) == 1)
 		lst.remove = 1;
 	lst.s = chang_dollar(lst.s, env, &(lst.on));
@@ -18,7 +19,11 @@ t_sign	change_valid(t_sign lst, char *str, char **env)
 		&& str[lst.i + lst.j] == ']' && lst.remove == 1)
 		lst.s = rm_space_variable(lst.s, 2);
 	else if (lst.remove == 1)
+	{
+		frees = lst.s;
 		lst.s = remove_space(lst.s);
+		free(frees);
+	}
 	if (escape_front_true(str, lst.i) == 1
 		&& lst.space_front == 1 && inside_quotes(str, lst.i) == 1)
 		lst.s = add_front_space(lst.s);
@@ -100,6 +105,7 @@ char	*string_change_dollar(char *ss, int *on, char **env)
 {
 	char	*string;
 	int		i;
+	char	*frees;
 
 	string = NULL;
 	i = 0;

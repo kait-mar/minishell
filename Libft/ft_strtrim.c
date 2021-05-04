@@ -52,7 +52,7 @@ static char	*return_vr(int end, int start)
 		return (NULL);
 }
 
-char		*ft_strtrim(char  *s1, char const *set)
+char	*ft_strtrim(char *s1, char const *set)
 {
 	int		start;
 	int		end;

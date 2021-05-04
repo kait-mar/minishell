@@ -12,35 +12,35 @@
 
 #include "../minishell.h"
 
-int     delete_in_env_helper(char *s, char *split, int *check)
+int	delete_in_env_helper(char *s, char *split, int *check)
 {
-    int i;
+	int	i;
 
-    i = in_match(s, split);
-    if (i == 1)
-    {
-        i = ft_strcmp(split , "PWD");
-        if (i == 0)
-            g_global.pwd_on = 1;
-        i = ft_strcmp(split, "OLDPWD");
-        if (i == 0)
-            g_global.oldpwd_on = 1;
-        *check = 1;
-        return (1) ;
-    }
-    return (0);
+	i = in_match(s, split);
+	if (i == 1)
+	{
+		i = ft_strcmp(split, "PWD");
+		if (i == 0)
+			g_global.pwd_on = 1;
+		i = ft_strcmp(split, "OLDPWD");
+		if (i == 0)
+			g_global.oldpwd_on = 1;
+		*check = 1;
+		return (1);
+	}
+	return (0);
 }
 
-t_env *increment_helper(int *count, t_env *tmp)
+t_env	*increment_helper(int *count, t_env *tmp)
 {
-    tmp = tmp->next;
-    *count += 1;
-    return (tmp);
+	tmp = tmp->next;
+	*count += 1;
+	return (tmp);
 }
 
-int		check_unset(char *str)
+int	check_unset(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (ft_strncmp(str, "unset", 5) == 0)
@@ -50,13 +50,14 @@ int		check_unset(char *str)
 
 char	*only_before_equal(char *str)
 {
-	int i;
-	char *s;
+	int		i;
+	char	*s;
 
 	i = 0;
-	if (!(s = (char *) ft_calloc(sizeof(char), ft_strlen(str))))
+	s = (char *) ft_calloc(sizeof(char), ft_strlen(str));
+	if (!s)
 		return (NULL);
-	while (str[i] != '=' &&  str[i] != '\0')
+	while (str[i] != '=' && str[i] != '\0')
 	{
 		s[i] = str[i];
 		i += 1;
@@ -65,36 +66,31 @@ char	*only_before_equal(char *str)
 	return (s);
 }
 
-t_env   *delete_in_env_core(t_env *env, char *split, int on)
+t_env	*delete_in_env_core(t_env *env, char *split, int on)
 {
-    char	*s;
+	char	*s;
 	int		j;
-	int 	count;
+	int		count;
 	int		check;
-    t_env   *tmp;
+	t_env	*tmp;
 
-    tmp = env;
-    check = 0;
-    count = 0;
-    s = malloc(1); //just to free it in while loop
-
-    while (tmp != NULL)
+	tmp = env;
+	check = 0;
+	count = 0;
+	s = malloc(1);
+	while (tmp != NULL)
 	{
-        free(s);
-        s = only_before_equal(tmp->in_env);
-        j = delete_in_env_helper(s, split, &check);
-        if (j == 1)
-            break ;
-        tmp = increment_helper(&count, tmp);
-    }
-    free(s);
-    if (check == 1)
-        env = delete_list(env, count);
-    else if (check == 0 && inside_quote(split) == 1 && on == 0)
-    {
-        ft_printf("minishell: unset: `%s': not a valid identifier\n", without_that(split, '\''));
-        *(g_global.status) = 1;
-    }
-    return (env);
+		free(s);
+		s = only_before_equal(tmp->in_env);
+		j = delete_in_env_helper(s, split, &check);
+		if (j == 1)
+			break ;
+		tmp = increment_helper(&count, tmp);
+	}
+	free(s);
+	if (check == 1)
+		env = delete_list(env, count);
+	else if (check == 0 && inside_quote(split) == 1 && on == 0)
+		print_error(split);
+	return (env);
 }
-
