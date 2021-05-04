@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int		find_how_many(char *s, char c)
+int	find_how_many(char *s, char c)
 {
 	int	i;
 
@@ -14,7 +14,7 @@ int		find_how_many(char *s, char c)
 	return (i);
 }
 
-int		first_word_lenght(char *s)
+int	first_word_lenght(char *s)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ int		first_word_lenght(char *s)
 	return (i);
 }
 
-int		fill_first_word(char *s, char **string, int *i, int *j)
+int	fill_first_word(char *s, char **string, int *i, int *j)
 {
 	int	on;
 
@@ -69,8 +69,9 @@ char	*take_first_word(char *s)
 
 	j = 0;
 	if (s == NULL)
-        return (NULL);
-	if (!(string = malloc(first_word_lenght(s) + 1)))
+		return (NULL);
+	string = malloc(first_word_lenght(s) + 1);
+	if (!string)
 		return (0);
 	i = 0;
 	while (s[i])
@@ -86,15 +87,18 @@ char	*take_first_word(char *s)
 	return (string);
 }
 
-void	stream_directory()
+void	stream_directory(void)
 {
 	DIR				*dir;
 	struct dirent	*pdir;
 
-	if ((dir = opendir(".")) != NULL)
+	dir = opendir(".");
+	if (dir != NULL)
 	{
-		while ((pdir = readdir(dir)) != NULL)
+		pdir = readdir(dir);
+		while (pdir != NULL)
 		{
+			pdir = readdir(dir);
 			if (*pdir->d_name != '.')
 			{
 				ft_putstr(pdir->d_name);

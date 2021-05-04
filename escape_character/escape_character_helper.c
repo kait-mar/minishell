@@ -12,54 +12,54 @@
 
 #include "../minishell.h"
 
-int     active(char *str, int i)
+int	active(char *str, int i)
 {
-    int count;
+	int	count;
 
-    count = 0;
-    if (str[i - 1] == '\\')
-    {
-        i -= 1;
-        while (str[i] == '\\')
-        {
-            i -= 1;
-            count += 1;
-        }
-        if ((count % 2) == 0)
-            return (1);
-        else
-            return (0);
-    }
-    return (1);
+	count = 0;
+	if (str[i - 1] == '\\')
+	{
+		i -= 1;
+		while (str[i] == '\\')
+		{
+			i -= 1;
+			count += 1;
+		}
+		if ((count % 2) == 0)
+			return (1);
+		else
+			return (0);
+	}
+	return (1);
 }
 
-int     check_escape_meta(char *str, int i)
+int	check_escape_meta(char *str, int i)
 {
-    while (str[i] == '\\')
-        i += 1;
-    if (str[i] == '>' || str[i] == '<' || str[i] == '|' || str[i] == ';')
-        return (1);
-    return (0);
+	while (str[i] == '\\')
+		i += 1;
+	if (str[i] == '>' || str[i] == '<' || str[i] == '|' || str[i] == ';')
+		return (1);
+	return (0);
 }
 
-int     check_escape_dollar(char *str, int i)
+int	check_escape_dollar(char *str, int i)
 {
-    while (str[i] == '\\')
-        i += 1;
-    if (str[i] == '$')
-        return (1);
-    return (0);
+	while (str[i] == '\\')
+		i += 1;
+	if (str[i] == '$')
+		return (1);
+	return (0);
 }
 
-int     count_escape(char *str, int i)
+int	count_escape(char *str, int i)
 {
-    int count;
+	int	count;
 
-    count = 0;
-    while (str[i] == '\\')
-    {
-        i += 1;
-        count += 1;
-    }
-    return (count);
+	count = 0;
+	while (str[i] == '\\')
+	{
+		i += 1;
+		count += 1;
+	}
+	return (count);
 }

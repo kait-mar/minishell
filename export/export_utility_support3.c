@@ -103,15 +103,16 @@ char	*add_backs(char *s)
 
 int 	fill_env_init(char **env, int *pwd, int *shlvl, int *start)
 {
-	int	i;
+	int		i;
 	char	*s;
 	char	**ss;
 	char	*shlvl_;
 	char	*free_pwd;
-	
+	char	*free_s;
+
 	i = 0;
 	ss = ft_calloc(sizeof (char *),
-				   arguments_in(env, i) + 3);
+			arguments_in(env, i) + 3);
 	while (env[i])
 	{
 		ss[i] = ft_strdup(env[i]);
@@ -130,7 +131,9 @@ int 	fill_env_init(char **env, int *pwd, int *shlvl, int *start)
 		else if (match("SHLVL", ss[i]) == 1)
 		{
 			s = ft_itoa(check_shlvl(ss[i]));
+			//free_s = env[i];
 			env[i] = append("SHLVL=", s);
+			//free(free_s);
 			free(s);
 			s = NULL;
 			*shlvl = 1;

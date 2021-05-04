@@ -14,45 +14,45 @@
 
 void 	cd_command(char *argument, int *status, char **env)
 {
-	char *s;
-	char *ss;
-	static int first_time = 0;
-	char *free_s;
+	char		*s;
+	char		*ss;
+	static int	first_time = 0;
+	char		*free_s;
 
 	if (argument == NULL)
 		return ;
 	ss = take_only(argument);
 	if (check_only_single_double(ss) == 0)
-    {
-        s = without_that(ss, '\"');
+	{
+		s = without_that(ss, '\"');
 		free_s = s;
-        s = without_that(ss, '\'');
-        free(free_s);
-        if (ft_strncmp(s, "", 1) == 0)
+		s = without_that(ss, '\'');
+		free(free_s);
+		if (ft_strncmp(s, "", 1) == 0)
 		{
-        	free(s);
+			free(s);
 			s = ft_strdup("/Users/molabhai");
 		}
 	}
 	old_pwd(env);
 	if (check_only_single_double(ss) == 0)
-    {
+	{
 		if (cd_command_helper(status, env, &s, first_time) == 0)
 		{
 			if (ss)
 				free(ss);
 			return ;
 		}
-    }
+	}
 	cd_command_helper2(env, &first_time);
 	if (ss)
 		free(ss);
 }
 
-char    *take_only(char *s)
+char	*take_only(char *s)
 {
-	int i;
-	char *string;
+	int		i;
+	char	*string;
 
 	i = 0;
 	if (s[i] == '\'')
@@ -102,11 +102,11 @@ void	cd_command_helper2(char **env, int *first_time)
 	if (str == NULL)
 		return ;
 	if (getcwd(str, 100) == NULL)
-	    ft_printf("%s\n", strerror(errno));
+		ft_printf("%s\n", strerror(errno));
 	new_pwd(env, str);
 	g_pwd_on = 0;
 	g_global.check = 1;
-    *first_time = 1;
-    free(str);
-    str = NULL;
+	*first_time = 1;
+	free(str);
+	str = NULL;
 }

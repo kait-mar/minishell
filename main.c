@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 void	built_in(t_meta *meta, t_assen assen, char **env)
 {
 	int	exept;
@@ -81,19 +80,11 @@ int	check_wich_command(char *str)
 int	main(int ac, char **av, char **env)
 {
 	t_assen	assen;
-	char	**env_f;
-	int i;
+	int		i;
 
 	i = 0;
-	env_f = malloc(sizeof (char **) * arguments_in(env, i));
 	memset(&assen, 0, sizeof (assen));
 	assen = minishell_init(env);
-	while (env[i])
-	{
-		env_f[i] = ft_strdup(env[i]);
-		i += 1;
-	}
-	env_f[i] = NULL;
 	minishell(av, env, assen);
 	return (*(g_global.status));
 }

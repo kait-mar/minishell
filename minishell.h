@@ -42,6 +42,7 @@
 #include "./unset/unset.h"
 #include "./minishell_utils/minishell_utils.h"
 #include "./redirection/redirection.h"
+#include "./dollar_sign/dollar_sign.h"
 
 
 typedef struct s_command_cd
@@ -241,7 +242,6 @@ int		find_dollar_esacpe(char *bult, char c);
 int		find_without(char *bult, char c);
 char	*trim_once(char *s1);
 int     check_shlvl(char *s);
-char	*ft_strtrim2(char const *s, char const *set);
 char    *remove_staring_quote(const char *s);
 char    *file_name(char *str);
 char	*final_file_name(char *file);
@@ -327,5 +327,7 @@ t_meta	*pipe_last(t_meta *head, t_assen assen, char **env);
 void	free_head(t_meta *head);
 void	free_temp(t_meta *head);
 int 	redirect_true(t_meta *head);
+int	go_nexts(char str);
+long long	results(char *str, int neg, int i, int res);
 
 #endif

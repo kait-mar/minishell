@@ -14,9 +14,9 @@
 
 char	*without_that(char *str, char c)
 {
-	int i;
-	int j;
-	char *s;
+	int		i;
+	int		j;
+	char	*s;
 
 	if (str == NULL)
 		return (NULL);
@@ -38,9 +38,9 @@ char	*without_that(char *str, char c)
 	return (s);
 }
 
-int		how_mutch_arguments(char **str, int i)
+int	how_mutch_arguments(char **str, int i)
 {
-	int on;
+	int	on;
 	int	j;
 
 	on = 0;
@@ -58,9 +58,9 @@ int		how_mutch_arguments(char **str, int i)
 	return (on);
 }
 
-int		arguments_in(char **splits, int i)
+int	arguments_in(char **splits, int i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (splits[i] != NULL)

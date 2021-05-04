@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int		how_many_escape(char *bult)
+int	how_many_escape(char *bult)
 {
 	int	i;
 
@@ -15,7 +15,7 @@ int		how_many_escape(char *bult)
 	return (i);
 }
 
-int		find_dollar_esacpe(char *bult, char c)
+int	find_dollar_esacpe(char *bult, char c)
 {
 	int	i;
 
@@ -28,7 +28,8 @@ int		find_dollar_esacpe(char *bult, char c)
 	}
 	return (0);
 }
-int		find_without(char *bult, char c)
+
+int	find_without(char *bult, char c)
 {
 	int	i;
 

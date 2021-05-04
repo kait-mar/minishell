@@ -14,11 +14,11 @@
 
 void	free_export_command(char **splits)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (splits == NULL)
-		return;
+		return ;
 	if (splits[i] != NULL)
 	{
 		while (splits[i])

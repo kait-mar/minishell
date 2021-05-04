@@ -18,9 +18,9 @@ int	token_error(t_meta *head, int *status)
 
 	a_head = head;
 	while (a_head->next != NULL && a_head->next->meta != 0
-		   && (ft_strcmp(a_head->argument, "") != 0
-			   || ((a_head->meta == '>' || a_head->meta == '<')
-				   && ft_strcmp(a_head->next->argument, "") == 0)))
+		&& (ft_strcmp(a_head->argument, "") != 0
+			|| ((a_head->meta == '>' || a_head->meta == '<')
+				&& ft_strcmp(a_head->next->argument, "") == 0)))
 		a_head = a_head->next;
 	if (ft_strcmp(a_head->argument, "") == 0
 		&& (a_head->meta == ';' || a_head->meta == '|')

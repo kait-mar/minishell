@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-int		result(char *str, int neg, int i, int res)
+int	result(char *str, int neg, int i, int res)
 {
-	int carac;
+	int	carac;
 
 	while (str[i] >= '0' && str[i] <= '9')
 	{
@@ -33,14 +33,14 @@ int		result(char *str, int neg, int i, int res)
 	return (res);
 }
 
-int		go_next(char str)
+int	go_next(char str)
 {
 	if ((str >= 9 && str <= 13) || str == ' ')
 		return (1);
 	return (0);
 }
 
-int		ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	long		i;
 	int			res;

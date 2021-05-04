@@ -12,84 +12,86 @@
 
 #include "../minishell.h"
 
-char    *escape_normal(char *str)
+char	*escape_normal(char *str)
 {
-    int i;
-    int j;
-    char *string;
+	int		i;
+	int		j;
+	char	*string;
 
-    i = 0;
-    j = 0;
-    string = (char *) ft_calloc(sizeof(char) , (new_space(str) + 1));
-    if (string == NULL)
-        return (NULL);
-    while (str[i] != '\0')
-    {
+	i = 0;
+	j = 0;
+	string = (char *) ft_calloc(sizeof(char), (new_space(str) + 1));
+	if (string == NULL)
+		return (NULL);
+	while (str[i] != '\0')
+	{
 		escape_normal_head(str, &string, &i, &j);
 	}
-    string[j] = '\0';
-    return (string);
+	string[j] = '\0';
+	return (string);
 }
 
-void    escape_normal_core(char *str, char **string, int *i, int *j)
+void	escape_normal_core(char *str, char **string, int *i, int *j)
 {
-    if (check_escape_dollar(str, *i) == 1)
-    {
-        while (str[*i] != '$')
-            (*string)[(*j)++] = str[(*i)++];
-        if (str[*i] == '$')
-            (*string)[(*j)++] = str[(*i)++];
-        if (str[*i] == '\\')
-        {
-            while (str[*i] == '\\')
-                (*string)[(*j)++] = str[(*i)++];
-        }
-    }
-    else if (check_escape_space(str, *i) == 1)
-    {
-        while (str[*i] != ' ')
-            (*string)[(*j)++] = str[(*i)++];
-        if (str[*i] == ' ')
-            (*string)[(*j)++] = str[(*i)++];
-    }
-    else
-    {
-        *i += 1;
-        (*string)[(*j)++] = str[(*i)++];
-    }
+	if (check_escape_dollar(str, *i) == 1)
+	{
+		while (str[*i] != '$')
+			(*string)[(*j)++] = str[(*i)++];
+		if (str[*i] == '$')
+			(*string)[(*j)++] = str[(*i)++];
+		if (str[*i] == '\\')
+		{
+			while (str[*i] == '\\')
+				(*string)[(*j)++] = str[(*i)++];
+		}
+	}
+	else if (check_escape_space(str, *i) == 1)
+	{
+		while (str[*i] != ' ')
+			(*string)[(*j)++] = str[(*i)++];
+		if (str[*i] == ' ')
+			(*string)[(*j)++] = str[(*i)++];
+	}
+	else
+	{
+		*i += 1;
+		(*string)[(*j)++] = str[(*i)++];
+	}
 }
 
-void    escape_normal_dquote(char *str, char **string, int *i, int *j)
+void	escape_normal_dquote(char *str, char **string, int *i, int *j)
 {
-    (*string)[(*j)++] = str[(*i)++];
-    while (str[*i] != '"' && str[*i] != '\0')
-        (*string)[(*j)++] = str[(*i)++];
-    if (str[*i] == '"')
-        (*string)[(*j)++] = str[(*i)++];
+	(*string)[(*j)++] = str[(*i)++];
+	while (str[*i] != '"' && str[*i] != '\0')
+		(*string)[(*j)++] = str[(*i)++];
+	if (str[*i] == '"')
+		(*string)[(*j)++] = str[(*i)++];
 }
 
-void    escape_normal_head(char *str, char **string, int *i, int *j)
+void	escape_normal_head(char *str, char **string, int *i, int *j)
 {
-    if (str[*i] == '"')
-        escape_normal_dquote(str, string, i, j);
-    else if (str[*i] == '\\')
-    {
-        if (check_escape_meta(str, *i) == 1)
-        {
-            while (str[*i] != '|' && str[*i] != '<' && str[*i] != '>' && str[*i] != ';')
-                (*string)[(*j)++] = str[(*i)++];
-            if (str[*i] == '|' || str[*i] == '<' || str[*i] == '>' || str[*i] == ';')
-                (*string)[(*j)++] = str[(*i)++];
-        }
-        else 
-            escape_normal_core(str, string, i, j);
-    }
-    else if (str[*i] == '$' && str[*i + 1] == '\\')
-    {
-        (*string)[(*j)++] = str[(*i)++];
-        while (str[*i] == '\\')
-            (*string)[(*j)++] = str[(*i)++];
-    }
-    else
-        (*string)[(*j)++] = str[(*i)++];
+	if (str[*i] == '"')
+		escape_normal_dquote(str, string, i, j);
+	else if (str[*i] == '\\')
+	{
+		if (check_escape_meta(str, *i) == 1)
+		{
+			while (str[*i] != '|' && str[*i] != '<'
+				&& str[*i] != '>' && str[*i] != ';')
+				(*string)[(*j)++] = str[(*i)++];
+			if (str[*i] == '|' || str[*i] == '<'
+				|| str[*i] == '>' || str[*i] == ';')
+				(*string)[(*j)++] = str[(*i)++];
+		}
+		else
+			escape_normal_core(str, string, i, j);
+	}
+	else if (str[*i] == '$' && str[*i + 1] == '\\')
+	{
+		(*string)[(*j)++] = str[(*i)++];
+		while (str[*i] == '\\')
+			(*string)[(*j)++] = str[(*i)++];
+	}
+	else
+		(*string)[(*j)++] = str[(*i)++];
 }

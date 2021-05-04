@@ -34,7 +34,7 @@ char	*ctrl_d(void)
 	return (ft_strdup("exit \n"));
 }
 
-t_assen 	*read_l(char **temp, char **tmp, t_history history, t_assen *climb, char *str)
+t_assen	*read_l(char **temp, char **tmp, t_history history, t_assen *climb, char *str)
 {
 	int		r;
 
@@ -54,7 +54,7 @@ t_assen 	*read_l(char **temp, char **tmp, t_history history, t_assen *climb, cha
 			&& ft_memcmp(str, history.down_arrow, 3) == 0)
 			climb = arrow_down(history, climb, tmp, temp);
 		if ((history.down_arrow != NULL
-			 && ft_memcmp(str, history.down_arrow, 3) != 0)
+			&& ft_memcmp(str, history.down_arrow, 3) != 0)
 			&& (history.up_arrow != NULL
 				&& ft_memcmp(str, history.up_arrow, 3) != 0) && str[0] != 127)
 			string_extention(tmp, temp, str);
@@ -70,8 +70,6 @@ char	*tty_loop(t_history history, t_assen *assen, t_assen *climb, char *str)
 
 	temp = NULL;
 	tmp = NULL;
-//	memset(&history, 0, sizeof (t_history));
-//	history = init_hist(history);
 	while (TRUE)
 	{
 		climb = read_l(&temp, &tmp, history, climb, str);
@@ -81,7 +79,6 @@ char	*tty_loop(t_history history, t_assen *assen, t_assen *climb, char *str)
 				append_assen(&assen, tmp);
 			break ;
 		}
-
 	}
 	return (tmp);
 }

@@ -22,7 +22,9 @@ void	filling(t_assen *assen)
 	if (fd != 1)
 	{
 		while (get_next_line(fd, &str) > 0)
+		{
 			append_assen(&assen, str);
+		}
 	}
 	if (str)
 		free(str);

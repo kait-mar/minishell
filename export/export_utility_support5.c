@@ -31,7 +31,7 @@ void	export_init(void)
 	if (!(s))
 		return ;
 	ss = ft_calloc(sizeof (char *),
-				   arguments_in(g_global.export->saver, i) + 3);
+			arguments_in(g_global.export->saver, i) + 3);
 	while (g_global.export->saver[i])
 	{
 		ss[i] = ft_strdup(g_global.export->saver[i]);

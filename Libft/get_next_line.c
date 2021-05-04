@@ -12,9 +12,9 @@
 
 #include "get_next_line.h"
 
-int		word_len(char *str, int i)
+int	word_len(char *str, int i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (str[j] != '\0')
@@ -26,33 +26,16 @@ int		word_len(char *str, int i)
 	return (j);
 }
 
-/*char	*ft_strdup(char *str)
+int	search(char *str)
 {
-	char	*s;
-	int		i;
-
-	if (!(s = (char *)ft_calloc(word_len(str, 0) + 1, sizeof(char))))
-		return (NULL);
-	i = 0;
-	while (str[i] != '\0')
-	{
-		s[i] = str[i];
-		i++;
-	}
-	s[i] = '\0';
-	return (s);
-}*/
-
-int		search(char *str)
-{
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\n')
 		{
-		    g_in_line = 1;
+			g_in_line = 1;
 			str[i] = '\0';
 			return (TRUE);
 		}
@@ -68,8 +51,12 @@ char	*extend(char *str, char *s)
 	int		j;
 
 	p_tr = NULL;
-	if (!(p_tr = (char *)ft_calloc((word_len(str, 0) +
-						(s ? word_len(s, 0) : 0) + 1), sizeof(char))))
+	if (s)
+		i = word_len(s, 0);
+	else
+		i = 0;
+	p_tr = (char *)ft_calloc((word_len(str, 0) + i + 1), 1);
+	if (!p_tr)
 		return (NULL);
 	i = 0;
 	while (s && s[i] != '\0')
@@ -79,18 +66,20 @@ char	*extend(char *str, char *s)
 	}
 	j = 0;
 	while (str[j] != '\0')
-	{
-		p_tr[i] = str[j];
-		i++;
-		j++;
-	}
+		p_tr[i++] = str[j++];
 	p_tr[i] = '\0';
 	free(str);
 	free(s);
 	return (p_tr);
 }
 
-int		get_next_line(int fd, char **line)
+void	ft_to_frees(char *str, char *o_tmp)
+{
+	free(str);
+	free(o_tmp);
+}
+
+int	get_next_line(int fd, char **line)
 {
 	char		*str;
 	static char	*ptr;
@@ -101,19 +90,20 @@ int		get_next_line(int fd, char **line)
 	o_tmp = NULL;
 	if (return_rest(&ptr, &line[0], &o_tmp, &tmp) != NULL)
 		return (1);
-	if (fd < 0 || !line || read(fd, NULL, 0) < 0 ||
-			(!(str = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1))))
+	str = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (fd < 0 || !line || read(fd, NULL, 0) < 0 || !str)
 		return (-1);
-	while ((k = read(fd, str, BUFFER_SIZE)) > 0)
+	k = read(fd, str, BUFFER_SIZE);
+	while (k > 0)
 	{
 		str[k] = '\0';
 		o_tmp = extend(str, o_tmp);
 		str = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
 		if (return_line(&ptr, &o_tmp, &line[0], str) != NULL)
 			return (1);
+		k = read(fd, str, BUFFER_SIZE);
 	}
 	return_free_last(&tmp, &ptr, &o_tmp, &line[0]);
-	free(str);
-	free(o_tmp);
+	ft_to_frees(str, o_tmp);
 	return (0);
 }

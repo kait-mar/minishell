@@ -70,7 +70,7 @@ t_assen	*arrow_down(t_history history, t_assen *climb, char **tmp, char **temp)
 void 	string_extention(char **tmp, char **temp, char *str)
 {
 	char	*temp_free;
-	char 	*tmp_free;
+	char	*tmp_free;
 
 	tmp_free = *tmp;
 	*tmp = extend_re(str, *tmp);
@@ -90,7 +90,7 @@ void 	string_extention(char **tmp, char **temp, char *str)
 char	*reading_input(t_assen *assen, char *string, t_history history)
 {
 	char			*tmp;
-	char 			*l;
+	char			*l;
 	t_assen			*climb;
 	struct termios	save;
 
@@ -102,7 +102,7 @@ char	*reading_input(t_assen *assen, char *string, t_history history)
 	{
 		save = tty_init(history.fd);
 		tmp = tty_loop(history, assen, climb, string);
-	 }
+	}
 	if (tcsetattr(history.fd, TCSANOW, &save) == 1)
 		exit (-1);
 	if (ft_strcmp(tmp, "") == 0)

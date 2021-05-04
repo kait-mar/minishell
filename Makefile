@@ -20,7 +20,7 @@ SRCS=  cd/cd.c cd/cd_utility.c pwd/pwd.c export/export.c \
 	   export/export_utility.c export/export_utility_two.c \
 	   unset/unset.c unset/unset_helper.c unset/unset_helper2.c main.c echo/echo.c echo/echo_utility.c \
 	   minishell_utils/keep_split.c minishell_utils/keep_split_helper.c  minishell_utils/keep_split_helper2.c \
-	   executable/executables.c echo/echo_utility_two.c meta.c file_append.c \
+	   executable/executables.c echo/echo_utility_two.c meta.c redirection/file_append.c \
 	   exit/exit.c redirection/redirect_output.c pipe/pipe_file.c redirection/redirect_input.c signals.c \
 	   dollar_sign/dollar_sign.c escape_character/escape_character.c escape_character/escape_character_helper.c \
 	   minishell_utility.c escape_character/escape_character_helper2.c  escape_character/escape_character_helper3.c \
@@ -39,7 +39,10 @@ SRCS=  cd/cd.c cd/cd_utility.c pwd/pwd.c export/export.c \
 	   executable/executables_support.c executable/executable_support2.c executable/executable_support3.c \
 	   executable/executable_support4.c executable/executable_support5.c executable/executable_support6.c \
 	   exit/exit_support.c pipe/pipe_file_support.c redirection/redirect_output_helper2.c pwd/pwd_support.c \
-	   export/export_free.c main_helper_free.c
+	   export/export_free.c main_helper_free.c \
+	   dollar_sign/dollar_sign_support.c dollar_sign/dollar_sign_support2.c dollar_sign/realloc_input.c \
+	   dollar_sign/dollar_sign_support3.c
+
 
 OBJ = $(SRCS:.c=.o)
 

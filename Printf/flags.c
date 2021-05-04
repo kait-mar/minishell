@@ -12,16 +12,16 @@
 
 #include "ft_printf.h"
 
-static int		check_for_star(char *s, int i)
+static int	check_for_star(char *s, int i)
 {
 	if (s[i] == '*')
 		return (1);
 	return (0);
 }
 
-void			flag_checker(char *s, int *i, t_flag *check)
+void	flag_checker(char *s, int *i, t_flag *check)
 {
-	int j;
+	int	j;
 
 	*i += 1;
 	j = *i;
@@ -45,7 +45,7 @@ void			flag_checker(char *s, int *i, t_flag *check)
 	}
 }
 
-void			take_len(char *s, int *i, t_flag *check, va_list ap)
+void	take_len(char *s, int *i, t_flag *check, va_list ap)
 {
 	check->len_before_flag = ft_atoi(s + *i);
 	while (ft_isdigit(s[*i]))
@@ -70,7 +70,7 @@ void			take_len(char *s, int *i, t_flag *check, va_list ap)
 	}
 }
 
-void			take_conversion(char *s, int i, t_flag *check, va_list ap)
+void	take_conversion(char *s, int i, t_flag *check, va_list ap)
 {
 	check->wich_conversion = conversion_for_print(s, i - 1);
 	if (check->wich_conversion == 0)
@@ -92,10 +92,10 @@ void			take_conversion(char *s, int i, t_flag *check, va_list ap)
 		check->nmbr_len = 1;
 }
 
-void			put_flag(char *s, int *i, t_flag *check, va_list ap)
+void	put_flag(char *s, int *i, t_flag *check, va_list ap)
 {
-	int m;
-	int l;
+	int	m;
+	int	l;
 
 	m = 0;
 	l = 0;
@@ -111,7 +111,7 @@ void			put_flag(char *s, int *i, t_flag *check, va_list ap)
 	if (check->zero == 0 && check->minus == 0)
 		no_zero_no_minus(check, m, l);
 	if (check_condition_four(check))
-        ft_putchar('0');
+		ft_putchar('0');
 	if (check->int_conversion < 0 && check->zero == 1)
 		put_flag_three(check);
 	if (check->zero == 1)

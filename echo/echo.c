@@ -1,9 +1,9 @@
 #include "../minishell.h"
 #include <stdio.h>
 
-void			my_putchar(char c)
+void	my_putchar(char c)
 {
-    write(1, &c, 1);
+	write(1, &c, 1);
 }
 
 void	to_free(char **bult)
@@ -13,7 +13,6 @@ void	to_free(char **bult)
 	i = 0;
 	while (bult[i])
 	{
-		//printf("the freed word is %s\n", bult[i]);
 		free(bult[i]);
 		i++;
 	}
@@ -31,8 +30,8 @@ int	echo(char *argv, char **env, int *status)
 	argv = skip_first_word(argv);
 	if (ft_strcmp(argv, "") == 0)
 	{
-        my_putchar('\n');
-        *status = 0;
+		my_putchar('\n');
+		*status = 0;
 		free(argv);
 		return (0);
 	}
@@ -43,13 +42,14 @@ int	echo(char *argv, char **env, int *status)
 	free(argv);
 	while (bult[g_global.j_echo] != NULL)
 	{
-		if (find(bult[g_global.j_echo], 39) == 0 && find(bult[g_global.j_echo], 34) == 0)
+		if (find(bult[g_global.j_echo], 39) == 0
+			&& find(bult[g_global.j_echo], 34) == 0)
 		{
 			if (check_echo_flag(bult, &i) == 0)
 				break ;
 		}
 		else
-            break ;
+			break ;
 	}
 	echo_complet(bult, env, status, i);
 	to_free(bult);

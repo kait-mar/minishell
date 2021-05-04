@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-char    *take_only_helper(char *s, int i)
+char	*take_only_helper(char *s, int i)
 {
 	char	*string;
 
@@ -53,13 +53,14 @@ char	*take_only_helper2(char *s, int i, char ref)
 
 char	*take_only_helper3(char *s)
 {
-	int	i;
+	int		i;
 	char	*string;
 
 	i = 0;
 	while (s[i] != ' ' && s[i] != '\t' && s[i] != '\0')
 		i += 1;
-	if (!(string = (char *) ft_calloc(sizeof (char ), i + 1)))
+	string = (char *) ft_calloc(sizeof (char ), i + 1);
+	if (!string)
 		return (NULL);
 	i = 0;
 	while (s[i] != ' ' && s[i] != '\t' && s[i] != '\0')
@@ -68,7 +69,7 @@ char	*take_only_helper3(char *s)
 		i += 1;
 	}
 	string[i] = '\0';
-    return (string);
+	return (string);
 }
 
 char	*take_only_core(char *s, int i)

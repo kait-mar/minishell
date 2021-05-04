@@ -12,48 +12,9 @@
 
 #include "get_next_line.h"
 
-/*void	ft_bzero(void *s, size_t n)
-{
-	size_t			i;
-	unsigned long	*str;
-	size_t			j;
-	unsigned char	*p;
-
-	j = n;
-	str = s;
-	p = s;
-	i = 0;
-	if (n == 0)
-		return ;
-	n = n / 8;
-	while (i < n)
-	{
-		(str)[i] = 0;
-		i++;
-	}
-	i = n * 8;
-	n = j % 8;
-	j = 0;
-	while (j < n)
-	{
-		p[i++] = 0;
-		j++;
-	}
-}*/
-
-/*void	*ft_calloc(size_t count, size_t size)
-{
-	void	*s;
-
-	if (!(s = (void *)malloc(size * count)))
-		return (NULL);
-	ft_bzero(s, count * size);
-	return (s);
-}*/
-
 char	*return_line(char **ptr, char **o_tmp, char **line, char *str)
 {
-	char *tmp;
+	char	*tmp;
 
 	if (search(*o_tmp) == TRUE)
 	{

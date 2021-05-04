@@ -1,0 +1,9 @@
+in unset.c:78  ==> tmp->in_env = env instead of tmp->in_env = ft_strdup(env)
+in unset_helper2.c:59 ==> adding a free(take_env)
+
+in unset_helper2.c:65 ==> adding a free(splits)
+in unset_helper.c:90 ==> adding a free(s)
+how about meta->argument
+in unset_helper.c:79 ==> s = malloc(1); just to free it in while loop
+check get_next_line.c in k and free in loop;
+dollar_sign_support3.c added the free to line 47

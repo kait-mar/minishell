@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int		big_hexa(int l)
+int	big_hexa(int l)
 {
 	if (l == 10)
 		return ('A');
@@ -29,10 +29,10 @@ int		big_hexa(int l)
 	return (0);
 }
 
-int		check_for_dot(char *s, int i)
+int	check_for_dot(char *s, int i)
 {
-	while (s[i] != 's' && s[i] != 'c' && s[i] != 'x' && s[i] != 'X' &&
-			s[i] != 'p' && s[i] != 'd' && s[i] != 'p' && s[i] != '\0')
+	while (s[i] != 's' && s[i] != 'c' && s[i] != 'x' && s[i] != 'X'
+		&& s[i] != 'p' && s[i] != 'd' && s[i] != 'p' && s[i] != '\0')
 	{
 		if (s[i] == '.')
 			return (1);
@@ -60,15 +60,15 @@ void	before_equal_after(t_flag *check)
 {
 	if (!(check->wich_conversion == 5))
 		check->zero = 1;
-	if (check->int_conversion == 0 && check->unsigned_conversion == 0 &&
-			check->hexa_conversion == 0)
+	if (check->int_conversion == 0 && check->unsigned_conversion == 0
+		&& check->hexa_conversion == 0)
 		check->nmbr_len = 0;
 }
 
 void	before_less_after(t_flag *check)
 {
 	check->zero = 1;
-	if (check->int_conversion == 0 && check->unsigned_conversion == 0 &&
-			check->hexa_conversion == 0 && check->wich_conversion != 5)
+	if (check->int_conversion == 0 && check->unsigned_conversion == 0
+		&& check->hexa_conversion == 0 && check->wich_conversion != 5)
 		check->nmbr_len = 0;
 }

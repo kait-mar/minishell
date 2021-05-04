@@ -12,26 +12,26 @@
 
 #include "ft_printf.h"
 
-int g_i;
+int	g_i;
 
 static	void	all_in(t_flag check)
 {
-	if (check.adress_conversion == 0 && check.wich_conversion == 5 &&
-			check.dot == 1 && check.minus == 0)
+	if (check.adress_conversion == 0 && check.wich_conversion == 5
+		&& check.dot == 1 && check.minus == 0)
 	{
-        ft_putchar('0');
-        ft_putchar('x');
+		ft_putchar('0');
+		ft_putchar('x');
 	}
-	if (check.int_conversion == 0 && check.unsigned_conversion == 0 &&
-			check.hexa_conversion == 0 && check.dot == 1 &&
-			check.wich_conversion != 0 && check.adress_conversion == 0
-			&& check.wich_conversion != 8)
+	if (check.int_conversion == 0 && check.unsigned_conversion == 0
+		&& check.hexa_conversion == 0 && check.dot == 1
+		&& check.wich_conversion != 0 && check.adress_conversion == 0
+		&& check.wich_conversion != 8)
 		check.minus = 1;
 	if (check.minus == 0)
 		print_conversion(&check);
 }
 
-int				conversion_for_print(char *s, int i)
+int	conversion_for_print(char *s, int i)
 {
 	int		j;
 	char	*str;
@@ -53,9 +53,9 @@ int				conversion_for_print(char *s, int i)
 	return (0);
 }
 
-int				print_conversion(t_flag *check)
+int	print_conversion(t_flag *check)
 {
-	int k;
+	int	k;
 
 	k = 0;
 	if (check->wich_conversion == 0)
@@ -77,15 +77,15 @@ int				print_conversion(t_flag *check)
 	return (0);
 }
 
-void			ft_putchar(char c)
+void	ft_putchar(char c)
 {
 	write(1, &c, 1);
 	g_i++;
 }
 
-int				ft_printf(const char *s, ...)
+int	ft_printf(const char *s, ...)
 {
-	va_list ap;
+	va_list	ap;
 	int		i;
 	t_flag	check;
 
@@ -96,13 +96,13 @@ int				ft_printf(const char *s, ...)
 	{
 		if (s[i] == '%')
 		{
-			ft_memset(&check, 0, sizeof(t_flag ));
+			ft_memset(&check, 0, sizeof(t_flag));
 			put_flag((char *)s, &i, &check, ap);
 			all_in(check);
 		}
 		if (s[i] != '%' && s[i] != '\0')
 		{
-            ft_putchar(s[i]);
+			ft_putchar(s[i]);
 			i++;
 		}
 	}

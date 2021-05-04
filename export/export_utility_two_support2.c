@@ -15,7 +15,7 @@
 void	pwd_init(char *s, int *i)
 {
 	char	*string;
-	char 	*pwd;
+	char	*pwd;
 
 	pwd = ft_strdup("PWD=");
 	getcwd(s, 100);
@@ -79,7 +79,7 @@ void	start_env(char **env, int *i)
 {
 	char	*ss;
 	char	*string;
-	char 	*free_string;
+	char	*free_string;
 
 	ss = findin_env(env);
 	string = append("_=", ss);
