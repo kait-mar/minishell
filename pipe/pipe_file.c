@@ -56,11 +56,14 @@ t_meta	*pipe_file(t_meta *head, t_assen assen, char **env, int *status)
 
 	count = 0;
 	old_stdin = dup(STDIN_FILENO);
-	g_global.in = 1;
-	while (head->meta == '|')
+	if (g_global.redirect == 1)
+		g_global.in = g_global.redirect_fd;
+	else
+		g_global.in = 1;
+	while (head != NULL && (head->meta == '|' || g_global.redirect == 1))
 	{
 		if (head->next->meta == '\0' || head->next->meta == '|'
-			|| head->next->meta == ';')
+			|| head->next->meta == ';' || head->next->meta == '<')
 			head = pipe_loop(head, assen, env, &count);
 		else
 			break ;
@@ -70,5 +73,8 @@ t_meta	*pipe_file(t_meta *head, t_assen assen, char **env, int *status)
 		wait(NULL);
 	dup2(old_stdin, 0);
 	close(old_stdin);
+//	head = head->next;
+//	if (head->next != NULL)
+//		head = head->next;
 	return (head);
 }

@@ -114,6 +114,8 @@ struct s_global
     int j_echo;
     int on;
     int in_signal;
+    int redirect;
+    int redirect_fd;
     int first_time;
     int check_single_quote;
     int check_double_quote;
@@ -324,5 +326,6 @@ int		last_thing(t_meta *head, t_assen assen,char **env);
 t_meta	*pipe_last(t_meta *head, t_assen assen, char **env);
 void	free_head(t_meta *head);
 void	free_temp(t_meta *head);
+int 	redirect_true(t_meta *head);
 
 #endif

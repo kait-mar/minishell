@@ -30,7 +30,20 @@ t_meta	*redirect_intput(t_meta *meta, t_assen assen, char **env, int *status)
 		if ((fd) == -1)
 			return (NULL);
 	}
-	redirected_command(fd, meta, assen, env);
+	if (temp->meta == '|')
+	{
+		g_global.redirect = 1;
+		g_global.redirect_fd = fd;
+		pipe_file(meta, assen, env, status);
+		while (temp->meta != '|')
+			temp = temp->next;
+		if (temp->next != NULL)
+			temp = temp->next;
+		close(g_global.redirect_fd);
+		close(fd);
+	}
+	else
+		redirected_command(fd, meta, assen, env);
 	return (temp);
 }
 
