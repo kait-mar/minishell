@@ -31,3 +31,20 @@ void	free_export_command(char **splits)
 	free(splits);
 	splits = NULL;
 }
+
+char	*return_alloc_env(char *str)
+{
+	char	*env;
+	int		len;
+
+	len = ft_strlen(str);
+	env = malloc(len + 1);
+	len = 0;
+	while (str[len] != '\0')
+	{
+		env[len] = str[len];
+		len += 1;
+	}
+	env[len] = '\0';
+	return (env);
+}

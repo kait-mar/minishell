@@ -64,5 +64,7 @@ int			fill_env_init(char **env, int *pwd, int *shlvl, int *start);
 void		filling_export(char **env);
 void		free_export_command(char **splits);
 char		*take_before_equal(char *str);
+void		free_global_exp(char *splits, int k);
+char		*return_alloc_env(char *str);
 
 #endif

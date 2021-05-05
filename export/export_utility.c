@@ -94,22 +94,11 @@ int	match(char *str, char *export)
 {
 	char	*env;
 	char	*new_argument;
-	int		len;
 
-	len = ft_strlen(str);
 	if (check_exp_lex(str) == 1)
 		env = take_before_equal(str);
 	else
-	{
-		env = malloc(len + 1);
-		len = 0;
-		while (str[len] != '\0')
-		{
-			env[len] = str[len];
-			len += 1;
-		}
-		env[len] = '\0';
-	}
+		env = return_alloc_env(str);
 	if (check_exp_lex(export) == 1)
 		new_argument = take_before_equal(export);
 	else

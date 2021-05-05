@@ -15,7 +15,6 @@
 t_export	*put_in_export(char *splits, int *on, t_export *export)
 {
 	int		k;
-	char	*global_free;
 
 	if (in_it(splits) == 1)
 		splits = add_backs(splits);
@@ -27,9 +26,7 @@ t_export	*put_in_export(char *splits, int *on, t_export *export)
 		if (match(g_global.export->saver[k], splits) == 1)
 		{
 			*on = 1;
-			global_free = g_global.export->saver[k];
-			g_global.export->saver[k] = ft_strdup(splits);
-			free(global_free);
+			free_global_exp(splits, k);
 		}
 		k += 1;
 	}

@@ -95,3 +95,12 @@ void	env_command(char **env, t_meta *meta, int *status)
 	}
 	*status = 0;
 }
+
+void	free_global_exp(char *splits, int k)
+{
+	char	*global_free;
+
+	global_free = g_global.export->saver[k];
+	g_global.export->saver[k] = ft_strdup(splits);
+	free(global_free);
+}
