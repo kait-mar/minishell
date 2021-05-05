@@ -83,7 +83,6 @@ void    minishell(char **av, char **env, t_assen assen)
     str = NULL;
     meta = NULL;
     string = malloc(BUFFER + 1);
-//	global = (t_meta *) malloc(sizeof (t_meta));
 	global =NULL;
     if (av[1] == NULL)
 	{

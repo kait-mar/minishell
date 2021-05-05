@@ -54,7 +54,8 @@ void	escape_normal_core(char *str, char **string, int *i, int *j)
 	}
 	else
 	{
-		*i += 1;
+		if (str[*i] != '\\' && str[*i + 1] != '"' && str[*i + 1] != '\'')
+			*i += 1;
 		(*string)[(*j)++] = str[(*i)++];
 	}
 }
