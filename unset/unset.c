@@ -15,6 +15,7 @@
 t_env	*delete_list(t_env *env, int count)
 {
 	t_env	*tmp;
+	t_env	*s;
 
 	tmp = env;
 	while (count > 1)
@@ -24,6 +25,7 @@ t_env	*delete_list(t_env *env, int count)
 	}
 	if (tmp->next->next != NULL)
 	{
+		//free(tmp->next->in_env);
 		free(tmp->next);
 		tmp->next = tmp->next->next;
 	}

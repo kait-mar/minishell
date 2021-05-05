@@ -36,6 +36,7 @@ int	print(char **bult, char **env, int *status)
 
 	i = 0;
 	k = 0;
+	//printf("the *bult is %s\n", *bult);
 	if (only_star(bult[g_global.j_echo]) == 1)
 		stream_directory();
 	while (bult[g_global.j_echo][k] != '\0')
@@ -48,6 +49,16 @@ int	print(char **bult, char **env, int *status)
 		}
 		else
 		{
+			if (bult[g_global.j_echo][k] == '\\')
+			{
+				int esp = how_many_escape(bult[g_global.j_echo]);
+				//printf("the esp is %d\n", esp);
+				int coun = esp / 2;
+				while (coun--)
+					my_putchar('\\');
+				while (bult[g_global.j_echo][k] == '\\')
+					k++;
+			}
 			my_putchar(bult[g_global.j_echo][k]);
 			k++;
 		}
