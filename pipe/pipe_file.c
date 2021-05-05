@@ -63,14 +63,14 @@ t_meta	*pipe_file(t_meta *head, t_assen assen, char **env, int *status)
 	while (head != NULL && (head->meta == '|' || g_global.redirect == 1))
 	{
 		if (head->next->meta == '\0' || head->next->meta == '|'
-			|| head->next->meta == ';' || head->next->meta == '<')
+			|| head->next->meta == ';' || head->next->meta == '<' || head->next->meta == '>')
 			head = pipe_loop(head, assen, env, &count);
 		else
 			break ;
 	}
 	head = pipe_last(head, assen, env);
 	while (count-- >= 0)
-		wait(NULL);
+		wait3(NULL, WUNTRACED, NULL);
 	dup2(old_stdin, 0);
 	close(old_stdin);
 //	head = head->next;

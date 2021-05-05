@@ -44,7 +44,14 @@ t_meta	*pipe_loop(t_meta *head, t_assen assen, char **env, int *count)
 		head = head->next;
 	if (head->meta == '<')
 	{
-		head = redirect_intput(head,assen, env, g_global.status);
+		head = redirect_intput(head, assen, env, g_global.status);
+		while (head->meta == '|')
+			head = head->next;
+		head = head->next;
+	}
+	else if (head->meta == '>')
+	{
+		head = redirect_output(head, assen, env, g_global.status);
 		while (head->meta == '|')
 			head = head->next;
 		head = head->next;

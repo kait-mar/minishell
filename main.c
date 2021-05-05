@@ -85,6 +85,11 @@ int	main(int ac, char **av, char **env)
 	i = 0;
 	memset(&assen, 0, sizeof (assen));
 	assen = minishell_init(env);
+	while (env[i])
+	{
+		env[i] = ft_strdup(env[i]);
+		i += 1;
+	}
 	minishell(av, env, assen);
 	return (*(g_global.status));
 }
