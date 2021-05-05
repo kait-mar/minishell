@@ -37,7 +37,9 @@ char	*ctrl_d(void)
 t_assen	*read_l(char **temp, char **tmp, t_history history, t_assen *climb, char *str)
 {
 	int		r;
+	int		i;
 
+	i = 0; 
 	r = read(history.fd, str, BUFFER);
 	str[r] = '\0';
 	if (r > 0)

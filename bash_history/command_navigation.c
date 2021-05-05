@@ -72,6 +72,16 @@ void 	string_extention(char **tmp, char **temp, char *str)
 	char	*temp_free;
 	char	*tmp_free;
 
+	if (ft_strcmp(*tmp, "") == 0)
+		g_global.signal_input = 0;
+	if (g_global.signal_input == 1)
+	{
+		free(*tmp);
+		free(*temp);
+		*tmp = NULL;
+		*temp = NULL;
+		g_global.signal_input = 0;
+	}
 	tmp_free = *tmp;
 	*tmp = extend_re(str, *tmp);
 	free(tmp_free);
@@ -80,7 +90,7 @@ void 	string_extention(char **tmp, char **temp, char *str)
 	*temp = extend_re(str, *temp);
 	free(temp_free);
 	temp_free = NULL;
-	if (find_re(str, '\n'))
+	if (find_re(str, '\n') && g_global.signal_input == 0)
 	{
 		free(*temp);
 		*temp = NULL;

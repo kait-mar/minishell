@@ -14,6 +14,7 @@
 
 void	inter_signal(int status)
 {
+	g_global.signal_input = 1;
 	g_global.in_signal = 1;
 	if (g_global.on == 1)
 	{
@@ -26,11 +27,11 @@ void	inter_signal(int status)
 	}
 	else
 	{
-		write(1, " \b\b  ", 4);
+		//write(1, " \b\b  ", 4);
 		prompt();
 	}
 }
-
+ 
 void	quit_signal(int signum)
 {
 	if (g_global.on == 1)
@@ -38,8 +39,8 @@ void	quit_signal(int signum)
 		kill(1, SIGQUIT);
 		ft_printf("Quit: 3\n");
 	}
-	else
-		write(1, " \b\b  ", 4);
+	//else
+	//	write(1, " \b\b  ", 4);
 }
 
 void	signal_handler(int *status)

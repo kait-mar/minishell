@@ -77,6 +77,21 @@ int	check_wich_command(char *str)
 	return (0);
 }
 
+int	match_shlvl(char *env, char *sh)
+{
+	int	i;
+
+	i = 0;
+	while (env[i] && sh[i] && env[i] != '=')
+	{
+		if (env[i] == sh[i])
+			i++;
+		else
+			return (0);
+	}
+	return (1);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_assen	assen;
@@ -87,7 +102,8 @@ int	main(int ac, char **av, char **env)
 	assen = minishell_init(env);
 	while (env[i])
 	{
-		env[i] = ft_strdup(env[i]);
+		if (match_shlvl(env[i], "SHLVL=") == 0)
+			env[i] = ft_strdup(env[i]);
 		i += 1;
 	}
 	minishell(av, env, assen);

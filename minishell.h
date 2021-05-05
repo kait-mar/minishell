@@ -130,6 +130,7 @@ struct s_global
     int *status;
     int in;
     int fd[2];
+    int signal_input;
     char	*buffer_address;
 	t_export *export;
 }       g_global;
