@@ -93,7 +93,10 @@ void	exit_command(int *status, char *s, t_assen *assen)
 		filling_history(fd, move);
 	waitpid(pid, &stat, WUNTRACED);
 	if (s[0] == '\0')
+	{
+		ft_printf("exit\n");
 		exit(*status);
+	}
 	else
 		last_things(s, status);
 }

@@ -37,17 +37,25 @@ char	*ctrl_d(void)
 t_assen	*read_l(char **temp, char **tmp, t_history history, t_assen *climb, char *str)
 {
 	int		r;
-	int		i;
 
-	i = 0; 
 	r = read(history.fd, str, BUFFER);
 	str[r] = '\0';
 	if (r > 0)
 	{
 		if (str[0] == 127)
 			back_space(tmp, history, temp, climb);
-		else if (str[0] == 4 && ft_strcmp(*tmp, "") == 0)
+		else if (str[0] == 4 && ((ft_strcmp(*tmp, "") == 0) ||  g_global.signal_input == 1))
+		{
+			if (g_global.signal_input == 1)
+			{
+				free(*tmp);
+				free(*temp);
+				*tmp = NULL;
+				*temp = NULL;
+				g_global.signal_input = 0;
+			}
 			*tmp = ctrl_d();
+		}
 		else if (str[0] != 4 && str[0] != 127)
 			ft_putstr(str);
 		if (history.up_arrow != NULL && ft_memcmp(str, history.up_arrow, 3) == 0)

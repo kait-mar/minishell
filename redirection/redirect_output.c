@@ -18,10 +18,10 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 	t_support	support;
 	t_meta		*temp;
 	char		*new;
-	t_meta		*tp;
+	t_meta		*check;
 
 	temp = meta;
-	tp = temp;
+	check = temp;
 	support.on = 0;
 	while (temp->next != NULL && (temp->meta == '>' || temp->meta_append != 0))
 	{
@@ -41,21 +41,30 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 		if (fd == -1)
 			return (NULL);
 	}
+	if (temp->meta == '<')
+		check = redirect_intput(temp, assen, env, status);
+	if (check == NULL)
+	{
+		while (temp != NULL && temp->meta == '<')
+			temp = temp->next;
+		while (temp != NULL && temp->meta == '>')
+			temp = temp->next;
+		//temp = temp->next;
+	}
+	else if (check != NULL)
+		redirected_output_command(fd, meta, assen, env);
 	if (temp->meta == '|')
 	{
 		g_global.redirect = 1;
 		g_global.redirect_fd = fd;
-		pipe_file(meta, assen, env, status);
+		pipe_file(temp, assen, env, status);
 		while (temp->meta != '|')
 			temp = temp->next;
 		if (temp->next != NULL)
 			temp = temp->next;
-		redirected_output_command(fd, meta, assen, env);
 		close(g_global.redirect_fd);
 		close(fd);
 	}
-	else
-		redirected_output_command(fd, meta, assen, env);
 	return (temp);
 }
 

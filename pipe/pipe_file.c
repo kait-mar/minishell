@@ -45,6 +45,7 @@ int	last_thing(t_meta *head, t_assen assen, char **env)
 		dup2(g_global.in, 0);
 		close(g_global.in);
 	}
+	head->argument = chang_dollar_sign(head->argument, env);
 	built_in(head, assen, env);
 	return (0);
 }

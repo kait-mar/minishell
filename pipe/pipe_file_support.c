@@ -28,6 +28,7 @@ t_meta	*pipe_loop(t_meta *head, t_assen assen, char **env, int *count)
 	i = 0;
 	pipe(g_global.fd);
 	*count += 1;
+	head->argument = chang_dollar_sign(head->argument, env);
 	connecting(head, assen, env);
 	close(g_global.fd[1]);
 	g_global.in = g_global.fd[0];

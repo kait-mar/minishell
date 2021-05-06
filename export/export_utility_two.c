@@ -90,12 +90,9 @@ char	*front_append(char *string, char *to_append)
 int	kait_count(char *str)
 {
 	int	i;
-	int	j;
-	int	k;
 	int	count;
 
 	i = 0;
-	k = 0;
 	count = 0;
 	while (str[i] != '\0')
 	{

@@ -59,10 +59,14 @@ t_assen	*arrow_down(t_history history, t_assen *climb, char **tmp, char **temp)
 	}
 	else if (climb->next == NULL)
 	{
-		ft_putstr(*temp);
+		if (*temp)
+			ft_putstr(*temp);
 		if (*tmp)
 			free(*tmp);
-		*tmp = ft_strdup(*temp);
+		if (*temp)
+			*tmp = ft_strdup(*temp);
+		else
+			*tmp = ft_strdup("");
 	}
 	return (climb);
 }
@@ -74,7 +78,7 @@ void 	string_extention(char **tmp, char **temp, char *str)
 
 	if (ft_strcmp(*tmp, "") == 0)
 		g_global.signal_input = 0;
-	if (g_global.signal_input == 1)
+	if (g_global.signal_input == 1 && str[0] != 4)
 	{
 		free(*tmp);
 		free(*temp);

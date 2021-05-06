@@ -37,8 +37,8 @@ int	print(char **bult, char **env, int *status)
 	i = 0;
 	k = 0;
 	//printf("the *bult is %s\n", *bult);
-	if (only_star(bult[g_global.j_echo]) == 1)
-		stream_directory();
+	//if (only_star(bult[g_global.j_echo]) == 1)
+	//	stream_directory();
 	while (bult[g_global.j_echo][k] != '\0')
 	{
 		if (bult[g_global.j_echo][k] == '$'
@@ -49,7 +49,7 @@ int	print(char **bult, char **env, int *status)
 		}
 		else
 		{
-			if (bult[g_global.j_echo][k] == '\\')
+			if (in_quote(bult[g_global.j_echo], k) == 1)
 			{
 				int esp = how_many_escape(bult[g_global.j_echo]);
 				//printf("the esp is %d\n", esp);

@@ -67,6 +67,7 @@ char	*old_pwd_helper(char **env, int i)
 	char	*s;
 
 	j = 0;
+	take_it = NULL;
 	while (env[j])
 	{
 		if (find_pwd(env[j]) == 1)
@@ -88,7 +89,8 @@ char	*old_pwd_helper(char **env, int i)
 	if (g_global.oldpwd_only)
 		free(g_global.oldpwd_only);
 	g_global.oldpwd_only = ft_strdup(old_pwd);
-	free(take_it);
+	if (take_it)
+		free(take_it);
 	take_it = NULL;
 	return (old_pwd);
 }
