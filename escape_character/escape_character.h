@@ -17,5 +17,6 @@ void	escape_meta_head(char *str, char **string, int *i, int *j);
 void	escape_meta_core(char *str, char **string, int *i, int *j);
 int		count_dollar_core(char *s, int count, int *i);
 void	remove_escape_dollar_support(char **str, char *s, int *i, int *j);
+void	remove_escape_loop(char **str, char *s, int *i, int *j);
 
 #endif

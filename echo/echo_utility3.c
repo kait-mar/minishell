@@ -92,7 +92,6 @@ int	find(char *str, char c)
 	{
 		if (str[i] == c && (i == 0 || (i - 1 >= 0 && str[i - 1] != '\\')))
 			return (1);
-		//if (str[i] == c)
 		i++;
 	}
 	return (0);

@@ -28,7 +28,7 @@ static int	coun(char *s, char c, char b)
 	return (count);
 }
 
-char		**ft_tofree(char *tabs[], int j)
+char	**ft_tofree(char *tabs[], int j)
 {
 	while (--j > 0)
 	{
@@ -49,8 +49,7 @@ char	**keep_split(char *s, char c, char b)
 	lst.i = 0;
 	lst.j = 0;
 	lst.check = -33;
-    lst.count = coun(s, c, b);
-	//printf("the allocated words number is %d\n", lst.count);
+	lst.count = coun(s, c, b);
 	lst.tabs = (char **)malloc(sizeof(*(lst.tabs)) * (lst.count + 1));
 	if (lst.tabs == NULL)
 		return (NULL);

@@ -37,19 +37,7 @@ void	new_pwd(char **env, char *str)
 	if (g_global.pwd_only)
 		free(g_global.pwd_only);
 	g_global.pwd_only = ft_strdup(old_pwd);
-	while (env[i])
-	{
-		if (find_pwd(env[i]) == 1)
-		{
-			if (res >= 1)
-				free(env[i]);
-			env[i] = ft_strdup(old_pwd);
-			res += 1;
-			k = 1;
-			break ;
-		}
-		i += 1;
-	}
+	k = new_pwd_core(env, &i, old_pwd, &res);
 	if (env[i] == NULL && k == 0 && g_global.pwd_on == 0)
 	{
 		env[i] = ft_strdup(old_pwd);
@@ -67,18 +55,8 @@ char	*old_pwd_helper(char **env, int i)
 	char	*s;
 
 	j = 0;
-	while (env[j])
-	{
-		if (find_pwd(env[j]) == 1)
-		{
-			s = ft_strdup(env[j]);
-			take_it = only_after_equal(s);
-			free(s);
-			i = 1;
-			break ;
-		}
-		j += 1;
-	}
+	take_it = NULL;
+	take_it = old_pwd_core(env, &i, &j);
 	if (i == 0 && g_global.pwd_on == 0)
 		old_pwd = old_pwd_support();
 	else if (i == 1)
@@ -88,7 +66,8 @@ char	*old_pwd_helper(char **env, int i)
 	if (g_global.oldpwd_only)
 		free(g_global.oldpwd_only);
 	g_global.oldpwd_only = ft_strdup(old_pwd);
-	free(take_it);
+	if (take_it)
+		free(take_it);
 	take_it = NULL;
 	return (old_pwd);
 }
@@ -120,19 +99,7 @@ void	old_pwd(char **env)
 	k = 0;
 	res = 0;
 	old_pwd = old_pwd_helper(env, i);
-	while (env[i])
-	{
-		if (find_old_pwd(env[i]) == 1)
-		{
-			if (res >= 1)
-				free(env[i]);
-			env[i] = ft_strdup(old_pwd);
-			k = 1;
-			res += 1;
-			break ;
-		}
-		i += 1;
-	}
+	k = pwd_core(env, &i, old_pwd, &res);
 	if (env[i] == NULL && k == 0)
 	{
 		env[i] = ft_strdup(old_pwd);

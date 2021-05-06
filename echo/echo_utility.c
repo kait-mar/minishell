@@ -59,16 +59,9 @@ char	**put_cases1(char **bult)
 	k = 0;
 	while (bult[g_global.j_echo][k] != '\0')
 	{
-		if (bult[g_global.j_echo][k] == '\\'
-			&& (bult[g_global.j_echo][k + 1] == '$'
-			|| bult[g_global.j_echo][k + 1] == '"'
-			|| bult[g_global.j_echo][k + 1] == '\''
-			|| bult[g_global.j_echo][k + 1] == '\\'))
+		if (condition1(bult, k))
 			bult = put_cases2(bult);
-		if (bult[g_global.j_echo][k] == '\\'
-			&& (bult[g_global.j_echo][k + 1] == '$'
-			|| bult[g_global.j_echo][k + 1] == '"'
-			|| bult[g_global.j_echo][k + 1] == '\''))
+		if (condition2(bult, k))
 			k++;
 		else if (bult[g_global.j_echo][k] == '\\')
 		{
@@ -89,7 +82,6 @@ void	put_cases(char **bult, char **env, int *status)
 {
 	char	**split;
 	int		i;
-	char	*s;
 
 	i = 0;
 	while (bult[g_global.j_echo])
@@ -100,21 +92,7 @@ void	put_cases(char **bult, char **env, int *status)
 		else if (find_how_many(bult[g_global.j_echo], 39) == 2
 			&& find_how_many(bult[g_global.j_echo], 34) == 2
 			&& find(bult[g_global.j_echo], '$') == 0)
-		{
-			if (bult[g_global.j_echo][0] == '\'')
-			{
-				s = bult[g_global.j_echo];
-				bult[g_global.j_echo] = ft_strtrim(bult[g_global.j_echo], "'");
-				free(s);
-			}
-			else
-			{
-				s = bult[g_global.j_echo];
-				bult[g_global.j_echo] = ft_strtrim(bult[g_global.j_echo], "\"");
-				free(s);
-			}
-			ft_putstr(bult[g_global.j_echo]);
-		}
+			bult = put_cases_norminette(bult);
 		else if (find_how_many(bult[g_global.j_echo], 39) == 2
 			&& find_how_many(bult[g_global.j_echo], 34) == 2)
 			bult[g_global.j_echo]
@@ -124,4 +102,24 @@ void	put_cases(char **bult, char **env, int *status)
 			last_put_cases(bult, env, status, &i);
 		g_global.j_echo++;
 	}
+}
+
+char	**put_cases_norminette(char **bult)
+{
+	char	*s;
+
+	if (bult[g_global.j_echo][0] == '\'')
+	{
+		s = bult[g_global.j_echo];
+		bult[g_global.j_echo] = ft_strtrim(bult[g_global.j_echo], "'");
+		free(s);
+	}
+	else
+	{
+		s = bult[g_global.j_echo];
+		bult[g_global.j_echo] = ft_strtrim(bult[g_global.j_echo], "\"");
+		free(s);
+	}
+	ft_putstr(bult[g_global.j_echo]);
+	return (bult);
 }

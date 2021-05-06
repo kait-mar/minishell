@@ -117,6 +117,5 @@ char	*remove_space(char *string)
         }
     }
     str[j] = '\0';
-    //free(string);
     return (str);
 }

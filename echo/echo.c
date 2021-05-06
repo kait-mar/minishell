@@ -19,6 +19,21 @@ void	to_free(char **bult)
 	free(bult);
 }
 
+void	flags(char **bult, int *i)
+{
+	while (bult[g_global.j_echo] != NULL)
+	{
+		if (find(bult[g_global.j_echo], 39) == 0
+			&& find(bult[g_global.j_echo], 34) == 0)
+		{
+			if (check_echo_flag(bult, i) == 0)
+				break ;
+		}
+		else
+			break ;
+	}
+}
+
 int	echo(char *argv, char **env, int *status)
 {
 	char	**bult;
@@ -39,19 +54,9 @@ int	echo(char *argv, char **env, int *status)
 	argv = ft_strtrim(argv, "\t");
 	free(s);
 	bult = keep_split(argv, 39, 34);
-	free(argv);
-	while (bult[g_global.j_echo] != NULL)
-	{
-		if (find(bult[g_global.j_echo], 39) == 0
-			&& find(bult[g_global.j_echo], 34) == 0)
-		{
-			if (check_echo_flag(bult, &i) == 0)
-				break ;
-		}
-		else
-			break ;
-	}
+	flags(bult, &i);
 	echo_complet(bult, env, status, i);
 	to_free(bult);
+	free(argv);
 	return (0);
 }

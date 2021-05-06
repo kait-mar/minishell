@@ -27,16 +27,33 @@ int	only_star(char *s)
 		return (0);
 }
 
+int	print_esp(char **bult, int k)
+{
+	int	coun;
+	int	esp;
+
+	if (bult[g_global.j_echo][k] == '\\')
+	{
+		esp = how_many_escape(bult[g_global.j_echo]);
+		coun = esp / 2;
+		while (coun--)
+			my_putchar('\\');
+		while (bult[g_global.j_echo][k] == '\\')
+			k++;
+	}
+	my_putchar(bult[g_global.j_echo][k]);
+	k++;
+	return (k);
+}
+
 int	print(char **bult, char **env, int *status)
 {
 	int		j;
 	int		i;
-	int		fd;
 	int		k;
 
 	i = 0;
 	k = 0;
-	//printf("the *bult is %s\n", *bult);
 	if (only_star(bult[g_global.j_echo]) == 1)
 		stream_directory();
 	while (bult[g_global.j_echo][k] != '\0')
@@ -48,20 +65,7 @@ int	print(char **bult, char **env, int *status)
 			k += 2;
 		}
 		else
-		{
-			if (bult[g_global.j_echo][k] == '\\')
-			{
-				int esp = how_many_escape(bult[g_global.j_echo]);
-				//printf("the esp is %d\n", esp);
-				int coun = esp / 2;
-				while (coun--)
-					my_putchar('\\');
-				while (bult[g_global.j_echo][k] == '\\')
-					k++;
-			}
-			my_putchar(bult[g_global.j_echo][k]);
-			k++;
-		}
+			k = print_esp(bult, k);
 		i = 1;
 	}
 	return (i);

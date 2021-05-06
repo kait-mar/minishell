@@ -3,6 +3,7 @@
 t_sign	change_valid(t_sign lst, char *str, char **env)
 {
 	char	*frees;
+
 	if (inside_quotes(str, lst.i) == 1)
 		lst.remove = 1;
 	lst.s = chang_dollar(lst.s, env, &(lst.on));
@@ -24,13 +25,7 @@ t_sign	change_valid(t_sign lst, char *str, char **env)
 		lst.s = remove_space(lst.s);
 		free(frees);
 	}
-	if (escape_front_true(str, lst.i) == 1
-		&& lst.space_front == 1 && inside_quotes(str, lst.i) == 1)
-		lst.s = add_front_space(lst.s);
-	if (escape_back_true(str, lst.i) == 1 && lst.space_back == 1)
-		lst.s = add_back_space(lst.s);
-	else if ((str[lst.i + lst.j] == '$' && lst.space_back == 1))
-		lst.s = add_back_space(lst.s);
+	lst = change_valid_norminette(lst, str);
 	return (lst);
 }
 

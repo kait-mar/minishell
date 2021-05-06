@@ -37,5 +37,7 @@ char	*string_pwd(int *on);
 char	*string_frees(char *string, int escape, char *ss, int on);
 t_sign	realloc_list(char *str, t_sign lst);
 t_sign	realloc_list_support(char *str, t_sign lst, int *j);
+t_sign	change_valid_norminette(t_sign lst, char *str);
+char	*str_free(char *str, char *s);
 
 #endif
