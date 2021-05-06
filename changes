@@ -7,3 +7,7 @@ how about meta->argument
 in unset_helper.c:79 ==> s = malloc(1); just to free it in while loop
 check get_next_line.c in k and free in loop;
 dollar_sign_support3.c added the free to line 47
+
+exit \\ write in
+signals ctrl-d ctrl-c
+export and unset
