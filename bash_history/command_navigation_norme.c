@@ -85,8 +85,8 @@ char	*tty_loop(t_history history, t_assen *assen, t_assen *climb, char *str)
 		climb = read_l(&temp, &tmp, history, climb, str);
 		if (tmp && find_re(tmp, '\n'))
 		{
-			if (ft_strcmp(tmp, "") != 0)
-				append_assen(&assen, tmp);
+			/*if (ft_strcmp(tmp, "") != 0)
+				append_assen(&assen, tmp);*/
 			break ;
 		}
 	}

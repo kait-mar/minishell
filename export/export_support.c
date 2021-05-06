@@ -17,7 +17,7 @@ void	filling_global(t_export *tmp)
 	int	i;
 
 	i = 0;
-	g_global.export = (t_export *) malloc(sizeof (t_export));
+	g_global.export = malloc(sizeof(t_export));
 	if (!(g_global.export))
 		return ;
 	g_global.export->saver = (char **) ft_calloc(sizeof (char *),
@@ -36,7 +36,7 @@ t_export	*filling_tmp(void)
 	t_export	*tmp;
 	int			i;
 
-	tmp = (t_export *) malloc(sizeof (t_export));
+	tmp = (t_export *)malloc(sizeof (t_export));
 	if (!(tmp))
 		return (NULL);
 	i = 0;

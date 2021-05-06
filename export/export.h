@@ -66,5 +66,7 @@ void		free_export_command(char **splits);
 char		*take_before_equal(char *str);
 void		free_global_exp(char *splits, int k);
 char		*return_alloc_env(char *str);
+void		fill_shlvl(char **ss, char **env, int i, int *shlvl);
+void		fill_pwd(char **ss, int i, int *pwd);
 
 #endif

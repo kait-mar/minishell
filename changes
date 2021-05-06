@@ -8,6 +8,7 @@ in unset_helper.c:79 ==> s = malloc(1); just to free it in while loop
 check get_next_line.c in k and free in loop;
 dollar_sign_support3.c added the free to line 47
 
+<<<<<<< HEAD
 
 echo \*
 unset | $
@@ -15,3 +16,8 @@ rm -rf
 echo \\
 pipe  then redirection number
 echo $'\033[0;33m'
+=======
+exit \\ write in
+signals ctrl-d ctrl-c
+export and unset
+>>>>>>> edc679ca478fdac5585eff63b46ec73f413cbcf4

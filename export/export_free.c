@@ -48,3 +48,22 @@ char	*return_alloc_env(char *str)
 	env[len] = '\0';
 	return (env);
 }
+
+void	fill_shlvl(char **ss, char **env, int i, int *shlvl)
+{
+	char	*s;
+
+	s = ft_itoa(check_shlvl(ss[i]));
+	env[i] = append("SHLVL=", s);
+	free(s);
+	s = NULL;
+	*shlvl = 1;
+}
+
+void	fill_pwd(char **ss, int i, int *pwd)
+{
+	if (g_global.pwd_only)
+		free(g_global.pwd_only);
+	g_global.pwd_only = ft_strdup(ss[i]);
+	*pwd = 1;
+}

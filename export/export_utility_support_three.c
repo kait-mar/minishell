@@ -23,8 +23,8 @@ char	*space_take_only(char *str, int *i, int *space)
 		j += 1;
 		*space = 0;
 	}
-	while (((ft_isprint(str[j]) == 1 ) || str[j] == '=')
-		   && (check_single_double_quote(str[j]) == 0))
+	while (((ft_isprint(str[j]) == 1) || str[j] == '=')
+		&& (check_single_double_quote(str[j]) == 0))
 		j += 1;
 	splits = from_to(str, *i, j);
 	*i = j;
