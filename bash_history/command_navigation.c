@@ -91,10 +91,7 @@ void 	string_extention(char **tmp, char **temp, char *str)
 	free(temp_free);
 	temp_free = NULL;
 	if (find_re(str, '\n') && g_global.signal_input == 0)
-	{
-		free(*temp);
-		*temp = NULL;
-	}
+		*temp = string_extention_helper(*temp);
 }
 
 char	*reading_input(t_assen *assen, char *string, t_history history)

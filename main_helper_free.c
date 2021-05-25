@@ -14,7 +14,7 @@
 
 void	free_head(t_meta *head)
 {
-	t_meta *point;
+	t_meta	*point;
 
 	while (head != NULL)
 	{

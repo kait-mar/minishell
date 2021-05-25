@@ -337,5 +337,7 @@ int	pwd_core(char **env, int *i, char *old_pwd, int *res);
 t_meta 	*meta_out_between_core(t_meta *temp, char *splits);
 int d_quotes(char *str, int i, char c);
 char	**splits_by_meta(char *str, int *meta);
-
+int		exit_command_void(int *status, char *s);
+t_meta	*split_it_header(char **splits, t_meta *global, int *i);
+int	check_meta(char *str);
 #endif

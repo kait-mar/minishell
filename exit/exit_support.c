@@ -57,3 +57,17 @@ long long	ft_atois(const char *str)
 	res = results((char *)str, neg, i, res);
 	return (res);
 }
+
+int	exit_command_void(int *status, char *s)
+{
+	char	**split;
+
+	split = ft_split(s, ' ');
+	if (split[1] != NULL)
+	{
+		printf("minishell: exit: too many arguments\n");
+		*status = 1;
+		return (0);
+	}
+	return (1);
+}

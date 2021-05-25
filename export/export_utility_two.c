@@ -67,11 +67,7 @@ char	*front_append(char *string, char *to_append)
 	if (!(s))
 		return (NULL);
 	i = 0;
-	while (to_append[i] != '\0')
-	{
-		s[i] = to_append[i];
-		i += 1;
-	}
+	s = front_add_helper(s, to_append, &i);
 	j = 0;
 	while (string[j] != '\0')
 	{

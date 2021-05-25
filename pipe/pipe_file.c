@@ -63,7 +63,8 @@ t_meta	*pipe_file(t_meta *head, t_assen assen, char **env, int *status)
 	while (head != NULL && (head->meta == '|' || g_global.redirect == 1))
 	{
 		if (head->next->meta == '\0' || head->next->meta == '|'
-			|| head->next->meta == ';' || head->next->meta == '<' || head->next->meta == '>')
+			|| head->next->meta == ';' || head->next->meta == '<'
+			|| head->next->meta == '>')
 			head = pipe_loop(head, assen, env, &count);
 		else
 			break ;

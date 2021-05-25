@@ -54,5 +54,6 @@ char			*extend_re(char *str, char *s);
 int				int_put(int c);
 t_history		init_hist(t_history history);
 void			append_assen(t_assen **assen, char *cmd);
+char			*string_extention_helper(char *temp);
 
 #endif
