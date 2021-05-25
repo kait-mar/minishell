@@ -68,8 +68,7 @@ char	*rm_space_variable(char *s, int wich)
 		}
 	}
 	str[j] = '\0';
-	free(s);
-	return (str);
+	return (str_free(str, s));
 }
 
 int	inside_quotes(char *s, int i)

@@ -12,38 +12,6 @@
 
 #include "minishell.h"
 
-int	until_meta(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '"')
-		{
-			i += 1;
-			while (str[i] != '\0' && str[i] != '"')
-			{
-				i += 1;
-			}
-			if (str[i] == '"')
-				i += 1;
-		}
-		if (str[i] == '\'')
-		{
-			i += 1;
-			while (str[i] != '\0' && str[i] != '\'')
-				i += 1;
-			if (str[i] == '\'')
-				i += 1;
-		}
-		if ((str[i] == '|' || str[i] == '>' || str[i] == '<' || str[i] == ';') && active(str, i) == 1)
-			return (i);
-		i += 1;
-	}
-	return (i);
-}
-
 void	free_meta_struct(t_meta *meta)
 {
 	free(meta->argument);
@@ -86,7 +54,8 @@ int	count_meta(char *str)
 			continue ;
 		else if (str[i] == '\\')
 			count = return_count_meta(str, &i, count, &how_mutch);
-		else if (str[i] == '|' || str[i] == '<' || str[i] == '>' || str[i] == ';')
+		else if (str[i] == '|' || str[i] == '<'
+			|| str[i] == '>' || str[i] == ';')
 		{
 			count += 1;
 			i += 1;
@@ -113,9 +82,9 @@ char	**splits_by_meta(char *str, int *meta)
 	while (str[i] != '\0')
 	{
 		if (skip_quote(str, &i))
-			continue;
+			continue ;
 		else if ((str[i] == ';' || str[i] == '|'
-			|| str[i] == '<' || str[i] == '>') && (active(str, i) == 1))
+				|| str[i] == '<' || str[i] == '>') && (active(str, i) == 1))
 			splits[k++] = filling_split(str, &i, &j);
 		else
 			i += 1;
@@ -124,41 +93,4 @@ char	**splits_by_meta(char *str, int *meta)
 	free(str);
 	str = NULL;
 	return (splits);
-}
-
-int	check_append(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == '>' && s[i + 1] == '>')
-			return (TRUE);
-		i += 1;
-	}
-	return (FALSE);
-}
-
-t_meta	*split_it_all(char *str, char **env, t_meta *global)
-{
-	char	**splits;
-	int		i;
-	int		check;
-	char	*s;
-
-	i = 0;
-	check = 0;
-	splits = NULL;
-	if (!(global = (t_meta *) malloc(sizeof(t_meta))))
-		return (NULL);
-	splits = splits_by_meta(str, &check);
-	if (splits[i] == NULL)
-        return NULL;
-	s = take_first_word(splits[i]);
-    global->command = check_wich_command(s);
-    free(s);
-	global = split_it_all_loop(splits, global, i);
-	free_export_command(splits);
-	return (global);
 }

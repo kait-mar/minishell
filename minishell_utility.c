@@ -50,73 +50,72 @@ int	count_new(char *str)
 				end -= 1;
 		}
 		i += 1;
-		count  += 1;
+		count += 1;
 	}
 	count -= (start + end);
 	return (count);
 }
 
-
 char	*remove_space(char *string)
 {
-    int i;
-    int j;
-    int start;
-    int end;
-    char *str;
+	int		i;
+	int		j;
+	int		start;
+	int		end;
+	char	*str;
 
-    i = 0;
-    j = 0;
-    if (!(str = (char *) malloc(sizeof (char ) * (count_new(string) + 1))))
-        return (NULL);
-    while (string[i] == ' ')
-        i += 1;
-    start = i;
-    end = ft_strlen(string) - 1;
-    while (string[end] == ' ')
-        end--;
-    if (string[end] == '\\')
-        end += 1;
-    while (start <= end)
-    {
-        if (string[start] == '"')
-        {
-            str[j++] = string[start++];
-            while (string[start] != '\0' && string[start] != '"')
-            {
-                str[j] = string[start];
-                j += 1;
-                start += 1;
-            }
-            str[j++] = string[start++];
-        }
-        else if (string[start] == '\'')
-        {
-            str[j++] = string[start++];
-            while (string[start] != '\0' && string[start] != '\'')
-            {
-                str[j] = string[start];
-                j += 1;
-                start += 1;
-            }
-            str[j++] = string[start++];
-        }
-        else if (string[start] == ' ' && active(string, start) == 1)
-        {
-            str[j++] = string[start++];
-            while (string[start] == ' ')
-                start++;
-        }
-        else if (string[start] == ' ' && active(string,start) == 0)
-            str[j++] = string[start++];
-        else
-        {
-            str[j] = string[start];
-            j += 1;
-            start += 1;
-        }
-    }
-    str[j] = '\0';
-    //free(string);
-    return (str);
+	i = 0;
+	j = 0;
+	str = (char *) malloc(sizeof (char ) * (count_new(string) + 1));
+	if (!str)
+		return (NULL);
+	while (string[i] == ' ')
+		i += 1;
+	start = i;
+	end = ft_strlen(string) - 1;
+	while (string[end] == ' ')
+		end--;
+	if (string[end] == '\\')
+		end += 1;
+	while (start <= end)
+	{
+		if (string[start] == '"')
+		{
+			str[j++] = string[start++];
+			while (string[start] != '\0' && string[start] != '"')
+			{
+				str[j] = string[start];
+				j += 1;
+				start += 1;
+			}
+			str[j++] = string[start++];
+		}
+		else if (string[start] == '\'')
+		{
+			str[j++] = string[start++];
+			while (string[start] != '\0' && string[start] != '\'')
+			{
+				str[j] = string[start];
+				j += 1;
+				start += 1;
+			}
+			str[j++] = string[start++];
+		}
+		else if (string[start] == ' ' && active(string, start) == 1)
+		{
+			str[j++] = string[start++];
+			while (string[start] == ' ')
+				start++;
+		}
+		else if (string[start] == ' ' && active(string, start) == 0)
+			str[j++] = string[start++];
+		else
+		{
+			str[j] = string[start];
+			j += 1;
+			start += 1;
+		}
+	}
+	str[j] = '\0';
+	return (str);
 }

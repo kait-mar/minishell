@@ -13,5 +13,8 @@ char	*last_print_env_case(char *bult, char **env,
 int		check_echo_flag(char **bult, int *i);
 void	echo_complet(char **bult, char **env, int *status, int i);
 void	to_free(char **bult);
+int		condition1(char **bult, int k);
+int		condition2(char **bult, int k);
+char	**put_cases_norminette(char **bult);
 
 #endif

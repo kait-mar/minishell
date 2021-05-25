@@ -72,14 +72,3 @@ int  main()
     printf("Done\n");
     return (0);
 }
-
-
-
-
-
-        if (str[i] == '"' || str[i] == '\'')
-            escape_normal_head(str, &string, &i, &j);
-        else if (str[i] == '\\')
-            escape_meta_core(str, &string, &i, &j);
-        else
-            string[j++] = str[i++];

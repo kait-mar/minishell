@@ -23,7 +23,7 @@ int 	redirect_true(t_meta *head)
 
 t_meta	*pipe_loop(t_meta *head, t_assen assen, char **env, int *count)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	pipe(g_global.fd);

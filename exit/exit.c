@@ -72,18 +72,12 @@ void	exit_command(int *status, char *s, t_assen *assen)
 	int			fd;
 	pid_t		pid;
 	int			stat;
-	char		**split;
 
 	move = assen;
 	if (move->next != NULL)
 		move = move->next;
-	split = ft_split(s, ' ');
-	if (split[1] != NULL)
-	{
-		printf("minishell: exit: too many arguments\n");
-		*status = 1;
+	if (exit_command_void(status, s) == 0)
 		return ;
-	}
 	s = take_only(s);
 	s = without_that(s, '\"');
 	s = without_that(s, '\'');

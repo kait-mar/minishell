@@ -65,3 +65,9 @@ char	*chang_dollar_sign(char *str, char **env)
 	}
 	return (str);
 }
+
+char	*str_free(char *str, char *s)
+{
+	free(s);
+	return (str);
+}

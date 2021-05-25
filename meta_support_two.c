@@ -46,10 +46,7 @@ t_meta 	*meta_out_between(char **splits, t_meta *temp, int *i)
 		splits[*i] = escape_meta(splits[*i]);
 		if (temp->command != 0 && temp->command != 4 && temp->command != 6)
 		{
-			temp->argument = skip_first_word(splits[*i]);
-			temp_free = temp->argument;
-			temp->argument = ft_strtrim(temp->argument, "\t");
-			free(temp_free);
+			temp = meta_out_between_core(temp, splits[*i]);
 		}
 		else if (temp->command == 0 || temp->command == 4 || temp->command == 6)
 		{
@@ -60,5 +57,16 @@ t_meta 	*meta_out_between(char **splits, t_meta *temp, int *i)
 		}
 	}
 	temp->meta_append = 0;
+	return (temp);
+}
+
+t_meta 	*meta_out_between_core(t_meta *temp, char *splits)
+{
+	char	*temp_free;
+
+	temp->argument = skip_first_word(splits);
+	temp_free = temp->argument;
+	temp->argument = ft_strtrim(temp->argument, "\t");
+	free(temp_free);
 	return (temp);
 }

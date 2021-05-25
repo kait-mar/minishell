@@ -57,6 +57,16 @@ int	count_dollar_escape(char *s)
 	return (count);
 }
 
+void	remove_escape_loop(char **str, char *s, int *i, int *j)
+{
+	while (s[*i] == '\\')
+	{
+		*i += 1;
+		(*str)[(*j)++] = s[(*i)++];
+	}
+	(*str)[(*j)++] = s[(*i)++];
+}
+
 char	*remove_escape_dollar(char *s)
 {
 	int		i;
@@ -71,14 +81,7 @@ char	*remove_escape_dollar(char *s)
 	while (s[i] != '\0')
 	{
 		if (s[i] == '\\' && check_escape_dollar(s, i) == 1)
-		{
-			while (s[i] == '\\')
-			{
-				i += 1;
-				str[j++] = s[i++];
-			}
-			str[j++] = s[i++];
-		}
+			remove_escape_loop(&str, s, &i, &j);
 		else if (s[i] == '$' && s[i + 1] == '\\')
 			remove_escape_dollar_support(&str, s, &i, &j);
 		else

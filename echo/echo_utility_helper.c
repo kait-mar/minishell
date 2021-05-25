@@ -16,6 +16,14 @@ char	*last_print_env_case(char *bult, char **env,
 	return (s);
 }
 
+char	**increment_flag(char **bult, int *k, int *i)
+{
+	(*k)++;
+	*i = 1;
+	bult[g_global.j_echo] = skip_first_word((bult[g_global.j_echo]));
+	return (bult);
+}
+
 int	check_echo_flag(char **bult, int *i)
 {
 	char	**str;
@@ -30,11 +38,7 @@ int	check_echo_flag(char **bult, int *i)
 	while (str[k])
 	{
 		if (flag_strcmp(str[k], "-n") == 0)
-		{
-			k++;
-			*i = 1;
-			bult[g_global.j_echo] = skip_first_word((bult[g_global.j_echo]));
-		}
+			bult = increment_flag(bult, &k, i);
 		else
 		{
 			b = 1;

@@ -57,7 +57,7 @@ void minishell_execution(t_meta *head, t_assen assen, char **env)
           /*  if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
                 head = head->next;*/
         }
-        else if (head->meta == '<')
+		else if (head->meta == '<')
         {
             head = redirect_intput(head, assen, env, g_global.status);
             //if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')

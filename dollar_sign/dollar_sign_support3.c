@@ -41,11 +41,22 @@ char	*string_frees(char *string, int escape, char *ss, int on)
 		}
 		else
 		{
-			//i have added this free
 			string_free = string;
 			string = adding_escape(ss, escape);
 			free(string_free);
 		}
 	}
 	return (string);
+}
+
+t_sign	change_valid_norminette(t_sign lst, char *str)
+{
+	if (escape_front_true(str, lst.i) == 1
+		&& lst.space_front == 1 && inside_quotes(str, lst.i) == 1)
+		lst.s = add_front_space(lst.s);
+	if (escape_back_true(str, lst.i) == 1 && lst.space_back == 1)
+		lst.s = add_back_space(lst.s);
+	else if ((str[lst.i + lst.j] == '$' && lst.space_back == 1))
+		lst.s = add_back_space(lst.s);
+	return (lst);
 }

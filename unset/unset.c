@@ -25,11 +25,9 @@ t_env	*delete_list(t_env *env, int count)
 	}
 	if (tmp->next->next != NULL)
 	{
-		//free(tmp->next->in_env);
-		s = tmp->next;
+		free(tmp->next->in_env);
+		free(tmp->next);
 		tmp->next = tmp->next->next;
-		free(s->in_env);
-		free(s);
 	}
 	else
 	{

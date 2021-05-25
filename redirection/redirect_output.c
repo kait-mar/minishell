@@ -17,8 +17,9 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 	int			fd;
 	t_support	support;
 	t_meta		*temp;
-	char		*new;
 	t_meta		*check;
+	char		*new;
+	//t_meta		*check;
 
 	temp = meta;
 	check = temp;
@@ -55,6 +56,7 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 		redirected_output_command(fd, meta, assen, env);
 	if (temp->meta == '|')
 	{
+
 		g_global.redirect = 1;
 		g_global.redirect_fd = fd;
 		pipe_file(temp, assen, env, status);

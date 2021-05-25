@@ -32,12 +32,6 @@ char	**copy_all(t_env *take_env, char **env)
 		i += 1;
 		tmp = tmp->next;
 	}
-	/*while (take_env != NULL)
-	{
-		env[i] = tmp->in_env;
-		i += 1;
-		tmp = tmp->next;
-	}*/
 	if (env[i] == NULL)
 		return (env);
 	else
@@ -73,7 +67,6 @@ void	unset_command(char **env, char *str, int *status)
 	g_global.export->saver = copy_all(take_env, g_global.export->saver);
 	to_free(splits);
 	free_struct(take_env);
-	//free(str);
 }
 
 void	free_struct(t_env *lst)

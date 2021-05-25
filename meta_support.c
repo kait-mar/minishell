@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	check_meta(char *str)
+int	check_meta(char *str)
 {
 	int	i;
 	int	count;
@@ -59,11 +59,7 @@ t_meta	*split_it_all_loop(char **splits, t_meta *global, int i)
 	char	*s;
 	char	*split_free;
 
-	if (check_meta(splits[i]) == TRUE)
-		global = meta_in(splits, global, &i);
-	else if (check_meta(splits[i]) == FALSE)
-		global = meta_out(splits, global, &i);
-	global->next = NULL;
+	global = split_it_header(splits, global, &i);
 	while (splits[i])
 	{
 		temp = (t_meta *) malloc(sizeof(t_meta));
