@@ -323,7 +323,7 @@ long long	ft_atois(const char *str);
 void	last_things(char *s, int *status);
 int		connecting(t_meta *head, t_assen assen, char **env);
 t_meta	*pipe_loop(t_meta *head, t_assen assen, char **env, int *count);
-int		last_thing(t_meta *head, t_assen assen,char **env);
+int 	last_thing(t_meta *head, t_assen assen,char **env);
 t_meta	*pipe_last(t_meta *head, t_assen assen, char **env);
 void	free_head(t_meta *head);
 void	free_temp(t_meta *head);

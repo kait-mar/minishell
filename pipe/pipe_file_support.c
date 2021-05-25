@@ -50,7 +50,7 @@ t_meta	*pipe_loop(t_meta *head, t_assen assen, char **env, int *count)
 			head = head->next;
 		head = head->next;
 	}
-	else if (head->meta == '>')
+	else if (head->meta == '>' && head->next->meta != 0)
 	{
 		head = redirect_output(head, assen, env, g_global.status);
 		while (head->meta == '|')
@@ -71,7 +71,7 @@ t_meta	*pipe_last(t_meta *head, t_assen assen, char **env)
 		if (head->next != NULL && head != NULL)
 		{
 			if (head->next->meta == '\0' || head->next->meta == ';')
-				last_thing(head, assen, env);
+				 last_thing(head, assen, env);
 		}
 		else if (head != NULL)
 			last_thing(head, assen, env);

@@ -38,15 +38,24 @@ int	connecting(t_meta *head, t_assen assen, char **env)
 	return (pid);
 }
 
-int	last_thing(t_meta *head, t_assen assen, char **env)
+int		last_thing(t_meta *head, t_assen assen, char **env)
 {
 	if (g_global.in != 0)
 	{
 		dup2(g_global.in, 0);
 		close(g_global.in);
 	}
-	head->argument = chang_dollar_sign(head->argument, env);
-	built_in(head, assen, env);
+	if (head->meta == '>')
+	{
+		head = redirect_output(head, assen, env, g_global.status);
+		while (head->meta == '|')
+			head = head->next;
+	}
+	else
+	{
+		head->argument = chang_dollar_sign(head->argument, env);
+		built_in(head, assen, env);
+	}
 	return (0);
 }
 
@@ -74,8 +83,13 @@ t_meta	*pipe_file(t_meta *head, t_assen assen, char **env, int *status)
 		wait3(NULL, WUNTRACED, NULL);
 	dup2(old_stdin, 0);
 	close(old_stdin);
-//	head = head->next;
-//	if (head->next != NULL)
-//		head = head->next;
+	if (head->meta == '>')
+	{
+		head = head->next;
+		while (head->meta == '|')
+			head = head->next;
+		if (head->next != NULL)
+			head = head->next;
+	}
 	return (head);
 }
