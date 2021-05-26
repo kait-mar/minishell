@@ -41,34 +41,21 @@ void    push_end(t_append **head, char *string)
     last->next = push_end;
     push_end->next = NULL;
 }
+int	find(char *str, char c)
+{
+	int	i;
 
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == c && (i == 0 || (i - 1 >= 0 && str[i - 1] != '\\')))
+			return (1);
+		i++;
+	}
+	return (0);
+}
 int  main()
 {
-    t_append *push;
-    int fd;
-    pid_t pid;
-    int stat;
-
-    push = NULL;
-    push_end(&push, "labhairi");
-    push_end(&push, "mouaad");
-    push_end(&push, "casa");
-    push_end(&push, "negra");
-    fd = open(".minishell_history", O_CREAT | O_APPEND | O_RDWR, S_IRWXU);
-    if ((pid = fork()) > 0)
-    {
-        if (dup2(fd, 1) == -1)
-            printf("%s\n", strerror(errno));
-        while (push != NULL)
-        {
-            printf("%s\n", push->string);
-            push = push->next;
-        }
-        exit(EXIT_SUCCESS);
-    }
-    else
-        exit(EXIT_FAILURE);
-    waitpid(pid, &stat, WUNTRACED);
-    printf("Done\n");
-    return (0);
+    printf("the returbed value is %d\n", find("\\\\\\\\", 39));
 }
+

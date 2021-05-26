@@ -32,6 +32,7 @@ void minishell_execution(t_meta *head, t_assen assen, char **env)
 	while (head != NULL)
     {
         head->argument = chang_dollar_sign(head->argument, env);
+        printf("the arg is %s\n", head->argument);
         if (head->command == 0)
 		{
         	s = take_first_word(head->argument);
