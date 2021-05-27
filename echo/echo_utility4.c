@@ -32,15 +32,17 @@ int	print_esp(char **bult, int k)
 	int	coun;
 	int	esp;
 
-	if (bult[g_global.j_echo][k] == '\\')
+	/*if (bult[g_global.j_echo][k] == '\\')
 	{
 		esp = how_many_escape(bult[g_global.j_echo]);
 		coun = esp / 2;
+		if (esp == 1)
+			coun = 1;
 		while (coun--)
 			my_putchar('\\');
 		while (bult[g_global.j_echo][k] == '\\')
 			k++;
-	}
+	}*/
 	my_putchar(bult[g_global.j_echo][k]);
 	k++;
 	return (k);

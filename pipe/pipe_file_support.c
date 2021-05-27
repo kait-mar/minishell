@@ -52,10 +52,16 @@ t_meta	*pipe_loop(t_meta *head, t_assen assen, char **env, int *count)
 	}
 	else if (head->meta == '>' && head->next->meta != 0)
 	{
+		if (g_global.in != 0)
+		{
+			dup2(g_global.in, 0);
+			close(g_global.in);
+		}
 		head = redirect_output(head, assen, env, g_global.status);
 		while (head->meta == '|')
 			head = head->next;
-		head = head->next;
+		if (head->next != NULL)
+			head = head->next;
 	}
 	return (head);
 }

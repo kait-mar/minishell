@@ -45,7 +45,9 @@ t_export	*export_loop(char *splits, t_export *export, int on, int *j)
 	splits = split_reformulation(splits);
 	if (check_exp_lex(splits) == 1)
 	{
-		splits = error_reformulation(splits);
+	//	printf("Before error ==> %s\n", splits);
+		//splits = error_reformulation(splits);
+	//	printf("After error ==> %s\n", splits);
 		export->argument[*j] = ft_strdup(splits);
 		export->flag = 1;
 		*j += 1;

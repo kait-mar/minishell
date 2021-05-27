@@ -61,6 +61,14 @@ char	*chang_dollar_sign(char *str, char **env)
 			if (str[lst.i] == '\'')
 				lst.i += 1;
 		}
+		else if (str[lst.i] == '"')
+		{
+			lst.i += 1;
+			while (str[lst.i] != '"' && str[lst.i] != '\0')
+				lst.i += 1;
+			if (str[lst.i] == '"')
+				lst.i += 1;
+		}
 		lst = change_dollar_core(lst, &str, env);
 	}
 	return (str);

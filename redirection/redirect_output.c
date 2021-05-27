@@ -52,18 +52,17 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 			temp = temp->next;
 		//temp = temp->next;
 	}
-	else if (check != NULL)
+	if (check != NULL)
 		redirected_output_command(fd, meta, assen, env);
 	if (temp->meta == '|')
 	{
-
 		g_global.redirect = 1;
 		g_global.redirect_fd = fd;
-		pipe_file(temp, assen, env, status);
-		while (temp->meta != '|')
+		temp = pipe_file(temp, assen, env, status);
+		/*while (temp->meta != '|')
 			temp = temp->next;
 		if (temp->next != NULL)
-			temp = temp->next;
+			temp = temp->next;*/
 		close(g_global.redirect_fd);
 		close(fd);
 	}

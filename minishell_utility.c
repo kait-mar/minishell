@@ -101,20 +101,28 @@ char	*remove_space(char *string)
 			}
 			str[j++] = string[start++];
 		}
-		else if (string[start] == ' ' && active(string, start) == 1)
+		else if (string[start] == ' ' && active(string, start) == 1&& string[start - 2] != '\\' )
 		{
-			str[j++] = string[start++];
+			int tt = start;
+			while (string[tt] == ' ')
+				tt -= 1;
+			if (string[tt] != '\\')
+				str[j++] = string[start++];
 			while (string[start] == ' ')
 				start++;
 		}
-		else if (string[start] == ' ' && active(string, start) == 0)
+		else if (string[start] == ' ' && active(string, start) == 0 && string[start - 2] != '\\')
+		{
 			str[j++] = string[start++];
-		else
+		}
+		else if (string[start] != ' ')
 		{
 			str[j] = string[start];
 			j += 1;
 			start += 1;
 		}
+		else
+			start += 1;
 	}
 	str[j] = '\0';
 	return (str);

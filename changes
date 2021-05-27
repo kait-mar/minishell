@@ -245,3 +245,9 @@ echo \"
 exit
 echo \"
 exit
+
+echo "'$HOME'"
+env | sort | grep P | cat > f | cat f
+export a="\\\\\\b"
+echo \\\\\\$a
+echo 'dfsfs'";"'dsdsds'
