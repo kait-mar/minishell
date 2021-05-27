@@ -70,7 +70,7 @@ void	print_count(char *str, int *i, int *count)
 
 	j = *i;
 	while (((ft_isprint(str[j]) == 1 ) || str[j] == '=')
-		   && ((check_single_double_quote(str[j]) == 0)
+		   	&& ((check_single_double_quote(str[j]) == 0)
 			   || (check_single_double_quote(str[j]) == 1
 				   && str[j - 1] == '\\')))
 		j += 1;
@@ -99,3 +99,47 @@ void	single_quote_count(char *str, int *i, int *count)
 	*count += 1;
 	*i = j;
 }
+
+/*remove_space_support(string, &i, &start, &end);
+void	remove_space_support(char *string, int *i, int *start, int *end)
+{
+	while (string[*i] == ' ')
+		*i += 1;
+	*start = *i;
+	*end = ft_strlen(string) - 1;
+	while (string[*end] == ' ')
+		(*end)--;
+	if (string[*end] == '\\')
+		*end += 1;
+}
+
+
+
+
+str = remove_space_quotes(str, string, &j, &start);
+char	*remove_space_quotes(char *str, char *string, int *j, int *start)
+{
+	if (string[*start] == '"')
+	{
+		str[(*j)++] = string[(*start)++];
+		while (string[(*start)] != '\0' && string[(*start)] != '"')
+		{
+			str[(*j)] = string[*start];
+			*j += 1;
+			*start += 1;
+		}
+		str[(*j)++] = string[(*start)++];
+	}
+	else if (string[*start] == '\'')
+	{
+		str[(*j)++] = string[(*start)++];
+		while (string[*start] != '\0' && string[*start] != '\'')
+		{
+			str[(*j)] = string[*start];
+			*j += 1;
+			start += 1;
+		}
+		str[(*j)++] = string[(*start)++];
+	}
+	return 
+}*/

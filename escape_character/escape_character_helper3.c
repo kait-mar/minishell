@@ -12,9 +12,9 @@
 
 #include "../minishell.h"
 
-int		in_quote(char *str, int i)
+int	in_quote(char *str, int i)
 {
-	int j;
+	int	j;
 
 	j = i;
 	while (str[j] == '\\')
@@ -66,18 +66,7 @@ void	escape_normal_core(char *str, char **string, int *i, int *j)
 	}
 	else
 	{
-		if (in_quote(str, *i) == 1)
-		{
-			while (str[*i] != '"' && str[*i] != '\'')
-				(*string)[(*j)++] = str[(*i)++];
-			if (str[*i] == '"' || str[*i] == '\'')
-				(*string)[(*j)++] = str[(*i)++];
-		}
-		else
-		{
-			*i += 1;
-			(*string)[(*j)++] = str[(*i)++];
-		}
+		escape_core_support(str, string, i, j);
 //		if (!(str[*i] == '\\' && (str[*i + 1] == '"' || str[*i + 1] == '\'')))
 //			*i += 1;
 //		(*string)[(*j)++] = str[(*i)++];

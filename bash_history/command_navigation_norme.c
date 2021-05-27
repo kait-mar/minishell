@@ -20,7 +20,7 @@ struct termios	tty_init(int fd)
 	if (tcgetattr(fd, &tp) == -1)
 		exit(-1);
 	save = tp;
-	tp.c_lflag &= ~(ICANON | ECHO);
+	tp.c_lflag &= ~ (ICANON | ECHO);
 	tp.c_cc[VMIN] = 0;
 	tp.c_cc[VTIME] = 0;
 	if (tcsetattr(fd, TCSANOW, &tp) == 1)
@@ -34,43 +34,31 @@ char	*ctrl_d(void)
 	return (ft_strdup("exit \n"));
 }
 
-t_assen	*read_l(char **temp, char **tmp, t_history history, t_assen *climb, char *str)
+t_assen	*read_l(char **temp, char **tmp, t_glb glb, char *str)
 {
 	int		r;
 
-	r = read(history.fd, str, BUFFER);
+	r = read(glb.history.fd, str, BUFFER);
 	str[r] = '\0';
 	if (r > 0)
 	{
 		if (str[0] == 127)
-			back_space(tmp, history, temp, climb);
-		else if (str[0] == 4 && ((ft_strcmp(*tmp, "") == 0) ||  g_global.signal_input == 1))
-		{
-			if (g_global.signal_input == 1)
-			{
-				free(*tmp);
-				free(*temp);
-				*tmp = NULL;
-				*temp = NULL;
-				g_global.signal_input = 0;
-			}
-			*tmp = ctrl_d();
-		}
+			back_space(tmp, glb.history, temp, glb.climb);
+		else if (str[0] == 4 && ((ft_strcmp(*tmp, "") == 0)
+				|| g_global.signal_input == 1))
+			*tmp = read_l_support(temp, tmp, glb);
 		else if (str[0] != 4 && str[0] != 127)
 			ft_putstr(str);
-		if (history.up_arrow != NULL
-			&& ft_memcmp(str, history.up_arrow, 3) == 0)
-			climb = arrow_up(tmp, history, climb);
-		if (history.down_arrow != NULL
-			&& ft_memcmp(str, history.down_arrow, 3) == 0)
-			climb = arrow_down(history, climb, tmp, temp);
-		if ((history.down_arrow != NULL
-				&& ft_memcmp(str, history.down_arrow, 3) != 0)
-			&& (history.up_arrow != NULL
-				&& ft_memcmp(str, history.up_arrow, 3) != 0) && str[0] != 127)
+		if (glb.history.up_arrow != NULL
+			&& ft_memcmp(str, glb.history.up_arrow, 3) == 0)
+			glb.climb = arrow_up(tmp, glb.history, glb.climb);
+		if (glb.history.down_arrow != NULL
+			&& ft_memcmp(str, glb.history.down_arrow, 3) == 0)
+			glb.climb = arrow_down(glb.history, glb.climb, tmp, temp);
+		if (condition_command(glb, str))
 			string_extention(tmp, temp, str);
 	}
-	return (climb);
+	return (glb.climb);
 }
 
 char	*tty_loop(t_history history, t_assen *assen, t_assen *climb, char *str)
@@ -78,12 +66,15 @@ char	*tty_loop(t_history history, t_assen *assen, t_assen *climb, char *str)
 	char	*temp;
 	char	*tmp;
 	char	*s;
+	t_glb	glb;
 
 	temp = NULL;
 	tmp = NULL;
+	glb.history = history;
+	glb.climb = climb;
 	while (TRUE)
 	{
-		climb = read_l(&temp, &tmp, history, climb, str);
+		climb = read_l(&temp, &tmp, glb, str);
 		if (tmp && find_re(tmp, '\n'))
 		{
 			/*if (ft_strcmp(tmp, "") != 0)

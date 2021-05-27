@@ -70,8 +70,6 @@ typedef	struct s_spaces
 
 /*	Metacharacter "Semicolon" */
 
-
-
 typedef struct  s_semi
 {
     char    *command;
@@ -340,4 +338,6 @@ char	**splits_by_meta(char *str, int *meta);
 int		exit_command_void(int *status, char *s);
 t_meta	*split_it_header(char **splits, t_meta *global, int *i);
 int	check_meta(char *str);
+char	*remove_space_core(char *str, char *string, int *j, int *start);
+
 #endif

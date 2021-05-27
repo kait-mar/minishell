@@ -43,9 +43,6 @@ void	built_in(t_meta *meta, t_assen assen, char **env)
 
 void	prompt(void)
 {
-	//char	s[100];
-
-	//getcwd(s, 100);
 	if (g_global.in_signal == 1)
 	{
 		ft_printf("\nminishell> ");

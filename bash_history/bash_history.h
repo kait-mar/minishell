@@ -36,11 +36,16 @@ typedef struct s_assen
 	struct s_assen	*prev;
 }				t_assen;
 
+typedef struct s_glb
+{
+	t_history	history;
+	t_assen		*climb;
+}				t_glb;
 
 struct termios	tty_init(int fd);
-t_assen			*read_l(char **temp, char **tmp,
-					t_history history, t_assen *climb, char *str);
-char			*tty_loop(t_history history, t_assen *assen, t_assen *climb, char *string);
+t_assen			*read_l(char **temp, char **tmp, t_glb glb, char *str);
+char			*tty_loop(t_history history, t_assen *assen,
+					t_assen *climb, char *string);
 t_assen			*arrow_down(t_history history,
 					t_assen *climb, char **tmp, char **temp);
 t_assen			*arrow_up(char **tmp, t_history history, t_assen *climb);
@@ -56,5 +61,8 @@ int				int_put(int c);
 t_history		init_hist(t_history history);
 void			append_assen(t_assen **assen, char *cmd);
 char			*string_extention_helper(char *temp);
+char			*read_l_support(char **temp, char **tmp, t_glb glb);
+char			*ctrl_d(void);
+int				condition_command(t_glb glb, char *str);
 
 #endif

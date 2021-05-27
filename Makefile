@@ -23,7 +23,7 @@ SRCS=  cd/cd.c cd/cd_utility.c pwd/pwd.c export/export.c \
 	   executable/executables.c echo/echo_utility_two.c meta.c redirection/file_append.c \
 	   exit/exit.c redirection/redirect_output.c pipe/pipe_file.c redirection/redirect_input.c signals.c \
 	   dollar_sign/dollar_sign.c escape_character/escape_character.c escape_character/escape_character_helper.c \
-	   minishell_utility.c escape_character/escape_character_helper2.c  escape_character/escape_character_helper3.c \
+	    escape_character/escape_character_helper2.c  escape_character/escape_character_helper3.c \
 	   escape_character/escape_character_helper4.c escape_character/escape_character_helper5.c \
 	   dollar_sign/dollar_sign_utility.c echo/echo_utility3.c echo/echo_utility4.c \
 	   executable/executable_utility.c  \
@@ -43,7 +43,8 @@ SRCS=  cd/cd.c cd/cd_utility.c pwd/pwd.c export/export.c \
 	   dollar_sign/dollar_sign_support.c dollar_sign/dollar_sign_support2.c dollar_sign/realloc_input.c \
 	   dollar_sign/dollar_sign_support3.c \
 		echo/echo_conditions.c cd/cd_norme.c meta2.c \
-		export/export_v3.c meta_support2.c
+		export/export_v3.c meta_support2.c bash_history/command_support.c minishell_utils/minishell_utility2.c \
+		minishell_utils/minishell_utility.c
 
 OBJ = $(SRCS:.c=.o)
 

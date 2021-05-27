@@ -86,7 +86,6 @@ void	put_cases(char **bult, char **env, int *status)
 	i = 0;
 	while (bult[g_global.j_echo])
 	{
-		//printf("==> %d || %d \n", find(bult[g_global.j_echo], 39), find(bult[g_global.j_echo], 34));
 		if (find(bult[g_global.j_echo], 39) == 0
 			&& find(bult[g_global.j_echo], 34) == 0)
 			print(bult, env, status);
