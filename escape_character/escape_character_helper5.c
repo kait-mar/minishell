@@ -41,3 +41,19 @@ void	remove_escape_dollar_support(char **str, char *s, int *i, int *j)
 	}
 	(*str)[(*j)++] = s[(*i)++];
 }
+
+void	escape_core_support(char *str, char **string, int *i, int *j)
+{
+	if (in_quote(str, *i) == 1)
+	{
+		while (str[*i] != '"' && str[*i] != '\'')
+			(*string)[(*j)++] = str[(*i)++];
+		if (str[*i] == '"' || str[*i] == '\'')
+			(*string)[(*j)++] = str[(*i)++];
+	}
+	else
+	{
+		*i += 1;
+		(*string)[(*j)++] = str[(*i)++];
+	}
+}

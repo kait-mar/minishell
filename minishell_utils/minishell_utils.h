@@ -10,6 +10,8 @@ typedef struct s_split
 	char		**tabs;
 	int			count;
 	int			check;
+	int			start;
+	int			end;
 }	t_split;
 
 void		count_helper(char *s, char b, int *i, int *count);
@@ -25,5 +27,6 @@ t_split		keep_split_support3(char *s, t_split lst, char c);
 t_split		keep_split_core(char *s, t_split lst, char c, char b);
 t_split		increment_counters2(char *s, t_split lst, char c, char b);
 t_split		keep_split_supporter(t_split lst, char c, char *s);
+int			count_new(char *str);
 
 #endif

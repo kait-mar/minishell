@@ -44,7 +44,6 @@ void	append_assen(t_assen **assen, char *cmd)
 t_history	init_hist(t_history history)
 {
 	char	buffer[2048];
-	//char	*buffer_address;
 
 	history.tty_name = ttyname(STDIN_FILENO);
 	history.term_type = getenv("TERM");
@@ -62,7 +61,5 @@ t_history	init_hist(t_history history)
 	history.delete_char = tgetstr("dc", &(g_global.buffer_address));
 	history.delete_mode = tgetstr("dm", &(g_global.buffer_address));
 	history.exit_d_mode = tgetstr("ed", &(g_global.buffer_address));
-	//added a free here
-	//free(buffer_address);
 	return (history);
 }
