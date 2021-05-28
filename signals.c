@@ -19,6 +19,9 @@ void	inter_signal(int status)
 	if (g_global.on == 1)
 	{
 		kill(1, SIGINT);
+		//printf("before : status is %d\n", *(g_global.status));
+		*(g_global.status) = 130;
+		//printf("after : status is %d\n", *(g_global.status));
 	}
 	if (g_global.on == 1)
 	{

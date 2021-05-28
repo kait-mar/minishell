@@ -16,9 +16,9 @@ t_assen	minishell_init(char **env)
 {
 	t_assen	assen;
 
-	memset(&g_global, 0, sizeof (g_global));
-	memset(&assen, 0, sizeof (t_assen));
-	g_global.status = malloc(sizeof (int ));
+	memset(&g_global, 0, sizeof(g_global));
+	memset(&assen, 0, sizeof(t_assen));
+	g_global.status = malloc(sizeof(int ));
 	*(g_global.status) = 0;
 	filling_export(env);
 	filling(&assen);
@@ -45,7 +45,7 @@ void	minishell_execution(t_meta *head, t_assen assen, char **env)
 	{
 		head = minishell_exec_helper(head, env);
 		if (token_error(head, g_global.status) == 1)
-			break;
+			break ;
 		if (head->meta == ';')
 			built_in(head, assen, env);
 		else if (head->meta == '|')
@@ -71,38 +71,38 @@ t_meta	*minishell_helper(t_meta *meta, char **env, char **str, t_meta *global)
 {
 	char	*str_free;
 
-		str_free = *str;
-		*str = remove_space(*str);
-		free(str_free);
-		str_free = *str;
-		*str = ft_strtrim(*str, "\t");
-		free(str_free);
-		str_free = *str;
-		*str = escape_normal(*str);
-		free(str_free);
-		free_head(meta);
-		meta = NULL;
-		meta = split_it_all(*str, env, global);
-		return (meta);
+	str_free = *str;
+	*str = remove_space(*str);
+	free(str_free);
+	str_free = *str;
+	*str = ft_strtrim(*str, "\t");
+	free(str_free);
+	str_free = *str;
+	*str = escape_normal(*str);
+	free(str_free);
+	free_head(meta);
+	meta = NULL;
+	meta = split_it_all(*str, env, global);
+	return (meta);
 }
 
-void    minishell(char **av, char **env, t_assen assen)
+void	minishell(char **av, char **env, t_assen assen)
 {
-	t_meta	*meta;
-	t_meta	*head;
-	t_meta	*global;
-	char    *str;
-	char	*string;
-	t_history   history;
+	t_meta		*meta;
+	t_meta		*head;
+	t_meta		*global;
+	char		*str;
+	char		*string;
+	t_history	history;
 
 	head = NULL;
 	str = NULL;
 	meta = NULL;
 	string = malloc(BUFFER + 1);
-	global =NULL;
+	global = NULL;
 	if (av[1] == NULL)
 	{
-		memset(&history, 0, sizeof (t_history));
+		memset(&history, 0, sizeof(t_history));
 		history = init_hist(history);
 	}
 	while (TRUE)

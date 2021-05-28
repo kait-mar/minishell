@@ -336,5 +336,5 @@ int	check_meta(char *str);
 char	*remove_space_core(char *str, char *string, int *j, int *start);
 t_meta	*minishell_helper(t_meta *meta, char **env, char **str, t_meta *global);
 void	minishell_global(t_meta *head, t_assen assen, char **env, char **av);
-
+int	match_shlvl(char *env, char *sh);
 #endif

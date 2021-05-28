@@ -8,7 +8,7 @@ char	*last_print_env_case(char *bult, char **env,
 	s = NULL;
 	if (*bult == '$' && *(bult + 1) == '?')
 	{
-		ft_printf("%d", *status);
+		ft_printf("%d", *(g_global.status));
 		s = bult + 2;
 	}
 	else

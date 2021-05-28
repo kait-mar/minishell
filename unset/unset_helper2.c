@@ -28,21 +28,30 @@ char	**copy_all(t_env *take_env, char **env)
 	tmp = take_env;
 	while (tmp != NULL)
 	{
+		if (env[i])
+			free(env[i]);
 		env[i] = tmp->in_env;
 		i += 1;
 		tmp = tmp->next;
 	}
-	if (env[i] == NULL)
-		return (env);
-	else
+	while (env[i] != NULL)
+	{
+		if (env[i] && match_shlvl(env[i], "SHLVL=") == 0)
+			free(env[i]);
+		env[i] = NULL;
+		i += 1;
+	}
+	env[i] = NULL;
+	/*else
 	{
 		while (env[i] != NULL)
 		{
+			printf("free[%s]\n", env[i]);
 			free(env[i]);
 			env[i] = NULL;
 			i += 1;
 		}
-	}
+	}*/
 	return (env);
 }
 

@@ -67,11 +67,14 @@ t_env	*delete_in_env(t_env *env, char **splits, int on, int *status)
 	int	j;
 
 	i = 0;
+	printf("before delete\n");
 	while (splits[i] != NULL)
 	{
+		printf("delete %s\n", splits[i]);
 		env = delete_in_env_core(env, splits[i], on);
 		i += 1;
 	}
+	printf("after delete\n");
 	return (env);
 }
 
@@ -80,10 +83,10 @@ t_env	*adding_last(t_env *head, int i, char *env)
 	t_env	*s;
 	t_env	*tmp;
 
-	tmp = (t_env *) malloc(sizeof(t_env));
+	tmp = (t_env *)malloc(sizeof(t_env));
 	if (!tmp)
 		return (NULL);
-	tmp->in_env = env;
+	tmp->in_env = ft_strdup(env);
 	tmp->next = NULL;
 	if (i == 0)
 		head = tmp;
