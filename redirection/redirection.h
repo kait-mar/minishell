@@ -10,22 +10,40 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef MINISHELL_REDIRECTION_H
-#define MINISHELL_REDIRECTION_H
-
+#ifndef REDIRECTION_H
+# define REDIRECTION_H
 
 typedef struct s_meta
 {
-	char	*argument;
-	int		command;
-	char	meta;
-	int     meta_append;
-	int     backslash;
-	struct	s_meta	*next;
+	char			*argument;
+	int				command;
+	char			meta;
+	int				meta_append;
+	int				backslash;
+	struct s_meta	*next;
 }				t_meta;
 
-void	redirected_fork(t_meta *meta, t_assen assen, char **env, int fd);
-void	redirect_output_fork(t_meta *meta, t_assen assen, char **env, int fd);
+typedef struct s_support
+{
+	int	on;
+	int	append;
+	int	check_meta;
+}				t_support;
+
+void		redirected_fork(t_meta *meta, t_assen assen, char **env, int fd);
+void		redirect_output_fork(t_meta *meta, t_assen assen,
+				char **env, int fd);
+t_meta		*redirect_pipe(t_meta *meta, t_meta *temp,
+				char **env, t_assen assen);
+t_meta		*meta_input(t_meta *meta, t_meta *temp, int *on);
+t_meta		*input_free(t_meta *meta);
+int			input_conditions1(t_meta *meta, t_meta *temp);
+char		**fill_split(char **split);
+t_meta		*global_temp(t_meta *temp, t_assen assen, char **env, int fd);
+t_meta		*redirect_temp(t_meta *temp, t_assen assen,
+				char **env, t_meta *check);
+t_support	output_support(t_meta *temp);
+t_support	output_initializer(t_meta **temp, t_meta **check,
+				t_meta *meta, t_support support);
 
 #endif

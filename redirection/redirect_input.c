@@ -12,7 +12,6 @@
 
 #include "../minishell.h"
 
-//echo hello > $kait and kait is not in env !!!!!!!!!!!
 t_meta	*redirect_intput(t_meta *meta, t_assen assen, char **env, int *status)
 {
 	int		fd;
@@ -33,19 +32,50 @@ t_meta	*redirect_intput(t_meta *meta, t_assen assen, char **env, int *status)
 	}
 	if (temp->meta == '|')
 	{
-		g_global.redirect = 1;
 		g_global.redirect_fd = fd;
-		pipe_file(meta, assen, env, status);
-		while (temp->meta != '|')
-			temp = temp->next;
-		if (temp->next != NULL)
-			temp = temp->next;
-		close(g_global.redirect_fd);
+		temp = redirect_pipe(meta, temp, env, assen);
 		close(fd);
 	}
 	else
 		redirected_command(fd, meta, assen, env);
 	return (temp);
+}
+
+t_meta	*redirect_pipe(t_meta *meta, t_meta *temp, char **env, t_assen assen)
+{
+	g_global.redirect = 1;
+	pipe_file(meta, assen, env, g_global.status);
+	while (temp->meta != '|')
+		temp = temp->next;
+	if (temp->next != NULL)
+		temp = temp->next;
+	close(g_global.redirect_fd);
+	return (temp);
+}
+
+int	input_conditions1(t_meta *meta, t_meta *temp)
+{
+	return (ft_strcmp(meta->argument, "") != 0
+		&& ft_strcmp(temp->argument, "") != 0
+		&& (meta->argument[ft_strlen(meta->argument) - 1] != ' '
+			&& *(temp->argument) != ' '));
+}
+
+t_meta	*meta_input(t_meta *meta, t_meta *temp, int *on)
+{
+	char	*str;
+
+	str = take_first_word(temp->argument);
+	if (meta->command == 0 && check_wich_command(str) != 0 && *on == 0)
+	{
+		free(str);
+		meta = temp;
+		str = take_first_word(temp->argument);
+		meta->command = check_wich_command(str);
+		*on = 1;
+	}
+	free(str);
+	return (meta);
 }
 
 t_meta	*input_conditions(t_meta *meta, char **new, t_meta *temp, int *on)
@@ -62,31 +92,12 @@ t_meta	*input_conditions(t_meta *meta, char **new, t_meta *temp, int *on)
 		temp->argument = ft_strdup(temp->argument + 1);
 		free(str);
 	}
-	str = take_first_word(temp->argument);
-	if (meta->command == 0 && check_wich_command(str) != 0 && *on == 0)
-	{
-		free(str);
-		meta = temp;
-		str = take_first_word(temp->argument);
-		//meta->command = check_wich_command(take_first_word(ft_strtrim(temp->argument, " ")));
-		meta->command = check_wich_command(str);
-		free(str);
-		*on = 1;
-	}
-	else
-		free(str);
+	meta = meta_input(meta, temp, on);
 	*new = final_file_name(*new);
 	if (*on == 0)
 	{
-		if (ft_strcmp(meta->argument, "") != 0
-			&& ft_strcmp(temp->argument, "") != 0
-			&& (meta->argument[ft_strlen(meta->argument) - 1] != ' '
-				&& *(temp->argument) != ' '))
-		{
-			str = meta->argument;
-			meta->argument = ft_strjoin(meta->argument, " ");
-			free(str);
-		}
+		if (input_conditions1(meta, temp))
+			meta = input_free(meta);
 		str = meta->argument;
 		meta->argument = ft_strjoin(meta->argument, temp->argument);
 		free(str);

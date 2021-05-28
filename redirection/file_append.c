@@ -64,3 +64,36 @@ char	*file_name(char *str)
 	}
 	return (name);
 }
+
+t_meta	*input_free(t_meta *meta)
+{
+	char	*str;
+
+	str = meta->argument;
+	meta->argument = ft_strjoin(meta->argument, " ");
+	free(str);
+	return (meta);
+}
+
+t_support	output_support(t_meta *temp)
+{
+	t_support	support;
+
+	support.on = 0;
+	support.append = 0;
+	support.check_meta = 0;
+	if (temp->meta_append != 0)
+		support.append = 1;
+	else if (temp->meta == '>')
+		support.check_meta = '>';
+	return (support);
+}
+
+t_support	output_initializer(t_meta **temp, t_meta **check,
+			t_meta *meta, t_support support)
+{
+	*temp = meta;
+	*check = *temp;
+	support.on = 0;
+	return (support);
+}

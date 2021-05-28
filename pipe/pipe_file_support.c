@@ -21,6 +21,31 @@ int 	redirect_true(t_meta *head)
 	return (0);
 }
 
+t_meta	*pipe_loop_support(t_meta *head, char **env, t_assen assen)
+{
+	if (head->meta == '<')
+	{
+		head = redirect_intput(head, assen, env, g_global.status);
+		while (head->meta == '|')
+			head = head->next;
+		head = head->next;
+	}
+	else if (head->meta == '>' && head->next->meta != 0)
+	{
+		if (g_global.in != 0)
+		{
+			dup2(g_global.in, 0);
+			close(g_global.in);
+		}
+		head = redirect_output(head, assen, env, g_global.status);
+		while (head->meta == '|')
+			head = head->next;
+		if (head->next != NULL)
+			head = head->next;
+	}
+	return (head);
+}
+
 t_meta	*pipe_loop(t_meta *head, t_assen assen, char **env, int *count)
 {
 	int	i;
@@ -43,26 +68,7 @@ t_meta	*pipe_loop(t_meta *head, t_assen assen, char **env, int *count)
 	}
 	else
 		head = head->next;
-	if (head->meta == '<')
-	{
-		head = redirect_intput(head, assen, env, g_global.status);
-		while (head->meta == '|')
-			head = head->next;
-		head = head->next;
-	}
-	else if (head->meta == '>' && head->next->meta != 0)
-	{
-		if (g_global.in != 0)
-		{
-			dup2(g_global.in, 0);
-			close(g_global.in);
-		}
-		head = redirect_output(head, assen, env, g_global.status);
-		while (head->meta == '|')
-			head = head->next;
-		if (head->next != NULL)
-			head = head->next;
-	}
+	head = pipe_loop_support(head, env, assen);
 	return (head);
 }
 

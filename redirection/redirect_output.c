@@ -19,22 +19,12 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 	t_meta		*temp;
 	t_meta		*check;
 	char		*new;
-	//t_meta		*check;
 
-	temp = meta;
-	check = temp;
-	support.on = 0;
+	support = output_initializer(&temp, &check, meta, support);
 	while (temp->next != NULL && (temp->meta == '>' || temp->meta_append != 0))
 	{
-		support.on = 0;
-		support.append = 0;
-		support.check_meta = 0;
-		if (temp->meta_append != 0)
-			support.append = 1;
-		else if (temp->meta == '>')
-			support.check_meta = '>';
+		support = output_support(temp);
 		temp = temp->next;
-		//r emove chang_dolar_sign
 		temp->argument = chang_dollar_sign(temp->argument, env);
 		meta = name_and_condition(&new, &(support.on), meta, temp);
 		fd = redirect_command_head(support.check_meta, support.append, new);
@@ -42,30 +32,35 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 		if (fd == -1)
 			return (NULL);
 	}
+	temp = redirect_temp(temp, assen, env, check);
+	if (check != NULL)
+		redirected_output_command(fd, meta, assen, env);
+	if (temp->meta == '|')
+		temp = global_temp(temp, assen, env, fd);
+	return (temp);
+}
+
+t_meta	*redirect_temp(t_meta *temp, t_assen assen, char **env, t_meta *check)
+{
 	if (temp->meta == '<')
-		check = redirect_intput(temp, assen, env, status);
+		check = redirect_intput(temp, assen, env, g_global.status);
 	if (check == NULL)
 	{
 		while (temp != NULL && temp->meta == '<')
 			temp = temp->next;
 		while (temp != NULL && temp->meta == '>')
 			temp = temp->next;
-		//temp = temp->next;
 	}
-	if (check != NULL)
-		redirected_output_command(fd, meta, assen, env);
-	if (temp->meta == '|')
-	{
-		g_global.redirect = 1;
-		g_global.redirect_fd = fd;
-		temp = pipe_file(temp, assen, env, status);
-		/*while (temp->meta != '|')
-			temp = temp->next;
-		if (temp->next != NULL)
-			temp = temp->next;*/
-		close(g_global.redirect_fd);
-		close(fd);
-	}
+	return (temp);
+}
+
+t_meta	*global_temp(t_meta *temp, t_assen assen, char **env, int fd)
+{
+	g_global.redirect = 1;
+	g_global.redirect_fd = fd;
+	temp = pipe_file(temp, assen, env, g_global.status);
+	close(g_global.redirect_fd);
+	close(fd);
 	return (temp);
 }
 
@@ -74,10 +69,28 @@ char	*final_file_name(char *file)
 	char	*new;
 	char	*temp;
 	int		i;
-	int		len;
 	char	**split;
 
 	split = keep_split(file, 39, 34);
+	split = fill_split(split);
+	i = 1;
+	new = ft_strdup(split[0]);
+	while (split[i])
+	{
+		temp = new;
+		new = ft_strjoin(new, split[i++]);
+		free(temp);
+	}
+	free(file);
+	to_free(split);
+	return (new);
+}
+
+char	**fill_split(char **split)
+{
+	int		i;
+	char	*temp;
+
 	i = 0;
 	while (split[i] != NULL)
 	{
@@ -95,15 +108,5 @@ char	*final_file_name(char *file)
 		}
 		i++;
 	}
-	i = 1;
-	new = ft_strdup(split[0]);
-	while (split[i])
-	{
-		temp = new;
-		new = ft_strjoin(new, split[i++]);
-		free(temp);
-	}
-	free(file);
-	to_free(split);
-	return (new);
+	return (split);
 }

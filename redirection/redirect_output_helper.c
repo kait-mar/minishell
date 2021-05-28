@@ -36,12 +36,9 @@ void	redirected_output_command(
 		ft_putstr(strerror(errno));
 	else if (pid == 0)
 		redirect_output_fork(meta, assen, env, fd);
-	//else
-	//{
-		if ((waitpid(pid, g_global.status, WUNTRACED) == -1))
-			ft_putstr(strerror(errno));
-		close(fd);
-//	}
+	if ((waitpid(pid, g_global.status, WUNTRACED) == -1))
+		ft_putstr(strerror(errno));
+	close(fd);
 }
 
 int	redirect_command_head(int check_meta, int append, char *new)
@@ -72,7 +69,7 @@ int	redirect_command_head(int check_meta, int append, char *new)
 
 t_meta	*name_and_condition(char **new, int *on, t_meta *meta, t_meta *temp)
 {
-	char 	*str;
+	char	*str;
 
 	*new = file_name(temp->argument);
 	str = temp->argument;
@@ -82,38 +79,14 @@ t_meta	*name_and_condition(char **new, int *on, t_meta *meta, t_meta *temp)
 	{
 		str = temp->argument;
 		temp->argument = ft_strdup(temp->argument + 1);
-		//always turn to this if any problem has been occured
 		free(str);
 	}
-	str = take_first_word(temp->argument);
-	if (meta->command == 0 && check_wich_command(str) != 0 && *on == 0)
-	{
-		free(str);
-		//if (meta != temp)
-		//{
-		//	free(meta->argument);
-		//	free(meta);
-		//}
-		meta = temp;
-		str = take_first_word(temp->argument);
-		meta->command = check_wich_command(str);
-		free(str);
-		*on = 1;
-	}
-	else
-		free(str);
+	meta = meta_input(meta, temp, on);
 	*new = final_file_name(*new);
 	if (*on == 0)
 	{
-		if (ft_strcmp(meta->argument, "") != 0
-			&& ft_strcmp(temp->argument, "") != 0
-			&& (meta->argument[ft_strlen(meta->argument) - 1] != ' '
-				&& *(temp->argument) != ' '))
-		{
-			str = meta->argument;
-			meta->argument = ft_strjoin(meta->argument, " ");
-			free(str);
-		}
+		if (input_conditions1(meta, temp))
+			meta = input_free(meta);
 		str = meta->argument;
 		meta->argument = ft_strjoin(meta->argument, temp->argument);
 		free(str);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	return_count_meta(char *str, int *i, int count, int *how_mutch)
 {

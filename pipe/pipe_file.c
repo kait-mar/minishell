@@ -38,7 +38,7 @@ int	connecting(t_meta *head, t_assen assen, char **env)
 	return (pid);
 }
 
-int		last_thing(t_meta *head, t_assen assen, char **env)
+int	last_thing(t_meta *head, t_assen assen, char **env)
 {
 	if (g_global.in != 0)
 	{
@@ -59,10 +59,27 @@ int		last_thing(t_meta *head, t_assen assen, char **env)
 	return (0);
 }
 
+int	pipe_condition(t_meta *head)
+{
+	return (head->next->meta == '\0' || head->next->meta == '|'
+		|| head->next->meta == ';' || head->next->meta == '<'
+		|| head->next->meta == '>');
+}
+
+t_meta	*pipe_file_core(t_meta *head)
+{
+	head = head->next;
+	while (head->meta == '|')
+		head = head->next;
+	if (head->next != NULL)
+		head = head->next;
+	return (head);
+}
+
 t_meta	*pipe_file(t_meta *head, t_assen assen, char **env, int *status)
 {
-	int		count;
-	int		old_stdin;
+	int	count;
+	int	old_stdin;
 
 	count = 0;
 	old_stdin = dup(STDIN_FILENO);
@@ -72,9 +89,7 @@ t_meta	*pipe_file(t_meta *head, t_assen assen, char **env, int *status)
 		g_global.in = 1;
 	while (head != NULL && (head->meta == '|' || g_global.redirect == 1))
 	{
-		if (head->next->meta == '\0' || head->next->meta == '|'
-			|| head->next->meta == ';' || head->next->meta == '<'
-			|| head->next->meta == '>')
+		if (pipe_condition(head))
 			head = pipe_loop(head, assen, env, &count);
 		else
 			break ;
@@ -85,12 +100,6 @@ t_meta	*pipe_file(t_meta *head, t_assen assen, char **env, int *status)
 	dup2(old_stdin, 0);
 	close(old_stdin);
 	if (head->meta == '>')
-	{
-		head = head->next;
-		while (head->meta == '|')
-			head = head->next;
-		if (head->next != NULL)
-			head = head->next;
-	}
+		head = pipe_file_core(head);
 	return (head);
 }

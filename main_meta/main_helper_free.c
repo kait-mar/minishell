@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	free_head(t_meta *head)
 {
@@ -42,4 +42,19 @@ void	free_temp(t_meta *head)
 		free(head);
 		head = NULL;
 	}
+}
+
+void	minishell_global(t_meta *head, t_assen assen, char **env, char **av)
+{
+	minishell_execution(head, assen, env);
+	if (av[1])
+		exit(*(g_global.status));
+	g_global.first_time = 1;
+	if (g_in_redirect == 1)
+	{
+		g_in_redirect = 0;
+		g_global.in_signal = 1;
+	}
+	else
+		g_global.in_signal = 0;
 }

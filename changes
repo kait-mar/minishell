@@ -251,3 +251,5 @@ env | sort | grep P | cat > f | cat f
 export a="\\\\\\b"
 echo \\\\\\$a
 echo 'dfsfs'";"'dsdsds'
+
+!!!!!!!!! echo hello > $kait and kait is not in env !!!!!!!!!!!
