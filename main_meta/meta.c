@@ -89,7 +89,15 @@ char	**splits_by_meta(char *str, int *meta)
 		else
 			i += 1;
 	}
-	splits[k++] = from_to(str, j, i);
+	//splits[k++] = from_to(str, j, i);
+	//splits = NUll diriha f same sing line
+	if (i == j)
+		splits[k] = NULL;
+	else
+	{
+		splits[k++] = from_to(str, j, i);
+		splits[k] = NULL;
+	}
 	free(str);
 	str = NULL;
 	return (splits);

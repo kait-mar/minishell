@@ -32,6 +32,7 @@ void	redirect_output_fork(t_meta *meta, t_assen assen, char **env, int fd)
 {
 	if ((dup2(fd, STDOUT_FILENO) != -1))
 	{
+		fprintf(stderr, "the meta is %s\n", meta->argument);
 		built_in(meta, assen, env);
 		close(fd);
 		exit(EXIT_SUCCESS);

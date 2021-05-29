@@ -98,3 +98,18 @@ int	check_inside_back_quote(char *s, int i)
 	}
 	return (1);
 }
+
+int check_front_quote(char *s, int i)
+{
+   int count;
+   count = 0;
+   while (i >= 0)
+   {
+      if (s[i] == '"')
+         count += 1;
+      i -= 1;
+   }
+   if ((count % 2) == 0)
+      return (0);
+   return (1);
+}

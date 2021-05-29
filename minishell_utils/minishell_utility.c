@@ -57,7 +57,7 @@ char	*remove_space_quotes(char *str, char *string, int *j, int *start)
 
 char	*remove_space_core(char *str, char *string, int *j, int *start)
 {
-	if (string[*start] == '"' || string[*start] == '\'')
+	/*if (string[*start] == '"' || string[*start] == '\'')
 		str = remove_space_quotes(str, string, j, start);
 	else if (string[*start] == ' ' && active(string, *start) == 1)
 	{
@@ -69,6 +69,31 @@ char	*remove_space_core(char *str, char *string, int *j, int *start)
 		str[(*j)++] = string[(*start)++];
 	else
 		str[(*j)++] = string[(*start)++];
+	return (str);*/
+	if (string[*start] == '"' || string[*start] == '\'')
+		str = remove_space_quotes(str, string, j, start);
+	else if (string[*start] == ' ' && active(string, *start) == 1 /*&& string[*start - 2] != '\\'*/)
+	{
+		str[(*j)++] = string[(*start)++];
+		while (string[*start] == ' ')
+			*start += 1;
+	}
+	else if (string[*start] == ' ' && active(string, *start) == 0 /*&& string[*start - 2] != '\\'*/)
+	{
+		str[(*j)++] = string[(*start)++];
+		while (string[*start] == ' ')
+			*start += 1;
+	}
+	else if (string[*start] != ' ')
+	{
+		str[*j] = string[*start];
+		*j += 1;
+		*start += 1;
+	}
+	else
+		*start += 1;
+	/*else
+		str[(*j)++] = string[(*start)++];*/
 	return (str);
 }
 

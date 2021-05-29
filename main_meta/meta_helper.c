@@ -42,7 +42,7 @@ t_meta	*meta_in(char **splits, t_meta *global, int *i)
 {
 	char	*s;
 
-	if (check_append(splits[*i]) == TRUE)
+	/*if (check_append(splits[*i]) == TRUE)
 	{
 		s = ft_substr(splits[*i], 0, until_meta(splits[*i]));
 		global->meta_append = 1;
@@ -53,6 +53,25 @@ t_meta	*meta_in(char **splits, t_meta *global, int *i)
 		s = ft_substr(splits[*i], 0, until_meta(splits[*i]));
 	}
 	global->meta = splits[*i][until_meta(splits[*i])];
+	if (s != NULL)
+		global = meta_for_in(s, global);
+	*i += 1;*/
+
+	// splits[*i] = escape_meta(splits[k - 1]);
+	if (check_append(splits[*i]) == TRUE)
+	{
+		//splits[*i] = escape_meta(splits[*i]);
+		s = ft_substr(splits[*i], 0, ft_strlen(splits[*i]) - 1);
+		global->meta_append = 1;
+	}
+	else
+	{
+	// splits[*i] = escape_meta(splits[*i]);
+		global->meta_append = 0;
+		s = ft_substr(splits[*i], 0, ft_strlen(splits[*i]) - 1);
+		s = escape_normal(s);
+	}
+	global->meta = splits[*i][ft_strlen(splits[*i]) - 1];
 	if (s != NULL)
 		global = meta_for_in(s, global);
 	*i += 1;
@@ -69,6 +88,7 @@ t_meta	*meta_out(char **splits, t_meta *global, int *i)
 		split_free = splits[*i];
 		splits[*i] = remove_space(splits[*i]);
 		free(split_free);
+		//  splits[*i] = escape_normal(splits[*i]);
 		splits[*i] = escape_meta(splits[*i]);
 		if (global->command != 0 && global->command != 6)
 		{

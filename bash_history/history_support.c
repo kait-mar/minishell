@@ -61,5 +61,6 @@ t_history	init_hist(t_history history)
 	history.delete_char = tgetstr("dc", &(g_global.buffer_address));
 	history.delete_mode = tgetstr("dm", &(g_global.buffer_address));
 	history.exit_d_mode = tgetstr("ed", &(g_global.buffer_address));
+	history.fd = open(history.tty_name, O_RDWR | O_NOCTTY);
 	return (history);
 }

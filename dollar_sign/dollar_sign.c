@@ -79,3 +79,54 @@ char	*str_free(char *str, char *s)
 	free(s);
 	return (str);
 }
+
+int	counts_dollar_escape(char *str)
+{
+	int i;
+	int count;
+	i = 0;
+	count = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\\' && str[i + 1] == '\\')
+		{
+			count += 1;
+			i += 2;
+		}
+		else
+		{
+			count += 1;
+			i += 1;
+		}
+	}
+	return (count);
+}
+
+char	*remove_dollar_escape(char *s)
+{
+	int i;
+	int j;
+	char *ss;
+	i = 0;
+	j = 0;
+	ss = (char *) malloc(sizeof (char ) * counts_dollar_escape(s) + 1);
+	if (ss == NULL)
+		return NULL;
+	while (s[i] != '\0')
+	{
+		if (s[i] == '\\' && s[i + 1] == '\\')
+		{
+			ss[j] = s[i];
+			i += 2;
+			j += 1;
+		}
+		else
+		{
+			ss[j] = s[i];
+			i += 1;
+			j += 1;
+		}
+	}
+	ss[j] = '\0';
+	return (ss);
+}

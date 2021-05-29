@@ -26,6 +26,11 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
 		support = output_support(temp);
 		temp = temp->next;
 		temp->argument = chang_dollar_sign(temp->argument, env);
+		if (ft_strcmp(temp->argument, "") == 0)
+		{
+			ft_printf("Ambiguos redirect\n");
+			break ;
+		}
 		meta = name_and_condition(&new, &(support.on), meta, temp);
 		fd = redirect_command_head(support.check_meta, support.append, new);
 		free(new);

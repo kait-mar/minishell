@@ -105,6 +105,7 @@ typedef struct s_buffer
 
 struct s_global
 {
+    int space_in;
     int j_echo;
     int on;
     int in_signal;
@@ -121,6 +122,7 @@ struct s_global
     char *oldpwd_only;
     int check;
     int *status;
+    int s_status;
     int in;
     int fd[2];
     int signal_input;

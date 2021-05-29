@@ -39,5 +39,7 @@ t_sign	realloc_list(char *str, t_sign lst);
 t_sign	realloc_list_support(char *str, t_sign lst, int *j);
 t_sign	change_valid_norminette(t_sign lst, char *str);
 char	*str_free(char *str, char *s);
-
+int		check_front_quote(char *s, int i);
+char	*remove_dollar_escape(char *s);
+int		counts_dollar_escape(char *str);
 #endif

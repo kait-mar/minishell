@@ -76,7 +76,7 @@ void 	string_extention(char **tmp, char **temp, char *str)
 	char	*temp_free;
 	char	*tmp_free;
 
-	if (ft_strcmp(*tmp, "") == 0)
+	/*if (ft_strcmp(*tmp, "") == 0)
 		g_global.signal_input = 0;
 	if (g_global.signal_input == 1 && str[0] != 4)
 	{
@@ -85,7 +85,7 @@ void 	string_extention(char **tmp, char **temp, char *str)
 		*tmp = NULL;
 		*temp = NULL;
 		g_global.signal_input = 0;
-	}
+	}*/
 	tmp_free = *tmp;
 	*tmp = extend_re(str, *tmp);
 	free(tmp_free);
@@ -100,7 +100,31 @@ void 	string_extention(char **tmp, char **temp, char *str)
 
 char	*reading_input(t_assen *assen, char *string, t_history history)
 {
-	char			*tmp;
+	char          *tmp;
+	char         *l;
+	//t_assen        *climb;
+	t_glb        glb;
+	struct termios save;
+
+	glb.climb = assen;
+	while (glb.climb->next != NULL)
+		glb.climb = glb.climb->next;
+	if (isatty(history.fd))
+	{
+		save = tty_init(history.fd);
+		glb.history = history;
+		tmp = tty_loop(assen, glb, string);
+	}
+	if (tcsetattr(history.fd, TCSANOW, &save) == 1)
+		exit (-1);
+	if (ft_strcmp(tmp, "") == 0)
+	{
+		l = ft_strdup(tmp);
+		free(tmp);
+		return (l);
+	}
+	return (ft_strdup(tmp));
+	/*char			*tmp;
 	char			*l;
 	t_assen			*climb;
 	struct termios	save;
@@ -122,5 +146,5 @@ char	*reading_input(t_assen *assen, char *string, t_history history)
 		free(tmp);
 		return (l);
 	}
-	return (ft_strdup(tmp));
+	return (ft_strdup(tmp));*/
 }

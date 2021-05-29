@@ -30,6 +30,8 @@ int	active(char *str, int i)
 		else
 			return (0);
 	}
+	if (i == 0 && str[i] == '\\')
+		return (0);
 	return (1);
 }
 

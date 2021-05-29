@@ -65,6 +65,8 @@ t_sign	change_dollar_core(t_sign lst, char **str, char **env)
 	if ((*str)[lst.i] != '$' && (*str)[lst.i] != '\''
 		&& (*str)[lst.i] != '\0' && check == 0)
 		lst.i += 1;
+	else if ((*str)[lst.i] == '\'' && check_front_quote(*str, lst.i) == 1)
+		lst.i += 1;
 	lst.on = 0;
 	return (lst);
 }
@@ -112,7 +114,15 @@ char	*string_change_dollar(char *ss, int *on, char **env)
 			string = take_after_equal(string);
 			*on = 1;
 		}
+		if (env[i + 1] == NULL)
+			break ;
 		i += 1;
 	}
+	if (string == NULL)
+		string = ft_strdup("");
+	if (string != NULL)
+		string = remove_dollar_escape(string);
+	if (no_space(string) == 1)
+		g_global.space_in = 1;
 	return (string);
 }

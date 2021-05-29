@@ -40,6 +40,16 @@ t_assen	*read_l(char **temp, char **tmp, t_glb glb, char *str)
 
 	r = read(glb.history.fd, str, BUFFER);
 	str[r] = '\0';
+	if (ft_strcmp(*tmp, "") == 0)
+		g_global.signal_input = 0;
+	if (g_global.signal_input == 1 && str[0] != 4)
+	{
+		free(*tmp);
+		free(*temp);
+		*tmp = NULL;
+		*temp = NULL;
+		g_global.signal_input = 0;
+	}
 	if (r > 0)
 	{
 		if (str[0] == 127)
@@ -61,7 +71,7 @@ t_assen	*read_l(char **temp, char **tmp, t_glb glb, char *str)
 	return (glb.climb);
 }
 
-char	*tty_loop(t_history history, t_assen *assen, t_assen *climb, char *str)
+/*char	*tty_loop(t_history history, t_assen *assen, t_assen *climb, char *str)
 {
 	char	*temp;
 	char	*tmp;
@@ -77,12 +87,33 @@ char	*tty_loop(t_history history, t_assen *assen, t_assen *climb, char *str)
 		climb = read_l(&temp, &tmp, glb, str);
 		if (tmp && find_re(tmp, '\n'))
 		{
-			/*if (ft_strcmp(tmp, "") != 0)
-				append_assen(&assen, tmp);*/
 			break ;
 		}
 	}
 	return (tmp);
+}*/
+
+char    *tty_loop(t_assen *assen, t_glb glb, char *str)
+{
+   char   *temp;
+   char   *tmp;
+   char   *s;
+   //t_glb    glb;
+   temp = NULL;
+   tmp = NULL;
+   //glb.history = history;
+   //glb.climb = climb;
+   while (TRUE)
+   {
+      glb.climb = read_l(&temp, &tmp, glb, str);
+      if (tmp && find_re(tmp, '\n'))
+      {
+         if (ft_strcmp(tmp, "") != 0)
+            append_assen(&assen, tmp);
+         break ;
+      }
+   }
+   return (tmp);
 }
 
 char	*string_extention_helper(char *temp)

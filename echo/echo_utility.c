@@ -57,10 +57,11 @@ char	**put_cases1(char **bult)
 	int	k;
 
 	k = 0;
+	bult[g_global.j_echo] = remove_dollar_escape(bult[g_global.j_echo]);
 	while (bult[g_global.j_echo][k] != '\0')
 	{
-		if (condition1(bult, k))
-			bult = put_cases2(bult);
+		//if (condition1(bult, k))
+		//	bult = put_cases2(bult);
 		if (condition2(bult, k))
 			k++;
 		else if (bult[g_global.j_echo][k] == '\\')

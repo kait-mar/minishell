@@ -46,6 +46,12 @@ int	redirect_command_head(int check_meta, int append, char *new)
 	int	fd;
 
 	fd = 0;
+	if (g_global.space_in == 1)
+	{
+		printf("Error in file Name\n");
+		g_global.space_in = 0;
+		return (-1);
+	}
 	if (append != 0)
 	{
 		fd = open(new, O_CREAT | O_APPEND | O_RDWR, S_IRWXU);
