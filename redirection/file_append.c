@@ -36,6 +36,8 @@ int	count_file(char *str)
 	return (i);
 }
 
+
+
 char	*file_name(char *str)
 {
 	char	*name;
@@ -44,6 +46,14 @@ char	*file_name(char *str)
 
 	i = 0;
 	j = count_file(str);
+	if (only_space(str, 0) == 1)
+	{
+		g_global.only_in_space = 1;
+		j = 1;
+		name = ft_calloc(1, j + 1);
+		name[0] = str[i];
+		return (name);
+	}
 	name = ft_calloc(1, j + 1);
 	j = 0;
 	while (str[i] != '\0' && str[i] != ' ')

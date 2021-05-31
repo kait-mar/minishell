@@ -22,7 +22,7 @@ int	check_meta(char *str)
 	while (str[i] != '\0')
 	{
 		if ((str[i] == ';' || str[i] == '|'
-				|| str[i] == '<' || str[i] == '>') && active(str, i) == 1)
+				|| str[i] == '<' || str[i] == '>') && active(str, i) == 1 && inside_quotes(str, i) == 1)
 			return (TRUE);
 		i += 1;
 	}

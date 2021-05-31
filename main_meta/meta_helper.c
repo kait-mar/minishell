@@ -20,6 +20,7 @@ t_meta	*meta_for_in(char *s, t_meta *global)
 	s = remove_space(s);
 	free(arg_free);
 	s = escape_meta(s);
+	s = escape_normal(s);
 	if (global->command != 0 && global->command != 6)
 	{
 		global->argument = skip_first_word(s);
@@ -93,6 +94,7 @@ t_meta	*meta_for_in_between(char *s, t_meta *temp)
 	s = remove_space(s);
 	free(temp_free);
 	s = escape_meta(s);
+	s = escape_normal(s);
 	if (temp->command != 0 && temp->command != 4 && temp->command != 6)
 	{
 		temp->argument = skip_first_word(s);

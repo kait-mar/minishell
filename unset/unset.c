@@ -67,14 +67,11 @@ t_env	*delete_in_env(t_env *env, char **splits, int on, int *status)
 	int	j;
 
 	i = 0;
-	printf("before delete\n");
 	while (splits[i] != NULL)
 	{
-		printf("delete %s\n", splits[i]);
 		env = delete_in_env_core(env, splits[i], on);
 		i += 1;
 	}
-	printf("after delete\n");
 	return (env);
 }
 

@@ -2,17 +2,20 @@
 
 char	*realloc_input(char *str, int string_len, t_sign lst)
 {
-	int	o;
 	int	j;
 
 	lst.len_after = 0;
 	lst.len_before = 0;
 	lst.len_cmd = ft_strlen(lst.s);
-	o = 0;
 	j = 0;
 	lst = realloc_list(str, lst);
 	lst = realloc_list_support(str, lst, &j);
 	lst.len_before = string_len;
+	if (ft_strlen(lst.s) == 0)
+	{
+		if (str[lst.len_before] == ' ')
+			lst.len_before += 1;
+	}
 	while (lst.len_after > 0)
 	{
 		lst.string[lst.i] = str[lst.len_before];

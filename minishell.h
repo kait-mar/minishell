@@ -109,11 +109,13 @@ struct s_global
     int on;
     int in_signal;
     int redirect;
+    int only_in_space;
     int redirect_fd;
     int first_time;
     int check_single_quote;
     int check_double_quote;
     int pwd_on;
+    int in_redirect;
     char    *pwd_only;
     char    *old_pwd;
     char	*buffer;

@@ -56,17 +56,9 @@ char	*chang_dollar_sign(char *str, char **env)
 		if (str[lst.i] == '\'')
 		{
 			lst.i += 1;
-			while (str[lst.i] != '\'' && str[lst.i] != '\0')
+			while (str[lst.i] != '\'' && str[lst.i] != '\0' && check_front_quote(str, lst.i) == 0)
 				lst.i += 1;
 			if (str[lst.i] == '\'')
-				lst.i += 1;
-		}
-		else if (str[lst.i] == '"')
-		{
-			lst.i += 1;
-			while (str[lst.i] != '"' && str[lst.i] != '\0')
-				lst.i += 1;
-			if (str[lst.i] == '"')
 				lst.i += 1;
 		}
 		lst = change_dollar_core(lst, &str, env);
@@ -78,4 +70,19 @@ char	*str_free(char *str, char *s)
 {
 	free(s);
 	return (str);
+}
+
+int check_front_quote(char *s, int i)
+{
+	int count;
+	count = 0;
+	while (i >= 0)
+	{
+		if (s[i] == '"')
+			count += 1;
+		i -= 1;
+	}
+	if ((count % 2) == 0)
+		return (0);
+	return (1);
 }

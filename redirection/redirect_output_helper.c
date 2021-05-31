@@ -46,6 +46,12 @@ int	redirect_command_head(int check_meta, int append, char *new)
 	int	fd;
 
 	fd = 0;
+
+	if (g_global.in_redirect == 1)
+	{
+		printf("Error in file Name \n");
+		return (-1);
+	}
 	if (append != 0)
 	{
 		fd = open(new, O_CREAT | O_APPEND | O_RDWR, S_IRWXU);
@@ -75,7 +81,7 @@ t_meta	*name_and_condition(char **new, int *on, t_meta *meta, t_meta *temp)
 	str = temp->argument;
 	temp->argument = ft_strdup(temp->argument + ft_strlen(*new));
 	free(str);
-	if ((temp->argument)[0] == ' ')
+	if ((temp->argument)[0] == ' ' && only_space(temp->argument, 0) == 0)
 	{
 		str = temp->argument;
 		temp->argument = ft_strdup(temp->argument + 1);

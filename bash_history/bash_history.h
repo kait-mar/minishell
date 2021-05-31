@@ -44,8 +44,8 @@ typedef struct s_glb
 
 struct termios	tty_init(int fd);
 t_assen			*read_l(char **temp, char **tmp, t_glb glb, char *str);
-char			*tty_loop(t_history history, t_assen *assen,
-					t_assen *climb, char *string);
+char			*tty_loop(t_assen *assen,
+					t_glb glb, char *string);
 t_assen			*arrow_down(t_history history,
 					t_assen *climb, char **tmp, char **temp);
 t_assen			*arrow_up(char **tmp, t_history history, t_assen *climb);

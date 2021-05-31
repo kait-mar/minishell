@@ -252,4 +252,14 @@ export a="\\\\\\b"
 echo \\\\\\$a
 echo 'dfsfs'";"'dsdsds'
 
-!!!!!!!!! echo hello > $kait and kait is not in env !!!!!!!!!!!
+ctrl+D
+export c="cdcd cdcdd" redirect
+echo \\;
+echo hello > \space
+ export cmd="echo hello" $cmd
+ export c="$USER+"
+
+ > $cs
+
+
+ $ frfrfrrf echo hello

@@ -47,10 +47,7 @@ char	*adding_escape(char *s, int count)
 int	dollar_len(char *str, int i)
 {
 	int	count;
-	int	j;
-	int	k;
 
-	j = 0;
 	count = 0;
 	while (str[i] == '\\')
 	{

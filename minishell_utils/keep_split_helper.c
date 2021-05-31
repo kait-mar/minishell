@@ -5,7 +5,7 @@ t_split	keep_split_support(char **s, t_split lst)
 	int	esp;
 
 	lst.k = 0;
-	if ((*s)[lst.i] == '\\')
+/*	if ((*s)[lst.i] == '\\')
 	{
 		esp = how_many_escape(*s);
 		if (esp % 2 == 0)
@@ -25,7 +25,7 @@ t_split	keep_split_support(char **s, t_split lst)
 			return (lst);
 		}
 		lst.check = 0;
-	}
+	}*/
 	return (lst);
 }
 

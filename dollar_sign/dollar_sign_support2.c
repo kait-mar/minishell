@@ -114,5 +114,9 @@ char	*string_change_dollar(char *ss, int *on, char **env)
 		}
 		i += 1;
 	}
+	if (string == NULL)
+		string = ft_strdup("");
+	if (no_space(string) == 1)
+		g_global.in_redirect = 1;
 	return (string);
 }

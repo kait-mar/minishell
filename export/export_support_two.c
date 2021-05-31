@@ -49,6 +49,8 @@ t_export	*export_loop(char *splits, t_export *export, int on, int *j)
 		//splits = error_reformulation(splits);
 	//	printf("After error ==> %s\n", splits);
 		export->argument[*j] = ft_strdup(splits);
+		export->argument[*j] = escape_normal(export->argument[*j]);
+		export->argument[*j] = escape_meta(export->argument[*j]);
 		export->flag = 1;
 		*j += 1;
 	}
