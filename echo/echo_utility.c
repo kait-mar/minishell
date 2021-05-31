@@ -92,11 +92,16 @@ void	put_cases(char **bult, char **env, int *status)
 		else if (find_how_many(bult[g_global.j_echo], 39) == 2
 			&& find_how_many(bult[g_global.j_echo], 34) == 2
 			&& find(bult[g_global.j_echo], '$') == 0)
+		{
 			bult = put_cases_norminette(bult);
+		}
 		else if (find_how_many(bult[g_global.j_echo], 39) == 2
 			&& find_how_many(bult[g_global.j_echo], 34) == 2)
+		{
 			bult[g_global.j_echo]
 					= in_between_cases(bult[g_global.j_echo], env, status);
+
+		}
 		else if (find(bult[g_global.j_echo], 39) == 1
 			|| find(bult[g_global.j_echo], 34) == 1)
 			last_put_cases(bult, env, status, &i);

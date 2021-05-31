@@ -53,10 +53,10 @@ char	*chang_dollar_sign(char *str, char **env)
 	lst.space_back = 0;
 	while (str[lst.i] != '\0')
 	{
-		if (str[lst.i] == '\'')
+		if (str[lst.i] == '\'' && check_single_inside_double(str + lst.i) == 0)
 		{
 			lst.i += 1;
-			while (str[lst.i] != '\'' && str[lst.i] != '\0' && check_front_quote(str, lst.i) == 0)
+			while (str[lst.i] != '\'' && str[lst.i] != '\0' /*&& check_front_quote(str, lst.i) == 0*/)
 				lst.i += 1;
 			if (str[lst.i] == '\'')
 				lst.i += 1;
@@ -76,6 +76,7 @@ int check_front_quote(char *s, int i)
 {
 	int count;
 	count = 0;
+
 	while (i >= 0)
 	{
 		if (s[i] == '"')
