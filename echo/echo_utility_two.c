@@ -27,7 +27,7 @@ int	first_word_lenght(char *s)
 	{
 		if (skip_quote(s, &i))
 			continue ;
-		else if (ft_isalnum(s[i]))
+		else if (ft_isalnum(s[i]) || s[i] == '/' )
 			i++;
 		else
 			break ;
@@ -78,7 +78,7 @@ char	*take_first_word(char *s)
 	{
 		if (fill_first_word(s, &string, &i, &j))
 			continue ;
-		else if (ft_isalnum(s[i]))
+		else if (ft_isalnum(s[i]) || s[i] == '/' || s[i] == '\'')
 			string[j++] = s[i++];
 		else
 			break ;

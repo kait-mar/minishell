@@ -87,7 +87,7 @@ void	escape_meta_head(char *str, char **string, int *i, int *j)
 		if (str[*i] == '"')
 			(*string)[(*j)++] = str[(*i)++];
 	}
-	else if (str[*i] == '\'')
+	if (str[*i] == '\'')
 	{
 		(*string)[(*j)++] = str[(*i)++];
 		while (str[*i] != '\'' && str[*i] != '\0')

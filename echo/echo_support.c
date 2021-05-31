@@ -5,6 +5,8 @@ void	last_put_cases(char **bult, char **env, int *status, int *i)
 	int	which_quote;
 
 	which_quote = 0;
+	if (bult[g_global.j_echo][0] == 34)
+		g_global.e_quote = 1;
 	if (bult[g_global.j_echo][0] == 39 || bult[g_global.j_echo][0] == 34)
 		bult[g_global.j_echo] = which_trim(bult[g_global.j_echo], &which_quote);
 	if ((find_without(bult[g_global.j_echo], '$') == 0
@@ -20,7 +22,9 @@ void	last_put_cases(char **bult, char **env, int *status, int *i)
 			*i = 0;
 		}
 		else
+		{
 			bult = put_cases1(bult);
+		}
 	}
 	else
 	{
@@ -56,12 +60,12 @@ char	*in_between_cases(char *bult, char **env, int *status)
 	if (*bult == '\'')
 	{
 		s = ft_strtrim(s, "'");
-		ft_putstr(bult);
+		ft_putstr(s);
 	}
 	else
 	{
 		s = ft_strtrim(s, "\"");
-		print_env(bult, env, 1, status);
+		print_env(s, env, 1, status);
 	}
 	return (s);
 }

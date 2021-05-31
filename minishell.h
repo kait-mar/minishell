@@ -106,6 +106,7 @@ typedef struct s_buffer
 struct s_global
 {
     int j_echo;
+    int e_quote;
     int on;
     int in_signal;
     int redirect;

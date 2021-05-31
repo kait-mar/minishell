@@ -28,7 +28,9 @@ void	built_in(t_meta *meta, t_assen assen, char **env)
 	else if (meta->command == 5)
 		unset_command(env, meta->argument, g_global.status);
 	else if (meta->command == 6)
+	{
 		echo(meta->argument, env, g_global.status);
+	}
 	else if (meta->command == 0)
 	{
 		if (ft_strcmp(meta->argument, "") != 0)
@@ -57,6 +59,8 @@ int	check_wich_command(char *str)
 	int	exept;
 
 	exept = 0;
+	if (echo_strcmp(str, "/bin/echo") == 0)
+		return (6);
 	if (ft_strncmp(str, "cd", 2) == 0 && (ft_isalpha(str[2]) == 0))
 		return (1);
 	if (check_pwd(str, &exept) == 0)
