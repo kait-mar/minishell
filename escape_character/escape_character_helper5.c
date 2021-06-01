@@ -57,3 +57,59 @@ void	escape_core_support(char *str, char **string, int *i, int *j)
 		(*string)[(*j)++] = str[(*i)++];
 	}
 }
+
+int		es_count(char *s, int count)
+{
+	int i;
+	int j;
+
+	i = 0;
+	count = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == '\\')
+		{
+			j = 0;
+			while (s[i] == '\\')
+			{
+				j += 1;
+				i += 1;
+			}
+			if ((j % 2) == 0)
+				count += (j / 2);
+			else
+				count += (j / 2) + 1;
+		}
+		else
+			count += 1;
+		i += 1;
+	}
+	return (count);
+}
+
+char	*es_for_quote(char *s)
+{
+	int i;
+	int count;
+	int j;
+	char *str;
+
+	j = 0;
+	i = 0;
+	str = (char *) malloc(sizeof (es_count(s, count)) + 1);
+	while (s[i] != '\0')
+	{
+		if (s[i] == '\\')
+		{
+			str[j++] = s[i];
+			if (s[i + 1] == '\\')
+				i += 1;
+		}
+		else
+			str[j++] = s[i];
+		i += 1;
+	}
+	str[j] = '\0';
+	free(s);
+	return (str);
+}

@@ -112,6 +112,7 @@ struct s_global
     int redirect;
     int only_in_space;
     int redirect_fd;
+    int s_status;
     int first_time;
     int check_single_quote;
     int check_double_quote;

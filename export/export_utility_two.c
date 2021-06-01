@@ -45,7 +45,7 @@ char	*adding_quote(char *s)
 		j += 1;
 		i += 1;
 	}
-	str = (char *) ft_calloc(sizeof(char ), j + i + 1);
+	str = ft_calloc(sizeof(char ), j + i + 1);
 	if (!(str))
 		return (NULL);
 	s2 = return_adding_quote(s, j);
@@ -62,7 +62,7 @@ char	*front_append(char *string, char *to_append)
 	int		j;
 	char	*free_s;
 
-	s = (char *) malloc(sizeof(char)
+	s = malloc(sizeof(char)
 			* (ft_strlen(string) + ft_strlen(to_append) + 1));
 	if (!(s))
 		return (NULL);
@@ -114,7 +114,7 @@ char	*append(char *s1, char *s2)
 	i = 0;
 	j = 0;
 	len = ft_strlen(s1) + ft_strlen(s2);
-	str = (char *) ft_calloc(sizeof (char ), len + 1);
+	str = ft_calloc(sizeof(char ), len + 1);
 	if (!(str))
 		return (NULL);
 	while (s1[i] != '\0')

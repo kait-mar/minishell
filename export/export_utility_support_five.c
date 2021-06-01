@@ -20,7 +20,7 @@ char	*error_reformulation(char *string)
 
 	i = 0;
 	j = 0;
-	s = (char *) ft_calloc(sizeof (char), ft_strlen(string));
+	s = ft_calloc(sizeof(char), ft_strlen(string));
 	if (!(s))
 		return (NULL);
 	while (string[i])

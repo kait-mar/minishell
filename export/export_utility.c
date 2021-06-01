@@ -78,7 +78,7 @@ char	*take_before_equal(char *str)
 	char	*s;
 
 	i = 0;
-	s = (char *) ft_calloc(sizeof(char), ft_strlen(str) + 1);
+	s = ft_calloc(sizeof(char), ft_strlen(str) + 1);
 	if (!(s))
 		return (NULL);
 	while (str[i] != '=')

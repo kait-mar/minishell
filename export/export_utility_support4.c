@@ -75,7 +75,7 @@ char	*findin_env(char **env)
 		paths = ft_split(path, ':');
 	else
 	{
-		paths = (char **) ft_calloc(sizeof (char), 2);
+		paths = ft_calloc(sizeof(char), 2);
 		if (!(paths))
 			return (NULL);
 		paths[0] = ft_strdup(path);
@@ -96,7 +96,7 @@ void	env_init(char **env)
 	pwd = 0;
 	shlvl = 0;
 	start = 0;
-	s = (char *) ft_calloc(sizeof(char ), 100);
+	s = ft_calloc(sizeof(char ), 100);
 	if (!(s))
 		return ;
 	i = fill_env_init(env, &pwd, &shlvl, &start);

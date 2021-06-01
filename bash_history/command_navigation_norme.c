@@ -40,16 +40,7 @@ t_assen	*read_l(char **temp, char **tmp, t_glb glb, char *str)
 
 	r = read(glb.history.fd, str, BUFFER);
 	str[r] = '\0';
-	if (ft_strcmp(*tmp, "") == 0)
-		g_global.signal_input = 0;
-	if (g_global.signal_input == 1 && str[0] != 4)
-	{
-		free(*tmp);
-		free(*temp);
-		*tmp = NULL;
-		*temp = NULL;
-		g_global.signal_input = 0;
-	}
+	signals_in_read(tmp, temp, str);
 	if (r > 0)
 	{
 		if (str[0] == 127)
@@ -84,8 +75,8 @@ char	*tty_loop(t_assen *assen, t_glb glb, char *str)
 		glb.climb = read_l(&temp, &tmp, glb, str);
 		if (tmp && find_re(tmp, '\n'))
 		{
-			/*if (ft_strcmp(tmp, "") != 0)
-				append_assen(&assen, tmp);*/
+			if (ft_strcmp(tmp, "") != 0)
+				append_assen(&assen, tmp);
 			break ;
 		}
 	}

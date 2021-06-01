@@ -20,5 +20,6 @@ void	remove_escape_dollar_support(char **str, char *s, int *i, int *j);
 int		in_quote(char *str, int i);
 void	remove_escape_loop(char **str, char *s, int *i, int *j);
 void	escape_core_support(char *str, char **string, int *i, int *j);
+char	*es_for_quote(char *s);
 
 #endif

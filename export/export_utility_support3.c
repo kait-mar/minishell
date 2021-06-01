@@ -17,10 +17,10 @@ void	filling_export(char **env)
 	int		i;
 
 	i = 0;
-	g_global.export = (t_export *) malloc(sizeof (t_export));
+	g_global.export = malloc(sizeof(t_export));
 	if (!(g_global.export))
 		return ;
-	g_global.export->saver = (char **) ft_calloc(sizeof (char *),
+	g_global.export->saver = ft_calloc(sizeof(char *),
 			arguments_in(env, i) + 3);
 	if (!(g_global.export->saver))
 		return ;
@@ -80,7 +80,7 @@ char	*add_backs(char *s)
 
 	i = 0;
 	j = how_mutch(s);
-	str = (char *) ft_calloc(sizeof (char), ft_strlen(s) + (j * 2) + 1);
+	str = ft_calloc(sizeof(char), ft_strlen(s) + (j * 2) + 1);
 	if (!(str))
 		return (NULL);
 	j = 0;

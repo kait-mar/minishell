@@ -59,7 +59,7 @@ char	**put_cases1(char **bult)
 	k = 0;
 	if (g_global.e_quote == 1)
 	{
-		bult[g_global.j_echo] = escape_meta(bult[g_global.j_echo]);
+		bult[g_global.j_echo] = es_for_quote(bult[g_global.j_echo]);
 		g_global.e_quote = 0;
 	}
 	while (bult[g_global.j_echo][k] != '\0')

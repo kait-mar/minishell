@@ -105,7 +105,9 @@ void	execut_command(char **env, char *str, int *statut)
 	{
 		g_global.on = 1;
 		waitpid(pid, &status, WUNTRACED);
-		*statut = WEXITSTATUS(status);
+		if (g_global.s_status == 0)
+			*statut = WEXITSTATUS(status);
+		g_global.s_status = 0;
 		g_global.on = 0;
 	}
 }

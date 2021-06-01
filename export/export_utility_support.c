@@ -65,7 +65,7 @@ void	match_free(char *env, char *new_argument)
 int	take_only_return(char *str, int j)
 {
 	while (((ft_isprint_mod(str[j]) == 1) || str[j] == '=')
-		   || (str[j] == ' ' && str[j - 1] == '\\'))
+			|| (str[j] == ' ' && str[j - 1] == '\\'))
 	{
 		if (str[j] == '\"' && str[j - 1] != '\\')
 		{

@@ -64,5 +64,6 @@ char			*string_extention_helper(char *temp);
 char			*read_l_support(char **temp, char **tmp, t_glb glb);
 char			*ctrl_d(void);
 int				condition_command(t_glb glb, char *str);
+void			signals_in_read(char **tmp, char **temp, char *str);
 
 #endif

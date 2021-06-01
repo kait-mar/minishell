@@ -42,16 +42,6 @@ char	**copy_all(t_env *take_env, char **env)
 		i += 1;
 	}
 	env[i] = NULL;
-	/*else
-	{
-		while (env[i] != NULL)
-		{
-			printf("free[%s]\n", env[i]);
-			free(env[i]);
-			env[i] = NULL;
-			i += 1;
-		}
-	}*/
 	return (env);
 }
 
@@ -82,12 +72,14 @@ void	free_struct(t_env *lst)
 {
 	t_env	*tmp;
 
-	tmp = lst;
 	while (lst != NULL)
 	{
 		tmp = lst;
+		if (lst->in_env)
+			free(lst->in_env);
 		lst = lst->next;
 		free(tmp);
+		tmp = NULL;
 	}
 }
 

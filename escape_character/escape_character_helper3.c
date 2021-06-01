@@ -65,12 +65,7 @@ void	escape_normal_core(char *str, char **string, int *i, int *j)
 			(*string)[(*j)++] = str[(*i)++];
 	}
 	else
-	{
 		escape_core_support(str, string, i, j);
-//		if (!(str[*i] == '\\' && (str[*i + 1] == '"' || str[*i + 1] == '\'')))
-//			*i += 1;
-//		(*string)[(*j)++] = str[(*i)++];
-	}
 }
 
 void	escape_normal_dquote(char *str, char **string, int *i, int *j)

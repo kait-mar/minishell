@@ -17,7 +17,7 @@ char	*from_to(char *str, int i, int j)
 	char	*s;
 	int		k;
 
-	s = (char *) ft_calloc(sizeof(char), (j - i) + 1);
+	s = ft_calloc(sizeof(char), (j - i) + 1);
 	if (!(s))
 		return (NULL);
 	k = 0;
@@ -43,7 +43,7 @@ char	**take_only_carac_for_export(char *str)
 	int		k;
 
 	i = 0;
-	splits = (char **) ft_calloc(sizeof(char *), kait_count(str) + 2);
+	splits = ft_calloc(sizeof(char *), kait_count(str) + 2);
 	if (!(splits))
 		return (NULL);
 	k = 0;
@@ -70,7 +70,7 @@ char	**take_only_carac(char *str)
 
 	i = 0;
 	space = 0;
-	splits = (char **) ft_calloc(sizeof(char *), kait_count(str) + 1);
+	splits = ft_calloc(sizeof(char *), kait_count(str) + 1);
 	if (!(splits))
 		return (NULL);
 	k = 0;

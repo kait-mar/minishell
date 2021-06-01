@@ -19,9 +19,8 @@ void	inter_signal(int status)
 	if (g_global.on == 1)
 	{
 		kill(1, SIGINT);
-		//printf("before : status is %d\n", *(g_global.status));
-		*(g_global.status) = 130;
-		//printf("after : status is %d\n", *(g_global.status));
+		*g_global.status = 130;
+		g_global.s_status = 1;
 	}
 	if (g_global.on == 1)
 	{
@@ -39,6 +38,8 @@ void	quit_signal(int signum)
 	if (g_global.on == 1)
 	{
 		kill(1, SIGQUIT);
+		*g_global.status = 131;
+		g_global.s_status = 1;
 		ft_printf("Quit: 3\n");
 	}
 }

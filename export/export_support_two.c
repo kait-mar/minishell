@@ -45,12 +45,8 @@ t_export	*export_loop(char *splits, t_export *export, int on, int *j)
 	splits = split_reformulation(splits);
 	if (check_exp_lex(splits) == 1)
 	{
-	//	printf("Before error ==> %s\n", splits);
-		//splits = error_reformulation(splits);
-	//	printf("After error ==> %s\n", splits);
 		export->argument[*j] = ft_strdup(splits);
-		export->argument[*j] = escape_normal(export->argument[*j]);
-		export->argument[*j] = escape_meta(export->argument[*j]);
+		export->argument[*j] = es_for_quote(export->argument[*j]);
 		export->flag = 1;
 		*j += 1;
 	}
@@ -83,7 +79,7 @@ t_export	*export_global(t_export *export)
 	return (export);
 }
 
-void 	filling_export_env(char **env, char *export_argument)
+void	filling_export_env(char **env, char *export_argument)
 {
 	int		i;
 	int		stop;
@@ -103,7 +99,7 @@ void 	filling_export_env(char **env, char *export_argument)
 		i += 1;
 	}
 	if (env[i] == NULL && stop == 0)
-	{	
+	{
 		env[i] = ft_strdup(export_argument);
 		env[i + 1] = NULL;
 	}

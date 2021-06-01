@@ -12,11 +12,15 @@
 
 #include "../minishell.h"
 
-void	pwd_init(char *s, int *i)
+void	pwd_init( int *i)
 {
 	char	*string;
 	char	*pwd;
+	char	*s;
 
+	s = (char *) ft_calloc(sizeof(char ), 100);
+	if (!(s))
+		return ;
 	pwd = ft_strdup("PWD=");
 	getcwd(s, 100);
 	string = append(pwd, s);
@@ -28,7 +32,7 @@ void	pwd_init(char *s, int *i)
 	*i += 1;
 }
 
-void	shlvl_init(char *s, int *i)
+void	shlvl_init(int *i)
 {
 	char	*string;
 	char	*shlvl;

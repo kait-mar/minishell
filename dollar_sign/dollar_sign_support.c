@@ -62,15 +62,10 @@ int	dollar_len(char *str, int i)
 	while (str[i] != '\0' && str[i] != '$' && str[i] != ' '
 		&& str[i] != '>' && str[i] != '<' && str[i] != ';' && str[i] != '\t'
 		&& str[i] != '\'' && str[i] != '"' && str[i] != '|' && str[i] != ','
-		&& str[i] != '[' && str[i] != ']')
+		&& str[i] != '[' && str[i] != ']' && ft_isalnum(str[i]))
 	{
-		if (ft_isalnum(str[i]))
-		{
-			count += 1;
-			i += 1;
-		}
-		else
-			break ;
+		count += 1;
+		i += 1;
 	}
 	return (count);
 }

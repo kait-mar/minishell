@@ -44,19 +44,18 @@ char	*chang_dollar_sign(char *str, char **env)
 {
 	t_sign	lst;
 
-	lst.i = 0;
-	lst.error = 0;
-	lst.on = 0;
-	lst.remove = 0;
-	lst.space_front = 0;
-	lst.s = NULL;
-	lst.space_back = 0;
+	memset(&lst, 0, sizeof (t_sign));
 	while (str[lst.i] != '\0')
 	{
-		if (str[lst.i] == '\'' && check_single_inside_double(str + lst.i) == 0)
+		if (str[lst.i] == '\'')
 		{
+			if (check_front_quote(str, lst.i) == 1)
+			{
+				lst.i += 1;
+				continue;
+			}
 			lst.i += 1;
-			while (str[lst.i] != '\'' && str[lst.i] != '\0' /*&& check_front_quote(str, lst.i) == 0*/)
+			while (str[lst.i] != '\'' && str[lst.i] != '\0')
 				lst.i += 1;
 			if (str[lst.i] == '\'')
 				lst.i += 1;
