@@ -46,20 +46,10 @@ int	redirect_command_head(int check_meta, int append, char *new)
 	int	fd;
 
 	fd = 0;
-
-	if (g_global.in_redirect == 1)
+	if (g_global.in_redirect == 1 || append != 0)
 	{
-		printf("Error in file Name \n");
-		return (-1);
-	}
-	if (append != 0)
-	{
-		fd = open(new, O_CREAT | O_APPEND | O_RDWR, S_IRWXU);
-		if ((fd) == -1)
-		{
-			ft_printf("%s", strerror(errno));
+		if (check_redirect_error(new, &fd, append) == -1)
 			return (-1);
-		}
 	}
 	else if (check_meta == '>')
 	{

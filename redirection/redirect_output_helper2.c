@@ -43,3 +43,16 @@ void	redirect_output_fork(t_meta *meta, t_assen assen, char **env, int fd)
 		exit(EXIT_FAILURE);
 	}
 }
+
+t_meta	*return_value(t_support *support, t_meta *temp, char **env)
+{
+	*support = output_support(temp);
+	temp = temp->next;
+	temp->argument = chang_dollar_sign(temp->argument, env);
+	if (ft_strcmp(temp->argument, "") == 0)
+	{
+		ft_printf("Ambiguos redirect \n");
+		return (NULL);
+	}
+	return (temp);
+}

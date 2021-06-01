@@ -36,8 +36,6 @@ int	count_file(char *str)
 	return (i);
 }
 
-
-
 char	*file_name(char *str)
 {
 	char	*name;
@@ -55,23 +53,7 @@ char	*file_name(char *str)
 		return (name);
 	}
 	name = ft_calloc(1, j + 1);
-	j = 0;
-	while (str[i] != '\0' && str[i] != ' ')
-	{
-		if (str[i] == '"')
-		{
-			name[j++] = str[i++];
-			while (str[i] != '\0' && str[i] != '"')
-				name[j++] = str[i++];
-		}
-		else if (str[i] == '\'')
-		{
-			name[j++] = str[i++];
-			while (str[i] != '\0' && str[i] != '\'')
-				name[j++] = str[i++];
-		}
-		name[j++] = str[i++];
-	}
+	name = fill_name(str, name);
 	return (name);
 }
 

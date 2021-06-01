@@ -6,6 +6,14 @@ void	my_putchar(char c)
 	write(1, &c, 1);
 }
 
+int	last_put_condition(char **bult, int which_quote)
+{
+	return ((find_without(bult[g_global.j_echo], '$') == 0
+			&& find_without(bult[g_global.j_echo], '"') == 0
+			&& find_without(bult[g_global.j_echo], '\'') == 0)
+		|| which_quote == 39);
+}
+
 void	to_free(char **bult)
 {
 	int	i;

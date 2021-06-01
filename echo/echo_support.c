@@ -9,10 +9,7 @@ void	last_put_cases(char **bult, char **env, int *status, int *i)
 		g_global.e_quote = 1;
 	if (bult[g_global.j_echo][0] == 39 || bult[g_global.j_echo][0] == 34)
 		bult[g_global.j_echo] = which_trim(bult[g_global.j_echo], &which_quote);
-	if ((find_without(bult[g_global.j_echo], '$') == 0
-			&& find_without(bult[g_global.j_echo], '"') == 0
-			&& find_without(bult[g_global.j_echo], '\'') == 0)
-		|| which_quote == 39)
+	if (last_put_condition(bult, which_quote))
 	{
 		if (find_without(bult[g_global.j_echo], '\\') == 0 || which_quote == 39)
 		{
@@ -22,9 +19,7 @@ void	last_put_cases(char **bult, char **env, int *status, int *i)
 			*i = 0;
 		}
 		else
-		{
 			bult = put_cases1(bult);
-		}
 	}
 	else
 	{

@@ -30,6 +30,13 @@ typedef struct s_support
 	int	check_meta;
 }				t_support;
 
+typedef struct s_redirect
+{
+	int		fd;
+	t_assen	*assen;
+	t_meta	*check;
+}			t_redirect;
+
 void		redirected_fork(t_meta *meta, t_assen assen, char **env, int fd);
 void		redirect_output_fork(t_meta *meta, t_assen assen,
 				char **env, int fd);
@@ -45,5 +52,8 @@ t_meta		*redirect_temp(t_meta *temp, t_assen assen,
 t_support	output_support(t_meta *temp);
 t_support	output_initializer(t_meta **temp, t_meta **check,
 				t_meta *meta, t_support support);
+char		*fill_name(char *str, char *name);
+int			check_redirect_error(char *new, int *fd, int append);
+t_meta		*return_value(t_support *support, t_meta *temp, char **env);
 
 #endif

@@ -64,8 +64,6 @@ char	**put_cases1(char **bult)
 	}
 	while (bult[g_global.j_echo][k] != '\0')
 	{
-		//if (condition1(bult, k))
-		//	bult = put_cases2(bult);
 		if (condition2(bult, k))
 			k++;
 		else if (bult[g_global.j_echo][k] == '\\')
@@ -101,7 +99,7 @@ void	put_cases(char **bult, char **env, int *status)
 		else if (find_how_many(bult[g_global.j_echo], 39) == 2
 			&& find_how_many(bult[g_global.j_echo], 34) == 2)
 			bult[g_global.j_echo]
-					= in_between_cases(bult[g_global.j_echo], env, status);
+				= in_between_cases(bult[g_global.j_echo], env, status);
 		else if (find(bult[g_global.j_echo], 39) == 1
 			|| find(bult[g_global.j_echo], 34) == 1)
 			last_put_cases(bult, env, status, &i);
