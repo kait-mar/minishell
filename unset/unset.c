@@ -66,7 +66,6 @@ int	inside_quote(char *s)
 t_env	*delete_in_env(t_env *env, char **splits, int on, int *status)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (splits[i] != NULL)

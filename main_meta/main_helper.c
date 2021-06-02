@@ -29,7 +29,6 @@ t_meta	*minishell_exec_helper(t_meta *head, char **env)
 {
 	char	*s;
 
-	head->argument = chang_dollar_sign(head->argument, env);
 	if (head->command == 0)
 	{
 		s = take_first_word(head->argument);
@@ -77,9 +76,9 @@ t_meta	*minishell_helper(t_meta *meta, char **env, char **str, t_meta *global)
 	str_free = *str;
 	*str = ft_strtrim(*str, "\t");
 	free(str_free);
-	str_free = *str;
-	*str = escape_normal(*str);
-	free(str_free);
+//	str_free = *str;
+//	*str = escape_normal(*str);
+//	free(str_free);
 	free_head(meta);
 	meta = NULL;
 	meta = split_it_all(*str, env, global);
@@ -100,8 +99,8 @@ void	minishell(char **av, char **env, t_assen assen)
 	while (TRUE)
 	{
 		signal_handler(g_global.status);
-		if (av[2])
-			mini.str = ft_strdup(av[2]);
+		if (av[1])
+			mini.str = ft_strdup(av[1]);
 		else
 		{
 			prompt();

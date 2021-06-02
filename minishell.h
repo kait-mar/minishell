@@ -336,7 +336,7 @@ void	free_temp(t_meta *head);
 int 	redirect_true(t_meta *head);
 int	go_nexts(char str);
 long long	results(char *str, int neg, int i, int res);
-char	*cd_free(char *s, char *ss);
+char	*cd_free(char *s, char *ss, char **env);
 int new_pwd_core(char **env, int *i, char *oldpwd, int *res);
 char	*old_pwd_core(char **env, int *i, int *j);
 int	pwd_core(char **env, int *i, char *old_pwd, int *res);

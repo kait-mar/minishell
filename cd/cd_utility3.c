@@ -23,7 +23,7 @@ void 	cd_command(char *argument, int *status, char **env)
 	ss = take_only(argument);
 	if (check_only_single_double(ss) == 0)
 	{
-		s = cd_free(s, ss);
+		s = cd_free(s, ss, env);
 	}
 	old_pwd(env);
 	if (check_only_single_double(ss) == 0)
@@ -40,18 +40,28 @@ void 	cd_command(char *argument, int *status, char **env)
 		free(ss);
 }
 
-char	*cd_free(char *s, char *ss)
+char	*cd_free(char *s, char *ss, char **env)
 {
 	char		*free_s;
+	char 		*x;
+	int i;
 
+	i = 0;
 	s = without_that(ss, '\"');
 	free_s = s;
 	s = without_that(ss, '\'');
 	free(free_s);
 	if (ft_strncmp(s, "", 1) == 0)
 	{
-		free(s);
-		s = ft_strdup("/Users/molabhai");
+		if (s)
+			free(s);
+		while (env[i])
+		{
+			x = take_before_equal(env[i]);
+			if (ft_strcmp(x, "HOME") == 0)
+				s = take_after_equal(env[i]);
+			i += 1;
+		}
 	}
 	return (s);
 }

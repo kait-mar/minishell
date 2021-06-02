@@ -67,7 +67,10 @@ t_history	init_hist(t_history history)
 void	signals_in_read(char **tmp, char **temp, char *str)
 {
 	if (ft_strcmp(*tmp, "") == 0)
+	{
 		g_global.signal_input = 0;
+		*g_global.status = 1;
+	}
 	if (g_global.signal_input == 1 && str[0] != 4)
 	{
 		free(*tmp);
@@ -75,5 +78,6 @@ void	signals_in_read(char **tmp, char **temp, char *str)
 		*tmp = NULL;
 		*temp = NULL;
 		g_global.signal_input = 0;
+		*g_global.status = 1;
 	}
 }

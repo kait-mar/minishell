@@ -17,5 +17,6 @@ int		condition1(char **bult, int k);
 int		condition2(char **bult, int k);
 char	**put_cases_norminette(char **bult);
 int		last_put_condition(char **bult, int which_quote);
+char	*es_quote(char *s);
 
 #endif

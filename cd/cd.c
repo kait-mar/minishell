@@ -54,7 +54,6 @@ void	remove_old_pwd(char **env)
 {
 	int		i;
 	char	*string;
-	char	*s;
 
 	i = 0;
 	string = ft_strdup("OLDPWD");

@@ -59,13 +59,13 @@ char	*take_after_equal(char *s)
 	j = 0;
 	take_after_equal_support(s, &i, &k, &j);
 	string = (char *) ft_calloc(sizeof (char), j + 1);
-	if (!string)
+	if (string == NULL)
 		return (NULL);
 	i = 0;
 	while (s[k] != '\0')
 		string[i++] = s[k++];
 	string[i] = '\0';
-	free(s);
+	//free(s);
 	return (string);
 }
 

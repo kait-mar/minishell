@@ -29,9 +29,6 @@ int	only_star(char *s)
 
 int	print_esp(char **bult, int k)
 {
-	int	coun;
-	int	esp;
-
 	my_putchar(bult[g_global.j_echo][k]);
 	k++;
 	return (k);
@@ -39,12 +36,15 @@ int	print_esp(char **bult, int k)
 
 int	print(char **bult, char **env, int *status)
 {
-	int		j;
 	int		i;
 	int		k;
+	char	*str;
 
 	i = 0;
 	k = 0;
+	str = bult[g_global.j_echo];
+	bult[g_global.j_echo] = es_quote(bult[g_global.j_echo]);
+	free(str);
 	while (bult[g_global.j_echo][k] != '\0')
 	{
 		if (bult[g_global.j_echo][k] == '$'

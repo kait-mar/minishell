@@ -32,7 +32,6 @@ void	new_pwd(char **env, char *str)
 	char		*old_pwd;
 
 	i = 0;
-	k = 0;
 	old_pwd = add_in("PWD=", str);
 	if (g_global.pwd_only)
 		free(g_global.pwd_only);
@@ -52,7 +51,6 @@ char	*old_pwd_helper(char **env, int i)
 	int		j;
 	char	*take_it;
 	char	*old_pwd;
-	char	*s;
 
 	j = 0;
 	take_it = NULL;
@@ -96,7 +94,6 @@ void	old_pwd(char **env)
 	static int	res;
 
 	i = 0;
-	k = 0;
 	res = 0;
 	old_pwd = old_pwd_helper(env, i);
 	k = pwd_core(env, &i, old_pwd, &res);

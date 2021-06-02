@@ -30,7 +30,7 @@ char	**copy_all(t_env *take_env, char **env)
 	{
 		if (env[i])
 			free(env[i]);
-		env[i] = tmp->in_env;
+		env[i] = ft_strdup(tmp->in_env);
 		i += 1;
 		tmp = tmp->next;
 	}
