@@ -86,4 +86,5 @@ size_t				ft_strlen(char const *s);
 int					ft_atoi(char const *s);
 void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t c, size_t size);
+void				reverse(char *str, int k, int y);
 #endif

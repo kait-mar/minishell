@@ -102,8 +102,7 @@ int	convert_hexa(unsigned int i, int z, int y)
 			i = i / 16;
 		}
 	}
-	if (y == 0)
-		revers_print(str, k);
+	reverse(str, k, y);
 	free(str);
 	return (k);
 }

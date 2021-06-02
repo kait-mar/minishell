@@ -46,3 +46,9 @@ int	print_mod(void)
 	ft_putchar('%');
 	return (0);
 }
+
+void	reverse(char *str, int k, int y)
+{
+	if (y == 0)
+		revers_print(str, k);
+}
