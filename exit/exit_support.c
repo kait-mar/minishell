@@ -28,11 +28,12 @@ void	last_things(char *s, int *status)
 {
 	if (check_is_num(s) == 1)
 	{
-		ft_printf("%s%s: %s\n", EXIT_ERROR, s, "numeric argument required");
+		printf("%s%s: %s\n", EXIT_ERROR, s, "numeric argument required");
 		*status = 255;
 	}
 	else
 		*status = ft_atois(s);
+	//printf("exit\n");
 	exit(*status % 256);
 }
 

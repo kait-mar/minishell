@@ -18,9 +18,13 @@ char	*last_print_env_case(char *bult, char **env,
 
 char	**increment_flag(char **bult, int *k, int *i)
 {
+	char *s;
+
 	(*k)++;
 	*i = 1;
+	s = bult[g_global.j_echo];
 	bult[g_global.j_echo] = skip_first_word((bult[g_global.j_echo]));
+	free(s);
 	return (bult);
 }
 

@@ -66,7 +66,6 @@ char	*tty_loop(t_assen *assen, t_glb glb, char *str)
 {
 	char	*temp;
 	char	*tmp;
-	char	*s;
 
 	temp = NULL;
 	tmp = NULL;

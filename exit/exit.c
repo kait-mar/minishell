@@ -14,7 +14,7 @@
 
 int	check_exit(char *str)
 {
-	if ((ft_strncmp(str, "exit", 4) == 0) && (ft_isalpha(str[4]) == 0))
+	if ((ft_strncmp(str, "exit", 4) == 0) && (ft_isalnum(str[4]) == 0))
 		return (1);
 	return (0);
 }
@@ -81,11 +81,11 @@ void	exit_command(int *status, char *s, t_assen *assen)
 	s = take_only(s);
 	s = without_that(s, '\"');
 	s = without_that(s, '\'');
-	fd = open(".minishell_history", O_CREAT | O_APPEND | O_RDWR, S_IRWXU);
+/*	fd = open(".minishell_history", O_CREAT | O_APPEND | O_RDWR, S_IRWXU);
 	pid = fork();
 	if (pid > 0)
 		filling_history(fd, move);
-	waitpid(pid, &stat, WUNTRACED);
+	waitpid(pid, &stat, WUNTRACED);*/
 	if (s[0] == '\0')
 	{
 		ft_printf("exit\n");

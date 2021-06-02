@@ -47,7 +47,7 @@ SRCS=  cd/cd.c cd/cd_utility.c pwd/pwd.c export/export.c \
 		minishell_utils/minishell_utility.c \
 		main_meta/main_helper.c main_meta/main_helper_free.c main_meta/main_norm_helper.c \
 		main_meta/main.c main_meta/meta.c main_meta/meta_support_two.c main_meta/meta_helper.c \
-		main_meta/meta_support.c main_meta/meta2.c main_meta/meta_support2.c
+		main_meta/meta_support.c main_meta/meta2.c main_meta/meta_support2.c redirection/redirections_core.c
 
 OBJ = $(SRCS:.c=.o)
 

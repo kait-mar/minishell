@@ -29,6 +29,7 @@ void	pwd_init( int *i)
 	free(pwd);
 	pwd = NULL;
 	string = NULL;
+	free(s);
 	*i += 1;
 }
 
