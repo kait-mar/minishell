@@ -37,6 +37,12 @@ typedef struct s_redirect
 	t_meta	*check;
 }			t_redirect;
 
+typedef struct s_redirection
+{
+	int		fd;
+	t_assen	assen;
+}			t_redirection;
+
 void		redirected_fork(t_meta *meta, t_assen assen, char **env, int fd);
 void		redirect_output_fork(t_meta *meta, t_assen assen,
 				char **env, int fd);
@@ -46,7 +52,8 @@ t_meta		*meta_input(t_meta *meta, t_meta *temp, int *on);
 t_meta		*input_free(t_meta *meta);
 int			input_conditions1(t_meta *meta, t_meta *temp);
 char		**fill_split(char **split);
-t_meta		*global_temp(t_meta *temp, t_assen assen, char **env, int fd);
+t_meta		*global_temp(t_meta *temp, t_redirection red,
+				char **env, t_meta *meta);
 t_meta		*redirect_temp(t_meta *temp, t_assen assen,
 				char **env, t_meta *check);
 t_support	output_support(t_meta *temp);

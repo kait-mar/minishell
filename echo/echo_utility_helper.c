@@ -18,7 +18,7 @@ char	*last_print_env_case(char *bult, char **env,
 
 char	**increment_flag(char **bult, int *k, int *i)
 {
-	char *s;
+	char	*s;
 
 	(*k)++;
 	*i = 1;

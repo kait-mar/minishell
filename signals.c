@@ -24,7 +24,7 @@ void	inter_signal(int status)
 	}
 	if (g_global.on == 1)
 	{
-		g_process = 0;
+		g_global.process = 0;
 		write(1, "\n", 1);
 	}
 	else

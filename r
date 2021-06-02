@@ -1,0 +1,9 @@
+Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.ZIB1WFjA2O/Render
+ITERM_PROFILE=Default
+PATH=/Users/kait-mar/.brew/bin:/Users/kait-mar/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
+PWD=/Users/kait-mar/Desktop/minishell
+TERM_PROGRAM=iTerm.app
+TERM_PROGRAM_VERSION=3.3.11
+TMPDIR=/var/folders/zz/zyxvpxvq6csfxvn_n00007kc0001wl/T/
+XPC_FLAGS=0x0
+XPC_SERVICE_NAME=0

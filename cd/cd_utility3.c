@@ -111,7 +111,7 @@ void	cd_command_helper2(char **env, int *first_time)
 	if (getcwd(str, 100) == NULL)
 		ft_printf("%s\n", strerror(errno));
 	new_pwd(env, str);
-	g_pwd_on = 0;
+	g_global.pwd_on = 0;
 	g_global.check = 1;
 	*first_time = 1;
 	free(str);

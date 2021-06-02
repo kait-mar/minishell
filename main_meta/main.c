@@ -33,7 +33,7 @@ void	built_in(t_meta *meta, t_assen assen, char **env)
 	{
 		if (ft_strcmp(meta->argument, "") != 0)
 		{
-			g_process = 1;
+			g_global.process = 1;
 			execut_command(env, meta->argument, g_global.status);
 		}
 	}

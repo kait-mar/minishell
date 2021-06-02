@@ -97,7 +97,7 @@ int	redirect_input_head(char *new)
 	fd = open(new, O_RDWR, S_IRWXU);
 	if ((fd) < 0)
 	{
-		g_in_redirect = 1;
+		g_global.in_redirect = 1;
 		ft_printf("minishell: %s: %s", new, strerror(errno));
 		return (-1);
 	}
