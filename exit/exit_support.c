@@ -15,10 +15,10 @@
 void	filling_history(int fd, t_assen *move)
 {
 	if (dup2(fd, 1) == -1)
-		printf("%s\n", strerror(errno));
+		ft_printf("%s\n", strerror(errno));
 	while (move != NULL)
 	{
-		printf("%s\n", move->cmd);
+		ft_printf("%s\n", move->cmd);
 		move = move->next;
 	}
 	close(fd);
@@ -28,12 +28,12 @@ void	last_things(char *s, int *status)
 {
 	if (check_is_num(s) == 1)
 	{
-		printf("%s%s: %s\n", EXIT_ERROR, s, "numeric argument required");
+		ft_printf("%s%s: %s\n", EXIT_ERROR, s, "numeric argument required");
 		*status = 255;
 	}
 	else
 		*status = ft_atois(s);
-	//printf("exit\n");
+	ft_printf("exit\n");
 	exit(*status % 256);
 }
 
@@ -66,7 +66,7 @@ int	exit_command_void(int *status, char *s)
 	split = ft_split(s, ' ');
 	if (split[1] != NULL)
 	{
-		printf("minishell: exit: too many arguments\n");
+		ft_printf("minishell: exit: too many arguments\n");
 		*status = 1;
 		return (0);
 	}

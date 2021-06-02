@@ -15,7 +15,7 @@ int	how_many_escape(char *bult)
 	return (i);
 }
 
-int	find_dollar_esacpe(char *bult, char c)
+int	find_dollar_esacpe(char *bult)
 {
 	int	i;
 

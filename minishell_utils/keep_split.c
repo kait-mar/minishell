@@ -40,18 +40,18 @@ char	**ft_tofree(char *tabs[], int j)
 	return (NULL);
 }
 
-t_split	keep_split_initializer(t_split lst)
+t_split	keep_split_initializer(void)
 {
+	t_split	lst;
+
 	lst.i = 0;
 	lst.j = 0;
 	lst.check = -33;
 	return (lst);
 }
 
-t_split	keep_split_support(char **s, t_split lst)
+t_split	keep_split_support(t_split lst)
 {
-	int	esp;
-
 	lst.k = 0;
 	return (lst);
 }
@@ -62,7 +62,7 @@ char	**keep_split(char *s, char c, char b)
 
 	if (!s)
 		return (NULL);
-	lst = keep_split_initializer(lst);
+	lst = keep_split_initializer();
 	lst.count = coun(s, c, b);
 	if (lst.count == 0)
 		lst.count = 1;
@@ -71,7 +71,7 @@ char	**keep_split(char *s, char c, char b)
 		return (NULL);
 	while (s[lst.i] != '\0' && lst.j < lst.count)
 	{
-		lst = keep_split_support(&s, lst);
+		lst = keep_split_support(lst);
 		if (lst.k == 1)
 			continue ;
 		lst.k = 0;

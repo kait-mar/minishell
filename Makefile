@@ -60,11 +60,11 @@ MAKINGLIBFT= cd Libft && make -f Makefile
 
 MAKINGPRINTF= cd Printf && make -f Makefile
 
-all: $(NAME) 
+all: $(NAME)
 $(NAME):
 	$(MAKINGLIBFT)
 	$(MAKINGPRINTF)
-	$(CC) $(SRCS) -ltermcap Libft/libft.a Printf/libftprintf.a -o minishell
+	$(CC) $(FLAGS) $(SRCS) -ltermcap Libft/libft.a Printf/libftprintf.a -o minishell
 clean:
 	$(DELETEOBJ) $(DELETENAME)
 	cd Libft && make fclean -f Makefile

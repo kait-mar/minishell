@@ -82,8 +82,10 @@ t_support	output_support(t_meta *temp)
 }
 
 t_support	output_initializer(t_meta **temp, t_meta **check,
-			t_meta *meta, t_support support)
+			t_meta *meta)
 {
+	t_support	support;
+
 	*temp = meta;
 	*check = *temp;
 	support.on = 0;

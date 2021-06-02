@@ -25,7 +25,7 @@ t_meta	*pipe_loop_support(t_meta *head, char **env, t_assen assen)
 {
 	if (head->meta == '<')
 	{
-		head = redirect_intput(head, assen, env, g_global.status);
+		head = redirect_intput(head, assen, env);
 		while (head->meta == '|')
 			head = head->next;
 		head = head->next;
@@ -37,7 +37,7 @@ t_meta	*pipe_loop_support(t_meta *head, char **env, t_assen assen)
 			dup2(g_global.in, 0);
 			close(g_global.in);
 		}
-		head = redirect_output(head, assen, env, g_global.status);
+		head = redirect_output(head, assen, env);
 		while (head->meta == '|')
 			head = head->next;
 		if (head->next != NULL)

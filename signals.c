@@ -14,6 +14,7 @@
 
 void	inter_signal(int status)
 {
+	status = 0;
 	g_global.signal_input = 1;
 	g_global.in_signal = 1;
 	if (g_global.on == 1)
@@ -23,9 +24,7 @@ void	inter_signal(int status)
 		g_global.s_status = 1;
 	}
 	if (g_global.on == 1)
-	{
 		write(1, "\n", 1);
-	}
 	else
 	{
 		prompt();
@@ -34,6 +33,7 @@ void	inter_signal(int status)
 
 void	quit_signal(int signum)
 {
+	signum = 0;
 	if (g_global.on == 1)
 	{
 		kill(1, SIGQUIT);
@@ -43,7 +43,7 @@ void	quit_signal(int signum)
 	}
 }
 
-void	signal_handler(int *status)
+void	signal_handler(void)
 {
 	signal(SIGINT, inter_signal);
 	signal(SIGQUIT, quit_signal);

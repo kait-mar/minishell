@@ -18,6 +18,7 @@ void 	cd_command(char *argument, int *status, char **env)
 	char		*ss;
 	static int	first_time = 0;
 
+	s = NULL;
 	if (argument == NULL)
 		return ;
 	ss = take_only(argument);
@@ -43,8 +44,8 @@ void 	cd_command(char *argument, int *status, char **env)
 char	*cd_free(char *s, char *ss, char **env)
 {
 	char		*free_s;
-	char 		*x;
-	int i;
+	char		*x;
+	int			i;
 
 	i = 0;
 	s = without_that(ss, '\"');
@@ -121,7 +122,7 @@ void	cd_command_helper2(char **env, int *first_time)
 	if (getcwd(str, 100) == NULL)
 		ft_printf("%s\n", strerror(errno));
 	new_pwd(env, str);
-	g_pwd_on = 0;
+	g_global.pwd_on = 0;
 	g_global.check = 1;
 	*first_time = 1;
 	free(str);

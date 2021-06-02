@@ -1,14 +1,14 @@
 #include "../minishell.h"
 
-void	put_normal(char **split, char **env, int i, int *status)
+void	put_normal(char **split, int i, int *status)
 {
 	while (*(split + 1) != NULL)
 	{
-		if (print(split, env, status) == 1)
+		if (print(split, status) == 1)
 			write(1, " ", 1);
 		split++;
 	}
-	print(split, env, status);
+	print(split, status);
 	if (i == 1)
 		my_putchar(' ');
 }
@@ -47,14 +47,15 @@ char	*check_print(char *bult)
 	return (bult);
 }
 
-char	*print_env2(char *bult, char **env, int which_quote, int *status)
+char	*print_env2(char *bult, char **env, int which_quote)
 {
 	char	**str;
 	int		i;
 	char	**tabs;
-	int		j;
 
 	i = 0;
+	str = NULL;
+	tabs = NULL;
 	if (which_quote == 0)
 		str = ft_split(bult, ' ');
 	else if (which_quote == 1)

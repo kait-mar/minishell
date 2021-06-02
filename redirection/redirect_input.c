@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-t_meta	*redirect_intput(t_meta *meta, t_assen assen, char **env, int *status)
+t_meta	*redirect_intput(t_meta *meta, t_assen assen, char **env)
 {
 	int		fd;
 	char	*new;
@@ -44,7 +44,7 @@ t_meta	*redirect_intput(t_meta *meta, t_assen assen, char **env, int *status)
 t_meta	*redirect_pipe(t_meta *meta, t_meta *temp, char **env, t_assen assen)
 {
 	g_global.redirect = 1;
-	pipe_file(meta, assen, env, g_global.status);
+	pipe_file(meta, assen, env);
 	while (temp->meta != '|')
 		temp = temp->next;
 	if (temp->next != NULL)

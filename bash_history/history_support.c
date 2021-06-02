@@ -48,7 +48,7 @@ t_history	init_hist(t_history history)
 	history.tty_name = ttyname(STDIN_FILENO);
 	history.term_type = getenv("TERM");
 	if (tgetent(buffer, history.term_type) != 1)
-		printf("No such term_type\n");
+		ft_printf("No such term_type\n");
 	history.tty_name = ttyname(STDIN_FILENO);
 	g_global.buffer_address = malloc(ft_strlen(buffer));
 	history.key_s = tgetstr("ks", &(g_global.buffer_address));

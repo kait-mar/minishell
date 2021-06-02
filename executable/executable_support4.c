@@ -36,7 +36,6 @@ static int	filling_string(char **tabs, char **env, char **str, char **string)
 int	wich_quote_func(char **env, char **string, char *bult, int which_quote)
 {
 	char	**str;
-	int		j;
 	char	**tabs;
 	int		i;
 

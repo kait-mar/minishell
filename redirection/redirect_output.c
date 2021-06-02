@@ -12,38 +12,39 @@
 
 #include "../minishell.h"
 
-t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env, int *status)
+t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env)
 {
-	int			fd;
-	t_support	support;
-	t_meta		*temp;
-	t_meta		*check;
-	char		*new;
+	t_redirection	red;
+	t_support		support;
+	t_meta			*temp;
+	t_meta			*check;
+	char			*new;
 
-	support = output_initializer(&temp, &check, meta, support);
+	support = output_initializer(&temp, &check, meta);
 	while (temp->next != NULL && (temp->meta == '>' || temp->meta_append != 0))
 	{
 		temp = return_value(&support, temp, env);
 		if (temp == NULL)
 			return (NULL);
 		meta = name_and_condition(&new, &(support.on), meta, temp);
-		fd = redirect_command_head(support.check_meta, support.append, new);
+		red.fd = redirect_command_head(support.check_meta, support.append, new);
 		free(new);
-		if (fd == -1)
+		if (red.fd == -1)
 			return (NULL);
 	}
 	temp = redirect_temp(temp, assen, env, check);
 	if (check != NULL)
-		redirected_output_command(fd, meta, assen, env);
+		redirected_output_command(red.fd, meta, assen, env);
+	red.assen = assen;
 	if (temp->meta == '|')
-		temp = global_temp(temp, assen, env, fd);
+		temp = global_temp(temp, red, env, meta);
 	return (temp);
 }
 
 t_meta	*redirect_temp(t_meta *temp, t_assen assen, char **env, t_meta *check)
 {
 	if (temp->meta == '<')
-		check = redirect_intput(temp, assen, env, g_global.status);
+		check = redirect_intput(temp, assen, env);
 	if (check == NULL)
 	{
 		while (temp != NULL && temp->meta == '<')
@@ -54,13 +55,13 @@ t_meta	*redirect_temp(t_meta *temp, t_assen assen, char **env, t_meta *check)
 	return (temp);
 }
 
-t_meta	*global_temp(t_meta *temp, t_assen assen, char **env, int fd)
+t_meta	*global_temp(t_meta *temp, t_redirection red, char **env, t_meta *meta)
 {
 	g_global.redirect = 1;
-	g_global.redirect_fd = fd;
-	temp = pipe_file(temp, assen, env, g_global.status);
+	g_global.redirect_fd = red.fd;
+	temp = pipe_file(meta, red.assen, env);
 	close(g_global.redirect_fd);
-	close(fd);
+	close(red.fd);
 	return (temp);
 }
 

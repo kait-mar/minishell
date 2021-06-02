@@ -55,14 +55,14 @@ void	unset_command(char **env, char *str, int *status)
 	*status = 0;
 	take_env = filling_env(env);
 	splits = take_only_carac(str);
-	take_env = delete_in_env(take_env, splits, i, status);
+	take_env = delete_in_env(take_env, splits, i);
 	env = copy_all(take_env, env);
 	free_struct(take_env);
 	take_env = filling_env(g_global.export->saver);
 	to_free(splits);
 	splits = take_only_carac(str);
 	i = 1;
-	take_env = delete_in_env(take_env, splits, i, status);
+	take_env = delete_in_env(take_env, splits, i);
 	g_global.export->saver = copy_all(take_env, g_global.export->saver);
 	to_free(splits);
 	free_struct(take_env);
@@ -86,6 +86,6 @@ void	free_struct(t_env *lst)
 void	print_error(char *split)
 {
 	ft_printf("minishell: unset: `%s': not a valid identifier\n",
-		without_that(split, '\''));
+		   without_that(split, '\''));
 	*(g_global.status) = 1;
 }

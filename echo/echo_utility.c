@@ -83,7 +83,6 @@ char	**put_cases1(char **bult)
 
 void	put_cases(char **bult, char **env, int *status)
 {
-	char	**split;
 	int		i;
 
 	i = 0;
@@ -91,7 +90,7 @@ void	put_cases(char **bult, char **env, int *status)
 	{
 		if (find(bult[g_global.j_echo], 39) == 0
 			&& find(bult[g_global.j_echo], 34) == 0)
-			print(bult, env, status);
+			print(bult, status);
 		else if (find_how_many(bult[g_global.j_echo], 39) == 2
 			&& find_how_many(bult[g_global.j_echo], 34) == 2
 			&& find(bult[g_global.j_echo], '$') == 0)
@@ -99,7 +98,7 @@ void	put_cases(char **bult, char **env, int *status)
 		else if (find_how_many(bult[g_global.j_echo], 39) == 2
 			&& find_how_many(bult[g_global.j_echo], 34) == 2)
 			bult[g_global.j_echo]
-					= in_between_cases(bult[g_global.j_echo], env, status);
+				= in_between_cases(bult[g_global.j_echo], env, status);
 		else if (find(bult[g_global.j_echo], 39) == 1
 			|| find(bult[g_global.j_echo], 34) == 1)
 			last_put_cases(bult, env, status, &i);

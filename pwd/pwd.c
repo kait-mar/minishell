@@ -52,7 +52,6 @@ int	check_pwd(char *str, int *exept)
 	int		i;
 	char	*s;
 	int		on;
-	char	*str_free;
 
 	i = 0;
 	*exept = 0;

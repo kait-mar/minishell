@@ -47,7 +47,7 @@ t_assen	*read_l(char **temp, char **tmp, t_glb glb, char *str)
 			back_space(tmp, glb.history, temp, glb.climb);
 		else if (str[0] == 4 && ((ft_strcmp(*tmp, "") == 0)
 				|| g_global.signal_input == 1))
-			*tmp = read_l_support(temp, tmp, glb);
+			*tmp = read_l_support(temp, tmp);
 		else if (str[0] != 4 && str[0] != 127)
 			ft_putstr(str);
 		if (glb.history.up_arrow != NULL

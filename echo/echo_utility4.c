@@ -34,7 +34,7 @@ int	print_esp(char **bult, int k)
 	return (k);
 }
 
-int	print(char **bult, char **env, int *status)
+int	print(char **bult, int *status)
 {
 	int		i;
 	int		k;

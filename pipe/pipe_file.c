@@ -47,7 +47,7 @@ int	last_thing(t_meta *head, t_assen assen, char **env)
 	}
 	if (head->meta == '>')
 	{
-		head = redirect_output(head, assen, env, g_global.status);
+		head = redirect_output(head, assen, env);
 		while (head->meta == '|')
 			head = head->next;
 	}
@@ -76,7 +76,7 @@ t_meta	*pipe_file_core(t_meta *head)
 	return (head);
 }
 
-t_meta	*pipe_file(t_meta *head, t_assen assen, char **env, int *status)
+t_meta	*pipe_file(t_meta *head, t_assen assen, char **env)
 {
 	int	count;
 	int	old_stdin;

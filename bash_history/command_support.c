@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-char	*read_l_support(char **temp, char **tmp, t_glb glb)
+char	*read_l_support(char **temp, char **tmp)
 {
 	if (g_global.signal_input == 1)
 	{

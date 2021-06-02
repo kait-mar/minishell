@@ -262,4 +262,9 @@ echo hello > \space
  > $cs
 
 
- $ frfrfrrf echo hello
+cd alone !
+relative path !!
+echo hello 'how s \\\\\going' no    '$HOME'
+echo < kait > kait2
+echo hello > kait | ls | cat
+echo hello <  kait | ls | cat

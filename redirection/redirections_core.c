@@ -30,7 +30,7 @@ int	check_redirect_error(char *new, int *fd, int append)
 {
 	if (g_global.in_redirect == 1)
 	{
-		printf("Error in file Name \n");
+		ft_printf("Error in file Name \n");
 		return (-1);
 	}
 	if (append != 0)

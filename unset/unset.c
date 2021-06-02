@@ -63,7 +63,7 @@ int	inside_quote(char *s)
 	return (0);
 }
 
-t_env	*delete_in_env(t_env *env, char **splits, int on, int *status)
+t_env	*delete_in_env(t_env *env, char **splits, int on)
 {
 	int	i;
 

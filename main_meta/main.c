@@ -17,6 +17,7 @@ void	built_in(t_meta *meta, t_assen assen, char **env)
 	int	exept;
 
 	exept = 0;
+	ft_memset(&assen, 0, sizeof(assen));
 	if (meta->command == 1)
 		cd_command(meta->argument, g_global.status, env);
 	else if (meta->command == 2)
@@ -32,12 +33,10 @@ void	built_in(t_meta *meta, t_assen assen, char **env)
 	else if (meta->command == 0)
 	{
 		if (ft_strcmp(meta->argument, "") != 0)
-		{
 			execut_command(env, meta->argument, g_global.status);
-		}
 	}
 	if (meta->command == 7)
-		exit_command(g_global.status, meta->argument, &assen);
+		exit_command(g_global.status, meta->argument);
 }
 
 void	prompt(void)
@@ -96,6 +95,7 @@ int	main(int ac, char **av, char **env)
 	int		i;
 
 	i = 0;
+	ac = 0;
 	memset(&assen, 0, sizeof (assen));
 	assen = minishell_init(env);
 	while (env[i])

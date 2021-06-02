@@ -34,7 +34,6 @@ int	print_env_two(char *bult, char **env, int which_quote, char **string)
 char	*return_parsed(char **bult, char **env)
 {
 	char	*str;
-	int		j;
 	int		which_quote;
 
 	which_quote = 0;

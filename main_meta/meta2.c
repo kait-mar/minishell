@@ -26,7 +26,7 @@ int	check_append(char *s)
 	return (FALSE);
 }
 
-t_meta	*split_it_all(char *str, char **env, t_meta *global)
+t_meta	*split_it_all(char *str, t_meta *global)
 {
 	char	**splits;
 	int		i;
@@ -39,7 +39,7 @@ t_meta	*split_it_all(char *str, char **env, t_meta *global)
 	global = (t_meta *) malloc(sizeof(t_meta));
 	if (!global)
 		return (NULL);
-	splits = splits_by_meta(str, &check);
+	splits = splits_by_meta(str);
 	if (splits[i] == NULL)
 		return (NULL);
 	s = take_first_word(splits[i]);

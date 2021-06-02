@@ -17,7 +17,6 @@ int	condition2(char **bult, int k)
 			|| bult[g_global.j_echo][k + 1] == '\''));
 }
 
-
 int 	to_quote(char *s, int i)
 {
 	if (s[i] == '\\')
@@ -32,9 +31,9 @@ int 	to_quote(char *s, int i)
 
 int 	count_es_quote(char *s)
 {
-	int i;
-	int j;
-	int count;
+	int	i;
+	int	j;
+	int	count;
 
 	i = 0;
 	count = 0;
@@ -44,10 +43,7 @@ int 	count_es_quote(char *s)
 		{
 			j = 0;
 			while (s[i] == '\\')
-			{
-				j += 1;
-				i += 1;
-			}
+				increment_counters(&j, &i);
 			if ((j % 2) == 0)
 				count += (j / 2 );
 			else
@@ -64,13 +60,11 @@ int 	count_es_quote(char *s)
 
 char	*es_quote(char *s)
 {
-	int i;
-	int j;
-	char *str;
+	int		i;
+	int		j;
+	char	*str;
 
 	str = malloc(sizeof(char ) * count_es_quote(s) + 1);
-	if (str == NULL)
-		return (NULL);
 	i = 0;
 	j = 0;
 	while (s[i] != '\0')
@@ -80,8 +74,7 @@ char	*es_quote(char *s)
 			while (s[i] == '\\')
 			{
 				i += 1;
-				str[j] = s[i];
-				j += 1;
+				str[j++] = s[i];
 				if (s[i] == '\\')
 					i += 1;
 			}

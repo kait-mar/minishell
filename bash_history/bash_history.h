@@ -61,7 +61,7 @@ int				int_put(int c);
 t_history		init_hist(t_history history);
 void			append_assen(t_assen **assen, char *cmd);
 char			*string_extention_helper(char *temp);
-char			*read_l_support(char **temp, char **tmp, t_glb glb);
+char			*read_l_support(char **temp, char **tmp);
 char			*ctrl_d(void);
 int				condition_command(t_glb glb, char *str);
 void			signals_in_read(char **tmp, char **temp, char *str);

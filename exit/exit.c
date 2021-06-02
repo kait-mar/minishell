@@ -66,26 +66,13 @@ int	go_nexts(char str)
 	return (0);
 }
 
-void	exit_command(int *status, char *s, t_assen *assen)
+void	exit_command(int *status, char *s)
 {
-	t_assen		*move;
-	int			fd;
-	pid_t		pid;
-	int			stat;
-
-	move = assen;
-	if (move->next != NULL)
-		move = move->next;
 	if (exit_command_void(status, s) == 0)
 		return ;
 	s = take_only(s);
 	s = without_that(s, '\"');
 	s = without_that(s, '\'');
-/*	fd = open(".minishell_history", O_CREAT | O_APPEND | O_RDWR, S_IRWXU);
-	pid = fork();
-	if (pid > 0)
-		filling_history(fd, move);
-	waitpid(pid, &stat, WUNTRACED);*/
 	if (s[0] == '\0')
 	{
 		ft_printf("exit\n");

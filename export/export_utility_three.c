@@ -27,7 +27,7 @@ int	check_env(char *str)
 	return (on);
 }
 
-t_export	*check_export(char **splits, char **env, t_export *export)
+t_export	*check_export(char **splits, t_export *export)
 {
 	int	i;
 	int	j;
@@ -58,7 +58,7 @@ void	export_command(char **env, char *str, int *status, t_export *export)
 	char	**splits;
 
 	splits = take_only_carac_for_export(str);
-	export = check_export(splits, env, export);
+	export = check_export(splits, export);
 	printing_filling_env(export, status, env);
 	free_export_command(splits);
 	if (export->env)

@@ -28,7 +28,6 @@ int	check_equal(char *s)
 
 char	*adding_quote(char *s)
 {
-	char	*s1;
 	char	*s2;
 	int		i;
 	int		j;

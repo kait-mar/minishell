@@ -6,19 +6,21 @@ char	*last_print_env_case(char *bult, char **env,
 	char	*s;
 
 	s = NULL;
+	if (*status == 0)
+		*status = 0;
 	if (*bult == '$' && *(bult + 1) == '?')
 	{
 		ft_printf("%d", *(g_global.status));
 		s = bult + 2;
 	}
 	else
-		s = print_env2(bult, env, which_quote, status);
+		s = print_env2(bult, env, which_quote);
 	return (s);
 }
 
 char	**increment_flag(char **bult, int *k, int *i)
 {
-	char *s;
+	char	*s;
 
 	(*k)++;
 	*i = 1;
@@ -41,7 +43,7 @@ int	check_echo_flag(char **bult, int *i)
 		return (0);
 	while (str[k])
 	{
-		if (flag_strcmp(str[k], "-n") == 0)
+		if (flag_strcmp(str[k]) == 0)
 			bult = increment_flag(bult, &k, i);
 		else
 		{

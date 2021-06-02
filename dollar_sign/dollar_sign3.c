@@ -65,7 +65,6 @@ char	*take_after_equal(char *s)
 	while (s[k] != '\0')
 		string[i++] = s[k++];
 	string[i] = '\0';
-	//free(s);
 	return (string);
 }
 

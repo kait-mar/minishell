@@ -31,8 +31,10 @@ t_meta	*initialize_temp(void)
 	return (temp);
 }
 
-t_minishell	mini_shell(t_minishell mini)
+t_minishell	mini_shell(void)
 {
+	t_minishell	mini;
+
 	mini.head = NULL;
 	mini.str = NULL;
 	mini.meta = NULL;

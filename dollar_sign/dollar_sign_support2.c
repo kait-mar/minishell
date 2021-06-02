@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dollar_sign_support2.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/02 18:29:06 by molabhai          #+#    #+#             */
+/*   Updated: 2021/06/02 18:29:08 by molabhai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 t_sign	change_valid(t_sign lst, char *str, char **env)
@@ -100,7 +112,6 @@ char	*string_change_dollar(char *ss, int *on, char **env)
 {
 	char	*string;
 	int		i;
-	char	*frees;
 
 	string = NULL;
 	i = 0;

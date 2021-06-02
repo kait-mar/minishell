@@ -66,7 +66,7 @@ int	count_meta(char *str)
 	return (count);
 }
 
-char	**splits_by_meta(char *str, int *meta)
+char	**splits_by_meta(char *str)
 {
 	int		i;
 	int		j;

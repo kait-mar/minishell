@@ -29,6 +29,7 @@ t_meta	*minishell_exec_helper(t_meta *head, char **env)
 {
 	char	*s;
 
+	head->argument = chang_dollar_sign(head->argument, env);
 	if (head->command == 0)
 	{
 		s = take_first_word(head->argument);
@@ -48,17 +49,17 @@ void	minishell_execution(t_meta *head, t_assen assen, char **env)
 		if (head->meta == ';')
 			built_in(head, assen, env);
 		else if (head->meta == '|')
-			head = pipe_file(head, assen, env, g_global.status);
+			head = pipe_file(head, assen, env);
 		else if (head->meta_append == 1)
 		{
-			head = redirect_output(head, assen, env, g_global.status);
+			head = redirect_output(head, assen, env);
 			if (ft_strcmp(head->argument, "") == 0 && head->meta == '|')
 				head = head->next;
 		}
 		else if (head->meta == '>')
-			head = redirect_output(head, assen, env, g_global.status);
+			head = redirect_output(head, assen, env);
 		else if (head->meta == '<')
-			head = redirect_intput(head, assen, env, g_global.status);
+			head = redirect_intput(head, assen, env);
 		else if (head->meta == '\0')
 			built_in(head, assen, env);
 		if (head != NULL && head->meta != '|')
@@ -66,7 +67,7 @@ void	minishell_execution(t_meta *head, t_assen assen, char **env)
 	}
 }
 
-t_meta	*minishell_helper(t_meta *meta, char **env, char **str, t_meta *global)
+t_meta	*minishell_helper(t_meta *meta, char **str, t_meta *global)
 {
 	char	*str_free;
 
@@ -76,12 +77,9 @@ t_meta	*minishell_helper(t_meta *meta, char **env, char **str, t_meta *global)
 	str_free = *str;
 	*str = ft_strtrim(*str, "\t");
 	free(str_free);
-//	str_free = *str;
-//	*str = escape_normal(*str);
-//	free(str_free);
 	free_head(meta);
 	meta = NULL;
-	meta = split_it_all(*str, env, global);
+	meta = split_it_all(*str, global);
 	return (meta);
 }
 
@@ -90,7 +88,7 @@ void	minishell(char **av, char **env, t_assen assen)
 	t_minishell	mini;
 	t_history	history;
 
-	mini = mini_shell(mini);
+	mini = mini_shell();
 	if (av[1] == NULL)
 	{
 		memset(&history, 0, sizeof(t_history));
@@ -98,15 +96,15 @@ void	minishell(char **av, char **env, t_assen assen)
 	}
 	while (TRUE)
 	{
-		signal_handler(g_global.status);
-		if (av[1])
-			mini.str = ft_strdup(av[1]);
+		signal_handler();
+		if (av[2])
+			mini.str = ft_strdup(av[2]);
 		else
 		{
 			prompt();
 			mini.str = reading_input(&assen, mini.string, history);
 		}
-		mini.meta = minishell_helper(mini.meta, env, &(mini.str), mini.global);
+		mini.meta = minishell_helper(mini.meta, &(mini.str), mini.global);
 		mini.head = mini.meta;
 		minishell_global(mini.head, assen, env, av);
 	}

@@ -76,16 +76,6 @@ void 	string_extention(char **tmp, char **temp, char *str)
 	char	*temp_free;
 	char	*tmp_free;
 
-	/*if (ft_strcmp(*tmp, "") == 0)
-		g_global.signal_input = 0;
-	if (g_global.signal_input == 1 && str[0] != 4)
-	{
-		free(*tmp);
-		free(*temp);
-		*tmp = NULL;
-		*temp = NULL;
-		g_global.signal_input = 0;
-	}*/
 	tmp_free = *tmp;
 	*tmp = extend_re(str, *tmp);
 	free(tmp_free);

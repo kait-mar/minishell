@@ -37,7 +37,7 @@ int	homogene(char *s)
 	return (0);
 }
 
-int	flag_strcmp(char *s1, char *s2)
+int	flag_strcmp(char *s1)
 {
 	int	i;
 
