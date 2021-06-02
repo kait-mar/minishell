@@ -22,7 +22,8 @@ int	check_meta(char *str)
 	while (str[i] != '\0')
 	{
 		if ((str[i] == ';' || str[i] == '|'
-				|| str[i] == '<' || str[i] == '>') && active(str, i) == 1 && inside_quotes(str, i) == 1)
+				|| str[i] == '<' || str[i] == '>')
+			&& active(str, i) == 1 && inside_quotes(str, i) == 1)
 			return (TRUE);
 		i += 1;
 	}
@@ -42,12 +43,6 @@ void	ft_lstadd(t_meta **alst, t_meta *new)
 		lst = *alst;
 		while (lst->next)
 			lst = lst->next;
-//		if (lst->next == NULL)
-//			lst->next = malloc(sizeof(t_meta));
-//		lst->next->argument = ft_strdup(new->argument);
-//		lst->next->meta = new->meta;
-//		lst->next->command = new->command;
-//		lst->next->meta_append = new->meta_append;
 		lst->next = new;
 		lst->next->next = NULL;
 	}
@@ -62,8 +57,7 @@ t_meta	*split_it_all_loop(char **splits, t_meta *global, int i)
 	global = split_it_header(splits, global, &i);
 	while (splits[i])
 	{
-		temp = (t_meta *) malloc(sizeof(t_meta));
-		temp->argument = NULL;
+		temp = initialize_temp();
 		if (temp == NULL)
 			return (NULL);
 		split_free = splits[i];
@@ -78,7 +72,6 @@ t_meta	*split_it_all_loop(char **splits, t_meta *global, int i)
 			meta_out_between(splits, temp, &i);
 		temp->next = NULL;
 		ft_lstadd(&global, temp);
-		//free_temp(temp);
 		i += 1;
 	}
 	return (global);

@@ -31,12 +31,6 @@ void	free_temp(t_meta *head)
 {
 	if (head)
 	{
-//		while (head->next != NULL)
-//		{
-//			if (head->argument)
-//				free(head->argument);
-//			head = head->next;
-//		}
 		if (head->argument)
 			free(head->argument);
 		free(head);
@@ -47,7 +41,7 @@ void	free_temp(t_meta *head)
 void	minishell_global(t_meta *head, t_assen assen, char **env, char **av)
 {
 	minishell_execution(head, assen, env);
-	if (av[1])
+	if (av[2])
 		exit(*(g_global.status));
 	g_global.first_time = 1;
 	if (g_in_redirect == 1)

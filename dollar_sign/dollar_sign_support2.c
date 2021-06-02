@@ -41,7 +41,6 @@ t_sign	change_dollar_helper(t_sign lst, char **str, char **env)
 	lst.j = ft_strlen(lst.s);
 	if (lst.valid == 1)
 	{
-
 		lst = change_valid(lst, *str, env);
 	}
 	*str = realloc_input(*str, len + lst.i, lst);

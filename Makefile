@@ -9,10 +9,9 @@
 #    Updated: 2021/03/09 09:52:05 by molabhai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 NAME= minishell
 
-CC= gcc -g
+CC= gcc
 
 FLAGS= -Wall -Wextra -Werror
 
@@ -61,16 +60,13 @@ MAKINGLIBFT= cd Libft && make -f Makefile
 
 MAKINGPRINTF= cd Printf && make -f Makefile
 
-all: $(NAME)
-
+all: $(NAME) 
 $(NAME):
 	$(MAKINGLIBFT)
 	$(MAKINGPRINTF)
-	$(CC)   $(SRCS)  -ltermcap Libft/libft.a Printf/libftprintf.a -o minishell
-
+	$(CC) $(SRCS) -ltermcap Libft/libft.a Printf/libftprintf.a -o minishell
 clean:
 	$(DELETEOBJ) $(DELETENAME)
 	cd Libft && make fclean -f Makefile
 	cd Printf && make fclean -f Makefile
-
 re: clean all
