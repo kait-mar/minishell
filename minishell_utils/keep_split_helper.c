@@ -1,34 +1,5 @@
 #include "../minishell.h"
 
-t_split	keep_split_support(char **s, t_split lst)
-{
-	int	esp;
-
-	lst.k = 0;
-/*	if ((*s)[lst.i] == '\\')
-	{
-		esp = how_many_escape(*s);
-		if (esp % 2 == 0)
-		{
-			lst.tabs[lst.j] = malloc(lst.k + 1);
-			if (!(lst.tabs[lst.j]))
-			{
-				ft_tofree(lst.tabs, lst.j);
-				lst.check = -1;
-				return (lst);
-			}
-			while ((*s)[lst.i] != '\0' && (*s)[lst.i] == '\\')
-				lst.tabs[lst.j][(lst.k)++] = (*s)[(lst.i)++];
-			(*s)[lst.i - 1] = '\0';
-			lst.tabs[(lst.j)++][lst.k] = '\0';
-			lst.check = 1;
-			return (lst);
-		}
-		lst.check = 0;
-	}*/
-	return (lst);
-}
-
 t_split	keep_split_support2(char *s, t_split lst, char c, char b)
 {
 	lst.tabs[lst.j] = malloc(lst.k + 1);

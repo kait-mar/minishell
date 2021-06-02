@@ -99,11 +99,9 @@ t_export	*check_export_init(char **splits, t_export *export)
 
 char	*split_reformulation(char *splits)
 {
-	char *free_s;
+	char	*free_s;
 
-	//free_s = splits;
 	splits = ft_strtrim(splits, "\t");
-	//free(free_s);
 	if (check_double_quote(splits) == 1
 		&& check_double_inside_single(splits) == 0)
 	{

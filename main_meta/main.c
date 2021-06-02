@@ -28,9 +28,7 @@ void	built_in(t_meta *meta, t_assen assen, char **env)
 	else if (meta->command == 5)
 		unset_command(env, meta->argument, g_global.status);
 	else if (meta->command == 6)
-	{
 		echo(meta->argument, env, g_global.status);
-	}
 	else if (meta->command == 0)
 	{
 		if (ft_strcmp(meta->argument, "") != 0)

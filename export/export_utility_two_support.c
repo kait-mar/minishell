@@ -69,9 +69,9 @@ void	print_count(char *str, int *i, int *count)
 
 	j = *i;
 	while (((ft_isprint(str[j]) == 1 ) || str[j] == '=')
-			&& ((check_single_double_quote(str[j]) == 0)
-				|| (check_single_double_quote(str[j]) == 1
-					&& str[j - 1] == '\\')))
+		&& ((check_single_double_quote(str[j]) == 0)
+			|| (check_single_double_quote(str[j]) == 1
+				&& str[j - 1] == '\\')))
 		j += 1;
 	*count += 1;
 	*i = j;

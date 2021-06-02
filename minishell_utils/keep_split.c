@@ -40,15 +40,29 @@ char	**ft_tofree(char *tabs[], int j)
 	return (NULL);
 }
 
+t_split	keep_split_initializer(t_split lst)
+{
+	lst.i = 0;
+	lst.j = 0;
+	lst.check = -33;
+	return (lst);
+}
+
+t_split	keep_split_support(char **s, t_split lst)
+{
+	int	esp;
+
+	lst.k = 0;
+	return (lst);
+}
+
 char	**keep_split(char *s, char c, char b)
 {
 	t_split	lst;
 
 	if (!s)
 		return (NULL);
-	lst.i = 0;
-	lst.j = 0;
-	lst.check = -33;
+	lst = keep_split_initializer(lst);
 	lst.count = coun(s, c, b);
 	if (lst.count == 0)
 		lst.count = 1;

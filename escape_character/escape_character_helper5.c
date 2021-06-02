@@ -58,10 +58,10 @@ void	escape_core_support(char *str, char **string, int *i, int *j)
 	}
 }
 
-int		es_count(char *s, int count)
+int	es_count(char *s, int count)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	count = 0;
@@ -89,10 +89,10 @@ int		es_count(char *s, int count)
 
 char	*es_for_quote(char *s)
 {
-	int i;
-	int count;
-	int j;
-	char *str;
+	int		i;
+	int		count;
+	int		j;
+	char	*str;
 
 	j = 0;
 	i = 0;

@@ -88,18 +88,10 @@ t_meta	*minishell_helper(t_meta *meta, char **env, char **str, t_meta *global)
 
 void	minishell(char **av, char **env, t_assen assen)
 {
-	t_meta		*meta;
-	t_meta		*head;
-	t_meta		*global;
-	char		*str;
-	char		*string;
+	t_minishell	mini;
 	t_history	history;
 
-	head = NULL;
-	str = NULL;
-	meta = NULL;
-	string = malloc(BUFFER + 1);
-	global = NULL;
+	mini = mini_shell(mini);
 	if (av[1] == NULL)
 	{
 		memset(&history, 0, sizeof(t_history));
@@ -108,15 +100,15 @@ void	minishell(char **av, char **env, t_assen assen)
 	while (TRUE)
 	{
 		signal_handler(g_global.status);
-		if (av[1])
-			str = ft_strdup(av[1]);
+		if (av[2])
+			mini.str = ft_strdup(av[2]);
 		else
 		{
 			prompt();
-			str = reading_input(&assen, string, history);
+			mini.str = reading_input(&assen, mini.string, history);
 		}
-		meta = minishell_helper(meta, env, &str, global);
-		head = meta;
-		minishell_global(head, assen, env, av);
+		mini.meta = minishell_helper(mini.meta, env, &(mini.str), mini.global);
+		mini.head = mini.meta;
+		minishell_global(mini.head, assen, env, av);
 	}
 }

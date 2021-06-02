@@ -45,6 +45,15 @@
 #include "./dollar_sign/dollar_sign.h"
 
 
+typedef struct s_minishell
+{
+	t_meta		*meta;
+	t_meta		*head;
+	t_meta		*global;
+	char		*str;
+	char		*string;
+}              t_minishell;
+
 typedef struct s_command_cd
 {
 	char *command;
@@ -341,4 +350,6 @@ char	*remove_space_core(char *str, char *string, int *j, int *start);
 t_meta	*minishell_helper(t_meta *meta, char **env, char **str, t_meta *global);
 void	minishell_global(t_meta *head, t_assen assen, char **env, char **av);
 int	match_shlvl(char *env, char *sh);
+t_meta	*initialize_temp();
+t_minishell	mini_shell(t_minishell mini);
 #endif

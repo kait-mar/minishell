@@ -21,3 +21,22 @@ t_meta	*split_it_header(char **splits, t_meta *global, int *i)
 	global->next = NULL;
 	return (global);
 }
+
+t_meta	*initialize_temp(void)
+{
+	t_meta	*temp;
+
+	temp = (t_meta *) malloc(sizeof(t_meta));
+	temp->argument = NULL;
+	return (temp);
+}
+
+t_minishell	mini_shell(t_minishell mini)
+{
+	mini.head = NULL;
+	mini.str = NULL;
+	mini.meta = NULL;
+	mini.string = malloc(BUFFER + 1);
+	mini.global = NULL;
+	return (mini);
+}

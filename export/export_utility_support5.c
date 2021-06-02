@@ -49,7 +49,7 @@ void	free_export_init(char **ss)
 			pwd = 1;
 		else if (match(string, ss[i]) == 1)
 			shlvl = 1;
-		free(ss[i]);;
+		free(ss[i]);
 		i += 1;
 		ss[i] = NULL;
 	}
@@ -63,7 +63,7 @@ void	export_init(void)
 	char	**ss;
 
 	ss = ft_calloc(sizeof(char *),
-				   arguments_in(g_global.export->saver, i) + 3);
+			arguments_in(g_global.export->saver, i) + 3);
 	while (g_global.export->saver[i])
 	{
 		ss[i] = ft_strdup(g_global.export->saver[i]);

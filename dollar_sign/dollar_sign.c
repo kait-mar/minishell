@@ -52,7 +52,7 @@ char	*chang_dollar_sign(char *str, char **env)
 			if (check_front_quote(str, lst.i) == 1)
 			{
 				lst.i += 1;
-				continue;
+				continue ;
 			}
 			lst.i += 1;
 			while (str[lst.i] != '\'' && str[lst.i] != '\0')
@@ -71,11 +71,11 @@ char	*str_free(char *str, char *s)
 	return (str);
 }
 
-int check_front_quote(char *s, int i)
+int	check_front_quote(char *s, int i)
 {
-	int count;
-	count = 0;
+	int	count;
 
+	count = 0;
 	while (i >= 0)
 	{
 		if (s[i] == '"')
