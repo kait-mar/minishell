@@ -45,6 +45,7 @@ int	print(char **bult, int *status)
 	str = bult[g_global.j_echo];
 	bult[g_global.j_echo] = es_quote(bult[g_global.j_echo]);
 	free(str);
+	bult[g_global.j_echo] = escape_normal(bult[g_global.j_echo]);
 	while (bult[g_global.j_echo][k] != '\0')
 	{
 		if (bult[g_global.j_echo][k] == '$'

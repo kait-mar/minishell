@@ -49,7 +49,7 @@ t_meta	*redirect_temp(t_meta *temp, t_assen assen, char **env, t_meta *check)
 	{
 		while (temp != NULL && temp->meta == '<')
 			temp = temp->next;
-		while (temp != NULL && temp->meta == '>')
+		while (temp != NULL && (temp->meta == '>' || temp->meta_append == 0))
 			temp = temp->next;
 	}
 	return (temp);

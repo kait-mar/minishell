@@ -21,7 +21,7 @@ t_assen	minishell_init(char **env)
 	g_global.status = malloc(sizeof(int ));
 	*(g_global.status) = 0;
 	filling_export(env);
-	filling(&assen);
+	//filling(&assen);
 	return (assen);
 }
 
@@ -97,8 +97,8 @@ void	minishell(char **av, char **env, t_assen assen)
 	while (TRUE)
 	{
 		signal_handler();
-		if (av[2])
-			mini.str = ft_strdup(av[2]);
+		if (av[1])
+			mini.str = ft_strdup(av[1]);
 		else
 		{
 			prompt();
