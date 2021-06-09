@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-static int		sign(int c)
+static int	sign(int c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (c < 0)
@@ -22,10 +22,10 @@ static int		sign(int c)
 	return (i);
 }
 
-static int		how_mutch(unsigned int c)
+static int	how_mutch(unsigned int c)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = c;
@@ -39,7 +39,7 @@ static int		how_mutch(unsigned int c)
 	return (i);
 }
 
-static char		*conversion(char x, unsigned int c, int n)
+static char	*conversion(char x, unsigned int c, int n)
 {
 	char	*str;
 	int		j;
@@ -47,7 +47,8 @@ static char		*conversion(char x, unsigned int c, int n)
 	j = how_mutch(c);
 	if (n < 0)
 		j = how_mutch(c) + 1;
-	if (!(str = (char *)ft_calloc(j + 1, sizeof(char))))
+	str = (char *)ft_calloc(j + 1, sizeof(char));
+	if (!str)
 		return (NULL);
 	while (c > 0)
 	{
@@ -66,7 +67,7 @@ static char		*conversion(char x, unsigned int c, int n)
 	return (str);
 }
 
-char			*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char			*str;
 	unsigned int	i;

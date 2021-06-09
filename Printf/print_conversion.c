@@ -12,47 +12,47 @@
 
 #include "ft_printf.h"
 
-int		print_char(int c)
+int	print_char(int c)
 {
-    ft_putchar(c);
+	ft_putchar(c);
 	return (1);
 }
 
-int		print_string(char *s)
+int	print_string(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (s == NULL)
 		s = ft_strdup("(null)");
 	while (s[i] != '\0')
 	{
-        ft_putchar(s[i]);
+		ft_putchar(s[i]);
 		i++;
 	}
 	return (i);
 }
 
-int		print_hexa(unsigned int i, int z)
+int	print_hexa(unsigned int i, int z)
 {
-	int j;
+	int	j;
 
 	j = convert_hexa(i, z, 0);
 	return (j);
 }
 
-int		print_unsigned_int(unsigned int i)
+int	print_unsigned_int(unsigned int i)
 {
-	int j;
+	int	j;
 
 	j = nmbr_len(i);
 	put_nmbr(i);
 	return (i);
 }
 
-int		print_int(int i)
+int	print_int(int i)
 {
-	int j;
+	int	j;
 
 	j = nmbr_len(i);
 	put_nmbr(i);

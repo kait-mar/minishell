@@ -14,27 +14,27 @@
 
 void	put_nmbr(long i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	if (i < 0)
 	{
-        ft_putchar('-');
+		ft_putchar('-');
 		i = -i;
 	}
 	if (i >= 0 && i < 10)
-        ft_putchar(i + '0');
+		ft_putchar(i + '0');
 	else
 	{
 		put_nmbr(i / 10);
 		j = i % 10;
-        ft_putchar(j + '0');
+		ft_putchar(j + '0');
 	}
 }
 
-int		nmbr_len(long i)
+int	nmbr_len(long i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	if (i == 0)
@@ -47,7 +47,7 @@ int		nmbr_len(long i)
 	return (j);
 }
 
-int		hexa_convert(int l, int z)
+int	hexa_convert(int l, int z)
 {
 	if (z == 0)
 	{
@@ -73,19 +73,20 @@ void	revers_print(char *str, int k)
 {
 	while (k > 0)
 	{
-        ft_putchar(str[k - 1]);
+		ft_putchar(str[k - 1]);
 		k--;
 	}
 }
 
-int		convert_hexa(unsigned int i, int z, int y)
+int	convert_hexa(unsigned int i, int z, int y)
 {
 	int		k;
 	char	*str;
 	int		l;
 
 	k = 0;
-	if (!(str = (char *)ft_calloc(sizeof(char), nmbr_len(i) + 1)))
+	str = (char *)ft_calloc(sizeof(char), nmbr_len(i) + 1);
+	if (!str)
 		return (-1);
 	if (i == 0)
 		str[k++] = i + '0';
@@ -101,8 +102,7 @@ int		convert_hexa(unsigned int i, int z, int y)
 			i = i / 16;
 		}
 	}
-	if (y == 0)
-		revers_print(str, k);
+	reverse(str, k, y);
 	free(str);
 	return (k);
 }

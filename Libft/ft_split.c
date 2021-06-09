@@ -12,10 +12,10 @@
 
 #include "libft.h"
 
-static int			part_num(char const *s, char c)
+static int	part_num(char const *s, char c)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -32,9 +32,9 @@ static int			part_num(char const *s, char c)
 	return (j);
 }
 
-static int			word_num(char const *s, char c, int i)
+static int	word_num(char const *s, char c, int i)
 {
-	int j;
+	int	j;
 
 	j = i;
 	while (s[i] != '\0')
@@ -46,12 +46,12 @@ static int			word_num(char const *s, char c, int i)
 	return (i - j);
 }
 
-static char			**fill(char const *s, char c, int i, char **str)
+static char	**fill(char const *s, char c, int i, char **str)
 {
 	int	p;
-	int l;
-	int k;
-	int j;
+	int	l;
+	int	k;
+	int	j;
 
 	p = 0;
 	l = 0;
@@ -62,7 +62,8 @@ static char			**fill(char const *s, char c, int i, char **str)
 		if (s[l] == '\0')
 			break ;
 		k = word_num(s, c, l);
-		if (!(str[p] = (char *)ft_calloc((k + 1), sizeof(char))))
+		str[p] = (char *)ft_calloc((k + 1), sizeof(char));
+		if (!str[p])
 			return (NULL);
 		j = 0;
 		while (j < k && s[l] != c)
@@ -74,7 +75,7 @@ static char			**fill(char const *s, char c, int i, char **str)
 	return (str);
 }
 
-static char			**free_all(char **s, int pos)
+static char	**free_all(char **s, int pos)
 {
 	while (pos > 0)
 	{
@@ -85,7 +86,7 @@ static char			**free_all(char **s, int pos)
 	return (NULL);
 }
 
-char				**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**str;
 	int		i;
@@ -93,9 +94,11 @@ char				**ft_split(char const *s, char c)
 	if (s == NULL)
 		return (NULL);
 	i = part_num(s, c);
-	if (!(str = (char **)ft_calloc((i + 4), sizeof(char *))))
+	str = (char **)ft_calloc((i + 4), sizeof(char *));
+	if (!str)
 		return (NULL);
-	if (!(str = fill(s, c, i, str)))
+	str = fill(s, c, i, str);
+	if (!str)
 		return (str = free_all(str, i));
 	return (str);
 }

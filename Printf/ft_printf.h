@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include "../Libft/libft.h"
 
-typedef struct		s_flag
+typedef struct s_flag
 {
 	int					zero;
 	int					minus;
@@ -48,7 +48,7 @@ int					print_unsigned_int(unsigned int i);
 int					print_hex_adress(unsigned long long i, int z);
 void				revers_print(char *str, int k);
 int					hexa_convert(int l, int z);
-int					print_mod();
+int					print_mod(void);
 void				take_conversion(char *s, int i, t_flag *check, va_list ap);
 void				put_flag(char *s, int *i, t_flag *check, va_list ap);
 int					conversion_for_print(char *s, int i);
@@ -82,9 +82,9 @@ int					check_condition_three(t_flag *check);
 int					check_condition_four(t_flag *check);
 void				*ft_memset(void *s, int c, size_t len);
 int					ft_isdigit(int c);
-//char				*ft_strdup(char *s);
 size_t				ft_strlen(char const *s);
 int					ft_atoi(char const *s);
 void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t c, size_t size);
+void				reverse(char *str, int k, int y);
 #endif

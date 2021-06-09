@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int		print_hex_adress(unsigned long long i, int j)
+int	print_hex_adress(unsigned long long i, int j)
 {
 	char	*str;
 	int		k;
@@ -33,16 +33,22 @@ int		print_hex_adress(unsigned long long i, int j)
 	}
 	if (j == 0)
 	{
-        ft_putchar('0');
-        ft_putchar('x');
+		ft_putchar('0');
+		ft_putchar('x');
 		revers_print(str, k);
 	}
 	free(str);
 	return (k);
 }
 
-int		print_mod(void)
+int	print_mod(void)
 {
-    ft_putchar('%');
+	ft_putchar('%');
 	return (0);
+}
+
+void	reverse(char *str, int k, int y)
+{
+	if (y == 0)
+		revers_print(str, k);
 }

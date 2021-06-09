@@ -25,18 +25,15 @@
 # include "libft.h"
 
 int						get_next_line(int fd, char **line);
-//void					ft_bzero(void *s, size_t n);
 void					*ft_calloc(size_t count, size_t size);
-//char					*ft_strdup(char *str);
 int						search(char *str);
 char					*extend(char *str, char *s);
 void					return_free_last(char **tmp, char **ptr, char **o_tmp,
-		char **line);
+							char **line);
 char					*return_line(char **tmp, char **line, char **ptr,
-		char *str);
+							char *str);
 char					*return_rest(char **ptr, char **line, char **o_tmp,
-		char **tmp);
+							char **tmp);
 int						word_len(char *str, int i);
-//char					*ft_strdup(char *str);
 
 #endif

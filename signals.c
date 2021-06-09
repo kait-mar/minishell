@@ -12,37 +12,39 @@
 
 #include "minishell.h"
 
-void		inter_signal(int status)
+void	inter_signal(int status)
 {
-    //write(1, "\b\b", 2);
-    g_in_signal = 1;
-	if (g_on == 1)
-	    kill(g_pid, SIGINT);
-	if (g_on == 1)
+	status = 0;
+	g_global.signal_input = 1;
+	g_global.in_signal = 1;
+	if (g_global.on == 1)
 	{
-        g_process = 0;
-        write(1, "\n", 1);
-        prompt(2);
-    }
+		kill(1, SIGINT);
+		*g_global.status = 130;
+		g_global.s_status = 1;
+	}
+	if (g_global.on == 1)
+		write(1, "\n", 1);
 	else
-    {
-        write(1, "\b\b  ", 4);
-        prompt(g_in_signal);
-    }
+	{
+		prompt();
+	}
 }
 
 void	quit_signal(int signum)
 {
-    if (g_on == 1)
-    {
-        kill(g_pid, SIGQUIT);
-        ft_printf("Quit: 3\n");
-    }
+	signum = 0;
+	if (g_global.on == 1)
+	{
+		kill(1, SIGQUIT);
+		*g_global.status = 131;
+		g_global.s_status = 1;
+		ft_printf("Quit: 3\n");
+	}
 }
 
-void	signal_handler(int *status)
+void	signal_handler(void)
 {
 	signal(SIGINT, inter_signal);
 	signal(SIGQUIT, quit_signal);
-	//printf("before termination signal handler\n");
 }
