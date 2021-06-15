@@ -79,7 +79,7 @@ int	print_conversion(t_flag *check)
 
 void	ft_putchar(char c)
 {
-	write(1, &c, 1);
+	write(2, &c, 1);
 	g_i++;
 }
 

@@ -62,5 +62,10 @@ t_support	output_initializer(t_meta **temp, t_meta **check,
 char		*fill_name(char *str, char *name);
 int			check_redirect_error(char *new, int *fd, int append);
 t_meta		*return_value(t_support *support, t_meta *temp, char **env);
+t_meta		*red1(t_meta *meta, int *on);
+t_meta		*red2(t_meta *temp, char **env);
+t_meta		*red3(t_meta *meta, int fd);
+void		red4(void);
+t_meta	*independent_func(t_meta *temp, t_meta *meta, char **env);
 
 #endif

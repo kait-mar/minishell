@@ -45,13 +45,15 @@ int	print(char **bult, int *status)
 	str = bult[g_global.j_echo];
 	bult[g_global.j_echo] = es_quote(bult[g_global.j_echo]);
 	free(str);
+	str = bult[g_global.j_echo];
 	bult[g_global.j_echo] = escape_normal(bult[g_global.j_echo]);
+	free(str);
 	while (bult[g_global.j_echo][k] != '\0')
 	{
 		if (bult[g_global.j_echo][k] == '$'
 			&& bult[g_global.j_echo][k + 1] == '?')
 		{
-			ft_printf("%d", *status);
+			ft_putnbr_fd(*status, 1);
 			k += 2;
 		}
 		else

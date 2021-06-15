@@ -14,7 +14,7 @@
 
 int	in_match(char *s1, char *s2)
 {
-	if (ft_strncmp(s1, s2, ft_strlen(s1)) == 0)
+	if (ft_strncmp(s1, s2, ft_strlen(s2)) == 0)
 		return (1);
 	return (0);
 }

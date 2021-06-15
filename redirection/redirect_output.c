@@ -38,6 +38,7 @@ t_meta	*redirect_output(t_meta *meta, t_assen assen, char **env)
 	red.assen = assen;
 	if (temp->meta == '|')
 		temp = global_temp(temp, red, env, meta);
+	close(red.fd);
 	return (temp);
 }
 
@@ -59,9 +60,14 @@ t_meta	*global_temp(t_meta *temp, t_redirection red, char **env, t_meta *meta)
 {
 	g_global.redirect = 1;
 	g_global.redirect_fd = red.fd;
+	while (meta->meta == '>' && meta->next != NULL)
+		meta = meta->next;
+//	g_global.old_save = dup(STDIN_FILENO);
 	temp = pipe_file(meta, red.assen, env);
-	close(g_global.redirect_fd);
+//	close(g_global.old_save);
+	//close(g_global.redirect_fd);
 	close(red.fd);
+	//dup2(g_global.old_save, 0);
 	return (temp);
 }
 

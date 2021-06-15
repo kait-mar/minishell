@@ -33,7 +33,7 @@ void	last_things(char *s, int *status)
 	}
 	else
 		*status = ft_atois(s);
-	ft_printf("exit\n");
+	write(1, "exit\n", 5);
 	exit(*status % 256);
 }
 

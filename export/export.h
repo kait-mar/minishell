@@ -45,7 +45,7 @@ t_export	*export_loop(char *splits, t_export *export, int on, int *j);
 int			no_space(char *s);
 t_export	*export_global(t_export *export);
 void		filling_export_env(char **env, char *export_argument);
-void		printing_filling_env(t_export *export, int *status, char **env);
+void		printing_filling_env(t_export *export, char **env);
 char		*return_adding_quote(char *s, int j);
 char		*return_loc(char *s, char *s2, char *str);
 void		print_count(char *str, int *i, int *count);

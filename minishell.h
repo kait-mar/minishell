@@ -107,7 +107,10 @@ struct s_global
 {
 	int			j_echo;
 	int			e_quote;
+	int			tt;
 	int			on;
+	int			from_in;
+	int			check_fd;
 	int			process;
 	int			in_signal;
 	int			redirect;
@@ -130,6 +133,7 @@ struct s_global
 	int			fd[2];
 	int			signal_input;
 	char		*buffer_address;
+	int			old_save;
 	t_export	*export;
 }			g_global;
 
@@ -143,7 +147,7 @@ void		pwd_command(int *status, int exept);
 int			check_pwd(char *str);
 int			check_env(char *str);
 void		env_command(char **str, t_meta *meta, int *status);
-void		export_command(char **env, char *splits, int *status,
+void		export_command(char **env, char *splits,
 				t_export *export);
 int			how_mutch_arguments(char **splits, int i);
 int			check_exp_lex(char *str);

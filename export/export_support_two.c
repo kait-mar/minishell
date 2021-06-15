@@ -56,6 +56,7 @@ t_export	*export_loop(char *splits, t_export *export, int on, int *j)
 	{
 		splits = error_reformulation(splits);
 		ft_printf("minishell: export: `%s': not a valid identifier\n", splits);
+		*(g_global.status) = 1;
 		export->flag = 0;
 	}
 	return (export);
@@ -103,7 +104,7 @@ void	filling_export_env(char **env, char *export_argument)
 	}
 }
 
-void	printing_filling_env(t_export *export, int *status, char **env)
+void	printing_filling_env(t_export *export, char **env)
 {
 	int	j;
 
@@ -115,17 +116,14 @@ void	printing_filling_env(t_export *export, int *status, char **env)
 			filling_export_env(env, export->argument[j]);
 			j += 1;
 		}
-		*status = 0;
 	}
 	else if (export->flag == 2)
 	{
 		while (export->env[j])
 		{
-			ft_printf("%s\n", export->env[j]);
+			write(1, export->env[j], ft_strlen(export->env[j]));
+			write(1, "\n", 1);
 			j += 1;
 		}
-		*status = 0;
 	}
-	if (export->flag == 0)
-		*status = 1;
 }

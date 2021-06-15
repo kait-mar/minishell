@@ -83,7 +83,7 @@ char	*filling_take_only_second(char *str, int *i)
 		*i = j;
 		return (splits);
 	}
-	*i = j + 1;
 	splits = from_to(str, *i, j + 1);
+	*i = j + 1;
 	return (splits);
 }

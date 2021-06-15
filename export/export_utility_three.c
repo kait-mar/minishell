@@ -52,13 +52,13 @@ t_export	*check_export(char **splits, t_export *export)
 	return (export);
 }
 
-void	export_command(char **env, char *str, int *status, t_export *export)
+void	export_command(char **env, char *str, t_export *export)
 {
 	char	**splits;
 
 	splits = take_only_carac_for_export(str);
 	export = check_export(splits, export);
-	printing_filling_env(export, status, env);
+	printing_filling_env(export, env);
 	free_export_command(splits);
 	if (export->env)
 		free_export_command(export->env);
@@ -89,7 +89,8 @@ void	env_command(char **env, t_meta *meta, int *status)
 	}
 	while (env[i])
 	{
-		ft_printf("%s\n", env[i]);
+		write(1, env[i], ft_strlen(env[i]));
+		write(1, "\n", 1);
 		i += 1;
 	}
 	*status = 0;

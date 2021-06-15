@@ -75,7 +75,7 @@ void	exit_command(int *status, char *s)
 	s = without_that(s, '\'');
 	if (s[0] == '\0')
 	{
-		ft_printf("exit\n");
+		write(1, "exit\n", 5);
 		exit(*status);
 	}
 	else

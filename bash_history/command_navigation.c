@@ -112,5 +112,5 @@ char	*reading_input(t_assen *assen, char *string, t_history history)
 		free(tmp);
 		return (l);
 	}
-	return (ft_strdup(tmp));
+	return (tmp);
 }

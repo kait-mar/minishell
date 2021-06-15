@@ -40,9 +40,6 @@ t_env	*increment_helper(int *count, t_env *tmp)
 
 int	check_unset(char *str)
 {
-	int	i;
-
-	i = 0;
 	if (ft_strncmp(str, "unset", 5) == 0)
 		return (0);
 	return (1);

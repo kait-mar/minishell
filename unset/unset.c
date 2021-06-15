@@ -70,7 +70,8 @@ t_env	*delete_in_env(t_env *env, char **splits, int on)
 	i = 0;
 	while (splits[i] != NULL)
 	{
-		env = delete_in_env_core(env, splits[i], on);
+		if (on == 0 && check_unset_tok(splits[i]) == 0)
+			env = delete_in_env_core(env, splits[i], on);
 		i += 1;
 	}
 	return (env);

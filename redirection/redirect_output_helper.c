@@ -36,9 +36,10 @@ void	redirected_output_command(
 		ft_putstr(strerror(errno));
 	else if (pid == 0)
 		redirect_output_fork(meta, assen, env, fd);
-	if ((waitpid(pid, g_global.status, WUNTRACED) == -1))
+	else if ((waitpid(pid, g_global.status, WUNTRACED) == -1))
 		ft_putstr(strerror(errno));
-	close(fd);
+	//fprintf(stderr, "close mm ==> %d, fd ==> %d\n", close(fd), fd);
+	//fprintf(stderr, "o1 ==> %d\n", open("o1", O_RDWR| O_CREAT ));
 }
 
 int	redirect_command_head(int check_meta, int append, char *new)
@@ -87,6 +88,9 @@ t_meta	*name_and_condition(char **new, int *on, t_meta *meta, t_meta *temp)
 		meta->argument = ft_strjoin(meta->argument, temp->argument);
 		free(str);
 	}
+	str = temp->argument;
+	temp->argument = ft_strdup("");
+	free(str);
 	return (meta);
 }
 
@@ -98,7 +102,7 @@ int	redirect_input_head(char *new)
 	if ((fd) < 0)
 	{
 		g_global.in_redirect = 1;
-		ft_printf("minishell: %s: %s", new, strerror(errno));
+		ft_printf("minishell: %s: %s\n", new, strerror(errno));
 		return (-1);
 	}
 	return (fd);

@@ -10,7 +10,7 @@ char	*last_print_env_case(char *bult, char **env,
 		*status = 0;
 	if (*bult == '$' && *(bult + 1) == '?')
 	{
-		ft_printf("%d", *(g_global.status));
+		ft_putnbr_fd(*(g_global.status), 1);
 		s = bult + 2;
 	}
 	else

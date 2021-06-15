@@ -20,7 +20,9 @@ int	connecting(t_meta *head, t_assen assen, char **env)
 	if (pid == 0)
 	{
 		close(g_global.fd[0]);
-		if (g_global.in != 0)
+		if (g_global.in == -1)
+			exit(EXIT_FAILURE);
+		if (g_global.in != 0 && g_global.tt == 0)
 		{
 			dup2(g_global.in, 0);
 			close(g_global.in);
@@ -33,6 +35,7 @@ int	connecting(t_meta *head, t_assen assen, char **env)
 		if (check_bin_echo(head->argument) == 1)
 			head->command = 6;
 		built_in(head, assen, env);
+		//close(g_global.in);
 		exit(EXIT_SUCCESS);
 	}
 	return (pid);
@@ -40,7 +43,7 @@ int	connecting(t_meta *head, t_assen assen, char **env)
 
 int	last_thing(t_meta *head, t_assen assen, char **env)
 {
-	if (g_global.in != 0)
+	if (g_global.in > 0 && g_global.tt == 0)
 	{
 		dup2(g_global.in, 0);
 		close(g_global.in);
@@ -61,9 +64,10 @@ int	last_thing(t_meta *head, t_assen assen, char **env)
 
 int	pipe_condition(t_meta *head)
 {
-	return (head->next->meta == '\0' || head->next->meta == '|'
-		|| head->next->meta == ';' || head->next->meta == '<'
-		|| head->next->meta == '>');
+	return (head->next != NULL
+		&& (head->next->meta == '\0' || head->next->meta == '|'
+			|| head->next->meta == ';' || head->next->meta == '<'
+			|| head->next->meta == '>'));
 }
 
 t_meta	*pipe_file_core(t_meta *head)
@@ -79,14 +83,15 @@ t_meta	*pipe_file_core(t_meta *head)
 t_meta	*pipe_file(t_meta *head, t_assen assen, char **env)
 {
 	int	count;
-	int	old_stdin;
 
 	count = 0;
-	old_stdin = dup(STDIN_FILENO);
+	g_global.old_save = dup(STDIN_FILENO);
 	if (g_global.redirect == 1)
 		g_global.in = g_global.redirect_fd;
 	else
 		g_global.in = 1;
+	pipe(g_global.fd);
+	g_global.in_redirect = 0;
 	while (head != NULL && (head->meta == '|' || g_global.redirect == 1))
 	{
 		if (pipe_condition(head))
@@ -97,9 +102,9 @@ t_meta	*pipe_file(t_meta *head, t_assen assen, char **env)
 	head = pipe_last(head, assen, env);
 	while (count-- >= 0)
 		wait3(NULL, WUNTRACED, NULL);
-	dup2(old_stdin, 0);
-	close(old_stdin);
-	if (head->meta == '>')
+	dup2(g_global.old_save, 0);
+	close(g_global.old_save);
+	if (head != NULL && head->meta == '>')
 		head = pipe_file_core(head);
 	return (head);
 }

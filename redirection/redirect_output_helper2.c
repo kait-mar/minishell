@@ -14,6 +14,11 @@
 
 void	redirected_fork(t_meta *meta, t_assen assen, char **env, int fd)
 {
+	if (g_global.check_fd != -1)
+	{
+		 dup2(g_global.check_fd, STDOUT_FILENO);
+	}
+	close(g_global.check_fd);
 	if ((dup2(fd, STDIN_FILENO) != -1))
 	{
 		built_in(meta, assen, env);
@@ -34,7 +39,6 @@ void	redirect_output_fork(t_meta *meta, t_assen assen, char **env, int fd)
 	{
 		built_in(meta, assen, env);
 		close(fd);
-		exit(EXIT_SUCCESS);
 	}
 	else
 	{
@@ -42,6 +46,7 @@ void	redirect_output_fork(t_meta *meta, t_assen assen, char **env, int fd)
 		close(fd);
 		exit(EXIT_FAILURE);
 	}
+	exit(EXIT_SUCCESS);
 }
 
 t_meta	*return_value(t_support *support, t_meta *temp, char **env)

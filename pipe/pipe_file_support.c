@@ -26,9 +26,10 @@ t_meta	*pipe_loop_support(t_meta *head, char **env, t_assen assen)
 	if (head->meta == '<')
 	{
 		head = redirect_intput(head, assen, env);
-		while (head->meta == '|')
+		while (head != NULL && head->meta == '|')
 			head = head->next;
-		head = head->next;
+		if (head != NULL)
+			head = head->next;
 	}
 	else if (head->meta == '>' && head->next->meta != 0)
 	{
@@ -38,9 +39,9 @@ t_meta	*pipe_loop_support(t_meta *head, char **env, t_assen assen)
 			close(g_global.in);
 		}
 		head = redirect_output(head, assen, env);
-		while (head->meta == '|')
+		while (head != NULL && head->meta == '|')
 			head = head->next;
-		if (head->next != NULL)
+		if (head != NULL)
 			head = head->next;
 	}
 	return (head);
@@ -48,26 +49,19 @@ t_meta	*pipe_loop_support(t_meta *head, char **env, t_assen assen)
 
 t_meta	*pipe_loop(t_meta *head, t_assen assen, char **env, int *count)
 {
-	int	i;
-
-	i = 0;
 	pipe(g_global.fd);
 	*count += 1;
 	head->argument = chang_dollar_sign(head->argument, env);
 	connecting(head, assen, env);
 	close(g_global.fd[1]);
+	if (g_global.in != 1)
+		close(g_global.in);
+	//	close(g_global.in);
 	g_global.in = g_global.fd[0];
-	if (g_global.redirect == 1)
-	{
-		while (i < 2 && head->next != NULL)
-		{
-			head = head->next;
-			i += 1;
-		}
-		g_global.redirect = 0;
-	}
-	else
+	if (g_global.redirect_fd != -1)
 		head = head->next;
+	g_global.redirect_fd = 0;
+	g_global.redirect = 0;
 	head = pipe_loop_support(head, env, assen);
 	return (head);
 }
@@ -76,11 +70,12 @@ t_meta	*pipe_last(t_meta *head, t_assen assen, char **env)
 {
 	pid_t	pid;
 
+	red4();
 	pid = fork();
 	if (pid == 0)
 	{
 		close(g_global.fd[1]);
-		if (head->next != NULL && head != NULL)
+		if (head != NULL && head->next != NULL)
 		{
 			if (head->next->meta == '\0' || head->next->meta == ';')
 				 last_thing(head, assen, env);
@@ -89,9 +84,13 @@ t_meta	*pipe_last(t_meta *head, t_assen assen, char **env)
 			last_thing(head, assen, env);
 		exit(EXIT_SUCCESS);
 	}
+	//fprintf(stderr, "close heeere ==> %d, fd ==> %d\n", close(g_global.fd[0]), g_global.fd[0]);
+	//fprintf(stderr, "close  here again ==> %d, fd ==> %d\n", close(g_global.fd[1]), g_global.fd[1]);
+	//fprintf(stderr, "close here 5==> %d, fd ==> %d\n", close(g_global.redirect_fd), g_global.redirect_fd);
+	//fprintf(stderr, "close here 6 ==> %d, fd ==> %d\n", close(g_global.in), g_global.in);
 	close(g_global.fd[0]);
 	close(g_global.fd[1]);
-	close(g_global.redirect_fd);
+	//close(g_global.redirect_fd);
 	close(g_global.in);
 	return (head);
 }

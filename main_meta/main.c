@@ -25,7 +25,7 @@ void	built_in(t_meta *meta, t_assen assen, char **env)
 	else if (meta->command == 3)
 		env_command(env, meta, g_global.status);
 	else if (meta->command == 4)
-		export_command(env, meta->argument, g_global.status, NULL);
+		export_command(env, meta->argument, NULL);
 	else if (meta->command == 5)
 		unset_command(env, meta->argument, g_global.status);
 	else if (meta->command == 6)

@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd_support.c                                      :+:      :+:    :+:   */
+/*   unset_helper3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: molabhai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/19 17:11:31 by molabhai          #+#    #+#             */
-/*   Updated: 2021/04/19 17:11:35 by molabhai         ###   ########.fr       */
+/*   Created: 2021/06/14 11:13:55 by molabhai          #+#    #+#             */
+/*   Updated: 2021/06/14 11:13:56 by molabhai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	pwd_command(int *status, int exept)
-{
-	char	*str;
 
-	str = (char *) ft_calloc(sizeof(char), 100);
-	if (!(str))
-		return ;
-	if (exept == 1)
+int		check_unset_tok(char *string)
+{
+	int i;
+
+	i = 0;
+	while (string[i] != '\0')
 	{
-		*status = 1;
-		ft_printf("usage: pwd [-L | -P]\n");
-		return ;
+		if (ft_isalnum(string[i]) == FALSE)
+		{
+			write(2, "unset syntax error\n", 19);
+			*(g_global.status) = 1;
+			return (1);
+		}
+		i += 1;
 	}
-	if (getcwd(str, 100) == NULL)
-	{
-		ft_printf("%s\n", strerror(errno));
-		*status = 11;
-	}
-	write(1, str, ft_strlen(str));
-	write(1, "\n", 1);
-	free(str);
-	str = NULL;
-	*status = 0;
+	return (0);
 }

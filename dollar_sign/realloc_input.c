@@ -84,3 +84,9 @@ t_sign	realloc_list_support(char *str, t_sign lst, int *j)
 	}
 	return (lst);
 }
+
+int	last_condition(t_sign lst, char *str)
+{
+	return (lst.i > 0 && str[lst.i - 1] == '['
+		&& str[lst.i + lst.j] == ']' && lst.remove == 1);
+}

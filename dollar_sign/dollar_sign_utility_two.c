@@ -93,7 +93,7 @@ int	escape_front_true(char *s, int i)
 
 	count = 0;
 	i = i - 1;
-	while (s[i] == ' ')
+	while (i > 0 && s[i] == ' ')
 	{
 		i -= 1;
 		count += 1;

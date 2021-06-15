@@ -21,14 +21,14 @@ t_sign	change_valid(t_sign lst, char *str, char **env)
 	lst.s = chang_dollar(lst.s, env, &(lst.on));
 	if ((lst.s)[0] == ' ')
 		lst.space_front = 1;
-	if (lst.s[ft_strlen(lst.s) - 1] == ' ')
+	if (ft_strlen(lst.s) > 0 && lst.s[ft_strlen(lst.s) - 1] == ' ')
 		lst.space_back = 1;
-	if (str[lst.i - 1] == '[' && str[lst.i + lst.j] == ']' && lst.remove == 1)
+	if (last_condition(lst, str))
 		lst.s = rm_space_variable(lst.s, 0);
-	else if (str[lst.i - 1] == '['
+	else if (lst.i > 0 && str[lst.i - 1] == '['
 		&& str[lst.i + lst.j] != ']' && lst.remove == 1)
 		lst.s = rm_space_variable(lst.s, 1);
-	else if (str[lst.i - 1] != '['
+	else if (lst.i > 0 && str[lst.i - 1] != '['
 		&& str[lst.i + lst.j] == ']' && lst.remove == 1)
 		lst.s = rm_space_variable(lst.s, 2);
 	else if (lst.remove == 1)
@@ -111,23 +111,25 @@ char	*take_away_dollar(char *s)
 char	*string_change_dollar(char *ss, int *on, char **env)
 {
 	char	*string;
+	char	*free_str;
 	int		i;
 
 	string = NULL;
+	free_str = NULL;
 	i = 0;
 	while (env[i] != NULL)
 	{
 		if (match(env[i], ss) == 1)
 		{
-			string = ft_strdup(env[i]);
-			string = take_after_equal(string);
+			free_str = ft_strdup(env[i]);
+			string = take_after_equal(free_str);
 			*on = 1;
+			free(free_str);
+			break ;
 		}
 		i += 1;
 	}
 	if (string == NULL)
 		string = ft_strdup("");
-	/*if (no_space(string) == 1)
-		g_global.in_redirect = 1;*/
 	return (string);
 }
