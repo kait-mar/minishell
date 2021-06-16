@@ -35,5 +35,4 @@ void 	red4(void)
 		close(g_global.fd[1]);
 		g_global.redirect_fd = 0;
 	}
-	//g_global.in = g_global.fd[0];
 }

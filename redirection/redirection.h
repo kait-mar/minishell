@@ -66,6 +66,13 @@ t_meta		*red1(t_meta *meta, int *on);
 t_meta		*red2(t_meta *temp, char **env);
 t_meta		*red3(t_meta *meta, int fd);
 void		red4(void);
-t_meta	*independent_func(t_meta *temp, t_meta *meta, char **env);
+t_meta		*independent_func(t_meta *temp, t_meta *meta, char **env);
+char		*free_temp_(char *s);
+void		checking_out(t_meta *temp, t_meta *meta, char **env, int *j);
+t_meta		*ret_temp_in(t_meta *temp, t_assen assen, char **env, int j);
+t_meta		*init_in(t_meta *meta, int *on, int *j);
+t_meta		*pipe_in_loop(t_meta *temp, int fd);
+t_meta		*ret_in_meta(t_meta *meta, t_meta *temp, int *on, int *fd);
+t_meta		*input_conditions(t_meta *meta, char **new, t_meta *temp, int *on);
 
 #endif

@@ -27,6 +27,7 @@ void	execution(char **splits, char *str, char **env)
 	path = filling_path(env, &on);
 	if (on == 0)
 	{
+		execve(splits[0], splits, NULL);
 		ft_printf("minishell: %s: No such file or directory\n", splits[0]);
 		exit(127);
 	}

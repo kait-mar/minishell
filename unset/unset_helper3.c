@@ -12,10 +12,9 @@
 
 #include "../minishell.h"
 
-
-int		check_unset_tok(char *string)
+int	check_unset_tok(char *string)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (string[i] != '\0')

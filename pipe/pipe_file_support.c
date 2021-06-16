@@ -56,7 +56,6 @@ t_meta	*pipe_loop(t_meta *head, t_assen assen, char **env, int *count)
 	close(g_global.fd[1]);
 	if (g_global.in != 1)
 		close(g_global.in);
-	//	close(g_global.in);
 	g_global.in = g_global.fd[0];
 	if (g_global.redirect_fd != -1)
 		head = head->next;
@@ -84,13 +83,8 @@ t_meta	*pipe_last(t_meta *head, t_assen assen, char **env)
 			last_thing(head, assen, env);
 		exit(EXIT_SUCCESS);
 	}
-	//fprintf(stderr, "close heeere ==> %d, fd ==> %d\n", close(g_global.fd[0]), g_global.fd[0]);
-	//fprintf(stderr, "close  here again ==> %d, fd ==> %d\n", close(g_global.fd[1]), g_global.fd[1]);
-	//fprintf(stderr, "close here 5==> %d, fd ==> %d\n", close(g_global.redirect_fd), g_global.redirect_fd);
-	//fprintf(stderr, "close here 6 ==> %d, fd ==> %d\n", close(g_global.in), g_global.in);
 	close(g_global.fd[0]);
 	close(g_global.fd[1]);
-	//close(g_global.redirect_fd);
 	close(g_global.in);
 	return (head);
 }

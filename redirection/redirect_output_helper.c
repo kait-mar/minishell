@@ -38,8 +38,6 @@ void	redirected_output_command(
 		redirect_output_fork(meta, assen, env, fd);
 	else if ((waitpid(pid, g_global.status, WUNTRACED) == -1))
 		ft_putstr(strerror(errno));
-	//fprintf(stderr, "close mm ==> %d, fd ==> %d\n", close(fd), fd);
-	//fprintf(stderr, "o1 ==> %d\n", open("o1", O_RDWR| O_CREAT ));
 }
 
 int	redirect_command_head(int check_meta, int append, char *new)
@@ -88,9 +86,7 @@ t_meta	*name_and_condition(char **new, int *on, t_meta *meta, t_meta *temp)
 		meta->argument = ft_strjoin(meta->argument, temp->argument);
 		free(str);
 	}
-	str = temp->argument;
-	temp->argument = ft_strdup("");
-	free(str);
+	temp->argument = free_temp_(temp->argument);
 	return (meta);
 }
 

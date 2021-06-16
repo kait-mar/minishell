@@ -16,9 +16,9 @@ void	redirected_fork(t_meta *meta, t_assen assen, char **env, int fd)
 {
 	if (g_global.check_fd != -1)
 	{
-		 dup2(g_global.check_fd, STDOUT_FILENO);
+		dup2(g_global.check_fd, STDOUT_FILENO);
+		close(g_global.check_fd);
 	}
-	close(g_global.check_fd);
 	if ((dup2(fd, STDIN_FILENO) != -1))
 	{
 		built_in(meta, assen, env);

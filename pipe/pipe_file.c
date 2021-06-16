@@ -35,7 +35,6 @@ int	connecting(t_meta *head, t_assen assen, char **env)
 		if (check_bin_echo(head->argument) == 1)
 			head->command = 6;
 		built_in(head, assen, env);
-		//close(g_global.in);
 		exit(EXIT_SUCCESS);
 	}
 	return (pid);
