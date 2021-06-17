@@ -48,7 +48,8 @@ t_export	*export_loop(char *splits, t_export *export, int on, int *j)
 		export->flag = 1;
 		*j += 1;
 	}
-	if (((ft_isalpha(splits[0]) || splits[0] == '_')
+	//if (((ft_isalpha(splits[0]) || splits[0] == '_')
+	if ((alpha(splits)
 			&& last_check(splits, 1) == 0
 			&& (no_space(splits) == 0)) || (check_exp_lex(splits) == 1))
 		export = put_in_export(splits, &on, export);
@@ -126,4 +127,18 @@ void	printing_filling_env(t_export *export, char **env)
 			j += 1;
 		}
 	}
+}
+
+int		alpha(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (!(ft_isalnum(s[i]) || s[i] == '_'))
+			return (0);
+		i++;
+	}
+	return (1);
 }

@@ -94,7 +94,7 @@ char	*take_only(char *s)
 }
 
 int	cd_command_helper(int *status, char **env, char **s, int first_time)
-{	
+{
 	if (chdir(*s) < 0)
 	{
 		ft_printf("minishell: cd: %s: %s\n", *s, strerror(errno));

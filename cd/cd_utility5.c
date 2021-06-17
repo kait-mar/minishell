@@ -32,21 +32,22 @@ char	*take_only_helper(char *s, int i)
 char	*take_only_helper2(char *s, int i, char ref)
 {
 	char	*string;
+	int j;
 
+	j = i;
 	while (s[i] != ref && s[i] != '\0')
 		i += 1;
 	string = (char *) ft_calloc(sizeof (char ), i + 2);
 	if (string == NULL)
 		return (NULL);
 	i = 0;
-	string[i] = s[i];
+	string[i] = s[j++];
 	i += 1;
-	while (s[i] != ref && s[i] != '\0')
+	while (s[j] != ref && s[j] != '\0')
 	{
-		string[i] = s[i];
+		string[i] = s[j++];
 		i += 1;
 	}
-	string[i] = s[i];
 	string[i] = '\0';
 	return (string);
 }

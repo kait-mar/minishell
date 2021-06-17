@@ -44,13 +44,19 @@ int	how_mutch_arguments(char **str, int i)
 	int	j;
 
 	on = 0;
+	int k = 0;
+	/*while (str[k])
+		printf("str[i] = %s\n", str[k++]);*/
 	while (str[i] != NULL)
 	{
 		j = 0;
 		while (str[i][j] != '\0')
 		{
-			if (ft_isalnum(str[i][j]) == 1)
+			//if (ft_isalnum(str[i][j]) == 1)
+			if (str[i][j])
 				on = 1;
+			/*else
+				print error and exit !!!!!!! */
 			j += 1;
 		}
 		i += 1;
