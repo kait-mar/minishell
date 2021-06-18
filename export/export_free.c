@@ -68,3 +68,17 @@ void	fill_pwd(char **ss, int i, int *pwd)
 	g_global.pwd_only = ft_strdup(ss[i]);
 	*pwd = 1;
 }
+
+int	alpha(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (!(ft_isalnum(s[i]) || s[i] == '_'))
+			return (0);
+		i++;
+	}
+	return (1);
+}

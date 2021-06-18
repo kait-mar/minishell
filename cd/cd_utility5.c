@@ -32,7 +32,7 @@ char	*take_only_helper(char *s, int i)
 char	*take_only_helper2(char *s, int i, char ref)
 {
 	char	*string;
-	int j;
+	int		j;
 
 	j = i;
 	while (s[i] != ref && s[i] != '\0')

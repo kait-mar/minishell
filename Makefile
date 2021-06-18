@@ -65,7 +65,7 @@ all: $(NAME)
 $(NAME):
 	$(MAKINGLIBFT)
 	$(MAKINGPRINTF)
-	$(CC)  $(SRCS) -ltermcap Libft/libft.a Printf/libftprintf.a -o minishell
+	$(CC) $(FLAGS) $(SRCS) -ltermcap Libft/libft.a Printf/libftprintf.a -o minishell
 clean:
 	$(DELETEOBJ) $(DELETENAME)
 	cd Libft && make fclean -f Makefile

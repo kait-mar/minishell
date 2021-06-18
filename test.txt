@@ -1,5 +1,0 @@
-export +
-unset and export in error : leaks
-cat : multiple argument in dquotes
-cd "Libft" / cd ".."
-cat /dev/random/|head -c 5|wc|khbddkb !!!!!!
